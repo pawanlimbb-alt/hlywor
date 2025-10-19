@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f2f2f2;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 30px 10px;
+}
+
+.container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 900px;
+  overflow: hidden;
+}
+
+/* Navbar */
+.navbar {
+  background: #d3d3d3;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #000;
+  transition: 0.2s;
+}
+
+.navbar a:hover {
+  color: #555;
+  text-decoration: underline;
+}
+
+.username {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Profile Layout */
+.profile-card {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px;
+  gap: 20px;
+}
+
+.left, .right {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Left side */
+.profile-pic {
+  text-align: center;
+}
+
+.profile-pic img {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  background: #eee;
+  object-fit: cover;
+  border: 2px solid #000;
+}
+
+.under-name {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.music-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.music-controls button {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.music-controls button:hover {
+  background: #555;
+}
+
+.warnings, .dont-follow, .ew {
+  margin-top: 20px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+h3 {
+  border-bottom: 2px solid #000;
+  display: inline-block;
+  padding-bottom: 2px;
+  margin-bottom: 5px;
+}
+
+/* Right side */
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.info {
+  list-style: none;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.info li {
+  margin-bottom: 5px;
+}
+
+.info span {
+  font-weight: 600;
+}
+
+.mini-gallery {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.mini-gallery img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  background: #eee;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+
+.mini-gallery img:hover {
+  transform: scale(1.05);
+}
+
+.before-follow, .yes {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.footer-note {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.footer-note img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  background: #eee;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .profile-card {
+    flex-direction: column;
+  }
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+  }
+}

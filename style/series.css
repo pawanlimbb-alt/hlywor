@@ -1,0 +1,93 @@
+/* === Base Styles === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  padding-bottom: 3rem;
+}
+
+/* === Header === */
+header {
+  text-align: center;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid #333;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+header p {
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+
+/* === Container === */
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* === Card === */
+.card {
+  background: #111;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.summary {
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+/* === Ratings === */
+.overall, .season {
+  margin-top: 1rem;
+}
+
+h3, h4 {
+  margin-bottom: 0.3rem;
+  color: #ddd;
+  font-weight: 500;
+}
+
+.stars {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.review {
+  color: #999;
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+  border-top: 1px solid #222;
+}
