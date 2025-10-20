@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Retro Gallery</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="style/gallery.css" />
 </head>
+
 <body>
   <nav>
     <div class="nav-left">
@@ -39,29 +42,29 @@
       <div class="author">By M. Jones</div>
     </div>
     <div class="photo">
-        <img src="style/images/IMG_20250527_172350033.jpg" alt="Photo 1">
-        <div class="author">By A. Smith</div>
-      </div>
-      <div class="photo">
-        <img src="style/images/IMG_20250709_181223731.jpg" alt="Photo 2">
-        <div class="author">By R. Lee</div>
-      </div>
-      <div class="photo">
-        <img src="style/images/backgroundsec1.png" alt="Photo 3">
-        <div class="author">By M. Jones</div>
-      </div>
-      <div class="photo">
-        <img src="style/images/camera.png" alt="Photo 1">
-        <div class="author">By A. Smith</div>
-      </div>
-      <div class="photo">
-        <img src="style/images/movies1.webp" alt="Photo 2">
-        <div class="author">By R. Lee</div>
-      </div>
-      <div class="photo">
-        <img src="style/images/backgroundsec1.png" alt="Photo 3">
-        <div class="author">By M. Jones</div>
-      </div>
+      <img src="style/images/IMG_20250527_172350033.jpg" alt="Photo 1">
+      <div class="author">By A. Smith</div>
+    </div>
+    <div class="photo">
+      <img src="style/images/IMG_20250709_181223731.jpg" alt="Photo 2">
+      <div class="author">By R. Lee</div>
+    </div>
+    <div class="photo">
+      <img src="style/images/backgroundsec1.png" alt="Photo 3">
+      <div class="author">By M. Jones</div>
+    </div>
+    <div class="photo">
+      <img src="style/images/camera.png" alt="Photo 1">
+      <div class="author">By A. Smith</div>
+    </div>
+    <div class="photo">
+      <img src="style/images/movies1.webp" alt="Photo 2">
+      <div class="author">By R. Lee</div>
+    </div>
+    <div class="photo">
+      <img src="style/images/backgroundsec1.png" alt="Photo 3">
+      <div class="author">By M. Jones</div>
+    </div>
   </main>
 
   <!-- 🔮 Lightbox Container -->
@@ -69,24 +72,32 @@
     <img src="" alt="">
   </div>
   <!--Comments-->
-  <form action="https://staticman3.herokuapp.com/v3/entry/github/pawanlimbb-alt/hlywor/main/comments" method="POST">
-    <input type="hidden" name="options[slug]" value="gallery"> <!-- change for each post -->
-    <input type="text" name="fields[name]" placeholder="Your name" required>
-    <textarea name="fields[message]" placeholder="Your comment" required></textarea>
-    <button type="submit">Post Comment</button>
-  </form>
-  <section id="comments">
+  <section id="comment-section">
+    <h3>Leave a Comment</h3>
+
+    <form action="https://staticman3.herokuapp.com/v3/entry/github/pawanlimbb-alt/hlywor/main/comments" method="POST"
+      id="comment-form">
+      <input type="hidden" name="options[slug]" value="gallery" />
+
+      <label>Your Name</label>
+      <input type="text" name="fields[name]" placeholder="Your name" required>
+
+      <label>Your Comment</label>
+      <textarea name="fields[message]" placeholder="Write something..." required></textarea>
+
+      <button type="submit">Post Comment</button>
+    </form>
+
+    <div id="comment-status"></div>
+
     <h3>Comments</h3>
-    <!-- Loop through saved comments -->
-    {% for comment in site.data.comments.my-first-post %}
-      <div class="comment">
-        <p><strong>{{ comment.name }}</strong></p>
-        <p>{{ comment.message }}</p>
-      </div>
-    {% endfor %}
+    <div id="comments-list">Loading comments...</div>
   </section>
-  
-  
+
+
+
+
+
   <footer>
     © 2025 Retroverse Gallery
   </footer>
@@ -121,5 +132,55 @@
       if (e.key === 'Escape') lightbox.classList.remove('active');
     });
   </script>
+  <script>
+    const repoURL = "https://raw.githubusercontent.com/pawanlimbb-alt/hlywor/main/_data/comments/blog1/";
+
+    async function loadComments() {
+      try {
+        const response = await fetch(repoURL);
+        if (!response.ok) {
+          document.getElementById("comments-list").innerText = "No comments yet!";
+          return;
+        }
+
+        const text = await response.text();
+        const parser = new DOMParser();
+        const html = parser.parseFromString(text, "text/html");
+        const links = Array.from(html.querySelectorAll('a'))
+          .filter(a => a.href.endsWith('.json'))
+          .map(a => a.href);
+
+        if (links.length === 0) {
+          document.getElementById("comments-list").innerText = "No comments yet!";
+          return;
+        }
+
+        let htmlOutput = "";
+        for (const link of links.reverse()) {
+          const res = await fetch(link);
+          const comment = await res.json();
+          htmlOutput += `
+            <div class="comment">
+              <p><strong>${comment.name}</strong></p>
+              <p>${comment.message}</p>
+            </div>
+          `;
+        }
+        document.getElementById("comments-list").innerHTML = htmlOutput;
+      } catch (err) {
+        document.getElementById("comments-list").innerText = "Error loading comments.";
+      }
+    }
+
+    loadComments();
+
+    // Optional: Message after submitting
+    document.getElementById("comment-form").addEventListener("submit", function () {
+      document.getElementById("comment-status").innerText =
+        "Submitting... Your comment will appear after a few seconds.";
+    });
+  </script>
+
 </body>
+
 </html>
