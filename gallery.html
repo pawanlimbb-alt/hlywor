@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retro Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style/gallery.css" />
+</head>
+<body>
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Home</a>
+      <a href="select-character.html">Characters</a>
+      <a href="#">Projects</a>
+    </div>
+    <div class="nav-right">
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Gallery</h1>
+    <p>A chaotic wall of memories — different shapes, one universe.</p>
+  </header>
+
+  <main class="free-gallery">
+    <!-- Your backend will render images like this -->
+    <div class="photo">
+      <img src="IMAGE_URL_1" alt="Photo 1">
+      <div class="author">By A. Smith</div>
+    </div>
+    <div class="photo">
+      <img src="IMAGE_URL_2" alt="Photo 2">
+      <div class="author">By R. Lee</div>
+    </div>
+    <div class="photo">
+      <img src="IMAGE_URL_3" alt="Photo 3">
+      <div class="author">By M. Jones</div>
+    </div>
+  </main>
+
+  <!-- 🔮 Lightbox Container -->
+  <div id="lightbox">
+    <img src="" alt="">
+  </div>
+
+  <footer>
+    © 2025 Retroverse Gallery
+  </footer>
+
+  <!-- ⚙️ JS: Random layout (optional) + Lightbox -->
+  <script>
+    // Optional random layout (delete if handled in backend)
+    document.addEventListener("DOMContentLoaded", () => {
+      const spanClasses = ['span-1x1', 'span-2x1', 'span-1x2', 'span-2x2'];
+      document.querySelectorAll('.photo').forEach(photo => {
+        const randomClass = spanClasses[Math.floor(Math.random() * spanClasses.length)];
+        photo.classList.add(randomClass);
+      });
+    });
+
+    // 🎮 Simple Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+
+    document.querySelectorAll('.photo img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') lightbox.classList.remove('active');
+    });
+  </script>
+</body>
+</html>

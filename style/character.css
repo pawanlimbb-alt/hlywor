@@ -1,0 +1,152 @@
+:root {
+    --bg: #e5e4df;
+    --window: #f4f3ef;
+    --bar: #d1cfca;
+    --border: #000;
+    --shadow: #999;
+    --hover: #c4c2bc;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: #111;
+  }
+  
+  /* Top Navbar */
+  nav {
+    background: var(--bar);
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 25px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: var(--border);
+    margin: 0 10px;
+    transition: color 0.2s;
+  }
+  
+  nav a:hover {
+    color: #666;
+  }
+  
+  /* Header */
+  header {
+    border-bottom: 2px solid var(--border);
+    background: #f1f0ec;
+    padding: 25px 5%;
+    text-align: center;
+  }
+  
+  header h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  
+  header p {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  /* Character Cards */
+  .card-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 40px;
+    padding: 60px 5%;
+  }
+  
+  .card {
+    background: var(--window);
+    border: 3px solid var(--border);
+    box-shadow: 6px 6px 0 var(--shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 0 var(--border);
+  }
+  
+  .card-header {
+    background: var(--bar);
+    border-bottom: 2px solid var(--border);
+    padding: 6px 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .char-img {
+    width: 120px;
+    height: 120px;
+    margin-top: 20px;
+    border: 2px solid var(--border);
+    image-rendering: pixelated;
+    background: #ccc;
+  }
+  
+  .card h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    margin: 15px 0 8px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  
+  .card p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #222;
+    text-align: center;
+  }
+  
+  .retro-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    background: var(--bar);
+    border: 2px solid var(--border);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    text-decoration: none;
+    color: #000;
+    margin-top: 15px;
+    transition: all 0.2s;
+  }
+  
+  .retro-btn:hover {
+    background: var(--hover);
+    box-shadow: 2px 2px 0 var(--border);
+  }
+  
+  footer {
+    border-top: 2px solid var(--border);
+    text-align: center;
+    padding: 40px 0;
+    font-size: 12px;
+    color: #444;
+  }
+  
