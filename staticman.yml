@@ -1,0 +1,18 @@
+# Staticman configuration
+
+# Generate comments as files inside this path
+comments:
+  allowedFields: ["name", "message"]
+  branch: "main"
+  commitMessage: "Add new comment"
+  filename: "comment-{@timestamp}"
+  format: "yaml"
+  moderation: false
+  path: "_data/comments/{options.slug}"
+  requiredFields: ["name", "message"]
+  transforms:
+    message: "trim"
+
+# Optional (prevents spam)
+reCaptcha:
+  enabled: false

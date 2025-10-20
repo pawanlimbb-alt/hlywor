@@ -68,7 +68,25 @@
   <div id="lightbox">
     <img src="" alt="">
   </div>
-
+  <!--Comments-->
+  <form action="https://staticman3.herokuapp.com/v3/entry/github/pawanlimbb-alt/hlywor/main/comments" method="POST">
+    <input type="hidden" name="options[slug]" value="gallery"> <!-- change for each post -->
+    <input type="text" name="fields[name]" placeholder="Your name" required>
+    <textarea name="fields[message]" placeholder="Your comment" required></textarea>
+    <button type="submit">Post Comment</button>
+  </form>
+  <section id="comments">
+    <h3>Comments</h3>
+    <!-- Loop through saved comments -->
+    {% for comment in site.data.comments.my-first-post %}
+      <div class="comment">
+        <p><strong>{{ comment.name }}</strong></p>
+        <p>{{ comment.message }}</p>
+      </div>
+    {% endfor %}
+  </section>
+  
+  
   <footer>
     © 2025 Retroverse Gallery
   </footer>
