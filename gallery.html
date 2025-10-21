@@ -97,11 +97,14 @@
 </div>
 
 <script>
-  const endpoint = '/.netlify/functions/postComment'; // Netlify function endpoint
+  // ⚙️ Unique identifier for each page
+  const pageId = 'gallery'; // <-- change this for each page, e.g. 'projects', 'character'
+
+  const endpoint = '/.netlify/functions/postComment';
 
   async function loadComments() {
     try {
-      const res = await fetch(endpoint);
+      const res = await fetch(`${endpoint}?page=${pageId}`);
       const comments = await res.json();
       const container = document.getElementById('comments');
       container.innerHTML = comments.map(c => `
@@ -126,7 +129,7 @@
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment })
+        body: JSON.stringify({ page: pageId, name, comment })
       });
       const result = await res.json();
       if (result.status === 'success') {
@@ -146,6 +149,7 @@
   document.getElementById('postBtn').addEventListener('click', postComment);
   loadComments();
 </script>
+
 <!-- === Comment Section End === -->
 
 
