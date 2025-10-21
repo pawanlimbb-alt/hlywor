@@ -7,17 +7,11 @@
     --hover: #c4c2bc;
     --accent: #ff6b3d;
   }
-  @font-face {
-    font-family: 'PixelFont';
-    src: url('../fonts/pixel.ttf') format('truetype');
-    font-display: swap;
-  }
   
- 
   body {
     margin: 0;
     background: var(--bg);
-    font-family: 'PixelFont', 'Press Start 2P', monospace;
+    font-family: 'Inter', sans-serif;
     color: #111;
     display: flex;
     flex-direction: column;
