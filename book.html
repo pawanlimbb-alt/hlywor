@@ -109,8 +109,7 @@
     </div>
 
   </main>
-<!--commnet-->
-<!-- === Comment Section Start === -->
+ <!-- === Comment Section Start === -->
 <div id="comment-section" style="max-width:600px;margin:auto;">
   <h3>Leave a Comment</h3>
   <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
@@ -124,20 +123,24 @@
 </div>
 
 <script>
-  const endpoint = '/.netlify/functions/postComment'; // Netlify function endpoint
+  // 👇 Unique ID for this blog post
+  const POST_ID = 'book'; // change for each post (e.g. "ai-vs-human", "travel-tips-2025")
+  const endpoint = '/.netlify/functions/postComment';
 
   async function loadComments() {
     try {
-      const res = await fetch(endpoint);
+      const res = await fetch(`${endpoint}?postId=${encodeURIComponent(POST_ID)}`);
       const comments = await res.json();
       const container = document.getElementById('comments');
-      container.innerHTML = comments.map(c => `
-        <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
-          <strong>${c.name}</strong><br>
-          <small>${new Date(c.timestamp).toLocaleString()}</small>
-          <p>${c.comment}</p>
-        </div>
-      `).join('');
+      container.innerHTML = comments.length
+        ? comments.map(c => `
+            <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
+              <strong>${c.name}</strong><br>
+              <small>${new Date(c.timestamp).toLocaleString()}</small>
+              <p>${c.comment}</p>
+            </div>
+          `).join('')
+        : '<p>No comments yet — be the first to share your thoughts!</p>';
     } catch (err) {
       console.error(err);
       document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
@@ -147,13 +150,15 @@
   async function postComment() {
     const name = document.getElementById('name').value.trim();
     const comment = document.getElementById('comment').value.trim();
-    if (!name || !comment) return alert('Please enter name and comment');
+    if (!name || !comment) return alert('Please enter your name and a comment.');
+
     document.getElementById('postBtn').disabled = true;
+
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment })
+        body: JSON.stringify({ name, comment, postId: POST_ID })
       });
       const result = await res.json();
       if (result.status === 'success') {
@@ -167,6 +172,7 @@
       console.error(err);
       alert('Failed to send comment.');
     }
+
     document.getElementById('postBtn').disabled = false;
   }
 
@@ -174,6 +180,7 @@
   loadComments();
 </script>
 <!-- === Comment Section End === -->
+
 
 
   <footer>
