@@ -12,7 +12,7 @@ export async function handler(event) {
       };
     }
   
-    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzxPQ8KNWr9V2WBGfUve5gmFxbynhCfQ6N4GkIFGRLsxO_GzvYElNqnp9o_KgGW5oNLWQ/exec'; // <-- replace this
+    const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbx6oIoBbI643fJMOaNXP50ZgTJRdHTWLz86s4D7T5NTjacHM9A23wqUepNTqwqgnGZc/exec'; // <-- replace this
   
     if (event.httpMethod === 'POST') {
       try {

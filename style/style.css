@@ -398,6 +398,15 @@ footer {
     border-radius: 8px;
     margin: 0 auto 10px;
 }
+.boo{
+    width: 150px;
+    height: 150px;
+    background-image: url("images/book.png");
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin: 0 auto 10px;
+}
 
 .cam{
     width: 150px;
