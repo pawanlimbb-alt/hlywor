@@ -71,28 +71,33 @@
   <div id="lightbox">
     <img src="" alt="">
   </div>
-  <!--Comments-->
-  <section id="comment-section">
-    <h3>Leave a Comment</h3>
+  <!-- ======= COMMENT SECTION ======= -->
+<section id="comment-section">
+  <h3>Leave a Comment</h3>
 
-    <form action="https://staticman3.herokuapp.com/v3/entry/github/pawanlimbb-alt/hlywor/main/comments" method="POST"
-      id="comment-form">
-      <input type="hidden" name="options[slug]" value="gallery" />
+  <!-- Comment Form -->
+  <form action="https://staticman-85nd.onrender.com/v3/entry/github/pawanlimbb-alt/hlywor/main/comments" 
+        method="POST" id="comment-form">
+    <!-- The slug should match the folder name in _data/comments/ -->
+    <input type="hidden" name="options[slug]" value="gallery" />
 
-      <label>Your Name</label>
-      <input type="text" name="fields[name]" placeholder="Your name" required>
+    <label>Your Name</label>
+    <input type="text" name="fields[name]" placeholder="Your name" required>
 
-      <label>Your Comment</label>
-      <textarea name="fields[message]" placeholder="Write something..." required></textarea>
+    <label>Your Comment</label>
+    <textarea name="fields[message]" placeholder="Write something..." required></textarea>
 
-      <button type="submit">Post Comment</button>
-    </form>
+    <button type="submit">Post Comment</button>
+  </form>
 
-    <div id="comment-status"></div>
+  <!-- Status message after submission -->
+  <div id="comment-status"></div>
 
-    <h3>Comments</h3>
-    <div id="comments-list">Loading comments...</div>
-  </section>
+  <!-- Display existing comments -->
+  <h3>Comments</h3>
+  <div id="comments-list">Loading comments...</div>
+</section>
+
 
 
 
@@ -132,54 +137,55 @@
       if (e.key === 'Escape') lightbox.classList.remove('active');
     });
   </script>
-  <script>
-    const repoURL = "https://raw.githubusercontent.com/pawanlimbb-alt/hlywor/main/_data/comments/blog1/";
-
-    async function loadComments() {
-      try {
-        const response = await fetch(repoURL);
-        if (!response.ok) {
-          document.getElementById("comments-list").innerText = "No comments yet!";
-          return;
-        }
-
-        const text = await response.text();
-        const parser = new DOMParser();
-        const html = parser.parseFromString(text, "text/html");
-        const links = Array.from(html.querySelectorAll('a'))
-          .filter(a => a.href.endsWith('.json'))
-          .map(a => a.href);
-
-        if (links.length === 0) {
-          document.getElementById("comments-list").innerText = "No comments yet!";
-          return;
-        }
-
-        let htmlOutput = "";
-        for (const link of links.reverse()) {
-          const res = await fetch(link);
-          const comment = await res.json();
-          htmlOutput += `
-            <div class="comment">
-              <p><strong>${comment.name}</strong></p>
-              <p>${comment.message}</p>
-            </div>
-          `;
-        }
-        document.getElementById("comments-list").innerHTML = htmlOutput;
-      } catch (err) {
-        document.getElementById("comments-list").innerText = "Error loading comments.";
+ <script>
+  const repoURL = "https://raw.githubusercontent.com/pawanlimbb-alt/hlywor/main/_data/comments/gallery/";
+  
+  async function loadComments() {
+    try {
+      const response = await fetch(repoURL);
+      if (!response.ok) {
+        document.getElementById("comments-list").innerText = "No comments yet!";
+        return;
       }
+  
+      const text = await response.text();
+      const parser = new DOMParser();
+      const html = parser.parseFromString(text, "text/html");
+      const links = Array.from(html.querySelectorAll('a'))
+        .filter(a => a.href.endsWith('.json'))
+        .map(a => a.href);
+  
+      if (links.length === 0) {
+        document.getElementById("comments-list").innerText = "No comments yet!";
+        return;
+      }
+  
+      let htmlOutput = "";
+      for (const link of links.reverse()) {
+        const res = await fetch(link);
+        const comment = await res.json();
+        htmlOutput += `
+          <div class="comment">
+            <p><strong>${comment.name}</strong></p>
+            <p>${comment.message}</p>
+          </div>
+        `;
+      }
+      document.getElementById("comments-list").innerHTML = htmlOutput;
+    } catch (err) {
+      document.getElementById("comments-list").innerText = "Error loading comments.";
     }
-
-    loadComments();
-
-    // Optional: Message after submitting
-    document.getElementById("comment-form").addEventListener("submit", function () {
-      document.getElementById("comment-status").innerText =
-        "Submitting... Your comment will appear after a few seconds.";
-    });
+  }
+  
+  loadComments();
+  
+  // Optional: show message when submitting
+  document.getElementById("comment-form").addEventListener("submit", function () {
+    document.getElementById("comment-status").innerText =
+      "Submitting... Your comment will appear after a few seconds.";
+  });
   </script>
+  
 
 </body>
 
