@@ -110,6 +110,7 @@
 
   </main>
  <!-- === Comment Section Start === -->
+<!-- === Comment Section Start === -->
 <div id="comment-section" style="max-width:600px;margin:auto;">
   <h3>Leave a Comment</h3>
   <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
@@ -123,9 +124,9 @@
 </div>
 
 <script>
-  // 👇 Unique ID for this blog post
-  const POST_ID = 'book'; // change for each post (e.g. "ai-vs-human", "travel-tips-2025")
-  const endpoint = '/.netlify/functions/postComment';
+  // 👇 Unique ID for this blog post (change on each post)
+  const POST_ID = 'book'; // e.g. 'travel-tips-2025', 'ai-future', etc.
+  const endpoint = '/api/postComment'; // ✅ Vercel function endpoint
 
   async function loadComments() {
     try {
@@ -179,6 +180,8 @@
   document.getElementById('postBtn').addEventListener('click', postComment);
   loadComments();
 </script>
+<!-- === Comment Section End === -->
+
 <!-- === Comment Section End === -->
 
 
