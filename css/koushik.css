@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f2f2f2;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 30px 10px;
+}
+
+.container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 700px;
+  overflow: hidden;
+}
+
+/* Navbar */
+.navbar {
+  background: #d3d3d3;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #000;
+}
+
+.username {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Profile Layout */
+.profile-card {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px;
+  gap: 20px;
+}
+
+.left, .right {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Left side */
+.profile-pic {
+  text-align: center;
+}
+
+.profile-pic img {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  object-fit: cover;
+  border: 2px solid #000;
+}
+
+.under-name {
+  margin-top: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Right side */
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.info {
+  list-style: none;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.info li {
+  margin-bottom: 5px;
+}
+
+.info span {
+  font-weight: 600;
+}
+
+/* ENTER REALM BLACK BOX */
+.realm-box {
+  margin-top: 25px;
+  background: #000;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.realm-btn {
+  font-family: 'Pixel', sans-serif;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.realm-btn:hover {
+  color: #00ffcc;
+  transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+  background: #111;
+  text-align: center;
+  padding: 25px;
+  border-top: 2px solid #333;
+  color: #777;
+  font-size: 12px;
+}
+
