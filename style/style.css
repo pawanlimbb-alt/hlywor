@@ -407,11 +407,29 @@ footer {
     border-radius: 8px;
     margin: 0 auto 10px;
 }
+.news{
+    width: 150px;
+    height: 150px;
+    background-image: url("images/news.png");
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin: 0 auto 10px;
+}
 
 .cam{
     width: 150px;
     height: 150px;
     background-image: url("images/camera.png");
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin: 0 auto 10px;
+}
+.uti{
+    width: 150px;
+    height: 150px;
+    background-image: url("images/utility.png");
     background-size: cover;
     background-position: center;
     border-radius: 8px;

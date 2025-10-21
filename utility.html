@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZVLSVF6T3J');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/utility.css">
+</head>
+
+<body>
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">Blog</a>
+      <a href="story.html">The Story</a>
+    </div>
+    <div class="nav-right">
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>The Library</h1>
+    <p>
+      Welcome to my digital bookshelf 📚  
+      Each entry below features a book I’ve read and personally reviewed —  
+      retro-styled, pixel-inspired, and filled with honest thoughts.
+    </p>
+  </header>
+
+  <div class="sub-nav">
+    <a href="#fiction">Fiction</a>
+    <a href="#nonfiction">Non-fiction</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#others">Others</a>
+  </div>
+
+  <main class="card-section">
+
+    <!-- Example Book 1 -->
+    <div class="card" id="fiction">
+      <div class="card-header">
+        <span>1984.EXE</span>
+        <span>✕</span>
+      </div>
+      <div class="book-content">
+        <img src="https://covers.openlibrary.org/b/id/7222246-L.jpg" alt="1984 cover">
+        <div class="book-info">
+          <h2>1984</h2>
+          <p class="author">by George Orwell</p>
+          <p class="review">
+            Orwell’s dystopia feels chillingly real — a reflection of how power shapes truth.
+            <strong>My Take:</strong> A must-read for anyone curious about control and freedom.
+          </p>
+          <p class="rating">★ Rating: 9.2/10</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example Book 2 -->
+    <div class="card" id="nonfiction">
+      <div class="card-header">
+        <span>ATOMIC_HABITS.TXT</span>
+        <span>✕</span>
+      </div>
+      <div class="book-content">
+        <img src="https://covers.openlibrary.org/b/id/10521285-L.jpg" alt="Atomic Habits cover">
+        <div class="book-info">
+          <h2>Atomic Habits</h2>
+          <p class="author">by James Clear</p>
+          <p class="review">
+            A compact guide on how small daily changes compound into big transformations.
+            <strong>My Take:</strong> Practical, simple, and genuinely helpful for growth.
+          </p>
+          <p class="rating">★ Rating: 8.8/10</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example Book 3 -->
+    <div class="card" id="philosophy">
+      <div class="card-header">
+        <span>MEDITATIONS.LOG</span>
+        <span>✕</span>
+      </div>
+      <div class="book-content">
+        <img src="https://covers.openlibrary.org/b/id/8374726-L.jpg" alt="Meditations cover">
+        <div class="book-info">
+          <h2>Meditations</h2>
+          <p class="author">by Marcus Aurelius</p>
+          <p class="review">
+            A timeless stream of Stoic reflections from a Roman emperor.
+            <strong>My Take:</strong> Stoicism simplified. Every reread brings new meaning.
+          </p>
+          <p class="rating">★ Rating: 9.0/10</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+<!--commnet-->
+<!-- === Comment Section Start === -->
+<div id="comment-section" style="max-width:600px;margin:auto;">
+  <h3>Leave a Comment</h3>
+  <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
+  <textarea id="comment" rows="3" placeholder="Write your comment..." style="width:100%;margin:6px 0;padding:8px;"></textarea>
+  <button id="postBtn" style="padding:10px 15px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+    Post Comment
+  </button>
+
+  <h3 style="margin-top:20px;">Comments</h3>
+  <div id="comments"></div>
+</div>
+
+<script>
+  const endpoint = '/.netlify/functions/postComment'; // Netlify function endpoint
+
+  async function loadComments() {
+    try {
+      const res = await fetch(endpoint);
+      const comments = await res.json();
+      const container = document.getElementById('comments');
+      container.innerHTML = comments.map(c => `
+        <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
+          <strong>${c.name}</strong><br>
+          <small>${new Date(c.timestamp).toLocaleString()}</small>
+          <p>${c.comment}</p>
+        </div>
+      `).join('');
+    } catch (err) {
+      console.error(err);
+      document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
+    }
+  }
+
+  async function postComment() {
+    const name = document.getElementById('name').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+    if (!name || !comment) return alert('Please enter name and comment');
+    document.getElementById('postBtn').disabled = true;
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, comment })
+      });
+      const result = await res.json();
+      if (result.status === 'success') {
+        document.getElementById('name').value = '';
+        document.getElementById('comment').value = '';
+        loadComments();
+      } else {
+        alert('Error posting comment.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send comment.');
+    }
+    document.getElementById('postBtn').disabled = false;
+  }
+
+  document.getElementById('postBtn').addEventListener('click', postComment);
+  loadComments();
+</script>
+<!-- === Comment Section End === -->
+
+
+  <footer>
+    Only Suvam can write reviews ★ Viewers can browse freely  
+    <br>&copy; 2025 HlyWor Library Zone
+  </footer>
+</body>
+</html>
