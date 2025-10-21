@@ -85,40 +85,50 @@
 </div>
 
 <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyKWAnMI2YtnIgq3no6cGZaqUfye5JPaJLTnjfC5liMQZjZoi3-NfFyq0fQHW2Xm8lxfQ/exec'; // Replace this
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyuP1TeLz5JR4yaJ1kGKRI6QjII72AZWKJ2yngMbwE7HgkqYnKrN9XU0NZs8mZpCYbJDw/exec';
 
 async function loadComments() {
-  const res = await fetch(scriptURL);
-  const comments = await res.json();
-  const list = document.getElementById('comment-list');
-  list.innerHTML = comments.map(c => `
-    <p><b>${c.name}</b>: ${c.comment}</p>
-  `).join('');
+  try {
+    const res = await fetch(scriptURL);
+    const comments = await res.json();
+    const list = document.getElementById('comment-list');
+    list.innerHTML = comments.map(c => `
+      <p><b>${c.name}</b>: ${c.comment}</p>
+    `).join('');
+  } catch (err) {
+    console.error('Error loading comments:', err);
+  }
 }
 
 async function submitComment() {
   const name = document.getElementById('name').value.trim();
   const comment = document.getElementById('comment').value.trim();
-  if (!name || !comment) return alert('Please enter both name and comment');
+  if (!name || !comment) {
+    alert('Please enter both name and comment');
+    return;
+  }
 
-  const res = await fetch(scriptURL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, comment })
-  });
+  try {
+    const res = await fetch(scriptURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, comment })
+    });
+    const data = await res.json();
 
-  const data = await res.json();
-  if (data.status === 'success') {
-    document.getElementById('comment').value = '';
-    loadComments();
-  } else {
-    alert('Error posting comment.');
+    if (data.status === 'success') {
+      document.getElementById('comment').value = '';
+      loadComments();
+    } else {
+      alert('Error posting comment: ' + data.message);
+    }
+  } catch (err) {
+    alert('Failed to send comment: ' + err.message);
   }
 }
 
 loadComments();
 </script>
-
 
 
 
