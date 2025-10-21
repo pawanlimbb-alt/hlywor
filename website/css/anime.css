@@ -1,0 +1,90 @@
+/* Load local pixel font */
+@font-face {
+    font-family: 'PixelFont';
+    src: url('../fonts/pixel.ttf') format('truetype');
+}
+
+/* Reset & layout */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: black;
+    color: white;
+    font-family: 'PixelFont', monospace;
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    font-size: 3em;
+    margin: 20px 0;
+}
+
+/* Tabs container */
+.tabs {
+    display: flex;
+    gap: 20px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid white;
+}
+
+/* Tab headers */
+.tab-button {
+    padding: 10px 15px;
+    font-size: 1.4em;
+    cursor: pointer;
+    background: black;
+    border: none;
+    color: white;
+    transition: all 0.2s;
+}
+
+.tab-button.active {
+    color: #ff0000;
+    border-bottom: 3px solid #ff0000;
+}
+
+/* Grid layout */
+.anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 0 20px 50px 20px;
+}
+
+/* Anime card styling */
+.anime-card {
+    background: black;
+    border: 2px solid white;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+.anime-card img {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.anime-card h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.anime-card p {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.anime-card:hover {
+    transform: scale(1.05);
+    border-color: #ff0000;
+}
+

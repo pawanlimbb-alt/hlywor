@@ -1,0 +1,168 @@
+@font-face {
+    font-family: 'PixelFont';
+    src: url('../fonts/pixel.ttf') format('truetype');
+}
+
+/* Reset & layout */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    font-family: 'PixelFont', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Headings */
+h1, h2 {
+    text-align: center;
+    color: white;
+    font-size: 3em;
+}
+
+/* Remove underline from all links */
+a {
+    text-decoration: none;
+}
+
+/* Big retro menu box */
+.menu-box {
+    border: 4px solid white;
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Buttons & links inside the box */
+.menu-box a, .menu-box button {
+    border: none;
+    background: black;
+    color: white;
+    font-family: 'PixelFont', monospace;
+    font-size: 1.8em;
+    padding: 15px 25px;
+    width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Close button outside menu-box */
+.close-button {
+    border: 2px solid white;
+    background: black;
+    color: white;
+    font-family: 'PixelFont', monospace;
+    font-size: 1.8em;
+    padding: 15px 25px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* Blink animation for hover or selected */
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+a:hover, button:hover, .selected {
+    animation: blink 0.5s step-start infinite;
+}
+
+/* Container layout */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Fun Fact popup style */
+.fun-fact-popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 15px 25px;
+    font-family: 'PixelFont', monospace;
+    font-size: 1.8em;
+    border: 2px solid white;
+    display: none;
+    z-index: 100;
+    text-align: center;
+}
+
+/* Quiz box styling */
+.quiz-box {
+    border: 4px solid white;
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 500px;
+}
+
+/* Pokédex entry styling (bigger font) */
+#pokedex-entry {
+    font-family: 'PixelFont', monospace;
+    font-size: 2.2em; /* increased from 1.8em */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Input field for quiz */
+#answer-input {
+    font-family: 'PixelFont', monospace;
+    font-size: 1.8em;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    background: black;
+    color: white;
+    border: 2px solid white;
+}
+
+/* Submit button for quiz */
+#submit-button {
+    font-family: 'PixelFont', monospace;
+    font-size: 1.8em;
+    padding: 10px 20px;
+    background: black;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
+}
+
+/* Feedback text */
+#feedback {
+    font-family: 'PixelFont', monospace;
+    font-size: 1.8em;
+    color: white;
+    text-align: center;
+}
+
+/* Anime cards (for later) */
+.anime-card {
+    background: black;
+    color: white;
+    border: 2px solid white;
+    padding: 15px;
+    margin: 15px;
+    width: 300px;
+    font-family: 'PixelFont', monospace;
+}
+
+.anime-card img {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+
