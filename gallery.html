@@ -85,7 +85,7 @@
 </div>
 
 <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyKWAnMI2YtnIgq3no6cGZaqUfye5JPaJLTnjfC5liMQZjZoi3-NfFyq0fQHW2Xm8lxfQ/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyKWAnMI2YtnIgq3no6cGZaqUfye5JPaJLTnjfC5liMQZjZoi3-NfFyq0fQHW2Xm8lxfQ/exec'; // Replace this
 
 async function loadComments() {
   const res = await fetch(scriptURL);
@@ -101,16 +101,24 @@ async function submitComment() {
   const comment = document.getElementById('comment').value.trim();
   if (!name || !comment) return alert('Please enter both name and comment');
 
-  await fetch(scriptURL, {
+  const res = await fetch(scriptURL, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, comment })
   });
-  document.getElementById('comment').value = '';
-  loadComments();
+
+  const data = await res.json();
+  if (data.status === 'success') {
+    document.getElementById('comment').value = '';
+    loadComments();
+  } else {
+    alert('Error posting comment.');
+  }
 }
 
 loadComments();
 </script>
+
 
 
 
