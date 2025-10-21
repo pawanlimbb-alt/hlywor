@@ -176,4 +176,101 @@
     font-size: 12px;
     color: #444;
   }
+
   
+  /* === 🎮 GALLERY COMMENT SECTION (MATCHES RETRO LIGHT THEME) === */
+#comment-section {
+  background: var(--bar);
+  border: 2px solid var(--border);
+  margin: 60px auto;
+  max-width: 700px;
+  padding: 30px 25px;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+}
+
+#comment-section h3 {
+  font-size: 10px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+#comment-section input,
+#comment-section textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  color: var(--text);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  text-transform: uppercase;
+  padding: 10px;
+  margin: 6px 0;
+  outline: none;
+  box-shadow: 2px 2px 0 var(--border);
+}
+
+#comment-section input:focus,
+#comment-section textarea:focus {
+  background: #fff;
+  border-color: var(--border);
+}
+
+#comment-section button {
+  width: 100%;
+  padding: 10px;
+  background: var(--border);
+  border: 2px solid var(--border);
+  color: var(--bg);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 2px 2px 0 var(--border);
+  transition: transform 0.1s ease-in-out, background 0.1s;
+}
+
+#comment-section button:hover {
+  background: var(--bar);
+  color: var(--border);
+  transform: translate(-1px, -1px);
+}
+
+#comments {
+  margin-top: 25px;
+  text-align: left;
+}
+
+#comments > div {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 0 var(--border);
+}
+
+#comments strong {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+#comments small {
+  font-size: 8px;
+  color: #555;
+  display: block;
+  margin-bottom: 6px;
+}
+
+#comments p {
+  font-size: 10px;
+  line-height: 1.5;
+  font-family: 'Inter', sans-serif;
+  color: #222;
+}
