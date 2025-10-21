@@ -1,0 +1,27 @@
+# 🔧 Staticman Configuration for hlywor website
+
+# Your deployed Staticman instance URL (Render)
+# Not mandatory but useful for clarity
+url: "https://staticman-85nd.onrender.com"
+
+# Where Staticman should push the comment files
+comments:
+  allowedFields: ["name", "message"]
+  branch: "main"               # The branch where comments are stored
+  commitMessage: "Add new comment by {fields.name}"
+  filename: "entry-{date}"     # Each comment file will have a unique name
+  format: "json"               # You can also use 'yaml' if you prefer
+  path: "_data/comments/{options.slug}"  # Folder for comments
+  moderation: true             # PRs instead of direct commits
+  requiredFields: ["name", "message"]
+
+# ReCAPTCHA (optional, can disable)
+reCaptcha:
+  enabled: false
+
+# GitHub public key (for verifying the connection)
+rsaPublicKey: |
+  -----BEGIN PUBLIC KEY-----
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDfR+TErVhcrSVxdk/aFjvkdLs6Y9oLfGFwsYoVXc3GXjx9M2AqFDBuIFIP2iAPZaavIT37PLrmEDu+eIiFBTTXzKjnc5ID+axUzFSZUStHa/qIn8oYyN8vF4f61oBSUS4TUR1EmzDkaOFxcBEGI8WdB+KDO8RYQHBQoT+fm257vt2DyMi030/2dGJnw2Bf4FzU7tMBxw+w/oh2qY90gWveIVYr2g7pmmSwz88kKzsXb9zCJ/XuHfv1rr3rkv2ItPv0VvxrMiVFeJwk/hwPZJHkwmBJQ0bZ9C+V9v01Cl144qREDeDykN1UNGcA2GHZrJLYMIpG4CdlHSrxcZU5WAW7FOGYerzscV4tsNmIanHE2rPQNNylsHO15aF4uOsjY9a0NFXxSWhk6pak3k3/UFpVpOagzxX7p5s2lR8pZUQrlujBvjCrik37JhWEbj2ys311FOSixaNebRbl5Fnrka1hGqqb9Nrx600v6HLiGc3krzm9cn7Ov77/w8yt02rjficERClck1W7qOxEvg7dytgAaAoN4lDepofaxfe22iXWxGYxUhXPLJZxws4rJoE1FErvukrer2FDV4tXBZZ0QGV/edGNmPG3gA40TE2FDaCiqOA5mLv9WSDAQ1a0Da/xIjLZPXlZEM7OXHGEAK+jyj/Lq3hVJni5Z3JS5amIB8VO+w== staticman
+
+  -----END PUBLIC KEY-----
