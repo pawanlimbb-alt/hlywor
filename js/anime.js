@@ -1,4 +1,4 @@
-// Tab switching functionality
+// Tab switching
 const tabs = document.querySelectorAll('.tab-button');
 const contents = document.querySelectorAll('.tab-content');
 
@@ -6,16 +6,14 @@ tabs.forEach(tab => {
     tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         contents.forEach(c => c.classList.remove('active'));
-
         tab.classList.add('active');
         document.getElementById(tab.dataset.tab).classList.add('active');
     });
 });
 
-// Anime titles per tab
+// Anime categories
 const animeTabs = {
-    favorites: [
-        "Evangelion: 1.0 You Are (Not) Alone",
+    favorites: ["Evangelion: 1.0 You Are (Not) Alone",
         "Evangelion: 2.0 You Can (Not) Advance",
         "Evangelion: 3.0 You Can (Not) Redo",
         "Evangelion: 3.0+1.0 Thrice Upon a Time",
@@ -44,10 +42,8 @@ const animeTabs = {
         "Attack on Titan Season 3",
         "Attack on Titan: The Final Season",
         "Attack on Titan: The Final Season Part 2",
-        "Attack on Titan: The Final Season Part 3"
-    ],
-    recommendations: [
-        "Shangri-La Frontier",
+        "Attack on Titan: The Final Season Part 3"],
+    recommendations: ["Shangri-La Frontier",
         "Shangri-La Frontier 2nd Season",
         "Orb: On the Movements of the Earth",
         "Scissor Seven",
@@ -80,10 +76,8 @@ const animeTabs = {
         "My Hero Academia 4th Season",
         "My Hero Academia 5th Season",
         "My Hero Academia 6th Season",
-        "My Hero Academia 7th Season"
-    ],
-    controversial: [
-        "Mushoku Tensei: Isekai Ittara Honki Dasu",
+        "My Hero Academia 7th Season"],
+    controversial: ["Mushoku Tensei: Isekai Ittara Honki Dasu",
         "Mushoku Tensei: Isekai Ittara Honki Dasu Part 2",
         "Mushoku Tensei: Isekai Ittara Honki Dasu Part 3",
         "Rurouni Kenshin: Meiji Kenkaku Romantan",
@@ -114,10 +108,8 @@ const animeTabs = {
         "Made in Abyss",
         "Made in Abyss: Retsujitsu no Ougonkyou",
         "Made in Abyss: Fukaki Tamashii no Reimei",
-        "Made in Abyss: Retsujitsu no Ougonkyou - Kuro no Shoujo"
-    ],
-    bestMusic: [
-        "Guilty Crown",
+        "Made in Abyss: Retsujitsu no Ougonkyou - Kuro no Shoujo"],
+    bestMusic: ["Guilty Crown",
         "Black Clover",
         "Cowboy Bebop",
         "Cowboy Bebop: Tengoku no Tobira",
@@ -175,10 +167,8 @@ const animeTabs = {
         "JoJo no Kimyou na Bouken: Golden Wind",
         "JoJo no Kimyou na Bouken: Stone Ocean",
         "JoJo no Kimyou na Bouken: Steel Ball Run",
-        "JoJo no Kimyou na Bouken: JoJolion"
-    ],
-    willMakeYouCry: [
-        "Anohana: The Flower We Saw That Day",
+        "JoJo no Kimyou na Bouken: JoJolion"],
+    willMakeYouCry: ["Anohana: The Flower We Saw That Day",
         "Anohana: The Movie",
         "Angel Beats!",
         "Kotaro Lives Alone",
@@ -196,83 +186,104 @@ const animeTabs = {
         "Wolf Children",
         "Bubble",
         "Maboroshi no Yamataikoku",
-        "No Game No Life: Zero"
-    ]
+        "No Game No Life: Zero"]
 };
 
-// Fetch anime from AniList
-async function fetchAnime(title) {
+// Delay helper
+function delay(ms) {
+    return new Promise(res => setTimeout(res, ms));
+}
+
+// Fetch a single anime with retries
+async function fetchAnime(title, retries = 2) {
     const query = `
     query ($search: String) {
       Media(search: $search, type: ANIME) {
         id
         title { romaji english }
         coverImage { large }
-        description(asHtml: false)
         genres
-        episodes
-        averageScore
       }
     }`;
 
-    const variables = { search: title };
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            const res = await fetch("https://graphql.anilist.co", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query, variables: { search: title } })
+            });
 
-    try {
-        const response = await fetch('https://graphql.anilist.co', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query, variables })
-        });
+            const json = await res.json();
+            if (!json.data?.Media) throw new Error("No media");
+            console.log(`✅ Fetched: ${title}`);
+            return json.data.Media;
 
-        const data = await response.json();
-        return data.data.Media;
-    } catch (err) {
-        console.error(`Failed to fetch ${title}:`, err);
-        return null;
+        } catch (err) {
+            console.warn(`⚠️ Retry ${attempt} failed for: ${title}`);
+            if (attempt === retries) {
+                console.error(`❌ Skipping: ${title}`);
+                return null;
+            }
+            await delay(1000);
+        }
     }
 }
 
-// Batch fetch helper
+// Fetch in batches with pause
 async function fetchInBatches(titles, batchSize = 5) {
     let results = [];
     for (let i = 0; i < titles.length; i += batchSize) {
         const batch = titles.slice(i, i + batchSize);
+        console.log(`🚀 Fetching batch ${i / batchSize + 1}/${Math.ceil(titles.length / batchSize)} (${batch.join(", ")})`);
         const batchResults = await Promise.all(batch.map(t => fetchAnime(t)));
         results = results.concat(batchResults.filter(a => a !== null));
+        await delay(1000); // Wait 1 second per batch
     }
     return results;
 }
 
-// Populate grids dynamically
+// Populate anime cards
 async function populateGrids() {
     for (const [tab, titles] of Object.entries(animeTabs)) {
         const grid = document.querySelector(`#${tab} .anime-grid`);
         if (!grid) continue;
 
-        grid.innerHTML = ''; // Clear previous
+        grid.innerHTML = "<p>Loading...</p>";
 
-        // Check cache
-        let animeList = JSON.parse(localStorage.getItem(tab) || 'null');
+        let animeList = JSON.parse(localStorage.getItem(tab) || "null");
         if (!animeList) {
-            animeList = await fetchInBatches(titles, 5); // batch of 5
+            animeList = await fetchInBatches(titles, 5);
             localStorage.setItem(tab, JSON.stringify(animeList));
         }
 
-        // Add cards
+        grid.innerHTML = "";
         animeList.forEach(anime => {
-            const card = document.createElement('a');
-            card.className = 'anime-card';
-            card.href = `anime_pages/${anime.title.romaji.replace(/\s/g, '_')}.html`;
+            const card = document.createElement("a");
+            card.className = "anime-card";
+            card.href = `anime_pages/${anime.title.romaji.replace(/\s/g, "_")}.html`;
             card.innerHTML = `
                 <img src="${anime.coverImage.large}" alt="${anime.title.romaji}" loading="lazy">
                 <h2>${anime.title.romaji}</h2>
-                <p>${anime.genres.join(', ')}</p>
+                <p>${anime.genres.join(", ")}</p>
             `;
             grid.appendChild(card);
         });
+        console.log(`✅ Finished populating ${tab} (${animeList.length} anime)`);
     }
 }
 
-// Start populating
+// Clear cache & start fresh
+localStorage.clear();
 populateGrids();
+
+
+
+
+
+
+
+
+
+
 
