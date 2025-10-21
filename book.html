@@ -124,19 +124,15 @@
 </div>
 
 <script>
-  // 👇 Each blog post should have its own unique ID
-  const POST_ID = 'book';  // e.g. "travel-2025", "ai-guide", etc.
-  const endpoint = 'https://script.google.com/macros/s/AKfycbyj9xhNyhBn0n1mIpj23C_z3fCPcEt22xoKP0omyHYTg_pSa_MlJVBTGwBSb78NgwHUuA/exec'; // ← your Apps Script URL
+  // 👇 Unique ID for this blog post (change on each post)
+  const POST_ID = 'book'; // e.g. 'travel-tips-2025', 'ai-future', etc.
+  const endpoint = '/api/postComment'; // ✅ Vercel function endpoint
 
   async function loadComments() {
-    const container = document.getElementById('comments');
-    const cacheKey = `comments_${POST_ID}`;
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) container.innerHTML = cached;
-
     try {
       const res = await fetch(`${endpoint}?postId=${encodeURIComponent(POST_ID)}`);
       const comments = await res.json();
+      const container = document.getElementById('comments');
       container.innerHTML = comments.length
         ? comments.map(c => `
             <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
@@ -146,10 +142,9 @@
             </div>
           `).join('')
         : '<p>No comments yet — be the first to share your thoughts!</p>';
-      localStorage.setItem(cacheKey, container.innerHTML);
     } catch (err) {
       console.error(err);
-      container.innerHTML = '<p>Failed to load comments.</p>';
+      document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
     }
   }
 
@@ -158,8 +153,7 @@
     const comment = document.getElementById('comment').value.trim();
     if (!name || !comment) return alert('Please enter your name and a comment.');
 
-    const btn = document.getElementById('postBtn');
-    btn.disabled = true;
+    document.getElementById('postBtn').disabled = true;
 
     try {
       const res = await fetch(endpoint, {
@@ -179,14 +173,14 @@
       console.error(err);
       alert('Failed to send comment.');
     }
-    btn.disabled = false;
+
+    document.getElementById('postBtn').disabled = false;
   }
 
   document.getElementById('postBtn').addEventListener('click', postComment);
   loadComments();
 </script>
 <!-- === Comment Section End === -->
-
 
 <!-- === Comment Section End === -->
 

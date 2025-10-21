@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbx6oIoBbI643fJMOaNXP50ZgTJRdHTWLz86s4D7T5NTjacHM9A23wqUepNTqwqgnGZc/exec'; // your deployed Google Apps Script URL
+  const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbyj9xhNyhBn0n1mIpj23C_z3fCPcEt22xoKP0omyHYTg_pSa_MlJVBTGwBSb78NgwHUuA/exec'; // your deployed Google Apps Script URL
 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
