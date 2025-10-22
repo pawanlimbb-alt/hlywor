@@ -1,4 +1,3 @@
-/* Font setup */
 @font-face {
     font-family: 'PixelFont';
     src: url('../fonts/pixel.ttf') format('truetype');
@@ -12,14 +11,12 @@ body {
     padding: 0;
 }
 
-/* Page title */
 h1 {
     text-align: center;
     margin: 30px 0;
     font-size: 40px;
 }
 
-/* Tabs */
 .tabs {
     display: flex;
     justify-content: center;
@@ -47,10 +44,8 @@ h1 {
 .tab-button.active {
     background: #fff;
     color: #000;
-    border: 1px solid #fff;
 }
 
-/* Grid layout fixed 6x3 */
 .anime-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -59,43 +54,35 @@ h1 {
     padding: 0 25px 50px 25px;
 }
 
-/* Anime card */
 .anime-card {
-    display: block;
-    text-decoration: none;
+    background: #000;
     color: #fff;
-    background: #111;
-    padding: 15px; /* more padding for longer card */
-    border-radius: 10px;
     border: 1px solid #fff;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
 }
 
 .anime-card:hover {
-    transform: scale(1.08); /* slightly bigger hover */
-    box-shadow: 0 0 14px #fff;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #fff;
 }
 
 .anime-card img {
     width: 100%;
-    height: 260px; /* taller images for longer cards */
+    height: 260px;
     object-fit: cover;
-    display: block;
-    border-radius: 6px;
-    border: 1px solid #fff;
+    border-bottom: 1px solid #fff;
 }
 
 .anime-card h2 {
-    font-size: 18px;
-    margin: 14px 0 6px 0; /* more space below image */
-}
-
-.anime-card p {
     font-size: 16px;
-    margin: 0;
+    margin: 10px 0;
+    padding: 0 5px;
 }
 
-/* Tab content visibility */
 .tab-content {
     display: none;
 }
@@ -104,25 +91,15 @@ h1 {
     display: block;
 }
 
-/* Responsive adjustments */
 @media (max-width: 1400px) {
-    .anime-grid {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(3, auto);
-    }
+    .anime-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 900px) {
-    .anime-grid {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, auto);
-    }
+    .anime-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 600px) {
-    .anime-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, auto);
-    }
+    .anime-grid { grid-template-columns: repeat(2, 1fr); }
 }
 

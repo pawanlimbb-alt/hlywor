@@ -83,12 +83,24 @@ header p {
   box-shadow: 2px 2px 0 var(--border);
 }
 
+/* Section Titles */
+.section-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 13px;
+  text-transform: uppercase;
+  background: var(--bar);
+  border-top: 2px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  padding: 15px 5%;
+  margin: 0;
+}
+
 /* Card Section */
 .card-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
-  padding: 60px 5%;
+  padding: 40px 5%;
 }
 
 .card {
@@ -165,4 +177,3 @@ footer {
   font-size: 12px;
   color: #444;
 }
-
