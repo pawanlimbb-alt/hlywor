@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Goals — HlyWor</title>
+
+  <link rel="stylesheet" href="style/goal.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- ✅ NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html">HlyWor</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tales.html">Stories</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="goal.html" class="active">Goals</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- 🧭 Scroll Indicator -->
+  <div id="scroll-bar"></div>
+
+  <!-- MAIN WINDOW -->
+  <div class="window">
+    <div class="window-bar">
+      <span>HlyWor — Goals</span>
+      <div class="window-controls">
+        <span>─</span><span>□</span><span>✕</span>
+      </div>
+    </div>
+
+    <div class="window-body">
+      <div class="content">
+        <h1>🎯 Our Goals</h1>
+        <p class="intro">
+          We don’t just post stories.  
+          We’re building something that lasts — a small world where creativity and honesty live together.  
+          This page is about what we’re aiming for — one story, one idea, one moment at a time.
+        </p>
+
+        <div class="section">
+          <h2>🪞 Our Vision</h2>
+          <p>
+            Our vision is to create a digital space that feels real —  
+            where thoughts, art, and stories aren’t filtered by trends or algorithms.  
+            A place where writers, creators, and readers can connect through emotion, not perfection.
+          </p>
+        </div>
+
+        <div class="section">
+          <h2>💡 Our Mission</h2>
+          <ul>
+            <li>Collect and share genuine stories — from us and from others.</li>
+            <li>Give new creators a space to start, even without experience.</li>
+            <li>Mix personal reflections, pop culture, and art into something meaningful.</li>
+            <li>Stay authentic — keeping that pixelated charm, one post at a time.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>🧱 What We’re Building</h2>
+          <ul>
+            <li>Expand the blog with more categories (life, culture, creative works).</li>
+            <li>Add community submissions and feature reader stories.</li>
+            <li>Collaborate with small artists, writers, and photographers.</li>
+            <li>Keep everything lightweight, nostalgic, and human.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>🤝 Join the Journey</h2>
+          <p>
+            HlyWor isn’t just ours — it’s for everyone who feels something reading it.  
+            You can share your story, send suggestions, or simply read and relate.  
+            Each visit, comment, or message shapes what this space becomes next.
+          </p>
+
+          <a href="suggest.html" class="retro-btn">Share Your Story</a>
+        </div>
+
+        <div class="social-section">
+          <h3>Find us online</h3>
+          <div class="social-links">
+            <a href="https://instagram.com/limbupaw" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="mailto:hlywor@gmail.com"><i class="fas fa-envelope"></i> Email Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 HlyWor. All Rights Reserved.</footer>
+
+  <script>
+    // 📜 Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.getElementById('scroll-bar').style.width = scrollPercent + '%';
+    });
+  </script>
+</body>
+</html>

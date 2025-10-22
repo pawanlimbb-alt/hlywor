@@ -1,0 +1,177 @@
+/* Global */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #111;
+    color: #ddd;
+    line-height: 1.7;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1a1a1a;
+    padding: 15px 8%;
+    border-bottom: 1px solid #333;
+  }
+  
+  .logo {
+    font-family: "Pixel", monospace;
+    color: #ccc;
+    font-size: 1rem;
+  }
+  
+  .navbar nav a {
+    text-decoration: none;
+    color: #aaa;
+    margin: 0 12px;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+  }
+  
+  .navbar nav a:hover,
+  .navbar nav a.active {
+    color: #fff;
+  }
+  
+  /* Container */
+  .about-container {
+    max-width: 850px;
+    margin: 60px auto;
+    padding: 0 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  }
+  
+  /* Header */
+  .about-header {
+    text-align: center;
+    padding: 40px 0 20px;
+  }
+  
+  .about-header h1 {
+    font-family: "Pixel", monospace;
+    font-size: 1.4rem;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  
+  .about-header .tagline {
+    color: #999;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+  }
+  
+  /* Body */
+  .about-body {
+    padding: 0 40px 40px;
+  }
+  
+  .about-body h2 {
+    font-family: "Pixel", monospace;
+    color: #f0f0f0;
+    font-size: 1rem;
+    margin-top: 40px;
+    text-transform: uppercase;
+  }
+  
+  .about-body p {
+    color: #ccc;
+    font-size: 0.95rem;
+    margin: 10px 0;
+  }
+  
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: #333;
+    margin: 40px 0;
+    opacity: 0.6;
+  }
+  
+  /* Suggest Box */
+  .suggest-box {
+    text-align: center;
+    padding: 40px 0 20px;
+    border-top: 1px solid #333;
+  }
+  
+  .suggest-btn {
+    display: inline-block;
+    font-family: "Pixel", monospace;
+    font-size: 0.9rem;
+    color: #ddd;
+    text-decoration: none;
+    border: 1px solid #444;
+    padding: 10px 18px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background: rgba(255,255,255,0.02);
+  }
+  
+  .suggest-btn:hover {
+    background: #222;
+    border-color: #555;
+    color: #fff;
+  }
+  
+  /* Signature */
+  .signature-box {
+    text-align: center;
+    border-top: 1px solid #333;
+    padding: 30px 20px 50px;
+    background: rgba(255,255,255,0.02);
+  }
+  
+  .signature-box p {
+    margin: 5px 0;
+    color: #aaa;
+    font-size: 0.9rem;
+  }
+  
+  .signature-box h3 {
+    font-family: "Pixel", monospace;
+    color: #fff;
+    margin: 10px 0 5px;
+    letter-spacing: 1px;
+  }
+  .signature-box a{
+    text-decoration: none;
+  }
+  
+  /* Social */
+  .social-links {
+    margin-top: 15px;
+  }
+  
+  .social-links a {
+    display: inline-block;
+    margin: 0 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+  
+  .social-links a:hover {
+    opacity: 1;
+  }
+  
+  .social-links img {
+    width: 22px;
+    height: 22px;
+    filter: grayscale(100%) brightness(80%);
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 25px 0;
+    color: #666;
+    border-top: 1px solid #222;
+    background: #0d0d0d;
+  }
+  
