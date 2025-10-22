@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HlyWor — Suggestions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #e5e4df;
+      --window: #f4f3ef;
+      --bar: #d1cfca;
+      --border: #000;
+      --shadow: #999;
+      --hover: #c4c2bc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: #111;
+    }
+
+    nav {
+      background: var(--bar);
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 25px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--border);
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: #666; }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      background: #f1f0ec;
+      padding: 25px 5%;
+    }
+
+    header h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 16px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      max-width: 800px;
+      color: #333;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    #suggestion-section {
+      max-width: 700px;
+      margin: 60px auto;
+      background: var(--window);
+      border: 3px solid var(--border);
+      box-shadow: 6px 6px 0 var(--shadow);
+      padding: 25px;
+    }
+
+    #suggestion-section h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    #suggestion-section p {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input, textarea {
+      border: 2px solid var(--border);
+      background: var(--bar);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 8px;
+      transition: background 0.2s;
+    }
+
+    input { width: 180px; }
+    textarea { width: 280px; height: 60px; resize: none; }
+    input:focus, textarea:focus { background: var(--hover); outline: none; }
+
+    button {
+      padding: 8px 12px;
+      background: var(--bar);
+      border: 2px solid var(--border);
+      font-family: 'Press Start 2P', cursive;
+      font-size: 9px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover { background: var(--hover); box-shadow: 2px 2px 0 var(--border); }
+
+    #suggestion-section h3 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 11px;
+      margin-top: 25px;
+      text-transform: uppercase;
+    }
+
+    #suggestions { margin-top: 10px; }
+
+    /* === RETRO CARD STYLE === */
+    .suggestion-card {
+      border: 3px solid var(--border);
+      box-shadow: 5px 5px 0 var(--shadow);
+      margin: 20px 0;
+      background: var(--window);
+      animation: popIn 0.25s ease;
+    }
+
+    .card-title-bar {
+      background: var(--bar);
+      border-bottom: 2px solid var(--border);
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+    }
+
+    .card-title-bar span {
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .card-body small {
+      display: block;
+      font-size: 11px;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.95); opacity: 0.5; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    footer {
+      border-top: 2px solid var(--border);
+      text-align: center;
+      padding: 40px 0;
+      font-size: 12px;
+      color: #444;
+      background: var(--window);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">Blog</a>
+      <a href="#">About</a>
+    </div>
+    <div class="nav-right">
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>💡 Suggestions</h1>
+    <p>Your feedback helps us improve HlyWor. Drop your ideas below and see what others have shared.</p>
+  </header>
+
+  <div id="suggestion-section">
+    <h2>Add Your Suggestion</h2>
+    <div class="input-row">
+      <input id="sname" placeholder="Your name">
+      <textarea id="smessage" placeholder="Write suggestion..."></textarea>
+      <button id="suggestBtn">Send</button>
+    </div>
+
+    <h3>Recent Suggestions</h3>
+    <div id="suggestions"><p>Loading suggestions...</p></div>
+  </div>
+
+  <footer>© 2025 HlyWor Blog. Crafted with ❤️ in our style.</footer>
+
+  <script>
+    const endpoint = 'https://script.google.com/macros/s/AKfycbznOxGIpQIq4o4yjxlecKhzvmNcUMYXTJnCY_0AX2bceQCeNdSy9L0MAuIhX9uSBoKxLg/exec'; // ← your Apps Script URL
+
+    async function loadSuggestions() {
+      const container = document.getElementById('suggestions');
+      const cacheKey = 'suggestions_cache';
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) container.innerHTML = cached;
+
+      try {
+        const res = await fetch(endpoint);
+        const suggestions = await res.json();
+        container.innerHTML = suggestions.length
+          ? suggestions.map(s => `
+              <div class="suggestion-card">
+                <div class="card-title-bar"><span>${s.name}</span></div>
+                <div class="card-body">
+                  <small>${new Date(s.timestamp).toLocaleString()}</small>
+                  <p>${s.suggestion}</p>
+                </div>
+              </div>
+            `).join('')
+          : '<p>No suggestions yet — be the first to share an idea!</p>';
+        localStorage.setItem(cacheKey, container.innerHTML);
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '<p>Failed to load suggestions.</p>';
+      }
+    }
+
+    async function postSuggestion() {
+      const name = document.getElementById('sname').value.trim();
+      const suggestion = document.getElementById('smessage').value.trim();
+      if (!name || !suggestion) return alert('Please enter your name and suggestion.');
+
+      const btn = document.getElementById('suggestBtn');
+      btn.disabled = true;
+
+      const container = document.getElementById('suggestions');
+      container.insertAdjacentHTML('afterbegin', `
+        <div class="suggestion-card" style="border-color:#ffeb3b;">
+          <div class="card-title-bar"><span>${name}</span></div>
+          <div class="card-body">
+            <small>${new Date().toLocaleString()}</small>
+            <p>${suggestion}</p>
+          </div>
+        </div>
+      `);
+      setTimeout(() => {
+        const firstCard = container.querySelector('.suggestion-card');
+        if (firstCard) firstCard.style.borderColor = 'var(--border)';
+      }, 1000);
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, suggestion })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          document.getElementById('sname').value = '';
+          document.getElementById('smessage').value = '';
+          loadSuggestions();
+        } else {
+          alert('Error sending suggestion.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Failed to send suggestion.');
+      }
+
+      btn.disabled = false;
+    }
+
+    document.getElementById('suggestBtn').addEventListener('click', postSuggestion);
+    loadSuggestions();
+  </script>
+</body>
+</html>
