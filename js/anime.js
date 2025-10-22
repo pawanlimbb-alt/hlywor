@@ -1,3 +1,7 @@
+// -----------------------------
+// Anime Library JS
+// -----------------------------
+
 // Tab switching + click sound
 const tabs = document.querySelectorAll('.tab-button');
 const contents = document.querySelectorAll('.tab-content');
@@ -16,9 +20,9 @@ tabs.forEach(tab => {
     });
 });
 
-// Anime lists (folders in images/)
+// Anime lists (exact folder names)
 const animeTabs = {
-    favorites: [
+    "favorites": [
         'Attack on Titan','Attack on Titan_ Final Season','Attack on Titan_ Final Season Part 2','Attack on Titan Season 2',
         'Attack on Titan Season 3','Attack on Titan Season 3 Part 2','Attack on Titan_ The Last Attack','Delicious in Dungeon',
         'Dr. Stone','Dr. Stone_ New World','Dr. Stone_ New World Part 2','Dr. Stone_ Ryusui','Dr. Stone_ Science Future',
@@ -32,7 +36,7 @@ const animeTabs = {
         'The Disappearance of Haruhi Suzumiya','The Eminence in Shadow','The Melancholy of Haruhi Suzumiya',
         'The Melancholy of Haruhi Suzumiya Season 2','Fullmetal Alchemist_ Brotherhood'
     ],
-    recommendations: [
+    "recommendations": [
         '86 Eighty-Six','86 Eighty-Six Part 2','86 Eighty-Six_ Special Edition - The Poppies Bloom Red on the Battlefield',
         'Gurren Lagann','Gurren Lagann The Movie_ The Lights in the Sky are Stars','Josee, the Tiger and the Fish',
         'Mob Psycho 100','Mob Psycho 100 II','Mob Psycho 100 III','Mob Psycho 100 Reigen_ The Miraculous Unknown Psychic',
@@ -47,7 +51,7 @@ const animeTabs = {
         'Sword Art Online Alternative_ Gun Gale Online','Sword Art Online II','Sword Art Online Movie_ Ordinal Scale - Sword Art Offline',
         'To Your Eternity','To Your Eternity Season 2','To Your Eternity Season 3','Vinland Saga','Vinland Saga Season 2'
     ],
-    controversial: [
+    "controversial": [
         'Berserk','Berserk (2016)','Berserk_ Season II','DARLING in the FRANXX','Goblin Slayer','Goblin Slayer_ Adventure Sheet',
         "Goblin Slayer_ Goblin's Crown",'Goblin Slayer II','Kokoro Connect','Kokoro Connect OVA','Made in Abyss',
         'Made in Abyss_ Dawn of the Deep Soul',"Made in Abyss_ Journey's Dawn",'Made in Abyss_ The Golden City of the Scorching Sun',
@@ -86,11 +90,16 @@ const animeTabs = {
     ]
 };
 
+// -----------------------------
 // Populate grids
+// -----------------------------
 for (const [tab, titles] of Object.entries(animeTabs)) {
-    const grid = document.querySelector(`#${tab} .anime-grid`);
+    const grid = document.querySelector(`#${tab.replace(/ /g, '-') } .anime-grid`);
+    if (!grid) continue;
+
     titles.forEach(title => {
         const imgPath = `images/${tab}/${title}/cover.webp`;
+
         const card = document.createElement('div');
         card.className = 'anime-card';
         card.innerHTML = `
