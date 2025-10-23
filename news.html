@@ -153,73 +153,80 @@
     </main>
   </section>
 
-  <!-- === Comment Section === -->
-  <div id="comment-section" style="max-width:600px;margin:auto;">
-    <h3>Leave a Comment</h3>
-    <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
-    <textarea id="comment" rows="3" placeholder="Write your comment..." style="width:100%;margin:6px 0;padding:8px;"></textarea>
-    <button id="postBtn" style="padding:10px 15px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
-      Post Comment
-    </button>
+  <!-- === Comment Section Start === -->
+<div id="comment-section" style="max-width:600px;margin:auto;">
+  <h3>Leave a Comment</h3>
+  <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
+  <textarea id="comment" rows="3" placeholder="Write your comment..." style="width:100%;margin:6px 0;padding:8px;"></textarea>
+  <button id="postBtn" style="padding:10px 15px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+    Post Comment
+  </button>
 
-    <h3 style="margin-top:20px;">Comments</h3>
-    <div id="comments"></div>
-  </div>
+  <h3 style="margin-top:20px;">Comments</h3>
+  <div id="comments"></div>
+</div>
 
-  <script>
-    const endpoint = '/.netlify/functions/postComment'; // Netlify function endpoint
+<script>
+  // 👇 Unique ID for this blog post (change on each post)
+  const POST_ID = 'news'; // e.g. 'travel-tips-2025', 'ai-future', etc.
+  const endpoint = '/api/postComment'; // ✅ Vercel function endpoint
 
-    async function loadComments() {
-      try {
-        const res = await fetch(endpoint);
-        const comments = await res.json();
-        const container = document.getElementById('comments');
-        container.innerHTML = comments.map(c => `
-          <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
-            <strong>${c.name}</strong><br>
-            <small>${new Date(c.timestamp).toLocaleString()}</small>
-            <p>${c.comment}</p>
-          </div>
-        `).join('');
-      } catch (err) {
-        console.error(err);
-        document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
+  async function loadComments() {
+    try {
+      const res = await fetch(`${endpoint}?postId=${encodeURIComponent(POST_ID)}`);
+      const comments = await res.json();
+      const container = document.getElementById('comments');
+      container.innerHTML = comments.length
+        ? comments.map(c => `
+            <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
+              <strong>${c.name}</strong><br>
+              <small>${new Date(c.timestamp).toLocaleString()}</small>
+              <p>${c.comment}</p>
+            </div>
+          `).join('')
+        : '<p>No comments yet — be the first to share your thoughts!</p>';
+    } catch (err) {
+      console.error(err);
+      document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
+    }
+  }
+
+  async function postComment() {
+    const name = document.getElementById('name').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+    if (!name || !comment) return alert('Please enter your name and a comment.');
+
+    document.getElementById('postBtn').disabled = true;
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, comment, postId: POST_ID })
+      });
+      const result = await res.json();
+      if (result.status === 'success') {
+        document.getElementById('name').value = '';
+        document.getElementById('comment').value = '';
+        loadComments();
+      } else {
+        alert('Error posting comment.');
       }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send comment.');
     }
 
-    async function postComment() {
-      const name = document.getElementById('name').value.trim();
-      const comment = document.getElementById('comment').value.trim();
-      if (!name || !comment) return alert('Please enter name and comment');
-      document.getElementById('postBtn').disabled = true;
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, comment })
-        });
-        const result = await res.json();
-        if (result.status === 'success') {
-          document.getElementById('name').value = '';
-          document.getElementById('comment').value = '';
-          loadComments();
-        } else {
-          alert('Error posting comment.');
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Failed to send comment.');
-      }
-      document.getElementById('postBtn').disabled = false;
-    }
+    document.getElementById('postBtn').disabled = false;
+  }
 
-    document.getElementById('postBtn').addEventListener('click', postComment);
-    loadComments();
-  </script>
+  document.getElementById('postBtn').addEventListener('click', postComment);
+  loadComments();
+</script>
+<!-- === Comment Section End === -->
 
   <footer>
-    Only Suvam can write reviews ★ Viewers can browse freely  
-    <br>&copy; 2025 HlyWor Library Zone
+    © 2025 HlyWor Blog. Crafted with ❤️ in our style.
   </footer>
 </body>
 </html>
