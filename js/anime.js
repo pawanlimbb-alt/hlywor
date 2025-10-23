@@ -20,7 +20,9 @@ tabs.forEach(tab => {
     });
 });
 
+// -----------------------------
 // Anime lists (exact folder names)
+// -----------------------------
 const animeTabs = {
     "favorites": [
         'Attack on Titan','Attack on Titan_ Final Season','Attack on Titan_ Final Season Part 2','Attack on Titan Season 2',
