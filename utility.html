@@ -27,19 +27,19 @@
     </div>
     <div class="nav-right">
       <a href="#">Contact</a>
+      <button id="modeToggle" class="mode-btn">🌙</button>
+
     </div>
   </nav>
 
   <header>
-    <h1>The Library</h1>
+    <h1>Utilities</h1>
     <p>
-      Welcome to my digital bookshelf 📚  
-      Each entry below features a book I’ve read and personally reviewed —  
-      retro-styled, pixel-inspired, and filled with honest thoughts.
+      A collection of handy tools, resources, and reviews to make your day easier and more interesting.
     </p>
   </header>
 
-  <div class="sub-nav">
+ <!-- <div class="sub-nav">
     <a href="#fiction">Fiction</a>
     <a href="#nonfiction">Non-fiction</a>
     <a href="#philosophy">Philosophy</a>
@@ -48,7 +48,6 @@
 
   <main class="card-section">
 
-    <!-- Example Book 1 -->
     <div class="card" id="fiction">
       <div class="card-header">
         <span>1984.EXE</span>
@@ -68,7 +67,7 @@
       </div>
     </div>
 
-    <!-- Example Book 2 -->
+  
     <div class="card" id="nonfiction">
       <div class="card-header">
         <span>ATOMIC_HABITS.TXT</span>
@@ -88,7 +87,7 @@
       </div>
     </div>
 
-    <!-- Example Book 3 -->
+    
     <div class="card" id="philosophy">
       <div class="card-header">
         <span>MEDITATIONS.LOG</span>
@@ -107,78 +106,262 @@
         </div>
       </div>
     </div>
+  </main> 
+-->
+  <!-- === Featured Tools Section === -->
+  <section class="tool-section">
+    <h2>Featured Tools & Utilities</h2>
+    <p class="tool-intro">
+      A mix of underrated yet powerful tools we use for writing, creativity, and productivity.
+    </p>
 
-  </main>
-<!--commnet-->
-<!-- === Comment Section Start === -->
-<div id="comment-section" style="max-width:600px;margin:auto;">
-  <h3>Leave a Comment</h3>
-  <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
-  <textarea id="comment" rows="3" placeholder="Write your comment..." style="width:100%;margin:6px 0;padding:8px;"></textarea>
-  <button id="postBtn" style="padding:10px 15px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
-    Post Comment
-  </button>
+    <div class="tool-grid">
 
-  <h3 style="margin-top:20px;">Comments</h3>
-  <div id="comments"></div>
-</div>
-
-<script>
-  const endpoint = '/.netlify/functions/postComment'; // Netlify function endpoint
-
-  async function loadComments() {
-    try {
-      const res = await fetch(endpoint);
-      const comments = await res.json();
-      const container = document.getElementById('comments');
-      container.innerHTML = comments.map(c => `
-        <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
-          <strong>${c.name}</strong><br>
-          <small>${new Date(c.timestamp).toLocaleString()}</small>
-          <p>${c.comment}</p>
+      <!-- QuillBot -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>QUILLBOT.AI</span>
+          <span>⚙</span>
         </div>
-      `).join('');
-    } catch (err) {
-      console.error(err);
-      document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
-    }
-  }
+        <div class="tool-content">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/QuillBot_logo.png" alt="QuillBot Logo">
+          <div class="tool-info">
+            <h3>QuillBot</h3>
+            <p>AI-powered paraphrasing and grammar tool that improves clarity and tone.</p>
+            <a href="https://quillbot.com" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
 
-  async function postComment() {
-    const name = document.getElementById('name').value.trim();
-    const comment = document.getElementById('comment').value.trim();
-    if (!name || !comment) return alert('Please enter name and comment');
-    document.getElementById('postBtn').disabled = true;
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment })
-      });
-      const result = await res.json();
-      if (result.status === 'success') {
-        document.getElementById('name').value = '';
-        document.getElementById('comment').value = '';
-        loadComments();
-      } else {
-        alert('Error posting comment.');
+      <!-- Grammarly -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>GRAMMARLY.EXE</span>
+          <span>⚙</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Grammarly_logo.png" alt="Grammarly Logo">
+          <div class="tool-info">
+            <h3>Grammarly</h3>
+            <p>Checks grammar, tone, and writing style — ideal for students and bloggers.</p>
+            <a href="https://grammarly.com" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Napkin.io -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>NAPKIN.IO</span>
+          <span>⚙</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://www.napkin.io/favicon.ico" alt="Napkin Logo">
+          <div class="tool-info">
+            <h3>Napkin.io</h3>
+            <p>Underrated idea pad for jotting code snippets, notes, and brainstorms.</p>
+            <a href="https://www.napkin.io" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photopea -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>PHOTOPEA.APP</span>
+          <span>⚙</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://www.photopea.com/promo/logo512.png" alt="Photopea Logo">
+          <div class="tool-info">
+            <h3>Photopea</h3>
+            <p>A browser-based photo editor that feels like Photoshop — totally free.</p>
+            <a href="https://www.photopea.com" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notion -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>NOTION.SO</span>
+          <span>⚙</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/Notion-logo.svg" alt="Notion Logo">
+          <div class="tool-info">
+            <h3>Notion</h3>
+            <p>Plan, organize, and journal your ideas — your all-in-one creative space.</p>
+            <a href="https://www.notion.so" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="suggest-tool">
+      <p>💡 Know a cool tool worth adding here?</p>
+      <a href="suggestion.html" target="_blank" class="tool-btn">Suggest One</a>
+    </div>
+  </section>
+
+  <!-- === Fun & Chill Zone === -->
+  <section class="fun-section">
+    <h2>Fun & Chill Zone</h2>
+    <p class="tool-intro">
+      Take a break — explore, relax, or discover something new.
+    </p>
+
+    <div class="tool-grid">
+
+      <!-- MyAnimeList -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>MYANIMELIST.NET</span>
+          <span>🎮</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" alt="MyAnimeList Logo">
+          <div class="tool-info">
+            <h3>MyAnimeList</h3>
+            <p>Track your anime & manga, rate favorites, and explore recommendations.</p>
+            <a href="https://myanimelist.net" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- What Should I Watch Next -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>WHAT2WATCH</span>
+          <span>🎮</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://www.whattowatchnext.xyz/favicon.ico" alt="What to Watch Logo">
+          <div class="tool-info">
+            <h3>What Should I Watch Next?</h3>
+            <p>Find your next binge-worthy movie or show based on your favorites.</p>
+            <a href="https://www.whattowatchnext.xyz/" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- A Soft Murmur -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>ASOFTMURMUR.COM</span>
+          <span>🎧</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://asoftmurmur.com/favicon.ico" alt="A Soft Murmur Logo">
+          <div class="tool-info">
+            <h3>A Soft Murmur</h3>
+            <p>Mix background sounds for focus, sleep, or peace — rain, waves, and more.</p>
+            <a href="https://asoftmurmur.com" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GeoGuessr -->
+      <div class="card tool-card">
+        <div class="card-header">
+          <span>GEOGUESSR.COM</span>
+          <span>🗺️</span>
+        </div>
+        <div class="tool-content">
+          <img src="https://www.geoguessr.com/_next/static/media/app-icon.8e7bdb68.png" alt="GeoGuessr Logo">
+          <div class="tool-info">
+            <h3>GeoGuessr</h3>
+            <p>Guess random map locations from Street View — fun, educational, addictive.</p>
+            <a href="https://www.geoguessr.com" target="_blank" class="tool-btn">Visit</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- === Comment Section === -->
+  <div id="comment-section" style="max-width:600px;margin:auto;">
+    <h3>Leave a Comment</h3>
+    <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
+    <textarea id="comment" rows="3" placeholder="Write your comment..." style="width:100%;margin:6px 0;padding:8px;"></textarea>
+    <button id="postBtn" style="padding:10px 15px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+      Post Comment
+    </button>
+
+    <h3 style="margin-top:20px;">Comments</h3>
+    <div id="comments"></div>
+  </div>
+
+  <script>
+    const endpoint = '/.netlify/functions/postComment';
+
+    async function loadComments() {
+      try {
+        const res = await fetch(endpoint);
+        const comments = await res.json();
+        const container = document.getElementById('comments');
+        container.innerHTML = comments.map(c => `
+          <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
+            <strong>${c.name}</strong><br>
+            <small>${new Date(c.timestamp).toLocaleString()}</small>
+            <p>${c.comment}</p>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+        document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
       }
-    } catch (err) {
-      console.error(err);
-      alert('Failed to send comment.');
     }
-    document.getElementById('postBtn').disabled = false;
-  }
 
-  document.getElementById('postBtn').addEventListener('click', postComment);
-  loadComments();
-</script>
-<!-- === Comment Section End === -->
+    async function postComment() {
+      const name = document.getElementById('name').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      if (!name || !comment) return alert('Please enter name and comment');
+      document.getElementById('postBtn').disabled = true;
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, comment })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          document.getElementById('name').value = '';
+          document.getElementById('comment').value = '';
+          loadComments();
+        } else {
+          alert('Error posting comment.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Failed to send comment.');
+      }
+      document.getElementById('postBtn').disabled = false;
+    }
 
+    document.getElementById('postBtn').addEventListener('click', postComment);
+    loadComments();
+  </script>
 
   <footer>
     Only Suvam can write reviews ★ Viewers can browse freely  
     <br>&copy; 2025 HlyWor Library Zone
   </footer>
+
+  <script>
+    const toggle = document.getElementById('modeToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      toggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+      localStorage.setItem('mode', document.body.classList.contains('dark') ? 'dark' : 'light');
+    });
+    if (localStorage.getItem('mode') === 'dark') {
+      document.body.classList.add('dark');
+      toggle.textContent = '☀️';
+    }
+  </script>
+  
 </body>
 </html>
