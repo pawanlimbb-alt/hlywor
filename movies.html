@@ -2,78 +2,106 @@
 <html lang="en">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-ZVLSVF6T3J');
+  </script>
 
-        gtag('config', 'G-ZVLSVF6T3J');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello, I'm Mac</title>
-    <link rel="stylesheet" href="style/movie.css"">
-  <link href=" https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello, I'm Mac</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/movie.css">
 </head>
 
 <body>
-    <header class="topbar">
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Learn</a></li>
-                <li><a href="#">Clone me</a></li>
-                <li><a href="#">Find me</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header class="topbar">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <!--
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Learn</a></li>
+        <li><a href="#">Clone me</a></li>
+      -->
+        <li><a href="character.html">Find me</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>The<br>Reviews</h1>
-            <p>I'm a free retro WebFlow template made by <a href="#">Mackenzie Child</a>.</p>
-            <button class="clone-btn">Clone me on WebFlow</button>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>The<br>Movie Reviews</h1>
+      <p>
+        In this section of our website, we provide reviews of the movies we have watched.<br>
+        Here, we give our precise criticism of the movies mentioned here, so that you can properly know which movie is worth your time and which is not. 😉
+        <br><br>
+        <a href="atck.html">By Suvam Limbu</a>.
+      </p>
+    </div>
+
+    <div class="hero-img">
+      <img src="style/images/movies1.webp" alt="Retro character illustration">
+    </div>
+  </section>
+
+  <section class="projects">
+    <h2>Movies</h2>
+    <div class="project-grid">
+      <!-- Movie 1 -->
+      <div class="project-card">
+        <div class="browser-bar">the-social-network.html</div>
+        <div class="project-image">
+          <img src="style/images/The_Social_Network.webp" alt="The Social Network Poster">
         </div>
-        <div class="hero-img">
-            <img src="style/images/movies1.webp" alt="Retro character illustration">
+        <div class="project-content">
+          <h3>The Social Network</h3>
+          <p>Genre: Drama / History<br>
+            The Social Network is a dramatized version of Mark Zuckerberg's biography.<br>
+            ★ Rating: 8.5/10
+          </p>
+          <button>Read More</button>
         </div>
-    </section>
+      </div>
 
-    
-
-    <section class="projects">
-        <h2>Movies</h2>
-        <div class="project-grid">
-            <div class="project-card">
-                <div class="browser-bar">2020-04-08-project.html</div>
-                <div class="project-image">
-                    <img src="" alt="project image">
-                </div>
-                <div class="project-content">
-                    <h3>Possimus</h3>
-                    <p>Officia sit numquam fugiat sint molestiae id. Est modi est at debitis dolorem. Voluptate quod rem
-                        dolores sint maiores.</p>
-                    <button>View project</button>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="browser-bar">2020-04-08-project.html</div>
-                <div class="project-image">
-                    <img src="" alt="project image">
-                </div>
-                <div class="project-content">
-                    <h3>Dolorum Ullam Totam</h3>
-                    <p>Consequatur consequuntur quisquam sit velit. Vitae et sit repellendus consequatur cumque ducimus
-                        eos atque.</p>
-                    <button>View project</button>
-                </div>
-            </div>
+      <!-- Movie 2 -->
+      <div class="project-card">
+        <div class="browser-bar">inception.html</div>
+        <div class="project-image">
+          <img src="style/images/inception.webp" alt="Inception Poster">
         </div>
-    </section>
+        <div class="project-content">
+          <h3>Inception</h3>
+          <p>Genre: Sci-Fi / Thriller<br>
+            A mind-bending journey into dreams within dreams. Christopher Nolan’s masterpiece.<br>
+            ★ Rating: 9/10
+          </p>
+          <button>Read More</button>
+        </div>
+      </div>
+
+      <!-- Movie 3 -->
+      <div class="project-card">
+        <div class="browser-bar">fight-club.html</div>
+        <div class="project-image">
+          <img src="style/images/fightclub.webp" alt="Fight Club Poster">
+        </div>
+        <div class="project-content">
+          <h3>Fight Club</h3>
+          <p>Genre: Drama / Psychological<br>
+            A thrilling look at identity, rebellion, and the modern man’s crisis.<br>
+            ★ Rating: 8.8/10
+          </p>
+          <button>Read More</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
 </body>
-
 </html>

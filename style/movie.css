@@ -72,20 +72,6 @@ body {
   text-decoration: underline;
 }
 
-.clone-btn {
-  border: 2px solid #000;
-  background: #fff;
-  padding: 10px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.clone-btn:hover {
-  background: #000;
-  color: #fff;
-}
-
 .hero-img {
   flex: 1;
   text-align: center;
@@ -100,7 +86,7 @@ body {
   border-radius: 8px;
 }
 
-/* ✅ Projects Section */
+/* ✅ Movies Section */
 .projects {
   padding: 40px 100px;
 }
@@ -117,36 +103,55 @@ body {
   gap: 25px;
 }
 
+/* ✅ Movie Card */
 .project-card {
   background: #fff;
   border: 2px solid #000;
   box-shadow: 4px 4px 0 #000;
   border-radius: 6px;
   overflow: hidden;
-  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+  box-shadow: 6px 6px 0 #000;
 }
 
+/* Top Bar */
 .browser-bar {
   background: #e1e1e1;
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-bottom: 2px solid #000;
   font-size: 12px;
   font-weight: 600;
 }
 
-.project-image img {
+/* ✅ Uniform Image Box */
+.project-image {
   width: 100%;
-  height: 160px;
-  object-fit: cover;
+  height: 220px;
   background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Card Text */
 .project-content {
   padding: 15px;
+  text-align: left;
+  flex-grow: 1;
 }
 
 .project-content h3 {
@@ -178,7 +183,6 @@ body {
   .hero {
     padding: 50px 40px;
   }
-
   .projects {
     padding: 30px 50px;
   }
@@ -186,10 +190,7 @@ body {
 
 @media (max-width: 768px) {
   .hero {
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     text-align: center;
     padding: 30px 20px;
     gap: 20px;
@@ -214,8 +215,7 @@ body {
 
 @media (max-width: 480px) {
   .hero {
-    flex-wrap: nowrap;
-    flex-direction: row;
+    flex-direction: column;
     gap: 15px;
     padding: 25px 10px;
   }
@@ -226,10 +226,6 @@ body {
 
   .hero-img img {
     width: 140px;
-  }
-
-  .clone-btn {
-    width: 100%;
   }
 
   .projects {
