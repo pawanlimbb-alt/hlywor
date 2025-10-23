@@ -1,17 +1,11 @@
 // -----------------------------
-// Anime Library JS
+// Tab switching
 // -----------------------------
-
-// Tab switching + click sound
 const tabs = document.querySelectorAll('.tab-button');
 const contents = document.querySelectorAll('.tab-content');
-const clickSound = new Audio('sounds/click.mp3');
 
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-        clickSound.currentTime = 0;
-        clickSound.play();
-
         tabs.forEach(t => t.classList.remove('active'));
         contents.forEach(c => c.classList.remove('active'));
 
@@ -21,7 +15,7 @@ tabs.forEach(tab => {
 });
 
 // -----------------------------
-// Anime lists (exact folder names)
+// Anime lists
 // -----------------------------
 const animeTabs = {
     "favorites": [
@@ -96,7 +90,7 @@ const animeTabs = {
 // Populate grids
 // -----------------------------
 for (const [tab, titles] of Object.entries(animeTabs)) {
-    const grid = document.querySelector(`#${tab.replace(/ /g, '-') } .anime-grid`);
+    const grid = document.querySelector(`#${tab.replace(/ /g,'-')} .anime-grid`);
     if (!grid) continue;
 
     titles.forEach(title => {
@@ -108,6 +102,13 @@ for (const [tab, titles] of Object.entries(animeTabs)) {
             <img src="${imgPath}" alt="${title}" loading="lazy">
             <h2>${title}</h2>
         `;
+
+        card.addEventListener('click', () => {
+            const encodedTitle = encodeURIComponent(title);
+            const encodedTab = encodeURIComponent(tab);
+            window.location.href = `animecard.html?tab=${encodedTab}&title=${encodedTitle}`;
+        });
+
         grid.appendChild(card);
     });
 }
