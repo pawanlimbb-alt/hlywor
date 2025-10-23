@@ -1,0 +1,57 @@
+body {
+    font-family: 'PixelFont', monospace;
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.anime-card-container {
+    padding: 20px;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.back-button {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+
+.back-button:hover {
+    background: white;
+    color: black;
+}
+
+.anime-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.anime-details img {
+    width: 300px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.anime-info {
+    max-width: 600px;
+    text-align: left;
+}
+
+h1, h2 {
+    font-family: 'PixelFont', monospace;
+}
+
+p {
+    line-height: 1.6;
+    font-size: 16px;
+}
+

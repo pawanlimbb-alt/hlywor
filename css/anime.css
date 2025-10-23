@@ -31,7 +31,6 @@ h1 {
     color: #fff;
     border: 1px solid #fff;
     cursor: pointer;
-    font-family: 'PixelFont', sans-serif;
     transition: 0.2s;
     border-radius: 5px;
     font-size: 16px;
@@ -49,7 +48,6 @@ h1 {
 .anime-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, auto);
     gap: 25px;
     padding: 0 25px 50px 25px;
 }
@@ -91,15 +89,7 @@ h1 {
     display: block;
 }
 
-@media (max-width: 1400px) {
-    .anime-grid { grid-template-columns: repeat(4, 1fr); }
-}
-
-@media (max-width: 900px) {
-    .anime-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-@media (max-width: 600px) {
-    .anime-grid { grid-template-columns: repeat(2, 1fr); }
-}
+@media (max-width: 1400px) { .anime-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 900px)  { .anime-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px)  { .anime-grid { grid-template-columns: repeat(2, 1fr); } }
 
