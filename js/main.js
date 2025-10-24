@@ -1,63 +1,70 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // -----------------------------
-    // Background music
-    // -----------------------------
+    // -------------------------------
+    // Sounds
+    // -------------------------------
+    const clickSound = new Audio('sounds/click.mp3');
+    const hoverSound = new Audio('sounds/Pop.mp3');
     const bgMusic = new Audio('sounds/background.mp3');
     bgMusic.loop = true;
-    bgMusic.autoplay = true;
-    bgMusic.muted = true; // start muted for autoplay
-    bgMusic.play().catch(() => {}); // try to play silently
+    bgMusic.volume = 0.2;
 
-    function enableBackgroundMusic() {
-        bgMusic.muted = false;
-        bgMusic.play();
-        document.removeEventListener('click', enableBackgroundMusic);
-        document.removeEventListener('keydown', enableBackgroundMusic);
-    }
+    // Attempt autoplay for background music
+    bgMusic.play().catch(() => {
+        // will play after first interaction
+        document.addEventListener('click', () => bgMusic.play(), { once: true });
+    });
 
-    document.addEventListener('click', enableBackgroundMusic);
-    document.addEventListener('keydown', enableBackgroundMusic);
-
-    // -----------------------------
-    // Click and hover sounds
-    // -----------------------------
-    const clickSound = new Audio('sounds/click.mp3');
-    const popSound = new Audio('sounds/Pop.mp3');
-
+    // Play click sound
     function playClick() {
         clickSound.currentTime = 0;
         clickSound.play();
     }
 
-    function playPop() {
-        popSound.currentTime = 0;
-        popSound.play();
+    // Play hover sound
+    function playHover() {
+        hoverSound.currentTime = 0;
+        hoverSound.play();
     }
 
-    // Play click sound on links and buttons
-    document.querySelectorAll('a, button').forEach(el => {
+    // -------------------------------
+    // Apply hover and click globally
+    // -------------------------------
+    document.querySelectorAll('button, a, .anime-card, .back-button').forEach(el => {
+        el.addEventListener('mouseenter', playHover);
         el.addEventListener('click', playClick);
-        el.addEventListener('mouseover', playPop); // hover pop
     });
 
-    // -----------------------------
-    // Ez.html start sound (play once)
-    // -----------------------------
+    // -------------------------------
+    // Click navigation with delay
+    // -------------------------------
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.href;
+            playClick();
+            setTimeout(() => window.location.href = url, 300);
+        });
+    });
+
+    document.querySelectorAll('.close-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            playClick();
+            setTimeout(() => window.location.href = 'menu.html', 300);
+        });
+    });
+
+    // -------------------------------
+    // Start sound on Ez.html only once
+    // -------------------------------
     if(window.location.pathname.includes('Ez.html')) {
         const startSound = new Audio('sounds/start.mp3');
-
-        function playStartAndGoMenu() {
-            startSound.currentTime = 0;
+        function playStart() {
             startSound.play();
-            setTimeout(() => {
-                window.location.href = 'menu.html';
-            }, 700);
         }
 
-        document.addEventListener('click', playStartAndGoMenu, { once: true });
-        document.addEventListener('keydown', playStartAndGoMenu, { once: true });
+        document.addEventListener('click', playStart, { once: true });
+        document.addEventListener('keydown', playStart, { once: true });
     }
-
 });
 
