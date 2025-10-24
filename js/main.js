@@ -1,43 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const clickSound = new Audio('sounds/click.mp3');
+    // -----------------------------
+    // Background music
+    // -----------------------------
+    const bgMusic = new Audio('sounds/background.mp3');
+    bgMusic.loop = true;
+    bgMusic.autoplay = true;
+    bgMusic.muted = true; // start muted for autoplay
+    bgMusic.play().catch(() => {}); // try to play silently
 
-    function playClick(url) {
-        clickSound.currentTime = 0;
-        clickSound.play();
-        if(url) {
-            setTimeout(() => {
-                window.location.href = url;
-            }, 700);
-        }
+    function enableBackgroundMusic() {
+        bgMusic.muted = false;
+        bgMusic.play();
+        document.removeEventListener('click', enableBackgroundMusic);
+        document.removeEventListener('keydown', enableBackgroundMusic);
     }
 
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            playClick(this.href);
-        });
+    document.addEventListener('click', enableBackgroundMusic);
+    document.addEventListener('keydown', enableBackgroundMusic);
+
+    // -----------------------------
+    // Click and hover sounds
+    // -----------------------------
+    const clickSound = new Audio('sounds/click.mp3');
+    const popSound = new Audio('sounds/Pop.mp3');
+
+    function playClick() {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    }
+
+    function playPop() {
+        popSound.currentTime = 0;
+        popSound.play();
+    }
+
+    // Play click sound on links and buttons
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('click', playClick);
+        el.addEventListener('mouseover', playPop); // hover pop
     });
 
-    document.querySelectorAll('button:not(#fun-fact-button)').forEach(btn => {
-        btn.addEventListener('click', () => {
-            playClick();
-        });
-    });
-
-    document.querySelectorAll('.close-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            playClick();
-            setTimeout(() => {
-                window.location.href = 'menu.html';
-            }, 700);
-        });
-    });
-
+    // -----------------------------
+    // Ez.html start sound (play once)
+    // -----------------------------
     if(window.location.pathname.includes('Ez.html')) {
-        const startSound = new Audio('sounds/Start.mp3');
+        const startSound = new Audio('sounds/start.mp3');
 
-        function startAndGoMenu() {
+        function playStartAndGoMenu() {
             startSound.currentTime = 0;
             startSound.play();
             setTimeout(() => {
@@ -45,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 700);
         }
 
-        document.addEventListener('click', startAndGoMenu, { once: true });
-        document.addEventListener('keydown', startAndGoMenu, { once: true });
+        document.addEventListener('click', playStartAndGoMenu, { once: true });
+        document.addEventListener('keydown', playStartAndGoMenu, { once: true });
     }
 
 });
