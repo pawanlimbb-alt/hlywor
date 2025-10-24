@@ -1,57 +1,140 @@
-body {
-    font-family: 'PixelFont', monospace;
-    background: black;
-    color: white;
-    margin: 0;
-    padding: 0;
+/* --------------------------
+   FONT DEFINITION
+-------------------------- */
+@font-face {
+    font-family: 'PixelFont';
+    src: url('../fonts/pixel.woff2') format('woff2'),
+         url('../fonts/pixel.woff') format('woff'),
+         url('../fonts/pixel.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-.anime-card-container {
-    padding: 20px;
-    min-height: 100vh;
+/* --------------------------
+   GLOBAL STYLES
+-------------------------- */
+*,
+h1, h2, h3, h4, h5, h6, p, span, button, div {
+    font-family: 'PixelFont', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+/* --------------------------
+   HEADINGS
+-------------------------- */
+h1 {
+    font-size: 40px;
+    margin: 30px 0;
     text-align: center;
 }
 
+/* Typing effect + pop animation for H1 */
+h1.typing {
+    display: block;
+    animation: pop 0.6s ease forwards, blink-caret 0.7s step-end infinite;
+}
+
+/* Heading pop keyframes */
+@keyframes pop {
+    0%   { transform: scale(0); opacity: 0; }
+    50%  { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes blink-caret {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #fff; }
+}
+
+/* --------------------------
+   BACK BUTTON
+-------------------------- */
 .back-button {
     background: transparent;
-    color: white;
-    border: 1px solid white;
-    padding: 8px 12px;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 10px 15px;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     transition: 0.2s;
+    border-radius: 5px;
 }
 
 .back-button:hover {
-    background: white;
-    color: black;
+    background: #fff;
+    color: #000;
 }
 
+/* --------------------------
+   ANIME DETAILS GRID
+-------------------------- */
 .anime-details {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    padding: 0 20px 50px 20px;
+    align-items: start;
+}
+
+/* Anime card pop effect */
+.anime-card-detail {
+    background: #000;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s, opacity 0.8s;
+    cursor: pointer;
+    opacity: 0; /* hidden for reveal */
+}
+
+.anime-card-detail:hover {
+    animation: card-pop 0.3s forwards;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #fff;
+}
+
+@keyframes card-pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.08); }
+    100% { transform: scale(1.05); }
 }
 
 .anime-details img {
-    width: 300px;
-    border: 2px solid white;
+    width: 100%;
+    max-width: 300px;
+    border: 2px solid #fff;
     border-radius: 10px;
 }
 
 .anime-info {
-    max-width: 600px;
-    text-align: left;
+    color: #fff;
 }
 
-h1, h2 {
-    font-family: 'PixelFont', monospace;
+.anime-info h2 {
+    margin: 15px 0 10px 0;
+    font-size: 20px;
 }
 
-p {
-    line-height: 1.6;
+.anime-info p {
     font-size: 16px;
+    line-height: 1.6;
+}
+
+/* --------------------------
+   RESPONSIVE GRID
+-------------------------- */
+@media (max-width: 900px) {
+    .anime-details {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
 }
 

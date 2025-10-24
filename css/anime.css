@@ -11,10 +11,11 @@
 }
 
 /* --------------------------
-   GLOBAL STYLES
+   GLOBAL STYLES & FONT FIX
 -------------------------- */
-* {
-    font-family: 'PixelFont', sans-serif;
+*,
+h1, h2, h3, h4, h5, h6, p, span, button, div {
+    font-family: 'PixelFont', sans-serif !important;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -33,11 +34,19 @@ h1 {
     margin: 30px 0;
 }
 
-/* Typing effect fix: center heading */
+/* Typing effect + POP animation for heading */
 h1.typing {
-    display: block;         /* make block-level for centering */
-    text-align: center;     /* center the text */
-    margin: 30px auto;      /* spacing */
+    display: block;                 /* block-level for centering */
+    text-align: center;             /* center the text */
+    margin: 30px auto;              /* spacing */
+    animation: pop 0.6s ease forwards, blink-caret 0.7s step-end infinite;
+}
+
+/* keyframes for heading pop */
+@keyframes pop {
+    0%   { transform: scale(0); opacity: 0; }
+    50%  { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 /* h2 for anime cards */
@@ -97,12 +106,21 @@ h2 {
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s, opacity 0.8s;
     cursor: pointer;
-    opacity: 0; /* initial hidden for reveal */
+    opacity: 0; /* hidden initially for reveal */
 }
 
+/* Hover pop animation for anime cards */
 .anime-card:hover {
-    transform: scale(1.1);
+    animation: card-pop 0.3s forwards;
+    transform: scale(1.1); /* final scale */
     box-shadow: 0 0 15px #fff;
+}
+
+/* Keyframes for card pop */
+@keyframes card-pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1.1); }
 }
 
 .anime-card img {
@@ -148,11 +166,11 @@ h2 {
    TYPING EFFECT
 -------------------------- */
 .typing {
-    border-right: 2px solid #fff; /* cursor effect */
+    border-right: 2px solid #fff; /* blinking cursor */
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
-    animation: blink-caret 0.7s step-end infinite;
+    /* animation applied in h1.typing */
 }
 
 @keyframes blink-caret {
