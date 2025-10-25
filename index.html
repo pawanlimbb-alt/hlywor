@@ -24,16 +24,18 @@
         <nav>
             <h1 class="logo">HlYWoR</h1>
             <ul class="nav-links">
-                <!--<li><a href="">Home</a></li>-->
                 <li><a href="about.html">About</a></li>
-                 <li><a href="suggestion.html">Suggestion</a></li>
-               
-               
+                <li><a href="suggestion.html">Suggestion</a></li>
                 <li><a href="goal.html">Goals</a></li>
                 <li><a href="#team">Team</a></li>
-                <!--<li><a href="#contact">Contact</a></li>-->
             </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
+        
     </header>
 
     <section id="home" class="hero">
@@ -184,6 +186,18 @@
     <footer>
         <p>© 2025 HlyWor Blog. Crafted with ❤️ in our style.</p>
     </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        </script>
+        
+      
 </body>
 
 </html>

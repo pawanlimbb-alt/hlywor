@@ -1,165 +1,245 @@
 :root {
-      --bg: #e5e4df;
-      --window: #f4f3ef;
-      --bar: #d1cfca;
-      --border: #000;
-      --shadow: #999;
-      --hover: #c4c2bc;
-    }
+  --bg: #e5e4df;
+  --window: #f4f3ef;
+  --bar: #d1cfca;
+  --border: #000;
+  --shadow: #999;
+  --hover: #c4c2bc;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      font-family: 'Inter', sans-serif;
-      color: #111;
-    }
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: 'Inter', sans-serif;
+  color: #111;
+}
 
-    /* Top Navbar */
-    nav {
-      background: var(--bar);
-      border-bottom: 2px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 25px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 10px;
-    }
+/* ========== NAVBAR ========== */
+nav {
+  background: var(--bar);
+  border-bottom: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 25px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  position: relative;
+  z-index: 100;
+}
 
-    nav a {
-      text-decoration: none;
-      color: var(--border);
-      margin: 0 10px;
-      transition: color 0.2s;
-    }
+.nav-left {
+  display: flex;
+  gap: 12px;
+}
 
-    nav a:hover {
-      color: #666;
-    }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
 
-    /* Header / Quick Links */
-    header {
-      border-bottom: 2px solid var(--border);
-      background: #f1f0ec;
-      padding: 25px 5%;
-    }
+nav a {
+  text-decoration: none;
+  color: var(--border);
+  transition: all 0.2s ease;
+}
 
-    header h1 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 16px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
+nav a:hover {
+  color: #666;
+}
 
-    header p {
-      max-width: 800px;
-      color: #333;
-      font-size: 14px;
-      line-height: 1.6;
-    }
+/* ========== HAMBURGER ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 16px;
+  cursor: pointer;
+  z-index: 1100;
+}
 
-    /* Sub-navigation links */
-    .sub-nav {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      background: var(--bar);
-      border-bottom: 2px solid var(--border);
-      padding: 10px 5%;
-      gap: 15px;
-    }
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: var(--border);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
 
-    .sub-nav a {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
-      color: var(--border);
-      text-decoration: none;
-      padding: 10px 18px;
-      border: 2px solid var(--border);
-      background: var(--window);
-      transition: all 0.2s ease;
-    }
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+}
 
-    .sub-nav a:hover {
-      background: var(--hover);
-      box-shadow: 2px 2px 0 var(--border);
-    }
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
 
-    /* Card Grid Section */
-    .card-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      padding: 60px 5%;
-    }
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(4px, -4px);
+}
 
-    .card {
-      background: var(--window);
-      border: 3px solid var(--border);
-      box-shadow: 6px 6px 0 var(--shadow);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+/* ========== COMPACT RIGHT POPUP NAV ========== */
+.popup-nav {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: var(--window);
+  border: 3px solid var(--border);
+  box-shadow: -5px 5px 0 var(--shadow);
+  padding: 15px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+  transition: all 0.3s ease;
+}
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 8px 8px 0 var(--border);
-    }
+.popup-nav.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
 
-    .card-header {
-      background: var(--bar);
-      border-bottom: 2px solid var(--border);
-      padding: 8px 10px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.popup-nav a {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  color: var(--border);
+  text-decoration: none;
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  background: var(--bar);
+  text-align: center;
+  width: 160px;
+  box-shadow: 3px 3px 0 var(--border);
+  transition: all 0.2s ease;
+}
 
-    .card h2 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 13px;
-      margin: 20px 0 10px;
-      text-transform: uppercase;
-    }
+.popup-nav a:hover {
+  background: var(--hover);
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border);
+}
 
-    .card p {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #222;
-    }
+/* ========== HEADER ========== */
+header {
+  border-bottom: 2px solid var(--border);
+  background: #f1f0ec;
+  padding: 25px 5%;
+}
 
-    .retro-btn {
-      display: inline-block;
-      padding: 8px 14px;
-      background: var(--bar);
-      border: 2px solid var(--border);
-      font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
-      text-decoration: none;
-      color: #000;
-      align-self: flex-start;
-      margin-top: 15px;
-      transition: all 0.2s;
-    }
+header h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
 
-    .retro-btn:hover {
-      background: var(--hover);
-      box-shadow: 2px 2px 0 var(--border);
-    }
+header p {
+  max-width: 800px;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.6;
+}
 
-    footer {
-      border-top: 2px solid var(--border);
-      text-align: center;
-      padding: 40px 0;
-      font-size: 12px;
-      color: #444;
-    }
+/* ========== CARDS ========== */
+.card-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 60px 5%;
+}
+
+.card {
+  background: var(--window);
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 var(--shadow);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 0 var(--border);
+}
+
+.card-header {
+  background: var(--bar);
+  border-bottom: 2px solid var(--border);
+  padding: 8px 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 13px;
+  margin: 20px 0 10px;
+  text-transform: uppercase;
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #222;
+}
+
+.retro-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  background: var(--bar);
+  border: 2px solid var(--border);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  text-decoration: none;
+  color: #000;
+  align-self: flex-start;
+  margin-top: 15px;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 0 var(--border);
+}
+
+.retro-btn:hover {
+  background: var(--hover);
+  box-shadow: 3px 3px 0 var(--border);
+  transform: translateY(-2px);
+}
+
+footer {
+  border-top: 2px solid var(--border);
+  text-align: center;
+  padding: 40px 0;
+  font-size: 12px;
+  color: #444;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .nav-left,
+  .nav-right > a {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+  }
+}
