@@ -1,0 +1,234 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  background: #fafafa;
+  color: #111;
+  image-rendering: pixelated;
+  overflow-x: hidden;
+}
+
+/* Top Navigation */
+.topbar {
+  background: #e1e1e1;
+  padding: 14px 24px;
+  border-bottom: 3px solid #000;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.topbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back-arrow {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 2px 2px #777;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.back-arrow:hover {
+  transform: scale(1.1);
+  color: #ff004c;
+}
+
+/* Layout */
+.review-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 50px 80px;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+.review-left {
+  flex: 1;
+  min-width: 300px;
+  max-width: 650px;
+}
+
+.review-right {
+  flex: 1;
+  text-align: center;
+}
+
+.poster-container {
+  width: 100%;
+  max-width: 450px;
+  height: 650px;
+  border: 3px solid #000;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 8px 8px 0 #000;
+}
+
+.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+/* Text Styling */
+.movie-name {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.movie-genre,
+.movie-rating {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 16px;
+  text-decoration: underline;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 12px;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+/* --- PIXELATED GLITCH OVERLAY --- */
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: none;
+  z-index: 2000;
+  overflow: hidden;
+}
+
+.glitch-overlay.active {
+  display: block;
+  animation: fadeOut 0.5s forwards;
+}
+
+.glitch-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    #000 0px,
+    #ff004c 2px,
+    #00eaff 4px,
+    #000 6px
+  );
+  opacity: 0.6;
+  transform: scale(1.02);
+  animation: pixelGlitch 0.4s steps(8) infinite;
+}
+
+.glitch-box:nth-child(2) {
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    180deg,
+    #000 0px,
+    #00ffea 2px,
+    #ff004c 4px,
+    #000 6px
+  );
+  opacity: 0.4;
+  animation-delay: 0.05s;
+}
+
+.glitch-box:nth-child(3) {
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+  animation-delay: 0.1s;
+}
+
+/* Animations */
+@keyframes pixelGlitch {
+  0% { clip-path: inset(0 0 90% 0); transform: translate(0,0); }
+  10% { clip-path: inset(10% 0 70% 0); transform: translate(-4px,2px); }
+  25% { clip-path: inset(20% 0 50% 0); transform: translate(3px,-2px); }
+  40% { clip-path: inset(40% 0 20% 0); transform: translate(-3px,1px); }
+  55% { clip-path: inset(70% 0 0 0); transform: translate(2px,-1px); }
+  70% { clip-path: inset(0 0 90% 0); transform: translate(-2px,1px); }
+  100% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 0.8; }
+  100% { opacity: 0; display: none; }
+}
+
+/* Also Checkout Section */
+.also-checkout {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.also-checkout h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.movie-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.movie-card {
+  width: 160px;
+  border: 3px solid #000;
+  background: #fff;
+  box-shadow: 5px 5px 0 #000;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.2s;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 3px solid #000;
+}
+
+.movie-card p {
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .review-page {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+  .poster-container {
+    max-width: 100%;
+    height: 500px;
+  }
+  .movie-cards {
+    gap: 15px;
+  }
+}

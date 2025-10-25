@@ -5,13 +5,14 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Press Start 2P', cursive;
   background: #f7f7f7;
   color: #111;
   line-height: 1.5;
+  image-rendering: pixelated;
 }
 
-/* ✅ Sticky Top Navigation */
+/* ✅ Top Navigation */
 .topbar {
   background: #e1e1e1;
   padding: 10px 20px;
@@ -24,7 +25,6 @@ body {
 .topbar ul {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
 }
@@ -32,7 +32,7 @@ body {
 .topbar a {
   text-decoration: none;
   color: #000;
-  font-weight: 600;
+  font-size: 10px;
   transition: color 0.2s;
 }
 
@@ -58,13 +58,13 @@ body {
 }
 
 .hero-text h1 {
-  font-size: 48px;
-  line-height: 1.1;
+  font-size: 20px;
+  line-height: 1.5;
 }
 
 .hero-text p {
   margin: 15px 0;
-  font-size: 16px;
+  font-size: 10px;
 }
 
 .hero-text a {
@@ -80,10 +80,9 @@ body {
 .hero-img img {
   width: 250px;
   max-width: 90%;
-  height: auto;
-  background: #eaeaea;
   border: 2px solid #000;
   border-radius: 8px;
+  image-rendering: pixelated;
 }
 
 /* ✅ Movies Section */
@@ -92,7 +91,7 @@ body {
 }
 
 .projects h2 {
-  font-size: 28px;
+  font-size: 14px;
   margin-bottom: 25px;
   text-align: center;
 }
@@ -120,16 +119,16 @@ body {
   box-shadow: 6px 6px 0 #000;
 }
 
-/* Top Bar */
+/* Browser Bar */
 .browser-bar {
   background: #e1e1e1;
   padding: 6px 10px;
   border-bottom: 2px solid #000;
-  font-size: 12px;
+  font-size: 8px;
   font-weight: 600;
 }
 
-/* ✅ Uniform Image Box */
+/* Image */
 .project-image {
   width: 100%;
   height: 220px;
@@ -145,22 +144,22 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  image-rendering: pixelated;
 }
 
-/* Card Text */
+/* Text */
 .project-content {
   padding: 15px;
-  text-align: left;
   flex-grow: 1;
 }
 
 .project-content h3 {
-  font-size: 18px;
+  font-size: 10px;
   margin-bottom: 8px;
 }
 
 .project-content p {
-  font-size: 14px;
+  font-size: 8px;
   margin-bottom: 10px;
 }
 
@@ -171,6 +170,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  font-size: 8px;
 }
 
 .project-content button:hover {
@@ -178,7 +178,7 @@ body {
   color: #fff;
 }
 
-/* ✅ Responsive Tweaks */
+/* ✅ Responsive */
 @media (max-width: 1024px) {
   .hero {
     padding: 50px 40px;
@@ -197,15 +197,11 @@ body {
   }
 
   .hero-text h1 {
-    font-size: 36px;
+    font-size: 16px;
   }
 
   .hero-text p {
-    font-size: 14px;
-  }
-
-  .hero-img img {
-    width: 180px;
+    font-size: 8px;
   }
 
   .projects {
@@ -221,11 +217,7 @@ body {
   }
 
   .hero-text h1 {
-    font-size: 28px;
-  }
-
-  .hero-img img {
-    width: 140px;
+    font-size: 14px;
   }
 
   .projects {
