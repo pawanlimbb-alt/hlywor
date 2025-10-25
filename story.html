@@ -2,21 +2,11 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-ZVLSVF6T3J');
-  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Story</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="style/story.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/story.css" />
 </head>
 
 <body>
@@ -26,8 +16,24 @@
       <a href="gallery.html">Gallery</a>
       <a href="goal.html">Goals</a>
     </div>
-    <a href="about.html">About</a>
+
+    <div class="nav-right">
+      <a href="about.html">About</a>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
   </nav>
+
+  <!-- Compact Right Popup -->
+  <div class="popup-nav" id="popupNav">
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="goal.html">Goals</a>
+    <a href="about.html">About</a>
+  </div>
 
   <header>
     <h1>The Story</h1>
@@ -36,14 +42,6 @@
       from personal blogs to lessons and ideas that shaped our style.
     </p>
   </header>
- <!--comment out
-  <div class="sub-nav">
-    <a href="#myblog">My Blog</a>
-    <a href="#advice">Advice</a>
-    <a href="#thoughts">Thoughts</a>
-    <a href="#extras">Extras</a>
-  </div>
--->
 
   <main class="card-section">
     <div class="card" id="myblog">
@@ -52,9 +50,7 @@
         <span>✕</span>
       </div>
       <h2>My Short intro</h2>
-      <p>
-        A peek into my side — It's about me.
-      </p>
+      <p>A peek into my side — It's about me.</p>
       <a href="character.html" class="retro-btn">Select Me</a>
     </div>
 
@@ -65,42 +61,30 @@
       </div>
       <h2>The Tales</h2>
       <p>
-        We have got a lot of relatable and interesting things to share. Check it out, you won't regret it.
+        We have got a lot of relatable and interesting things to share.
+        Check it out, you won't regret it.
       </p>
       <a href="tales.html" class="retro-btn">Read Tales</a>
     </div>
- <!-------------------comment out
-    <div class="card" id="thoughts">
-      <div class="card-header">
-        <span>THOUGHTS.LOG</span>
-        <span>✕</span>
-      </div>
-      <h2>Thoughts</h2>
-      <p>
-        Random musings, creative sparks, and late-night reflections.
-        Not polished, just real — like the first draft of a dream.
-      </p>
-      <a href="pawan_tale.html" class="retro-btn">Open Thoughts</a>
-    </div>
-  
-    <div class="card" id="extras">
-      <div class="card-header">
-        <span>EXTRAS.DOC</span>
-        <span>✕</span>
-      </div>
-      <h2>Extras</h2>
-      <p>
-        Extra snippets, side projects, and retro experiments
-        that didn’t fit anywhere else but deserve to exist.
-      </p>
-      <a href="#" class="retro-btn">Explore Extras</a>
-    </div>
-    ----->
   </main>
 
-  <footer>
-    © 2025 HlyWor Blog. Crafted with ❤️ in our style.
-  </footer>
-</body>
+  <footer>© 2025 HlyWor Blog. Crafted with ❤️ in our style.</footer>
 
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const popupNav = document.getElementById('popupNav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      popupNav.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!popupNav.contains(e.target) && !hamburger.contains(e.target)) {
+        popupNav.classList.remove('active');
+        hamburger.classList.remove('active');
+      }
+    });
+  </script>
+</body>
 </html>
