@@ -1,26 +1,25 @@
 // -----------------------------
-// Anime Library JS
+// Tab switching
 // -----------------------------
-
-// Tab switching + click sound
 const tabs = document.querySelectorAll('.tab-button');
 const contents = document.querySelectorAll('.tab-content');
-const clickSound = new Audio('sounds/click.mp3');
 
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-        clickSound.currentTime = 0;
-        clickSound.play();
-
         tabs.forEach(t => t.classList.remove('active'));
         contents.forEach(c => c.classList.remove('active'));
 
         tab.classList.add('active');
         document.getElementById(tab.dataset.tab).classList.add('active');
+
+        // trigger reveal on newly active tab
+        triggerReveal();
     });
 });
 
-// Anime lists (exact folder names)
+// -----------------------------
+// Anime lists
+// -----------------------------
 const animeTabs = {
     "favorites": [
         'Attack on Titan','Attack on Titan_ Final Season','Attack on Titan_ Final Season Part 2','Attack on Titan Season 2',
@@ -94,19 +93,68 @@ const animeTabs = {
 // Populate grids
 // -----------------------------
 for (const [tab, titles] of Object.entries(animeTabs)) {
-    const grid = document.querySelector(`#${tab.replace(/ /g, '-') } .anime-grid`);
+    const grid = document.querySelector(`#${tab.replace(/ /g,'-')} .anime-grid`);
     if (!grid) continue;
 
-    titles.forEach(title => {
+    titles.forEach((title, index) => {
         const imgPath = `images/${tab}/${title}/cover.webp`;
 
         const card = document.createElement('div');
-        card.className = 'anime-card';
+        card.className = 'anime-card reveal';
+        card.style.transitionDelay = `${index * 50}ms`; // stagger animation
         card.innerHTML = `
             <img src="${imgPath}" alt="${title}" loading="lazy">
             <h2>${title}</h2>
         `;
+
+        card.addEventListener('click', () => {
+            const encodedTitle = encodeURIComponent(title);
+            const encodedTab = encodeURIComponent(tab);
+            window.location.href = `animecard.html?tab=${encodedTab}&title=${encodedTitle}`;
+        });
+
         grid.appendChild(card);
     });
 }
+
+// -----------------------------
+// TYPING EFFECT for H1
+// -----------------------------
+const typingElement = document.querySelector('h1');
+const text = typingElement.textContent;
+typingElement.setAttribute('data-text', text);
+typingElement.textContent = '';
+typingElement.classList.add('typing', 'reveal');
+
+let i = 0;
+function type() {
+    if (i < text.length) {
+        typingElement.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 80); // typing speed
+    }
+}
+type();
+
+// -----------------------------
+// SCROLL REVEAL
+// -----------------------------
+function triggerReveal() {
+    const reveals = document.querySelectorAll('.tab-content.active .anime-card, h1');
+
+    reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (top < windowHeight - 50) {
+            el.classList.add('active');
+        } else {
+            el.classList.remove('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', triggerReveal);
+window.addEventListener('resize', triggerReveal);
+triggerReveal();
 

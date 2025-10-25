@@ -26,3 +26,35 @@
     <script src="js/animecard.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Details</title>
+    <link rel="stylesheet" href="css/animecard.css">
+</head>
+<body>
+
+    <button class="back-button" onclick="window.history.back()">← Back</button>
+
+    <div class="anime-details">
+        <div class="anime-card-detail reveal">
+            <img id="anime-cover" src="images/fallback.webp" alt="Anime Cover">
+        </div>
+
+        <div class="anime-card-detail reveal anime-info">
+            <h1 id="anime-title" class="typing">Loading...</h1>
+            <p id="anime-summary">No summary available yet.</p>
+            <p id="anime-episodes">Episodes: Unknown</p>
+            <p id="anime-genre">Genre: Unknown</p>
+            <h2>My Thoughts</h2>
+            <p id="anime-thoughts">Add your personal notes here.</p>
+        </div>
+    </div>
+<script src="js/main.js"></script>
+    <script src="js/animeData.js"></script>
+    <script src="js/animecard.js"></script>
+</body>
+</html>
+

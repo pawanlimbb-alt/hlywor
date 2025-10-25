@@ -1,22 +1,64 @@
+/* --------------------------
+   FONT DEFINITION
+-------------------------- */
 @font-face {
     font-family: 'PixelFont';
-    src: url('../fonts/pixel.ttf') format('truetype');
+    src: url('../fonts/pixel.woff2') format('woff2'),
+         url('../fonts/pixel.woff') format('woff'),
+         url('../fonts/pixel.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --------------------------
+   GLOBAL STYLES & FONT FIX
+-------------------------- */
+*,
+h1, h2, h3, h4, h5, h6, p, span, button, div {
+    font-family: 'PixelFont', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'PixelFont', sans-serif;
     background-color: #000;
     color: #fff;
-    margin: 0;
-    padding: 0;
 }
 
+/* --------------------------
+   HEADINGS
+-------------------------- */
 h1 {
-    text-align: center;
-    margin: 30px 0;
     font-size: 40px;
+    margin: 30px 0;
 }
 
+/* Typing effect + POP animation for heading */
+h1.typing {
+    display: block;                 /* block-level for centering */
+    text-align: center;             /* center the text */
+    margin: 30px auto;              /* spacing */
+    animation: pop 0.6s ease forwards, blink-caret 0.7s step-end infinite;
+}
+
+/* keyframes for heading pop */
+@keyframes pop {
+    0%   { transform: scale(0); opacity: 0; }
+    50%  { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* h2 for anime cards */
+h2 {
+    font-size: 16px;
+    margin: 10px 0;
+    padding: 0 5px;
+}
+
+/* --------------------------
+   TABS
+-------------------------- */
 .tabs {
     display: flex;
     justify-content: center;
@@ -31,7 +73,6 @@ h1 {
     color: #fff;
     border: 1px solid #fff;
     cursor: pointer;
-    font-family: 'PixelFont', sans-serif;
     transition: 0.2s;
     border-radius: 5px;
     font-size: 16px;
@@ -46,10 +87,12 @@ h1 {
     color: #000;
 }
 
+/* --------------------------
+   ANIME GRID & CARDS
+-------------------------- */
 .anime-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, auto);
     gap: 25px;
     padding: 0 25px 50px 25px;
 }
@@ -61,13 +104,23 @@ h1 {
     border-radius: 10px;
     overflow: hidden;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, opacity 0.8s;
     cursor: pointer;
+    opacity: 0; /* hidden initially for reveal */
 }
 
+/* Hover pop animation for anime cards */
 .anime-card:hover {
-    transform: scale(1.1);
+    animation: card-pop 0.3s forwards;
+    transform: scale(1.1); /* final scale */
     box-shadow: 0 0 15px #fff;
+}
+
+/* Keyframes for card pop */
+@keyframes card-pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1.1); }
 }
 
 .anime-card img {
@@ -77,12 +130,9 @@ h1 {
     border-bottom: 1px solid #fff;
 }
 
-.anime-card h2 {
-    font-size: 16px;
-    margin: 10px 0;
-    padding: 0 5px;
-}
-
+/* --------------------------
+   TAB CONTENT
+-------------------------- */
 .tab-content {
     display: none;
 }
@@ -91,15 +141,40 @@ h1 {
     display: block;
 }
 
-@media (max-width: 1400px) {
-    .anime-grid { grid-template-columns: repeat(4, 1fr); }
+/* --------------------------
+   RESPONSIVE GRID
+-------------------------- */
+@media (max-width: 1400px) { .anime-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 900px)  { .anime-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px)  { .anime-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* --------------------------
+   SCROLL REVEAL
+-------------------------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
 }
 
-@media (max-width: 900px) {
-    .anime-grid { grid-template-columns: repeat(3, 1fr); }
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-@media (max-width: 600px) {
-    .anime-grid { grid-template-columns: repeat(2, 1fr); }
+/* --------------------------
+   TYPING EFFECT
+-------------------------- */
+.typing {
+    border-right: 2px solid #fff; /* blinking cursor */
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    /* animation applied in h1.typing */
+}
+
+@keyframes blink-caret {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #fff; }
 }
 
