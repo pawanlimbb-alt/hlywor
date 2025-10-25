@@ -35,7 +35,7 @@
                 <span></span>
             </div>
         </nav>
-        
+
     </header>
 
     <section id="home" class="hero">
@@ -70,7 +70,7 @@
                     <div class="cam"></div>
                 </a>
             </section>
- <section class="What-we-do">
+            <section class="What-we-do">
                 <a href="book.html">
                     <h2>Book Reviews</h2>
                     <div class="boo"></div>
@@ -90,7 +90,7 @@
             </section>
 
 
-           <!-- <section class="numbers">
+            <!-- <section class="numbers">
                 <div class="stat">495%<br><small>Growth</small></div>
                 <div class="stat">750<br><small>Upload</small></div>
                 <div class="stat">60<br><small>Clients</small></div>
@@ -111,13 +111,15 @@
     <section id="about" class="section">
         <h2>About</h2>
         <p>hlywor.fun is kind of like our open notebook.
-            We write about our days, college life, random thoughts, movies we watch, and things we’ve learned along the way.
+            We write about our days, college life, random thoughts, movies we watch, and things we’ve learned along the
+            way.
             <br>
             Sometimes it’s deep, sometimes it’s just something that made us laugh — depends on the day, honestly.
             <br>
             We also share stories from others and moments that feel real to us.
             <br>
-            It’s not about being perfect or planned — it’s just us, writing what feels right.</p>
+            It’s not about being perfect or planned — it’s just us, writing what feels right.
+        </p>
     </section>
 
     <section id="blog" class="section blog">
@@ -162,17 +164,21 @@
         <h2>US</h2>
         <div class="team-grid">
             <div class="member">
-                <a href="pawan.html"><div class="avatar1"></div></a>
+                <a href="pawan.html">
+                    <div class="avatar1"></div>
+                </a>
                 <h3>Pawan Limbu</h3>
                 <p>CEO</p>
             </div>
             <div class="member">
-                <a href="atck.html"><div class="avatar2"></div></a>
+                <a href="atck.html">
+                    <div class="avatar2"></div>
+                </a>
                 <h3>Suvam Limbu</h3>
                 <p>CTO</p>
             </div>
 
-           
+
 
         </div>
     </section>
@@ -190,35 +196,54 @@
     <script>
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
-        
+
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             hamburger.classList.toggle('active');
         });
-        </script>
+    </script>
 
     <script>
-fetch("posts.json")
-  .then(r => r.json())
-  .then(posts => {
-    const container = document.querySelector(".blog-grid");
-    container.innerHTML = "";
-    posts.slice(0, 6).forEach(post => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="${post.thumbnail}" alt="${post.title}" style="width:100%;border-radius:8px;">
+        fetch("posts.json")
+            .then(r => r.json())
+            .then(posts => {
+                const container = document.querySelector(".blog-grid");
+                container.innerHTML = "";
+
+                // Sort and take latest 6
+                const latest = posts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
+
+                // Create post cards
+                latest.forEach(post => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+        <img src="${post.thumbnail}" alt="${post.title}" class="post-thumb" style="width:100%;border-radius:8px;">
         <h3>${post.title}</h3>
         <p>${post.desc}</p>
-        <a href="${post.url}">Read More</a>
+        <a href="${post.url}" class="read-btn">Read More</a>
       `;
-      container.appendChild(card);
-    });
-  });
-</script>
+                    container.appendChild(card);
+                });
 
-        
-      
+                // Optional: Show "View All Posts" button if there are more than 6 posts
+                if (posts.length > 6) {
+                    const viewAll = document.createElement("div");
+                    viewAll.style.textAlign = "center";
+                    viewAll.style.marginTop = "20px";
+                    viewAll.innerHTML = `<a href="/posts/" class="view-all-btn" style="display:inline-block;padding:10px 20px;background:#222;color:#fff;border-radius:8px;text-decoration:none;">View All Posts</a>`;
+                    container.parentElement.appendChild(viewAll);
+                }
+            })
+            .catch(err => {
+                console.error("Error loading posts:", err);
+                const container = document.querySelector(".blog-grid");
+                container.innerHTML = "<p style='text-align:center;color:#888;'>No posts found yet.</p>";
+            });
+    </script>
+
+
+
 </body>
 
 </html>
