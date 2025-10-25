@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="post-title" content="Social Network">
+  <meta name="post-date" content="2025-10-25">
+  <meta name="post-desc" content="This movie inspired me to start this website">
+  <meta name="post-thumbnail" content="style/image/The_Social_Network.webp">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Review - The Social Network</title>
+
+  <!-- Pixel Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style/fight_club.css" />
+
+  <!-- Retro 8-bit Power-up Sound -->
+  <audio id="glitch-sound" preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_18b8bfc75b.mp3?filename=power-up-7103.mp3"
+      type="audio/mpeg" />
+  </audio>
+</head>
+
+<body>
+  <!-- Glitch Overlay -->
+  <div class="glitch-overlay">
+    <div class="glitch-box"></div>
+    <div class="glitch-box"></div>
+    <div class="glitch-box"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="topbar">
+    <nav>
+      <ul>
+        <li><a href="movies.html" class="back-arrow">⬅ BACK</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Poster with overlayed text -->
+  <section class="poster-section">
+    <img src="style/images/Fight Club.webp" alt="Fight Club" class="main-poster" />
+    <div class="poster-overlay">
+      <h1 class="movie-name">Fight Club</h1>
+      <p class="movie-genre"><strong>Genre:</strong>Crime/Action/Psychological</p>
+      <p class="movie-rating"><strong>Rating by me:</strong> ★ 8.8/10</p>
+    </div>
+  </section>
+
+  <!-- Review Section -->
+  <main class="review-page">
+    <section class="review-content">
+      <div class="movie-header">
+        <div class="text-info">
+          <!-- These will not show on desktop -->
+          <h1 class="movie-name mobile-only">FIGHT CLUB</h1>
+          <p class="movie-genre mobile-only"><strong>Genre:</strong>Crime/Action/Psychological</p>
+          <p class="movie-rating mobile-only"><strong>Rating by me:</strong> ★ 8.8/10</p>
+        </div>
+
+        <!-- Poster for mobile view -->
+        <div class="mobile-poster">
+          <img src="style/images/Fight Club.webp" alt="Fight Club Poster" />
+        </div>
+      </div>
+
+      <h2>Intro</h2>
+      <p>
+       "Fight Club" is a movie about a man who suffers from severe insomnia and starts hallucinating about man named "Tyler Durden"<br>
+       and with his imaginary friend, he starts a cult.
+      </p>
+
+      <h2>Main Body</h2>
+      <p>
+        What makes this movie stand out is its crisp dialogue, cold tone, and haunting score by Trent Reznor.
+        Jesse Eisenberg’s portrayal of Zuckerberg perfectly captures the emotionally detached genius struggling
+        to fit into a world he’s transforming.
+      </p>
+      <p>
+        David Fincher’s direction gives the movie a razor-sharp edge — every frame feels calculated and intense,
+        mirroring the characters’ ambition and moral conflicts.
+      </p>
+
+      <h2>Conclusion</h2>
+      <p>
+        The Social Network isn’t just about Facebook — it’s about ego, loneliness, and the cost of success.
+        A modern classic that defines an entire generation of technology and human flaws.
+      </p>
+    </section>
+  </main>
+
+  <!-- Also Checkout Section -->
+  <section class="also-checkout">
+    <h2>Also Checkout</h2>
+    <div class="movie-cards">
+      <div class="movie-card">
+        <img src="style/images/Inception.webp" alt="Inception Poster">
+        <p>Inception</p>
+      </div>
+      <div class="movie-card">
+        <img src="style/images/Blade_Runner_2049.webp" alt="Blade Runner 2049 Poster">
+        <p>Blade Runner 2049</p>
+      </div>
+      <div class="movie-card">
+        <img src="style/images/The_Matrix.webp" alt="The Matrix Poster">
+        <p>The Matrix</p>
+      </div>
+      <div class="movie-card">
+        <img src="style/images/Her.webp" alt="Her Poster">
+        <p>Her</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Trigger glitch effect and sound on page load
+    window.addEventListener('load', () => {
+      const overlay = document.querySelector('.glitch-overlay');
+      const sound = document.getElementById('glitch-sound');
+
+      sound.currentTime = 0;
+      sound.play().catch(err => console.log("Autoplay blocked:", err));
+
+      overlay.classList.add('active');
+      setTimeout(() => {
+        overlay.classList.remove('active');
+      }, 500);
+    });
+  </script>
+</body>
+
+</html>

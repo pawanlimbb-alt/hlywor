@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta name="post-title" content="Social Network">
+  <meta name="post-date" content="2025-10-25">
+  <meta name="post-desc" content="This movie inspired me to start this website">
+  <meta name="post-thumbnail" content="style/image/The_Social_Network.webp">
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Review - Detailed Page</title>
+  <title>Movie Review - The Social Network</title>
 
   <!-- Pixel Font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="style/review.css" />
+  <link rel="stylesheet" href="style/social_network.css" />
 
   <!-- Retro 8-bit Power-up Sound -->
   <audio id="glitch-sound" preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_18b8bfc75b.mp3?filename=power-up-7103.mp3" type="audio/mpeg" />
+    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_18b8bfc75b.mp3?filename=power-up-7103.mp3"
+      type="audio/mpeg" />
   </audio>
 </head>
 
@@ -34,12 +41,32 @@
     </nav>
   </header>
 
-  <!-- Review Section -->
-  <main class="review-page">
-    <section class="review-left">
+  <!-- Poster with overlayed text -->
+  <section class="poster-section">
+    <img src="style/images/The_Social_Network.webp" alt="The Social Network Poster" class="main-poster" />
+    <div class="poster-overlay">
       <h1 class="movie-name">THE SOCIAL NETWORK</h1>
       <p class="movie-genre"><strong>Genre:</strong> Drama / History</p>
       <p class="movie-rating"><strong>Rating by me:</strong> ★ 8.5/10</p>
+    </div>
+  </section>
+
+  <!-- Review Section -->
+  <main class="review-page">
+    <section class="review-content">
+      <div class="movie-header">
+        <div class="text-info">
+          <!-- These will not show on desktop -->
+          <h1 class="movie-name mobile-only">THE SOCIAL NETWORK</h1>
+          <p class="movie-genre mobile-only"><strong>Genre:</strong> Drama / History</p>
+          <p class="movie-rating mobile-only"><strong>Rating by me:</strong> ★ 8.5/10</p>
+        </div>
+
+        <!-- Poster for mobile view -->
+        <div class="mobile-poster">
+          <img src="style/images/The_Social_Network.webp" alt="The Social Network Poster" />
+        </div>
+      </div>
 
       <h2>Intro</h2>
       <p>
@@ -63,37 +90,31 @@
         The Social Network isn’t just about Facebook — it’s about ego, loneliness, and the cost of success.
         A modern classic that defines an entire generation of technology and human flaws.
       </p>
-
-      <!-- Also Checkout Section -->
-      <div class="also-checkout">
-        <h2>Also Checkout</h2>
-        <div class="movie-cards">
-          <div class="movie-card">
-            <img src="style/images/Inception.webp" alt="Inception Poster">
-            <p>Inception</p>
-          </div>
-          <div class="movie-card">
-            <img src="style/images/Interstellar.webp" alt="Interstellar Poster">
-            <p>Interstellar</p>
-          </div>
-          <div class="movie-card">
-            <img src="style/images/Fight_Club.webp" alt="Fight Club Poster">
-            <p>Fight Club</p>
-          </div>
-          <div class="movie-card">
-            <img src="style/images/The_Batman.webp" alt="The Batman Poster">
-            <p>The Batman</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="review-right">
-      <div class="poster-container">
-        <img src="style/images/The_Social_Network.webp" alt="The Social Network Poster" class="poster">
-      </div>
     </section>
   </main>
+
+  <!-- Also Checkout Section -->
+  <section class="also-checkout">
+    <h2>Also Checkout</h2>
+    <div class="movie-cards">
+      <div class="movie-card">
+        <img src="style/images/Inception.webp" alt="Inception Poster">
+        <p>Inception</p>
+      </div>
+      <div class="movie-card">
+        <img src="style/images/Blade_Runner_2049.webp" alt="Blade Runner 2049 Poster">
+        <p>Blade Runner 2049</p>
+      </div>
+      <div class="movie-card">
+        <img src="style/images/The_Matrix.webp" alt="The Matrix Poster">
+        <p>The Matrix</p>
+      </div>
+      <div class="movie-card">
+        <img src="style/images/Her.webp" alt="Her Poster">
+        <p>Her</p>
+      </div>
+    </div>
+  </section>
 
   <script>
     // Trigger glitch effect and sound on page load
@@ -107,8 +128,9 @@
       overlay.classList.add('active');
       setTimeout(() => {
         overlay.classList.remove('active');
-      }, 500); // faster glitch
+      }, 500);
     });
   </script>
 </body>
+
 </html>
