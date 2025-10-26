@@ -1,35 +1,73 @@
 // make_posts_index.js
-import fs from 'fs';
-import path from 'path';
-import { JSDOM } from 'jsdom';
+// CommonJS version — no package.json type changes needed
+const fs = require('fs');
+const path = require('path');
+const { JSDOM } = require('jsdom');
 
-const postsDir = './posts';
-const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.html'));
-const posts = [];
-
-for (const file of files) {
-  const filePath = path.join(postsDir, file);
-  const html = fs.readFileSync(filePath, 'utf-8');
-  const dom = new JSDOM(html);
-  const doc = dom.window.document;
-
-  const title = doc.querySelector('meta[name="post-title"]')?.content || file;
-  const date = doc.querySelector('meta[name="post-date"]')?.content || '2000-01-01';
-  const desc = doc.querySelector('meta[name="post-desc"]')?.content || '';
-  const thumb = doc.querySelector('meta[name="post-thumbnail"]')?.content || '';
-
-  posts.push({
-    title,
-    date,
-    desc,
-    thumbnail: thumb,
-    url: `/posts/${file}`
-  });
+const postsDir = path.join(process.cwd(), 'post'); // absolute path to ./posts
+if (!fs.existsSync(postsDir)) {
+  console.error('🔥 posts directory not found at', postsDir);
+  process.exit(1);
 }
 
-// Sort by newest date
+const htmlFiles = [];
+
+// recursive walker that ONLY walks inside postsDir
+function walkPosts(dir) {
+  const items = fs.readdirSync(dir);
+  for (const it of items) {
+    const full = path.join(dir, it);
+    const stat = fs.statSync(full);
+    if (stat.isDirectory()) {
+      walkPosts(full);
+    } else if (stat.isFile() && it.toLowerCase().endsWith('.html')) {
+      htmlFiles.push(full);
+    }
+  }
+}
+
+walkPosts(postsDir);
+
+if (htmlFiles.length === 0) {
+  console.log('⚠️  No .html files found inside /posts/. Will write empty posts.json');
+}
+
+const posts = [];
+
+for (const filePath of htmlFiles) {
+  try {
+    const html = fs.readFileSync(filePath, 'utf8');
+    const dom = new JSDOM(html);
+    const doc = dom.window.document;
+
+    const title = doc.querySelector('meta[name="post-title"]')?.getAttribute('content') || doc.title || path.basename(filePath);
+    const date = doc.querySelector('meta[name="post-date"]')?.getAttribute('content') || '2000-01-01';
+    const desc = doc.querySelector('meta[name="post-desc"]')?.getAttribute('content') || '';
+    const thumbnail = doc.querySelector('meta[name="post-thumbnail"]')?.getAttribute('content') || '';
+
+    // make url relative to repo root and use forward slashes
+    let rel = path.relative(process.cwd(), filePath).replace(/\\/g, '/');
+    if (!rel.startsWith('/')) rel = '/' + rel;
+
+    posts.push({
+      title: title,
+      date: date,
+      desc: desc,
+      thumbnail: thumbnail,
+      url: rel
+    });
+
+    console.log(' + indexed:', rel);
+  } catch (err) {
+    console.error('Error parsing', filePath, err);
+  }
+}
+
+// sort newest first
 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-// Save to posts.json in root folder
-fs.writeFileSync('posts.json', JSON.stringify(posts, null, 2));
-console.log('✅ posts.json updated successfully!');
+// write posts.json to repo root
+const outPath = path.join(process.cwd(), 'posts.json');
+fs.writeFileSync(outPath, JSON.stringify(posts, null, 2), 'utf8');
+
+console.log(`✅ posts.json written (${posts.length} items) -> ${outPath}`);
