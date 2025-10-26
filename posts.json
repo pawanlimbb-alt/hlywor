@@ -4,258 +4,27 @@
     "date": "2025-10-25",
     "desc": "This movie inspired me to start this website",
     "thumbnail": "style/image/The_Social_Network.webp",
-    "url": "fight_club.html"
+    "url": "/post/fight_club.html"
   },
   {
     "title": "Inception",
     "date": "2025-10-25",
     "desc": "This movie showed us about lucid dreaming in more detail",
     "thumbnail": "style/image/POSTER INCEPTION.webp",
-    "url": "inception.html"
+    "url": "/post/inception.html"
   },
   {
     "title": "Social Network",
     "date": "2025-10-25",
     "desc": "This movie inspired me to start this website",
     "thumbnail": "style/image/The_Social_Network.webp",
-    "url": "socialnetwork.html"
+    "url": "/post/socialnetwork.html"
   },
   {
-    "title": "Ez.html",
+    "title": "The High School — A Personal Story by Pawan | HlyWor",
     "date": "2000-01-01",
     "desc": "",
     "thumbnail": "",
-    "url": "Backup/Ez.html"
-  },
-  {
-    "title": "anime.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "Backup/anime.html"
-  },
-  {
-    "title": "games.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "Backup/games.html"
-  },
-  {
-    "title": "manga.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "Backup/manga.html"
-  },
-  {
-    "title": "manhwa.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "Backup/manhwa.html"
-  },
-  {
-    "title": "menu.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "Backup/menu.html"
-  },
-  {
-    "title": "quiz.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "Backup/quiz.html"
-  },
-  {
-    "title": "Ez.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "Ez.html"
-  },
-  {
-    "title": "about.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "about.html"
-  },
-  {
-    "title": "anime.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "anime.html"
-  },
-  {
-    "title": "animecard.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "animecard.html"
-  },
-  {
-    "title": "atck.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "atck.html"
-  },
-  {
-    "title": "book.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "book.html"
-  },
-  {
-    "title": "character.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "character.html"
-  },
-  {
-    "title": "characterStory.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "characterStory.html"
-  },
-  {
-    "title": "gallery.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "gallery.html"
-  },
-  {
-    "title": "games.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "games.html"
-  },
-  {
-    "title": "goal.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "goal.html"
-  },
-  {
-    "title": "highschool.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "highschool.html"
-  },
-  {
-    "title": "index.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "index.html"
-  },
-  {
-    "title": "koushik.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "koushik.html"
-  },
-  {
-    "title": "manga.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "manga.html"
-  },
-  {
-    "title": "manhwa.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "manhwa.html"
-  },
-  {
-    "title": "menu.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "menu.html"
-  },
-  {
-    "title": "movies.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "movies.html"
-  },
-  {
-    "title": "news.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "news.html"
-  },
-  {
-    "title": "pawan.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "pawan.html"
-  },
-  {
-    "title": "quiz.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "quiz.html"
-  },
-  {
-    "title": "series.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "series.html"
-  },
-  {
-    "title": "story.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "story.html"
-  },
-  {
-    "title": "suggestion.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "suggestion.html"
-  },
-  {
-    "title": "tales.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "tales.html"
-  },
-  {
-    "title": "text.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "text.html"
-  },
-  {
-    "title": "utility.html",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "",
-    "url": "utility.html"
+    "url": "/post/highschool.html"
   }
 ]
