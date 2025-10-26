@@ -14,20 +14,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Library</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style/news.css">
+  <link rel="stylesheet" href="style/book.css">
 </head>
 
 <body>
   <nav>
     <div class="nav-left">
+      <h1 class="logo">HlYWoR</h1>
+    </div>
+
+    <div class="nav-right">
       <a href="index.html">Home</a>
       <a href="gallery.html">Gallery</a>
       <a href="goal.html">Goals</a>
-    </div>
-    <div class="nav-right">
-       <a href="about.html">About</a>
+      <a href="about.html">About</a>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </nav>
+
+  <!-- Compact Right Popup -->
+  <div class="popup-nav" id="popupNav">
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="goal.html">Goals</a>
+    <a href="about.html">About</a>
+  </div>
 
   <header>
     <h1>BOOK REVIEWS</h1>
@@ -255,5 +270,25 @@
   <footer>
     © 2025 HlyWor Blog. Crafted with ❤️ in our style.
   </footer>
+
+
+  <script>
+  const hamburger = document.getElementById('hamburger');
+  const popupNav = document.getElementById('popupNav');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    popupNav.classList.toggle('active');
+  });
+
+  // Optional: close popup when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!popupNav.contains(e.target) && !hamburger.contains(e.target)) {
+      popupNav.classList.remove('active');
+      hamburger.classList.remove('active');
+    }
+  });
+</script>
+
 </body>
 </html>

@@ -233,7 +233,7 @@ footer {
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-  .nav-left,
+  
   .nav-right > a {
     display: none !important;
   }
