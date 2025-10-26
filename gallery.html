@@ -285,6 +285,23 @@
       if (e.key === 'Escape') lightbox.classList.remove('active');
     });
   </script>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const popupNav = document.getElementById('popupNav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      popupNav.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!popupNav.contains(e.target) && !hamburger.contains(e.target)) {
+        popupNav.classList.remove('active');
+        hamburger.classList.remove('active');
+      }
+    });
+  </script>
  
 
 </body>
