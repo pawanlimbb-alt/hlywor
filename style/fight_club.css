@@ -2,67 +2,67 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     font-family: 'Press Start 2P', cursive;
     background: #fafafa;
     color: #111;
     image-rendering: pixelated;
     overflow-x: hidden;
-}
-
-/* Top Navigation */
-.topbar {
+  }
+  
+  /* Top Navigation */
+  .topbar {
     background: #e1e1e1;
     padding: 14px 24px;
     border-bottom: 3px solid #000;
     position: sticky;
     top: 0;
     z-index: 1000;
-}
-
-.topbar ul {
+  }
+  
+  .topbar ul {
     list-style: none;
     display: flex;
     justify-content: flex-start;
-}
-
-.back-arrow {
+  }
+  
+  .back-arrow {
     text-decoration: none;
     color: #000;
     font-size: 16px;
     font-weight: bold;
     text-shadow: 2px 2px #777;
     transition: transform 0.2s, color 0.2s;
-}
-
-.back-arrow:hover {
+  }
+  
+  .back-arrow:hover {
     transform: scale(1.1);
-    color: #ee4dc5;
-}
-
-/* Poster Section with Overlay */
-.poster-section {
+    color: #1470c1;
+  }
+  
+  /* Poster Section with Overlay */
+  .poster-section {
     position: relative;
     width: 100%;
     text-align: center;
     background: #000;
     border-bottom: 4px solid #000;
     overflow: hidden;
-}
-
-.main-poster {
+  }
+  
+  .main-poster {
     width: 100%;
     max-height: 500px;
     object-fit: cover;
     border-bottom: 4px solid #000;
     image-rendering: pixelated;
     display: block;
-}
-
-/* Text overlay on poster */
-.poster-overlay {
+  }
+  
+  /* Text overlay on poster */
+  .poster-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -71,88 +71,88 @@ body {
     padding: 25px 35px;
     color: #fff;
     border-bottom-right-radius: 10px;
-}
-
-.poster-overlay .movie-name {
+  }
+  
+  .poster-overlay .movie-name {
     font-size: 20px;
-    color: #ee4dc5;
+    color: #00eaff;
     margin-bottom: 10px;
-}
-
-.poster-overlay .movie-genre,
-.poster-overlay .movie-rating {
+  }
+  
+  .poster-overlay .movie-genre,
+  .poster-overlay .movie-rating {
     font-size: 12px;
     color: #fff;
     margin-bottom: 6px;
-}
-
-/* Hide overlay info on mobile */
-.mobile-only {
+  }
+  
+  /* Hide overlay info on mobile */
+  .mobile-only {
     display: none;
-}
-
-/* Review Section */
-.review-page {
+  }
+  
+  /* Review Section */
+  .review-page {
     display: flex;
     justify-content: center;
     padding: 50px 80px;
-}
-
-.review-content {
+  }
+  
+  .review-content {
     max-width: 900px;
     width: 100%;
-}
-
-.movie-header {
+  }
+  
+  .movie-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 30px;
-}
-
-.text-info {
+  }
+  
+  .text-info {
     flex: 1;
-}
-
-.movie-name {
+  }
+  
+  .movie-name {
     font-size: 22px;
     margin-bottom: 15px;
-}
-
-.movie-genre,
-.movie-rating {
+  }
+  
+  .movie-genre,
+  .movie-rating {
     font-size: 14px;
     margin-bottom: 10px;
-}
-
-.mobile-poster {
+  }
+  
+  .mobile-poster {
     display: none;
-}
-
-.mobile-poster img {
+  }
+  
+  .mobile-poster img {
     width: 150px;
     height: 200px;
     border: 3px solid #000;
     border-radius: 8px;
     object-fit: cover;
     box-shadow: 5px 5px 0 #000;
-}
-
-h2 {
+  }
+  
+  h2 {
     font-size: 16px;
     text-decoration: underline;
     margin-top: 25px;
     margin-bottom: 10px;
-}
-
-p {
+  }
+  
+  p {
     font-size: 12px;
     line-height: 1.8;
     margin-bottom: 10px;
-}
-
-/* Also Checkout Section - full width below content */
-.also-checkout {
+  }
+  
+  /* Also Checkout Section - full width below content */
+  .also-checkout {
     margin-top: 60px;
     padding: 60px 80px;
     width: 100%;
@@ -160,25 +160,25 @@ p {
     border-top: 4px solid #000;
     border-bottom: 4px solid #000;
     text-align: center;
-}
-
-.also-checkout h2 {
+  }
+  
+  .also-checkout h2 {
     font-size: 18px;
     margin-bottom: 30px;
     color: #000;
-    text-shadow: 2px 2px #ee4dc5;
-}
-
-/* Movie Cards */
-.movie-cards {
+    text-shadow: 2px 2px #1470c1;
+  }
+  
+  /* Movie Cards */
+  .movie-cards {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 25px;
-}
-
-.movie-card {
+  }
+  
+  .movie-card {
     width: 200px;
     height: 320px;
     border: 3px solid #000;
@@ -189,156 +189,125 @@ p {
     border-radius: 6px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     cursor: pointer;
-}
-
-.movie-card:hover {
+  }
+  
+  .movie-card:hover {
     transform: scale(1.08) rotate(-1.5deg);
-    box-shadow: 8px 8px 0 #ee4dc5;
-}
-
-.movie-card img {
+    box-shadow: 8px 8px 0 #1470c1;
+  }
+  
+  .movie-card img {
     width: 100%;
     height: 250px;
     object-fit: cover;
     border-bottom: 3px solid #000;
     border-radius: 3px;
-}
-
-.movie-card p {
+  }
+  
+  .movie-card p {
     font-size: 11px;
     margin-top: 8px;
     color: #000;
-    text-shadow: 1px 1px #ee4dc5;
-}
-
-/* Glitch Overlay */
-.glitch-overlay {
+    text-shadow: 1px 1px #00eaff;
+  }
+  
+  /* Glitch Overlay */
+  .glitch-overlay {
     position: fixed;
     inset: 0;
     background: #000;
     display: none;
     z-index: 2000;
     overflow: hidden;
-}
-
-.glitch-overlay.active {
+  }
+  
+  .glitch-overlay.active {
     display: block;
     animation: fadeOut 0.5s forwards;
-}
-
-.glitch-box {
+  }
+  
+  .glitch-box {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: repeating-linear-gradient(90deg,
-            #000 0px,
-            #00ff9d 2px,
-            #ee4dc5 4px,
-            #000 6px);
+    background: repeating-linear-gradient(
+      90deg,
+      #000 0px,
+      #00ff9d 2px,
+      #00eaff 4px,
+      #000 6px
+    );
     opacity: 0.6;
     transform: scale(1.02);
     animation: pixelGlitch 0.4s steps(8) infinite;
-}
-
-.glitch-box:nth-child(2) {
+  }
+  
+  .glitch-box:nth-child(2) {
     mix-blend-mode: screen;
-    background: repeating-linear-gradient(180deg,
-            #000 0px,
-            #00ffea 2px,
-            #ee4dc5 4px,
-            #000 6px);
+    background: repeating-linear-gradient(
+      180deg,
+      #000 0px,
+      #00ffea 2px,
+      #1470c1 4px,
+      #000 6px
+    );
     opacity: 0.4;
     animation-delay: 0.05s;
-}
-
-.glitch-box:nth-child(3) {
+  }
+  
+  .glitch-box:nth-child(3) {
     mix-blend-mode: overlay;
     opacity: 0.3;
     animation-delay: 0.1s;
-}
-
-@keyframes pixelGlitch {
-    0% {
-        clip-path: inset(0 0 90% 0);
-        transform: translate(0, 0);
-    }
-
-    10% {
-        clip-path: inset(10% 0 70% 0);
-        transform: translate(-4px, 2px);
-    }
-
-    25% {
-        clip-path: inset(20% 0 50% 0);
-        transform: translate(3px, -2px);
-    }
-
-    40% {
-        clip-path: inset(40% 0 20% 0);
-        transform: translate(-3px, 1px);
-    }
-
-    55% {
-        clip-path: inset(70% 0 0 0);
-        transform: translate(2px, -1px);
-    }
-
-    70% {
-        clip-path: inset(0 0 90% 0);
-        transform: translate(-2px, 1px);
-    }
-
-    100% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(0, 0);
-    }
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-
-    80% {
-        opacity: 0.8;
-    }
-
-    100% {
-        opacity: 0;
-        display: none;
-    }
-}
-
-/* Responsive - Mobile Layout */
-@media (max-width: 768px) {
+  }
+  
+  @keyframes pixelGlitch {
+    0% { clip-path: inset(0 0 90% 0); transform: translate(0,0); }
+    10% { clip-path: inset(10% 0 70% 0); transform: translate(-4px,2px); }
+    25% { clip-path: inset(20% 0 50% 0); transform: translate(3px,-2px); }
+    40% { clip-path: inset(40% 0 20% 0); transform: translate(-3px,1px); }
+    55% { clip-path: inset(70% 0 0 0); transform: translate(2px,-1px); }
+    70% { clip-path: inset(0 0 90% 0); transform: translate(-2px,1px); }
+    100% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+  }
+  
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; display: none; }
+  }
+  
+  /* Responsive - Mobile Layout */
+  @media (max-width: 768px) {
     .poster-section {
-        display: none;
+      display: none;
     }
-
+  
     .mobile-only {
-        display: block;
+      display: block;
     }
-
+  
     .review-page {
-        padding: 30px 20px;
+      padding: 30px 20px;
     }
-
+  
     .movie-header {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
     }
-
+  
     .mobile-poster {
-        display: block;
+      display: block;
     }
-
+  
     .also-checkout {
-        padding: 40px 20px;
+      padding: 40px 20px;
     }
-
+  
     .movie-cards {
-        justify-content: center;
-        gap: 20px;
+      justify-content: center;
+      gap: 20px;
     }
-}
+  }
+  
