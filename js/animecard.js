@@ -1,29 +1,3 @@
-const params = new URLSearchParams(window.location.search);
-const title = params.get("title");
-const tab = params.get("tab");
-
-const titleElement = document.getElementById("anime-title");
-const coverElement = document.getElementById("anime-cover");
-const summaryElement = document.getElementById("anime-summary");
-const episodesElement = document.getElementById("anime-episodes");
-const genreElement = document.getElementById("anime-genre");
-const thoughtsElement = document.getElementById("anime-thoughts");
-
-titleElement.textContent = title || "Unknown Anime";
-
-// Load local image
-const imgPath = `images/${tab}/${title}/cover.webp`;
-fetch(imgPath)
-    .then(res => {
-        if (res.ok) coverElement.src = imgPath;
-        else coverElement.src = "images/fallback.webp";
-    }).catch(() => coverElement.src = "images/fallback.webp");
-
-// Add any personal info here
-summaryElement.textContent = "This is a placeholder summary. Add your own notes per anime!";
-episodesElement.textContent = "Episodes: Unknown";
-genreElement.textContent = "Type: Anime";
-thoughtsElement.textContent = "Add your personal thoughts here!";
 // Get URL params
 const params = new URLSearchParams(window.location.search);
 const title = params.get("title");
@@ -39,17 +13,49 @@ const thoughtsElement = document.getElementById("anime-thoughts");
 
 titleElement.textContent = title || "Unknown Anime";
 
-// Find anime in animeData
-let animeInfo;
-if (animeData[tab]) {
-    animeInfo = animeData[tab].find(a => a.title === title);
+// Resolve dataset by tab param using category-specific arrays
+function getDatasetForTab(tabKey) {
+    switch (tabKey) {
+        case 'favorites':
+            return typeof favorites !== 'undefined' ? favorites : [];
+        case 'recommendations':
+            return typeof recommendations !== 'undefined' ? recommendations : [];
+        case 'controversial':
+            return typeof controversial !== 'undefined' ? controversial : [];
+        case 'best-music':
+            return typeof bestMusic !== 'undefined' ? bestMusic : [];
+        case 'will-make-you-cry':
+            return typeof willMakeYouCry !== 'undefined' ? willMakeYouCry : [];
+        default:
+            return [];
+    }
 }
 
-// Load image
+// Find anime in the selected category dataset
+let animeInfo;
+if (tab) {
+    const dataset = getDatasetForTab(decodeURIComponent(tab));
+    animeInfo = dataset.find(a => a.title === (title ? decodeURIComponent(title) : ''));
+}
+
+// Load image with robust fallbacks
+const safeTab = tab ? decodeURIComponent(tab) : '';
+const safeTitle = title ? decodeURIComponent(title) : '';
+
+// Ensure broken image swaps to fallback gracefully
+coverElement.onerror = () => {
+    coverElement.onerror = null;
+    coverElement.src = "images/koushik.webp";
+};
+
 if (animeInfo && animeInfo.cover) {
     coverElement.src = animeInfo.cover;
+} else if (safeTab && safeTitle) {
+    const encTab = encodeURIComponent(safeTab);
+    const encTitle = encodeURIComponent(safeTitle);
+    coverElement.src = `images/${encTab}/${encTitle}/cover.webp`;
 } else {
-    coverElement.src = "images/fallback.webp";
+    coverElement.src = "images/koushik.webp";
 }
 
 // Populate details

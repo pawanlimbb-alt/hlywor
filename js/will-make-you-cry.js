@@ -129,5 +129,3 @@ const willMakeYouCry = [
     }
 ];
 
-export default willMakeYouCry;
-

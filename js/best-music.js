@@ -393,5 +393,3 @@ const bestMusic = [
     }
 ];
 
-export default bestMusic;
-

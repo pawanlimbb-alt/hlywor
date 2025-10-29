@@ -313,5 +313,3 @@ const controversial = [
     }
 ];
 
-export default controversial;
-
