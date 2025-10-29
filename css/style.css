@@ -30,6 +30,16 @@ a {
     text-decoration: none;
 }
 
+/* Remove default focus outlines so only blink shows on selection */
+a:focus, a:focus-visible,
+button:focus, button:focus-visible,
+.tab-button:focus, .tab-button:focus-visible,
+.back-button:focus, .back-button:focus-visible,
+.anime-card:focus, .anime-card:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
 /* Big retro menu box */
 .menu-box {
     border: 4px solid white;

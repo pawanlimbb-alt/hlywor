@@ -109,6 +109,12 @@ h2 {
     opacity: 0; /* hidden initially for reveal */
 }
 
+/* Highlight currently selected card (keyboard navigation) */
+.anime-card.selected {
+    transform: scale(1.08);
+    box-shadow: 0 0 18px #fff;
+}
+
 /* Hover pop animation for anime cards */
 .anime-card:hover {
     animation: card-pop 0.3s forwards;
