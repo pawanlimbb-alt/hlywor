@@ -9,10 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     bgMusic.loop = true;
     bgMusic.volume = 0.2;
 
-    // Attempt autoplay for background music
+    // Simple autoplay; fall back to first user interaction
     bgMusic.play().catch(() => {
-        // will play after first interaction
-        document.addEventListener('click', () => bgMusic.play(), { once: true });
+        const playOnce = () => bgMusic.play().catch(() => {});
+        document.addEventListener('click', playOnce, { once: true });
+        document.addEventListener('keydown', playOnce, { once: true });
     });
 
     // Play click sound
@@ -55,16 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------
-    // Start sound on Ez.html only once
+    // Ez.html: navigate to menu after 3s on first interaction
     // -------------------------------
-    if(window.location.pathname.includes('Ez.html')) {
-        const startSound = new Audio('sounds/start.mp3');
-        function playStart() {
-            startSound.play();
+    if (window.location.pathname.includes('Ez.html')) {
+        function scheduleGoMenu() {
+            setTimeout(() => {
+                window.location.href = 'menu.html';
+            }, 3000);
         }
-
-        document.addEventListener('click', playStart, { once: true });
-        document.addEventListener('keydown', playStart, { once: true });
+        document.addEventListener('click', scheduleGoMenu, { once: true });
+        document.addEventListener('keydown', scheduleGoMenu, { once: true });
     }
 });
 

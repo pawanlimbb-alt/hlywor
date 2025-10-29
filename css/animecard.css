@@ -35,23 +35,6 @@ h1 {
     text-align: center;
 }
 
-/* Typing effect + pop animation for H1 */
-h1.typing {
-    display: block;
-    animation: pop 0.6s ease forwards, blink-caret 0.7s step-end infinite;
-}
-
-/* Heading pop keyframes */
-@keyframes pop {
-    0%   { transform: scale(0); opacity: 0; }
-    50%  { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes blink-caret {
-    0%, 100% { border-color: transparent; }
-    50% { border-color: #fff; }
-}
 
 /* --------------------------
    BACK BUTTON
@@ -83,35 +66,27 @@ h1.typing {
     align-items: start;
 }
 
-/* Anime card pop effect */
+/* Card appearance (no hover animation) */
 .anime-card-detail {
-    background: #000;
-    border: 1px solid #fff;
-    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 14px;
     overflow: hidden;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s, opacity 0.8s;
-    cursor: pointer;
-    opacity: 0; /* hidden for reveal */
-}
-
-.anime-card-detail:hover {
-    animation: card-pop 0.3s forwards;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #fff;
-}
-
-@keyframes card-pop {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.08); }
-    100% { transform: scale(1.05); }
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    cursor: default;
+    opacity: 1;
+    padding: 16px;
 }
 
 .anime-details img {
     width: 100%;
-    max-width: 300px;
-    border: 2px solid #fff;
-    border-radius: 10px;
+    max-width: 360px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.5);
 }
 
 .anime-info {
@@ -119,13 +94,15 @@ h1.typing {
 }
 
 .anime-info h2 {
-    margin: 15px 0 10px 0;
-    font-size: 20px;
+    margin: 20px 0 12px 0;
+    font-size: 22px;
+    letter-spacing: 0.5px;
 }
 
 .anime-info p {
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.9);
 }
 
 /* --------------------------
