@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get to Know Me</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <h1>Get to Know Me</h1>
+
+        <div class="menu-box library-buttons">
+            <button id="fun-fact-button">Random Fun Fact</button>
+            <a href="#" id="about-me-info">About Me (Anonymous)</a>
+        </div>
+
+        <div id="fun-fact-popup" class="fun-fact-popup"></div>
+
+        <button class="close-button">Close</button>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/facts.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const aboutLink = document.getElementById('about-me-info');
+        const popup = document.getElementById('fun-fact-popup');
+        if (aboutLink && popup) {
+            aboutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                popup.textContent = 'I\'ll share bits about my tastes and projects while staying anonymous.';
+                popup.style.display = 'block';
+                setTimeout(() => { popup.style.display = 'none'; }, 2500);
+            });
+        }
+    });
+    </script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>
+
+

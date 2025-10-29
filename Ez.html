@@ -19,20 +19,25 @@
     video {
       max-width: 80%;
       max-height: 80%;
+      pointer-events: none;
+      user-select: none;
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false">
   <!-- Silent autoplay video -->
-  <video id="startVideo" src="videos/Start.mp4" autoplay muted></video>
+  <video id="startVideo" src="videos/Start.mp4" autoplay muted playsinline preload="auto" controlslist="nodownload noremoteplayback nofullscreen" disablepictureinpicture></video>
 
   <script>
     const video = document.getElementById('startVideo');
+    const startSound = new Audio('sounds/start.mp3');
     let clicked = false;
 
     document.body.addEventListener('click', () => {
       if (clicked) return; // prevent multiple clicks
       clicked = true;
+
+      try { startSound.currentTime = 0; startSound.play(); } catch (e) {}
 
       video.muted = false; // enable sound
       video.currentTime = 0; // restart from beginning
