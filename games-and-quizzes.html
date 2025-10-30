@@ -8,11 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="container">
+    <video id="bg-video" src="videos/background.mp4" autoplay loop muted playsinline style="position:fixed; left:0; top:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <div class="container left-menu-layout">
         <h1>Games & Quizzes</h1>
 
         <div class="menu-box library-buttons">
-            <a href="quiz.html">Pokemon Quiz</a>
+            <a href="quiz.html">Pokemon Description Quiz</a>
+            <a href="ability-quiz.html">Ability Quiz</a>
+            <a href="move-quiz.html">Move Quiz (Unique Move)</a>
             <button disabled>More Coming Soon</button>
         </div>
 
@@ -20,6 +23,7 @@
     </div>
 
     <script src="js/main.js"></script>
+    <script src="js/music.js"></script>
     <script src="js/navigation.js"></script>
 </body>
 </html>

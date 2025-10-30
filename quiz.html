@@ -7,21 +7,23 @@
     <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Pokemon Quiz</h1>
-
-        <div class="quiz-box">
-            <p id="pokedex-entry">Loading...</p>
-            <input type="text" id="answer-input" placeholder="Type Pokémon name here" />
-            <button id="submit-button">Submit</button>
-            <p id="feedback"></p>
+    <video id="bg-video" src="videos/background.mp4" autoplay loop muted playsinline style="position:fixed; left:0; top:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <div class="quiz-bg-panel">
+        <div class="container">
+            <h1>Pokemon Quiz</h1>
+            <div class="quiz-box">
+                <p id="pokedex-entry">Loading...</p>
+                <input type="text" id="answer-input" placeholder="Type Pokémon name here" />
+                <button id="submit-button">Submit</button>
+                <p id="feedback"></p>
+            </div>
+            <button class="close-button">Back to Menu</button>
         </div>
-
-        <button class="close-button">Back to Menu</button>
     </div>
-<script src="js/main.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/quiz.js"></script>
     <script src="js/navigation.js"></script>
+    <script src="js/music.js"></script>
 </body>
 </html>
 
