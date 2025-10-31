@@ -7,12 +7,68 @@
     <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
-    <h1>Games Library</h1>
-    <p>Placeholder content for Games Library.</p>
-    <a href="menu.html">Back to Menu</a>
-
+    <video id="bg-video" src="videos/background.mp4" autoplay loop muted playsinline style="position:fixed; left:0; top:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <div class="container left-menu-layout">
+        <h1>Games Library</h1>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="favorites">Favorites</button>
+            <button class="tab-button" data-tab="classics">Classics</button>
+            <button class="tab-button" data-tab="indie">Indie</button>
+            <button class="tab-button" data-tab="multiplayer">Multiplayer</button>
+        </div>
+        <div class="tab-content active" id="favorites">
+            <div class="games-grid">
+                <div class="anime-card reveal active">
+                    <img src="images/favorites/Delicious in Dungeon/cover.webp" alt="Game Placeholder" loading="lazy">
+                    <h2>Sample Retro Game</h2>
+                </div>
+                <div class="anime-card reveal active games-placeholder">
+                    <img src="images/koushik.webp" alt="Coming Soon" loading="lazy">
+                    <h2>Coming Soon!</h2>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="classics">
+            <div class="games-grid">
+                <div class="anime-card reveal active games-placeholder">
+                    <img src="images/koushik.webp" alt="Coming Soon" loading="lazy">
+                    <h2>Coming Soon!</h2>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="indie">
+            <div class="games-grid">
+                <div class="anime-card reveal active games-placeholder">
+                    <img src="images/koushik.webp" alt="Coming Soon" loading="lazy">
+                    <h2>Coming Soon!</h2>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="multiplayer">
+            <div class="games-grid">
+                <div class="anime-card reveal active games-placeholder">
+                    <img src="images/koushik.webp" alt="Coming Soon" loading="lazy">
+                    <h2>Coming Soon!</h2>
+                </div>
+            </div>
+        </div>
+        <button class="close-button">Close</button>
+    </div>
     <script src="js/main.js"></script>
-        <script src="js/navigation.js"></script>
+    <script src="js/music.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        const tabs = document.querySelectorAll('.tab-button');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
 

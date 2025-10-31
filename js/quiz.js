@@ -82,6 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Shuffle questions at the start
     shuffleArray(quizData);
 
+    // Placeholder for empty or small data
+    if (quizData.length < 3) {
+        quizData.push({ name: "Coming Soon", entry: "More questions coming soon!" });
+    }
+
     let currentIndex = 0;
 
     const pokedexEntry = document.getElementById('pokedex-entry');

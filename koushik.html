@@ -1,23 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Koushik / Morak</title>
-
-  <link rel="stylesheet" href="css/koushik.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Pixel Font for ENTER REALM -->
+  <title>EzaF</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/theme.css" />
   <style>
-    @font-face {
-      font-family: 'Pixel';
-      src: url('fonts/pixel.ttf') format('truetype');
+    html, body { background: #000 !important; }
+    .container {
+      background: rgba(18,18,18,0.96);
+      border-radius: 36px;
+      border: 2px solid #fff;
+      box-shadow: 0 8px 40px 0 rgba(0,0,0,0.20);
+      padding: 48px 32px 28px 32px;
+      max-width: 780px;
+      margin: 58px auto 24px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 32px;
+      background: transparent;
+    }
+    .nav-links a {
+      color: #fff; border-radius: 12px; padding: 7px 18px;
+      border: 1.7px solid #fff;
+      text-decoration: none;
+      font-size: 1.12em;
+      transition: box-shadow .2s, background .18s, color .12s;
+    }
+    .nav-links a:hover {
+      background: #ff3b3b; color: #fff; box-shadow: 0 0 12px #ff3b3b;
+      border-color: #ff3b3b;
+    }
+    .username {
+      color: #ff3b3b;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .profile-card {
+      display: flex;
+      flex-direction: row;
+      background: rgba(22,22,22,0.95);
+      box-shadow: 0 6px 38px 0 rgba(0,0,0,0.14);
+      border-radius: 25px;
+      width: 100%;
+      max-width: 700px;
+      align-items: stretch;
+      min-height: 320px;
+      overflow: hidden;
+    }
+    .profile-pic {
+      background: #101010;
+      border-right: 2px solid #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px;
+      min-width: 180px;
+    }
+    .profile-pic img {
+      width: 142px; height: 142px; border-radius: 18px;
+      border: 2.5px solid #fff;
+      background: #222;
+      box-shadow: 0 0 20px #000;
+    }
+    .under-name {
+      color: #ff3b3b; margin-top: 21px;
+      font-size: 1.1em; letter-spacing: 2px;
+      font-family: 'PixelFont', monospace;
+      font-weight: bold;
+    }
+    .profile-card .right {
+      flex: 1;
+      padding: 40px 38px 30px 38px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .profile-card h1 {
+      color: #fff;
+      margin-bottom: 29px;
+      letter-spacing: 7px;
+      font-size: 2.5em;
+      font-family: 'PixelFont', monospace;
+    }
+    .info li {
+      color: #fff;
+      padding: 7px 0 8px 0;
+      border-bottom: 1px solid #333;
+      margin-left: 4px;
+      margin-bottom: 2px;
+      list-style: none;
+      font-size: 1.14em;
+    }
+    .info span { color: #ff3b3b; font-weight:600; }
+    .realm-box {
+      margin-top: 29px;
+      text-align: left;
+    }
+    .realm-btn {
+      font-family: 'PixelFont', monospace;
+      font-weight: bold;
+      font-size: 1.5em;
+      padding: 17px 44px;
+      background: #ff3b3b;
+      color: #fff;
+      border: 2.4px solid #fff;
+      border-radius: 21px;
+      text-shadow: 0 0 7px #ff3b3b, 0 0 2px #111;
+      cursor: pointer;
+      box-shadow: 0 0 26px 0 #ff3b3b;
+      transition: all .18s cubic-bezier(.39,1.3,.64,1);
+      display:inline-block;
+      margin-left: 2px;
+    }
+    .realm-btn:hover {
+      background: #fff;
+      color: #ff3b3b;
+      border-color: #ff3b3b;
+      box-shadow: 0 0 42px #ff3b3b;
+      text-shadow: 0 0 12px #ff3b3b;
+      transform: scale(1.08) translateY(-2px);
+      outline:none;
+    }
+    footer {
+      color: #555;
+      text-align: center;
+      margin-top: 42px;
+      font-size: 1em;
     }
   </style>
 </head>
-
 <body>
   <div class="container">
     <header class="navbar">
@@ -26,39 +146,33 @@
       </div>
       <div class="username">@morakkoushik</div>
     </header>
-
     <main class="profile-card">
       <section class="left">
         <div class="profile-pic">
           <img src="images/koushik.webp" alt="profile" />
-          <p class="under-name">Koushik Morak</p>
+          <p class="under-name"> Morak </p>
         </div>
       </section>
-
       <section class="right">
         <h1>HELLO!</h1>
         <ul class="info">
-          <li><span>name :</span> Koushik Morak</li>
+          <li><span>name :</span> EzaF </li>
           <li><span>age :</span> ???</li>
-          <li><span>birthday :</span> 10 November</li>
-          <li><span>pronouns :</span> He/Him</li>
-          <li><span>language :</span> Assamese / Hindi / English</li>
-          <li><span>mbti :</span> INTP-T</li>
-          <li><span>phobia :</span> None</li>
+          <li><span>birthday :</span> 10 Something</li>
+          <li><span>pronouns :</span> LMAO/IDGAF</li>
+          <li><span>language :</span> I Can Communicate With You</li>
+          <li><span>mbti :</span> Don No</li>
+          <li><span>phobia :</span> I aint Scared</li>
         </ul>
-
-        <!-- ENTER REALM BLACK BOX -->
         <div class="realm-box">
           <a href="Ez.html" class="realm-btn">ENTER REALM</a>
         </div>
       </section>
     </main>
-
     <footer>
       © 2025 HlyWor Blog. Crafted with ❤️ in our style.
     </footer>
   </div>
 </body>
-
 </html>
 
