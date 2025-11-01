@@ -26,17 +26,19 @@
       align-items: center;
       width: 100%;
       margin-bottom: 32px;
-      background: transparent;
     }
     .nav-links a {
-      color: #fff; border-radius: 12px; padding: 7px 18px;
+      color: #fff;
+      border-radius: 12px;
+      padding: 7px 18px;
       border: 1.7px solid #fff;
       text-decoration: none;
       font-size: 1.12em;
       transition: box-shadow .2s, background .18s, color .12s;
     }
     .nav-links a:hover {
-      background: #ff3b3b; color: #fff; box-shadow: 0 0 12px #ff3b3b;
+      background: #ff3b3b; color: #fff;
+      box-shadow: 0 0 12px #ff3b3b;
       border-color: #ff3b3b;
     }
     .username {
@@ -66,14 +68,18 @@
       min-width: 180px;
     }
     .profile-pic img {
-      width: 142px; height: 142px; border-radius: 18px;
+      width: 142px;
+      height: 142px;
+      border-radius: 18px;
       border: 2.5px solid #fff;
       background: #222;
       box-shadow: 0 0 20px #000;
     }
     .under-name {
-      color: #ff3b3b; margin-top: 21px;
-      font-size: 1.1em; letter-spacing: 2px;
+      color: #ff3b3b;
+      margin-top: 21px;
+      font-size: 1.1em;
+      letter-spacing: 2px;
       font-family: 'PixelFont', monospace;
       font-weight: bold;
     }
@@ -137,20 +143,21 @@
       font-size: 1em;
     }
 
-    /* 🔻 RESPONSIVE FIXES FOR ANDROID PORTRAIT 🔻 */
+    /* 📱 Android Portrait Layout (like Paw) */
     @media (max-width: 768px) {
       .container {
-        margin: 28px 14px;
-        padding: 28px 18px 20px 18px;
+        width: 95%;
+        margin: 24px auto;
+        padding: 24px 18px;
         border-radius: 24px;
       }
       .navbar {
         flex-direction: column;
-        gap: 8px;
         text-align: center;
+        gap: 10px;
       }
       .nav-links a {
-        font-size: 1em;
+        font-size: 0.95em;
         padding: 6px 14px;
       }
       .username {
@@ -159,13 +166,15 @@
       .profile-card {
         flex-direction: column;
         align-items: center;
+        text-align: center;
+        width: 100%;
         min-height: auto;
       }
       .profile-pic {
         border-right: none;
         border-bottom: 2px solid #fff;
-        padding: 20px;
-        min-width: 100%;
+        padding: 22px 0;
+        width: 100%;
       }
       .profile-pic img {
         width: 120px;
@@ -176,28 +185,56 @@
         font-size: 1em;
       }
       .profile-card .right {
-        padding: 26px 20px;
-        text-align: center;
+        padding: 28px 20px;
+        align-items: center;
       }
       .profile-card h1 {
         font-size: 2em;
         letter-spacing: 5px;
       }
+      .info {
+        width: 100%;
+        max-width: 350px;
+      }
       .info li {
         font-size: 1em;
+        padding: 6px 0;
         text-align: left;
       }
       .realm-box {
-        margin-top: 20px;
+        margin-top: 22px;
         text-align: center;
       }
       .realm-btn {
         font-size: 1.2em;
-        padding: 13px 34px;
+        padding: 13px 32px;
       }
       footer {
         font-size: 0.9em;
-        margin-top: 30px;
+        margin-top: 32px;
+      }
+    }
+
+    /* 🔄 Landscape tweak */
+    @media (max-height: 480px) and (orientation: landscape) {
+      .profile-card {
+        flex-direction: row;
+        align-items: stretch;
+      }
+      .profile-pic {
+        min-width: 150px;
+        padding: 18px;
+      }
+      .profile-pic img {
+        width: 100px;
+        height: 100px;
+      }
+      .profile-card h1 {
+        font-size: 1.8em;
+      }
+      .realm-btn {
+        padding: 10px 24px;
+        font-size: 1em;
       }
     }
   </style>
