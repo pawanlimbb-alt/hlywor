@@ -136,6 +136,70 @@
       margin-top: 42px;
       font-size: 1em;
     }
+
+    /* 🔻 RESPONSIVE FIXES FOR ANDROID PORTRAIT 🔻 */
+    @media (max-width: 768px) {
+      .container {
+        margin: 28px 14px;
+        padding: 28px 18px 20px 18px;
+        border-radius: 24px;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+      .nav-links a {
+        font-size: 1em;
+        padding: 6px 14px;
+      }
+      .username {
+        font-size: 1em;
+      }
+      .profile-card {
+        flex-direction: column;
+        align-items: center;
+        min-height: auto;
+      }
+      .profile-pic {
+        border-right: none;
+        border-bottom: 2px solid #fff;
+        padding: 20px;
+        min-width: 100%;
+      }
+      .profile-pic img {
+        width: 120px;
+        height: 120px;
+      }
+      .under-name {
+        margin-top: 14px;
+        font-size: 1em;
+      }
+      .profile-card .right {
+        padding: 26px 20px;
+        text-align: center;
+      }
+      .profile-card h1 {
+        font-size: 2em;
+        letter-spacing: 5px;
+      }
+      .info li {
+        font-size: 1em;
+        text-align: left;
+      }
+      .realm-box {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .realm-btn {
+        font-size: 1.2em;
+        padding: 13px 34px;
+      }
+      footer {
+        font-size: 0.9em;
+        margin-top: 30px;
+      }
+    }
   </style>
 </head>
 <body>
