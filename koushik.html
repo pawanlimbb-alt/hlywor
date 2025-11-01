@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/theme.css" />
   <style>
-    html, body { background: #000 !important; }
+    html, body { background: #000 !important; margin: 0; padding: 0; }
+
     .container {
       background: rgba(18,18,18,0.96);
       border-radius: 36px;
@@ -20,13 +21,17 @@
       flex-direction: column;
       align-items: center;
     }
+
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
       margin-bottom: 32px;
+      background: transparent;
+      flex-wrap: wrap;
     }
+
     .nav-links a {
       color: #fff;
       border-radius: 12px;
@@ -36,16 +41,22 @@
       font-size: 1.12em;
       transition: box-shadow .2s, background .18s, color .12s;
     }
+
     .nav-links a:hover {
-      background: #ff3b3b; color: #fff;
+      background: #ff3b3b;
+      color: #fff;
       box-shadow: 0 0 12px #ff3b3b;
       border-color: #ff3b3b;
     }
+
     .username {
       color: #ff3b3b;
       font-weight: 600;
       letter-spacing: 1px;
+      text-align: center;
+      margin-top: 10px;
     }
+
     .profile-card {
       display: flex;
       flex-direction: row;
@@ -58,6 +69,7 @@
       min-height: 320px;
       overflow: hidden;
     }
+
     .profile-pic {
       background: #101010;
       border-right: 2px solid #fff;
@@ -67,6 +79,7 @@
       padding: 28px;
       min-width: 180px;
     }
+
     .profile-pic img {
       width: 142px;
       height: 142px;
@@ -74,7 +87,10 @@
       border: 2.5px solid #fff;
       background: #222;
       box-shadow: 0 0 20px #000;
+      display: block;
+      margin: 0 auto;
     }
+
     .under-name {
       color: #ff3b3b;
       margin-top: 21px;
@@ -82,7 +98,9 @@
       letter-spacing: 2px;
       font-family: 'PixelFont', monospace;
       font-weight: bold;
+      text-align: center;
     }
+
     .profile-card .right {
       flex: 1;
       padding: 40px 38px 30px 38px;
@@ -90,6 +108,7 @@
       flex-direction: column;
       justify-content: center;
     }
+
     .profile-card h1 {
       color: #fff;
       margin-bottom: 29px;
@@ -97,6 +116,7 @@
       font-size: 2.5em;
       font-family: 'PixelFont', monospace;
     }
+
     .info li {
       color: #fff;
       padding: 7px 0 8px 0;
@@ -106,11 +126,17 @@
       list-style: none;
       font-size: 1.14em;
     }
-    .info span { color: #ff3b3b; font-weight:600; }
+
+    .info span {
+      color: #ff3b3b;
+      font-weight: 600;
+    }
+
     .realm-box {
       margin-top: 29px;
       text-align: left;
     }
+
     .realm-btn {
       font-family: 'PixelFont', monospace;
       font-weight: bold;
@@ -124,9 +150,10 @@
       cursor: pointer;
       box-shadow: 0 0 26px 0 #ff3b3b;
       transition: all .18s cubic-bezier(.39,1.3,.64,1);
-      display:inline-block;
+      display: inline-block;
       margin-left: 2px;
     }
+
     .realm-btn:hover {
       background: #fff;
       color: #ff3b3b;
@@ -134,8 +161,9 @@
       box-shadow: 0 0 42px #ff3b3b;
       text-shadow: 0 0 12px #ff3b3b;
       transform: scale(1.08) translateY(-2px);
-      outline:none;
+      outline: none;
     }
+
     footer {
       color: #555;
       text-align: center;
@@ -143,98 +171,48 @@
       font-size: 1em;
     }
 
-    /* 📱 Android Portrait Layout (like Paw) */
+    /* ---------- Responsive (Android / Portrait) ---------- */
     @media (max-width: 768px) {
       .container {
-        width: 95%;
-        margin: 24px auto;
-        padding: 24px 18px;
-        border-radius: 24px;
+        margin: 20px auto;
+        padding: 28px 20px;
       }
+
       .navbar {
         flex-direction: column;
+        align-items: center;
         text-align: center;
-        gap: 10px;
       }
-      .nav-links a {
-        font-size: 0.95em;
-        padding: 6px 14px;
-      }
-      .username {
-        font-size: 1em;
-      }
+
       .profile-card {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        width: 100%;
-        min-height: auto;
       }
+
       .profile-pic {
         border-right: none;
         border-bottom: 2px solid #fff;
-        padding: 22px 0;
+        padding: 24px 0;
         width: 100%;
       }
-      .profile-pic img {
-        width: 120px;
-        height: 120px;
-      }
-      .under-name {
-        margin-top: 14px;
-        font-size: 1em;
-      }
+
       .profile-card .right {
-        padding: 28px 20px;
-        align-items: center;
+        padding: 30px 18px;
       }
-      .profile-card h1 {
-        font-size: 2em;
-        letter-spacing: 5px;
-      }
-      .info {
-        width: 100%;
-        max-width: 350px;
-      }
-      .info li {
-        font-size: 1em;
-        padding: 6px 0;
-        text-align: left;
-      }
+
       .realm-box {
-        margin-top: 22px;
         text-align: center;
       }
-      .realm-btn {
-        font-size: 1.2em;
-        padding: 13px 32px;
-      }
-      footer {
-        font-size: 0.9em;
-        margin-top: 32px;
-      }
-    }
 
-    /* 🔄 Landscape tweak */
-    @media (max-height: 480px) and (orientation: landscape) {
-      .profile-card {
-        flex-direction: row;
-        align-items: stretch;
-      }
-      .profile-pic {
-        min-width: 150px;
-        padding: 18px;
-      }
-      .profile-pic img {
-        width: 100px;
-        height: 100px;
-      }
-      .profile-card h1 {
-        font-size: 1.8em;
-      }
       .realm-btn {
-        padding: 10px 24px;
-        font-size: 1em;
+        font-size: 1.3em;
+        padding: 14px 36px;
+      }
+
+      footer {
+        margin-top: 32px;
+        font-size: 0.9em;
       }
     }
   </style>
@@ -247,17 +225,19 @@
       </div>
       <div class="username">@morakkoushik</div>
     </header>
+
     <main class="profile-card">
       <section class="left">
         <div class="profile-pic">
           <img src="images/koushik.webp" alt="profile" />
-          <p class="under-name"> Morak </p>
+          <p class="under-name">Morak</p>
         </div>
       </section>
+
       <section class="right">
         <h1>HELLO!</h1>
         <ul class="info">
-          <li><span>name :</span> EzaF </li>
+          <li><span>name :</span> EzaF</li>
           <li><span>age :</span> ???</li>
           <li><span>birthday :</span> 10 Something</li>
           <li><span>pronouns :</span> LMAO/IDGAF</li>
@@ -270,6 +250,7 @@
         </div>
       </section>
     </main>
+
     <footer>
       © 2025 HlyWor Blog. Crafted with ❤️ in our style.
     </footer>
