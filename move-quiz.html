@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Move Quiz: Guess the Pokémon by Unique Move</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+    <video id="bg-video" src="videos/background.mp4" autoplay loop muted playsinline style="position:fixed; left:0; top:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <div class="quiz-bg-panel">
+        <div class="container">
+            <h1>Move Quiz: Guess the Pokémon by Unique Move</h1>
+            <div class="quiz-box">
+                <p id="move-hint">Loading...</p>
+                <input type="text" id="move-answer" placeholder="Type Pokémon name here" />
+                <button id="move-submit">Submit</button>
+                <p id="move-feedback"></p>
+            </div>
+            <button class="close-button">Back to Menu</button>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="js/move-quiz.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/music.js"></script>
+</body>
+</html>

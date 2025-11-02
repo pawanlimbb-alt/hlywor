@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Comics</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/anime.css">
     <link rel="stylesheet" href="css/theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="container">
+    <video id="bg-video" src="videos/background.mp4" autoplay loop muted playsinline style="position:fixed; left:0; top:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <div class="container left-menu-layout">
         <h1>Comics</h1>
-
-        <div class="menu-box">
-            <p style="font-size:1.6em; text-align:center; max-width:700px;">
-                This section combines everything: Manga and Manhwa together.
-                I’ll keep adding series here as I go.
-            </p>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="favorites">Favorites</button>
+            <button class="tab-button" data-tab="classics">Classics</button>
         </div>
-
+        <div class="tab-content active" id="favorites">
+            <div class="anime-grid"></div>
+        </div>
+        <div class="tab-content" id="classics">
+            <div class="anime-grid"></div>
+        </div>
         <button class="close-button">Close</button>
     </div>
-
     <script src="js/main.js"></script>
+    <script src="js/comics.js"></script>
     <script src="js/navigation.js"></script>
+    <script src="js/music.js"></script>
 </body>
 </html>
 

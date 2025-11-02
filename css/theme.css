@@ -1,28 +1,22 @@
-/* Waybar-inspired Site Theme */
+/* Ez's Signature Black-White-Red Theme */
 
 :root {
-    --text: #cdd6f4;
-    --blue: #8aadf4;
-    --pink: #f5c2e7;
-    --red: #f38ba8;
-    --green: #a6e3a1;
-    --yellow: #f9e2af;
-    --peach: #fab387;
-    --lavender: #b4befe;
-    --teal: #94e2d5;
-    --orange: #f28fad;
-    --magenta: #ff9ee0;
-    --panel-bg: rgba(30, 30, 30, 0.85);
-    --panel-border: rgba(255,255,255,0.2);
+    --text: #ffffff;
+    --red: #ff3b3b;
+    --dark-red: #b22222;
+    --panel-bg: rgba(15, 15, 15, 0.9);
+    --panel-border: rgba(255, 255, 255, 0.1);
     --black: #000000;
+    --white: #ffffff;
 }
 
-/* Global base overrides */
+/* Base */
 html, body {
     color: var(--text);
+    background: var(--black);
 }
 
-/* Floating island containers */
+/* Floating boxes */
 .menu-box,
 .quiz-box,
 .fun-fact-popup {
@@ -31,7 +25,7 @@ html, body {
     border-radius: 12px;
 }
 
-/* Core interactive items */
+/* Buttons, links, etc */
 .menu-box a,
 .menu-box button,
 .close-button,
@@ -39,66 +33,63 @@ html, body {
 .tab-button,
 button,
 a.button {
-    background: var(--panel-bg);
-    border: 1.5px solid var(--lavender);
-    color: var(--text);
+    background: var(--black);
+    border: 1.5px solid var(--white);
+    color: var(--white);
     border-radius: 10px;
+    transition: transform 0.15s ease, box-shadow 0.2s ease,
+                background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Hover states (Waybar-like fill) */
+/* Hover effects */
 .menu-box a:hover,
 .menu-box button:hover,
 .close-button:hover,
 .back-button:hover,
 .tab-button:hover {
-    background: var(--lavender);
+    background: var(--red);
     color: var(--black);
+    border-color: var(--red);
 }
 
-/* Tab active state pops to filled style */
+/* Active tab */
 .tab-button.active {
-    background: var(--blue);
+    background: var(--red);
+    border-color: var(--red);
     color: var(--black);
-    border-color: var(--blue);
 }
 
-/* Cards (grid) */
-.anime-card {
-    background: var(--panel-bg) !important;
-    border: 1.5px solid var(--panel-border) !important;
-    border-radius: 14px !important;
-}
-.anime-card:hover {
-    box-shadow: 0 0 16px var(--blue);
-}
-.anime-card.selected {
-    box-shadow: 0 0 18px var(--pink);
-}
-
-/* Details page blocks */
+/* Cards */
+.anime-card,
 .anime-card-detail {
     background: var(--panel-bg) !important;
     border: 1.5px solid var(--panel-border) !important;
     border-radius: 14px !important;
 }
-.anime-details img {
-    border-color: var(--lavender) !important;
+.anime-card:hover {
+    box-shadow: 0 0 16px var(--red);
+}
+.anime-card.selected {
+    box-shadow: 0 0 18px var(--white);
 }
 
 /* Inputs */
 input, textarea {
     background: var(--black);
-    color: var(--text);
-    border: 1.5px solid var(--lavender);
+    color: var(--white);
+    border: 1.5px solid var(--white);
     border-radius: 8px;
 }
+input:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--red);
+}
 
-/* Appear animation (applied to common UI elements) */
+/* Appear animation */
 @keyframes ui-appear {
     0% { opacity: 0; transform: translateY(10px) scale(0.98); filter: blur(2px); }
     100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
-
 .menu-box,
 .menu-box a,
 .menu-box button,
@@ -112,90 +103,23 @@ input, textarea {
     animation: ui-appear 0.45s ease both;
 }
 
-/* ------------------------------------
-   Accent mapping (Waybar-inspired)
------------------------------------- */
-/* Main menu: 4 items get distinct accents */
-.menu-box > a:nth-child(1) { border-color: var(--blue); color: var(--blue); }
-.menu-box > a:nth-child(1):hover { background: var(--blue); color: var(--black); }
-
-.menu-box > a:nth-child(2) { border-color: var(--teal); color: var(--teal); }
-.menu-box > a:nth-child(2):hover { background: var(--teal); color: var(--black); }
-
-.menu-box > a:nth-child(3) { border-color: var(--pink); color: var(--pink); }
-.menu-box > a:nth-child(3):hover { background: var(--pink); color: var(--black); }
-
-.menu-box > a:nth-child(4) { border-color: var(--magenta); color: var(--magenta); }
-.menu-box > a:nth-child(4):hover { background: var(--magenta); color: var(--black); }
-
-/* Library sub-menu accents (inherits generic nth-child mapping) */
-
-/* Tabs color coding (order-dependent) */
-.tabs .tab-button:nth-child(1) { border-color: var(--pink); color: var(--pink); }
-.tabs .tab-button:nth-child(1).active { background: var(--pink); color: var(--black); }
-
-.tabs .tab-button:nth-child(2) { border-color: var(--green); color: var(--green); }
-.tabs .tab-button:nth-child(2).active { background: var(--green); color: var(--black); }
-
-.tabs .tab-button:nth-child(3) { border-color: var(--red); color: var(--red); }
-.tabs .tab-button:nth-child(3).active { background: var(--red); color: var(--black); }
-
-.tabs .tab-button:nth-child(4) { border-color: var(--teal); color: var(--teal); }
-.tabs .tab-button:nth-child(4).active { background: var(--teal); color: var(--black); }
-
-.tabs .tab-button:nth-child(5) { border-color: var(--yellow); color: var(--yellow); }
-.tabs .tab-button:nth-child(5).active { background: var(--yellow); color: var(--black); }
-
-/* Card glow by tab section */
-#favorites .anime-card:hover, #favorites .anime-card.selected { box-shadow: 0 0 18px var(--pink); }
-#recommendations .anime-card:hover, #recommendations .anime-card.selected { box-shadow: 0 0 18px var(--green); }
-#controversial .anime-card:hover, #controversial .anime-card.selected { box-shadow: 0 0 18px var(--red); }
-#best-music .anime-card:hover, #best-music .anime-card.selected { box-shadow: 0 0 18px var(--teal); }
-#will-make-you-cry .anime-card:hover, #will-make-you-cry .anime-card.selected { box-shadow: 0 0 18px var(--yellow); }
-
-/* ------------------------------------
-   Extra animations & effects
------------------------------------- */
+/* Glow animation */
 @keyframes soft-pulse {
-    0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-    50% { box-shadow: 0 0 18px rgba(255,255,255,0.18); }
-    100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+    0% { box-shadow: 0 0 0 rgba(255,0,0,0); }
+    50% { box-shadow: 0 0 18px rgba(255,0,0,0.3); }
+    100% { box-shadow: 0 0 0 rgba(255,0,0,0); }
 }
-
-@keyframes sheen {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
-/* Subtle pulse on selection */
 .selected {
     animation: soft-pulse 1.2s ease-in-out infinite;
 }
 
-/* Shiny hover on primary items */
-.menu-box a,
-.menu-box button,
-.tab-button,
-.close-button,
-.back-button {
-    position: relative;
-    overflow: hidden;
-}
-
+/* Hover lift + glow */
 .menu-box a:hover,
 .menu-box button:hover,
 .tab-button:hover,
 .close-button:hover,
 .back-button:hover {
-    background-image: linear-gradient(120deg, rgba(255,255,255,0.0) 40%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.0) 60%);
-    background-size: 200% 100%;
-    animation: sheen 0.8s ease;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35), 0 0 14px var(--red);
 }
-
-/* Inputs focus glow */
-input:focus, textarea:focus {
-    outline: none;
-    box-shadow: 0 0 10px var(--lavender);
-}
-
 

@@ -9,13 +9,9 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    background: black;
+    background: transparent !important;
     color: white;
     font-family: 'PixelFont', monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
 }
 
 /* Headings */
@@ -81,7 +77,21 @@ button:focus, button:focus-visible,
     50% { opacity: 0; }
 }
 
-a:hover, button:hover, .selected {
+/* --- FIXED HOVER ANIMATION --- */
+.menu-box a:hover, .menu-box button:hover, .close-button:hover, .tab-button:hover, .back-button:hover {
+    background: #ff3b3b;
+    color: #fff;
+    border-color: #ff3b3b;
+    box-shadow: 0 0 22px #ff3b3b, 0 4px 16px #000;
+    transform: scale(1.07) translateY(-2px);
+    transition: background 0.2s cubic-bezier(.22,.61,.36,1),
+                color 0.17s cubic-bezier(.22,.61,.36,1),
+                transform 0.17s cubic-bezier(.22,.61,.36,1),
+                box-shadow 0.2s cubic-bezier(.22,.61,.36,1);
+    animation: none !important;
+}
+
+.selected {
     animation: blink 0.5s step-start infinite;
 }
 
@@ -175,4 +185,169 @@ a:hover, button:hover, .selected {
     display: block;
     margin-bottom: 10px;
 }
+
+.left-menu-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100vw;
+    padding-left: 40px;
+    padding-top: 40px;
+}
+
+.left-menu-layout h1 {
+    text-align: left;
+    margin-bottom: 32px;
+    margin-left: 0;
+}
+
+.left-menu-layout .menu-box {
+    align-items: flex-start;
+    width: 320px;
+    margin-right: 0;
+    margin-left: 0;
+    height: auto;
+}
+
+/* --- UNIFIED MENU + GRID PROPORTIONS --- */
+.menu-box {
+    border-radius: 36px;
+    padding: 36px 32px;
+    max-width: 400px;
+    min-width: 300px;
+    box-shadow: 0 8px 38px 0 rgba(0,0,0,0.16);
+    align-items: center;
+}
+.tabs {
+    display: flex;
+    justify-content: flex-start;
+    gap: 14px;
+    margin: 25px 0 25px 0;
+    width: 100%;
+}
+.tab-button {
+    padding: 12px 28px;
+    font-size: 1.2em;
+    border-radius: 19px;
+}
+.anime-grid, .comics-grid, .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px 10px 50px 10px;
+    justify-content: flex-start;
+}
+.anime-card, .comics-grid .anime-card, .games-grid .anime-card {
+    width: 280px;
+    padding: 20px;
+    border-radius: 17px;
+    margin: 0 auto;
+}
+
+/* --- QUIZ BACKGROUND PANEL --- */
+.quiz-bg-panel {
+    background: rgba(14, 14, 14, 0.96);
+    padding: 56px 0;
+    border-radius: 30px;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2.5px solid #222;
+    box-shadow: 0 6px 38px 0 rgba(0,0,0,0.17);
+    z-index: 0;
+    position: relative;
+}
+
+/* --- UNIVERSAL QUIZ BOX STYLES --- */
+.quiz-box {
+    border: 4px solid #fff;
+    padding: 30px 50px;
+    background: #111;
+    border-radius: 17px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 420px;
+    margin: 30px auto 0 auto;
+    box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
+}
+.quiz-box input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    border-radius: 13px;
+    font-size: 1.5em;
+    padding: 14px 12px;
+    margin-bottom: 12px;
+    background: #161616;
+    color: #fff;
+}
+.quiz-box button, .quiz-box .close-button {
+    width: 100%;
+    max-width: 210px;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    border-radius: 11px;
+    font-size: 1.28em;
+    padding: 12px 0;
+    margin-top: 8px;
+    background: #161616;
+    color: #fff;
+    font-family: inherit;
+}
+.quiz-box #feedback,
+.quiz-box #move-feedback,
+.quiz-box #ability-feedback {
+    font-size: 1.18em;
+    font-family: 'PixelFont', monospace;
+    margin: 12px 0 0 0;
+    min-height: 1.2em;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.6px;
+}
+
+/* --- ENFORCE QUIZ FONT AND SIZE SITEWIDE --- */
+.quiz-bg-panel,
+.quiz-box,
+.quiz-box input[type="text"],
+.quiz-box button,
+.quiz-box .close-button,
+.quiz-box #feedback,
+.quiz-box #move-feedback,
+.quiz-box #ability-feedback {
+    font-family: 'PixelFont', monospace !important;
+    font-size: 1.2em !important;
+}
+.quiz-bg-panel .container > h1 {
+    font-size: 1.7em !important;
+    font-family: 'PixelFont', monospace !important;
+    letter-spacing: 2px;
+}
+.quiz-box input[type="text"] {
+    padding: 14px 16px !important;
+    font-size: 1.28em !important;
+}
+.quiz-box button, .quiz-box .close-button {
+    padding: 14px 0 !important;
+    font-size: 1.16em !important;
+}
+
+/* --- HIDE SCROLLBARS SITEWIDE --- */
+html, body, * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background: transparent;
+}
+/* Still allows scrolling with touch/wheel/keys */
 
