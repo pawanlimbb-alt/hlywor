@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Comics</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/anime.css">
     <link rel="stylesheet" href="css/theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -16,42 +16,17 @@
             <button class="tab-button" data-tab="classics">Classics</button>
         </div>
         <div class="tab-content active" id="favorites">
-            <div class="comics-grid">
-                <div class="anime-card reveal active">
-                    <img src="images/koushik.webp" alt="Placeholder" loading="lazy">
-                    <h2>Sample Manga/Manhwa</h2>
-                </div>
-                <div class="anime-card reveal active comics-placeholder">
-                    <img src="images/koushik.webp" alt="Coming Soon" loading="lazy">
-                    <h2>Coming Soon!</h2>
-                </div>
-            </div>
+            <div class="anime-grid"></div>
         </div>
         <div class="tab-content" id="classics">
-            <div class="comics-grid">
-                <div class="anime-card reveal active comics-placeholder">
-                    <img src="images/koushik.webp" alt="Coming Soon" loading="lazy">
-                    <h2>Coming Soon!</h2>
-                </div>
-            </div>
+            <div class="anime-grid"></div>
         </div>
         <button class="close-button">Close</button>
     </div>
     <script src="js/main.js"></script>
-    <script src="js/music.js"></script>
+    <script src="js/comics.js"></script>
     <script src="js/navigation.js"></script>
-    <script>
-        const tabs = document.querySelectorAll('.tab-button');
-        const contents = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
-            });
-        });
-    </script>
+    <script src="js/music.js"></script>
 </body>
 </html>
 

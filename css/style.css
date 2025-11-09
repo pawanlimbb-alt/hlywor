@@ -313,6 +313,32 @@ button:focus, button:focus-visible,
     letter-spacing: 0.6px;
 }
 
+/* --- ENFORCE QUIZ FONT AND SIZE SITEWIDE --- */
+.quiz-bg-panel,
+.quiz-box,
+.quiz-box input[type="text"],
+.quiz-box button,
+.quiz-box .close-button,
+.quiz-box #feedback,
+.quiz-box #move-feedback,
+.quiz-box #ability-feedback {
+    font-family: 'PixelFont', monospace !important;
+    font-size: 1.2em !important;
+}
+.quiz-bg-panel .container > h1 {
+    font-size: 1.7em !important;
+    font-family: 'PixelFont', monospace !important;
+    letter-spacing: 2px;
+}
+.quiz-box input[type="text"] {
+    padding: 14px 16px !important;
+    font-size: 1.28em !important;
+}
+.quiz-box button, .quiz-box .close-button {
+    padding: 14px 0 !important;
+    font-size: 1.16em !important;
+}
+
 /* --- HIDE SCROLLBARS SITEWIDE --- */
 html, body, * {
     scrollbar-width: none; /* Firefox */
