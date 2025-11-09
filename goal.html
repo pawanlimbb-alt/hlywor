@@ -8,6 +8,20 @@
   <link rel="stylesheet" href="style/goal.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* 🌙 Fade-in Scroll Animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
 
@@ -39,54 +53,58 @@
 
     <div class="window-body">
       <div class="content">
-        <h1>🎯 Our Goals</h1>
-        <p class="intro">
-          We don’t just post stories.  
-          We’re building something that lasts — a small world where creativity and honesty live together.  
-          This page is about what we’re aiming for — one story, one idea, one moment at a time.
+        <h1 class="fade-in">🎯 Our Goals</h1>
+        <p class="intro fade-in">
+          We’re not chasing clicks or trends — we’re chasing <em>moments</em>.<br>
+          Moments that breathe, that stay, that remind you what it feels like to be human.<br>
+          HlyWor isn’t just a blog — it’s a small world stitched together by honesty, creativity, and a quiet kind of hope.<br>
+          One story, one idea, one person at a time.
         </p>
 
-        <div class="section">
+        <div class="section fade-in">
           <h2>🪞 Our Vision</h2>
           <p>
-            Our vision is to create a digital space that feels real —  
-            where thoughts, art, and stories aren’t filtered by trends or algorithms.  
-            A place where writers, creators, and readers can connect through emotion, not perfection.
+            We dream of a digital space that feels like an old photograph — warm, a little imperfect, and real.<br>
+            A place untouched by filters or algorithms.<br>
+            Where words, art, and thoughts can exist as they are — raw, emotional, and true.<br>
+            Here, connection matters more than perfection.
           </p>
         </div>
 
-        <div class="section">
+        <div class="section fade-in">
           <h2>💡 Our Mission</h2>
           <ul>
-            <li>Collect and share genuine stories — from us and from others.</li>
-            <li>Give new creators a space to start, even without experience.</li>
-            <li>Mix personal reflections, pop culture, and art into something meaningful.</li>
-            <li>Stay authentic — keeping that pixelated charm, one post at a time.</li>
+            <li>Gather stories that come from real places — from laughter, silence, and everything in between.</li>
+            <li>Give new creators a home, even if all they have is a blank page and a brave heart.</li>
+            <li>Blend reflections, art, and culture into something that feels alive.</li>
+            <li>Stay small, simple, and human — keeping that magic intact.</li>
           </ul>
         </div>
 
-        <div class="section">
+        <div class="section fade-in">
           <h2>🧱 What We’re Building</h2>
           <ul>
-            <li>Expand the blog with more categories (life, culture, creative works).</li>
-            <li>Add community submissions and feature reader stories.</li>
-            <li>Collaborate with small artists, writers, and photographers.</li>
-            <li>Keep everything lightweight, nostalgic, and human.</li>
+            <li>More corners for life, art, and culture.</li>
+            <li>A door open for community stories and shared moments.</li>
+            <li>Collaborations with artists, writers, and photographers who see beauty in the small things.</li>
+            <li>A blog that feels like the internet once did — personal, light, and full of soul.</li>
           </ul>
         </div>
 
-        <div class="section">
+        <div class="section fade-in">
           <h2>🤝 Join the Journey</h2>
           <p>
-            HlyWor isn’t just ours — it’s for everyone who feels something reading it.  
-            You can share your story, send suggestions, or simply read and relate.  
-            Each visit, comment, or message shapes what this space becomes next.
+            HlyWor belongs to everyone who still believes that words can mean something.<br>
+            Share your story, your thoughts, or your silence — it all matters here.<br>
+            Each visit, each comment, each feeling you leave behind helps shape what this becomes.<br><br>
+            Because maybe, just maybe — we’re not building a website.<br>
+            We’re building a place to belong.
           </p>
 
-          <a href="suggest.html" class="retro-btn">Share Your Story</a>
+          <a href="mailto:hlywor@gmail.com" class="retro-btn">Share Your Story</a>
         </div>
 
-        <div class="social-section">
+        <div class="social-section fade-in">
           <h3>Find us online</h3>
           <div class="social-links">
             <a href="https://instagram.com/limbupaw" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
@@ -106,6 +124,26 @@
       const docHeight = document.body.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
       document.getElementById('scroll-bar').style.width = scrollPercent + '%';
+    });
+
+    // ✨ Fade-in Animation on Scroll
+    const faders = document.querySelectorAll('.fade-in');
+    
+    const appearOptions = {
+      threshold: 0.2,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
     });
   </script>
 </body>
