@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-ZVLSVF6T3J');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit to HlyWor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/submit.css">
+</head>
+
+<body>
+  <!-- Top Navbar -->
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="goal.html">Goals</a>
+      <a href="blogs.html">Blogs</a>
+    </div>
+    <div class="nav-right">
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Submit Your Story</h1>
+    <p>
+      Got a moment, a chaos, a late-night thought dump, or a full power emo blog?<br>
+      Drop it here and let it live on HlyWor.
+    </p>
+  </header>
+
+  <!-- Submission Window -->
+  <main class="submit-wrapper">
+    <section class="submit-window">
+      <div class="window-top-bar">
+        <div class="window-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <p class="window-title">HlyWor_Submission.exe</p>
+      </div>
+
+      <!-- added id="submit-form" -->
+      <form class="submit-form" id="submit-form" method="post" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name*</label>
+            <input type="text" id="name" name="name" placeholder="e.g. Pawan" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" name="email" placeholder="for credit / contact">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="type">Type</label>
+            <select id="type" name="type">
+              <option value="blog">Blog</option>
+              <option value="story">Story</option>
+              <option value="poem">Poem</option>
+              <option value="review">Review</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="readtime">Estimated Read Time (optional)</label>
+            <input type="text" id="readtime" name="readtime" placeholder="e.g. 5-6 min">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="title">Title*</label>
+          <input type="text" id="title" name="title" placeholder="Give your chaos a title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="content">Your Writing*</label>
+          <textarea id="content" name="content" placeholder="Type your whole blog / story here..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Cover Image (optional)</label>
+          <label class="file-input-label">
+            <input type="file" name="image" accept="image/*">
+            <span class="file-btn">Choose File</span>
+            <span class="file-text">No file selected</span>
+          </label>
+          <p class="helper-text">Recommended: 16:9 image, under 2MB, .jpg/.png/.webp</p>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" name="agree" required>
+            <span>I confirm this is my original writing and I’m okay with it being posted on HlyWor.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit to HlyWor</button>
+
+        <!-- added id for status text -->
+        <p class="helper-text bottom-note" id="form-message">
+          Note: Submissions won’t appear instantly. We read them first, then publish.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 HlyWor Blog. Crafted with ❤️ in our style.
+  </footer>
+
+  <script>
+    const endpoint = '/api/submitStory';
+
+    const form = document.getElementById('submit-form');
+    const msg = document.getElementById('form-message');
+
+    // file label
+    const fileInput = document.querySelector('.file-input-label input[type="file"]');
+    const fileText = document.querySelector('.file-text');
+    if (fileInput && fileText) {
+      fileInput.addEventListener('change', () => {
+        fileText.textContent = fileInput.files.length
+          ? fileInput.files[0].name
+          : 'No file selected';
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      msg.textContent = 'Sending your chaos to the void...';
+
+      const formData = new FormData(form);
+
+      const payload = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        type: formData.get('type'),
+        readtime: formData.get('readtime'),
+        title: formData.get('title'),
+        content: formData.get('content'),
+        agree: formData.get('agree') ? true : false
+        // image is not stored yet
+      };
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.status === 'success') {
+          msg.textContent = 'Submitted. We\'ll read it soon 🫶';
+          form.reset();
+          if (fileText) fileText.textContent = 'No file selected';
+        } else {
+          msg.textContent = 'Something went wrong. Please try again.';
+        }
+      } catch (err) {
+        console.error(err);
+        msg.textContent = 'Failed to submit. Try again later.';
+      }
+    });
+  </script>
+</body>
+</html>
