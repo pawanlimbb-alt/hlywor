@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Charu Maya Limbu — HlyWor</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board:  #1e1418;  /* slightly warmer dark for pink theme */
+      --paper:  #fdf6f8;
+      --paper2: #f8edf0;
+      --paper3: #f0dde2;
+      --ink:    #1a0810;
+      --ink2:   #3d2028;
+      --ink3:   #6a4050;
+      --ink4:   #a07880;
+      --rule:   rgba(180,120,140,0.2);
+      --acc:    #e85c9a;  /* Charu's pink */
+      --acc2:   #c23070;
+      --gold:   #d4a020;
+      --pin-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.3);
+      --pixel:  'Press Start 2P', monospace;
+      --serif:  'Crimson Pro', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      --hand:   'Caveat', cursive;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--board); font-family: var(--serif); min-height: 100vh; overflow-x: hidden; }
+
+    /* Cork / warm texture */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(100,30,50,0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(70,20,35,0.28) 0%, transparent 45%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: auto,auto,200px 200px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Soft pink glow */
+    .pink-glow {
+      position: fixed; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,92,154,0.1) 0%, transparent 70%);
+      top: 10%; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+      animation: glowPulse 9s ease-in-out infinite;
+    }
+    /* Second softer glow bottom right */
+    .pink-glow-2 {
+      position: fixed; width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(194,48,112,0.07) 0%, transparent 70%);
+      bottom: -50px; right: 5%;
+      pointer-events: none; z-index: 0;
+      animation: glowPulse 12s ease-in-out infinite reverse;
+    }
+    @keyframes glowPulse { 0%,100%{opacity:.6;transform:translateX(-50%) scale(1)} 50%{opacity:1;transform:translateX(-50%) scale(1.12)} }
+
+    /* Petals / floating hearts instead of embers */
+    .petals { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .petal {
+      position: absolute;
+      animation: petalFall linear infinite; opacity: 0;
+      font-size: var(--ps, 0.9rem);
+    }
+    @keyframes petalFall {
+      0%  { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity: 0; }
+      5%  { opacity: 0.7; }
+      90% { opacity: 0.3; }
+      100%{ transform: translateY(105vh) translateX(var(--pd)) rotate(360deg); opacity: 0; }
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--board); }
+    ::-webkit-scrollbar-thumb { background: var(--acc); border-radius: 2px; }
+
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg,var(--acc),#ff99cc); z-index: 9999; transition: width 0.08s linear; }
+
+    /* ── NAV ── */
+    .nav { position: sticky; top: 0; z-index: 200; background: var(--ink); border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 52px; }
+    .nav-logo { font-family: var(--pixel); font-size: 0.55rem; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-shadow: 0 0 12px rgba(212,160,32,0.4); animation: flicker 7s infinite; }
+    @keyframes flicker { 0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1} }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
+    .nav-links a { font-family: var(--sans); font-size: 0.75rem; color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: rgba(255,255,255,0.85); }
+    .nav-back { font-family: var(--sans); font-size: 0.72rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: rgba(255,255,255,0.8); }
+    .nav-back::before { content: '←'; margin-right: 5px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; width: 32px; height: 32px; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 18px; height: 1.5px; background: rgba(255,255,255,0.6); transition: all 0.28s; transform-origin: center; }
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mob-nav { display: none; position: fixed; top: 52px; left: 0; right: 0; background: var(--ink); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 20px 28px; z-index: 199; flex-direction: column; }
+    .mob-nav.open { display: flex; }
+    .mob-nav a { font-family: var(--sans); font-size: 0.88rem; color: rgba(255,255,255,0.45); padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; transition: color 0.2s; }
+    .mob-nav a:last-child { border-bottom: none; }
+    .mob-nav a:hover { color: rgba(255,255,255,0.85); }
+
+    /* PAGE */
+    .page-wrap { max-width: 920px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
+
+    /* Book drop */
+    @keyframes bookDrop {
+      0%  { opacity:0; transform:translateY(-55px) rotate(2deg) scale(0.95); }
+      65% { opacity:1; transform:translateY(7px) rotate(-0.4deg) scale(1.004); }
+      82% { transform:translateY(-3px) rotate(0.2deg); }
+      100%{ opacity:1; transform:translateY(0) rotate(0deg) scale(1); }
+    }
+
+    .profile-wrap { padding-top: 48px; position: relative; }
+    .profile-pin {
+      position: absolute; top: 34px; left: 50%; transform: translateX(-50%);
+      width: 17px; height: 17px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%,#ffaacc,#cc2266);
+      box-shadow: 0 2px 7px rgba(0,0,0,0.65), inset 0 1px 2px rgba(255,255,255,0.3);
+      z-index: 10;
+      animation: pinDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) both 0.15s;
+    }
+    @keyframes pinDrop { from{opacity:0;transform:translateX(-50%) translateY(-20px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+    .profile-pin::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); width:2px; height:15px; background:linear-gradient(to bottom,#888,#333); }
+
+    .profile-sheet { display: flex; box-shadow: var(--pin-shadow); animation: bookDrop 0.9s cubic-bezier(0.34,1.4,0.64,1) both; }
+
+    .profile-spine {
+      width: 26px; flex-shrink: 0;
+      background: linear-gradient(180deg,#3d1020 0%,#2a0810 20%,#4a1828 40%,#2a0810 60%,#3d1020 80%,#2a0810 100%);
+      border-right: 2px solid rgba(0,0,0,0.5);
+      border-radius: 3px 0 0 3px; position: relative;
+    }
+    .profile-spine::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:6px; bottom:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 28px,rgba(0,0,0,0.35) 28px,rgba(0,0,0,0.35) 34px); }
+
+    .profile-page { flex:1; background:var(--paper); position:relative; overflow:hidden; }
+    .profile-page::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px); background-position:0 100px; pointer-events:none; z-index:0; }
+    .profile-page::after { content:''; position:absolute; top:0; bottom:0; left:70px; width:1px; background:rgba(220,80,120,0.2); pointer-events:none; z-index:0; }
+    .page-curl { position:absolute; bottom:0; right:0; width:42px; height:42px; background:linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.08) 50%,var(--paper2) 50%); clip-path:polygon(100% 0,100% 100%,0 100%); pointer-events:none; z-index:10; transition:width 0.3s,height 0.3s; }
+    .profile-sheet:hover .page-curl { width:58px; height:58px; }
+
+    /* TOP */
+    .top-section { display: grid; grid-template-columns: 210px 1fr; gap: 32px; padding: 32px 36px 28px 88px; border-bottom: 1px solid var(--rule); position: relative; z-index: 2; }
+
+    /* Photos */
+    .photos-col { position: relative; height: 290px; }
+    .diary-photo { position: absolute; background: #fff; padding: 6px 6px 22px; box-shadow: 2px 4px 14px rgba(0,0,0,0.25), 1px 1px 3px rgba(0,0,0,0.1); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+    .diary-photo:hover { box-shadow: 5px 7px 24px rgba(232,92,154,0.35); z-index: 20 !important; }
+    .diary-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: sepia(5%) brightness(0.97) saturate(1.05); transition: filter 0.4s; }
+    .diary-photo:hover img { filter: sepia(0%) brightness(1) saturate(1.1); }
+    .diary-photo-cap { font-family: var(--hand); font-size: 0.72rem; color: var(--ink3); text-align: center; padding-top: 4px; line-height: 1.2; }
+
+    /* Tape */
+    .diary-photo::before { content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%) rotate(-1.5deg); width:46px; height:14px; background:rgba(232,92,154,0.6); z-index:3; }
+    .diary-photo:nth-child(2)::before { background:rgba(240,180,200,0.65); transform:translateX(-50%) rotate(1.5deg); }
+    .diary-photo:nth-child(3)::before { background:rgba(194,48,112,0.5); transform:translateX(-50%) rotate(-0.5deg); }
+
+    /* 3 photo positions */
+    .diary-photo:nth-child(1) { top:4px;left:50%;transform:translateX(-50%) rotate(-2deg);width:134px;height:126px;z-index:3; }
+    .diary-photo:nth-child(2) { bottom:8px;left:0;width:120px;height:112px;transform:rotate(3deg);z-index:2; }
+    .diary-photo:nth-child(3) { bottom:8px;right:0;width:120px;height:112px;transform:rotate(-2.5deg);z-index:1; }
+
+    /* Info col */
+    .info-col { display: flex; flex-direction: column; gap: 10px; }
+    .exe-badge { font-family: var(--pixel); font-size: 0.3rem; letter-spacing: 1px; padding: 3px 10px; background: var(--acc); color: #fff; display: inline-block; align-self: flex-start; transform: rotate(-0.5deg); margin-bottom: 2px; }
+    .profile-name { font-family: var(--hand); font-size: clamp(1.9rem,5vw,3rem); color: var(--ink); font-weight: 700; line-height: 1.1; }
+    .profile-sub { font-family: var(--pixel); font-size: 0.24rem; color: var(--acc); letter-spacing: 2px; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .chip { font-family: var(--hand); font-size: 0.82rem; padding: 2px 10px; color: #fff; background: var(--acc); border-radius: 1px; opacity: 0.88; }
+    .chip-soft { font-family: var(--hand); font-size: 0.82rem; padding: 2px 10px; color: var(--acc2); border: 1px solid rgba(232,92,154,0.3); background: rgba(232,92,154,0.06); border-radius: 1px; }
+    .chip-outline { font-family: var(--pixel); font-size: 0.22rem; padding: 2px 8px; letter-spacing: 1px; color: var(--ink3); border: 1px solid rgba(26,8,16,0.15); background: var(--paper3); border-radius: 1px; }
+
+    .ig-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--hand); font-size: 0.95rem; color: #fff; padding: 5px 16px; background: linear-gradient(135deg,#e85c9a,#cc2277,#aa1155); text-decoration: none; transition: all 0.2s; align-self: flex-start; }
+    .ig-link:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+    .profile-bio { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--ink2); line-height: 1.8; max-width: 460px; }
+
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .info-list li { font-family: var(--hand); font-size: 0.95rem; color: var(--ink2); display: flex; gap: 8px; }
+    .info-lbl { font-family: var(--pixel); font-size: 0.2rem; color: var(--ink4); letter-spacing: 1px; width: 76px; flex-shrink: 0; padding-top: 3px; }
+
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+    .stat-row { display: flex; align-items: center; gap: 7px; }
+    .stat-lbl { font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);letter-spacing:1px;width:56px;flex-shrink:0; }
+    .stat-bar-w { flex:1;height:5px;background:rgba(26,8,16,0.07);border-radius:1px;overflow:hidden; }
+    .stat-bar { height:100%;border-radius:1px;background:var(--acc);width:0;transition:width 1s cubic-bezier(0.34,1.2,0.64,1); }
+    .stat-n { font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);width:18px;text-align:right;flex-shrink:0; }
+
+    /* Body sections */
+    .body-section { padding: 22px 36px 0 88px; position: relative; z-index: 2; }
+    .sec-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .sdlbl { font-family: var(--pixel); font-size: 0.24rem; color: var(--acc); letter-spacing: 3px; white-space: nowrap; }
+    .sdline { flex: 1; height: 1px; background: var(--rule); }
+
+    .sec-text { font-family: var(--serif); font-size: 1rem; color: var(--ink2); line-height: 1.85; font-style: italic; max-width: 580px; }
+    .sec-text strong { font-style: normal; color: var(--ink); }
+
+    .rules-list { display: flex; flex-direction: column; gap: 7px; max-width: 580px; }
+    .rule-item { font-family: var(--hand); font-size: 1rem; color: var(--ink2); display: flex; gap: 8px; align-items: baseline; }
+    .rule-item::before { content: '♡'; color: var(--acc); font-size: 0.85rem; flex-shrink: 0; }
+
+    /* Love list — things she loves */
+    .love-list { display: flex; flex-wrap: wrap; gap: 7px; max-width: 580px; }
+    .love-tag {
+      font-family: var(--hand); font-size: 0.9rem;
+      padding: 3px 12px;
+      color: var(--ink2);
+      border: 1px solid rgba(232,92,154,0.25);
+      background: rgba(232,92,154,0.06);
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .love-tag:hover { background: rgba(232,92,154,0.12); border-color: var(--acc); }
+
+    .cw-wrap { font-family: var(--hand); font-size: 0.9rem; color: var(--ink3); line-height: 1.8; max-width: 580px; }
+    .cw-lbl { font-family: var(--pixel); font-size: 0.22rem; color: #e85c5c; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+    /* Mini gallery */
+    .mini-gallery { display: flex; gap: 14px; flex-wrap: wrap; }
+    .mini-photo { background: #fff; padding: 5px 5px 18px; box-shadow: 2px 3px 12px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; position: relative; }
+    .mini-photo:nth-child(odd)  { transform: rotate(-2deg); }
+    .mini-photo:nth-child(even) { transform: rotate(1.5deg); }
+    .mini-photo:hover { transform: rotate(0deg) scale(1.07) !important; box-shadow: 4px 6px 20px rgba(232,92,154,0.35); z-index: 5; }
+    .mini-photo img { width: 100px; height: 100px; object-fit: cover; display: block; filter: sepia(4%); }
+    .mini-photo::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:36px; height:11px; background:rgba(232,92,154,0.55); }
+
+    /* Dream section — soft sticky note */
+    .dream-note {
+      max-width: 540px;
+      background: linear-gradient(135deg, #fff5f8, #ffeef4);
+      padding: 22px 26px;
+      position: relative;
+      transform: rotate(-0.4deg);
+      box-shadow: 2px 3px 14px rgba(232,92,154,0.15), 1px 1px 4px rgba(0,0,0,0.08);
+      border-left: 3px solid var(--acc);
+    }
+    .dream-note::before {
+      content:''; position:absolute; top:-9px; left:50%;
+      transform:translateX(-50%) rotate(-0.5deg);
+      width:56px; height:14px;
+      background:rgba(232,92,154,0.5);
+    }
+    .dream-text { font-family: var(--hand); font-size: 1.05rem; color: var(--ink2); line-height: 1.9; }
+    .dream-sign { font-family: var(--hand); font-size: 1.3rem; color: var(--acc); margin-top: 14px; display: block; text-align: right; }
+
+    /* Letter / note */
+    .letter-wrap { max-width: 580px; background: var(--paper2); padding: 20px 24px; position: relative; transform: rotate(-0.3deg); box-shadow: 1px 2px 8px rgba(0,0,0,0.08); }
+    .letter-wrap::before { content:''; position:absolute; top:-9px; left:50%; transform:translateX(-50%); width:56px; height:14px; background:rgba(232,92,154,0.45); }
+    .letter-text { font-family: var(--hand); font-size: 1rem; color: var(--ink2); line-height: 1.85; }
+    .letter-sign { font-family: var(--hand); font-size: 1.3rem; color: var(--acc); margin-top: 14px; display: block; text-align: right; }
+
+    /* Social section */
+    .social-section { margin-top: 44px; position: relative; z-index: 1; }
+    .social-heading { font-family: var(--pixel); font-size: 0.3rem; color: var(--acc); letter-spacing: 3px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .social-heading::before { content:''; display:inline-block; width:18px; height:1px; background:var(--acc); }
+    .social-cards { display: flex; flex-wrap: wrap; gap: 14px; }
+    .social-card { background: var(--paper); padding: 12px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+    .social-card:nth-child(odd) { transform: rotate(-1deg); }
+    .social-card:nth-child(even) { transform: rotate(0.8deg); }
+    .social-card:hover { transform: rotate(0deg) translateY(-5px) !important; box-shadow: 0 12px 30px rgba(232,92,154,0.3); }
+    .social-card::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:36px; height:12px; background:rgba(232,92,154,0.5); }
+    .social-icon { font-size: 1.2rem; }
+    .social-label { font-family: var(--hand); font-size: 1rem; color: var(--ink); }
+    .social-handle { font-family: var(--pixel); font-size: 0.22rem; color: var(--ink4); letter-spacing: 1px; }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 20px 28px; margin-top: 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: relative; z-index: 1; }
+    .site-footer p { font-family: var(--sans); font-size: 0.68rem; color: rgba(255,255,255,0.2); }
+    .footer-logo { font-family: var(--pixel); font-size: 0.38rem; color: var(--gold); letter-spacing: 2px; }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .top-section { grid-template-columns: 1fr; padding: 24px 18px 20px 22px; }
+      .photos-col { height: 230px; }
+      .body-section { padding: 18px 18px 0 22px; }
+      .profile-page::after { left: 14px; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .page-wrap { padding: 0 10px 60px; }
+      .mini-photo img { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="pink-glow"></div>
+<div class="pink-glow-2"></div>
+<div class="petals" id="petals"></div>
+<div id="progress-bar"></div>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../character.html">Crew</a></li>
+      <li><a href="../gallery.html">Gallery</a></li>
+      <li><a href="../goal.html">Goals</a></li>
+    </ul>
+    <a href="../character.html" class="nav-back">Back to crew</a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="../index.html">Home</a>
+  <a href="../character.html">Crew</a>
+  <a href="../gallery.html">Gallery</a>
+  <a href="../goal.html">Goals</a>
+</div>
+
+<div class="page-wrap">
+
+  <div class="profile-wrap">
+    <div class="profile-pin"></div>
+    <div class="profile-sheet">
+      <div class="profile-spine"></div>
+      <div class="profile-page">
+
+        <!-- TOP -->
+        <div class="top-section">
+          <div class="photos-col">
+            <div class="diary-photo">
+              <img src="img/charu2.webp" alt="Charu">
+              <div class="diary-photo-cap">maya ✦</div>
+            </div>
+            <div class="diary-photo">
+              <img src="img/charu4.webp" alt="Charu">
+              <div class="diary-photo-cap">in bloom 🌷</div>
+            </div>
+            <div class="diary-photo">
+              <img src="img/charu3.webp" alt="Charu">
+              <div class="diary-photo-cap">soft days 🌸</div>
+            </div>
+          </div>
+
+          <div class="info-col">
+            <span class="exe-badge">CML.EXE</span>
+            <div class="profile-name">Charu Maya Limbu</div>
+            <div class="profile-sub">WRITER · DREAMER · WITH LOVE</div>
+
+            <div class="chip-row">
+              <span class="chip">Student</span>
+              <span class="chip-soft">K-drama addict</span>
+              <span class="chip-soft">BTS army</span>
+              <span class="chip-outline">She / Her</span>
+            </div>
+
+            <a class="ig-link" href="https://instagram.com/my_angela" target="_blank" rel="noopener">
+              📷 @my_angela
+            </a>
+
+            <p class="profile-bio">
+              Social person who loves people, hates calculations, and lives for K-dramas, BTS, and Salman Khan. Can be aggressive but always kind at heart.
+            </p>
+
+            <ul class="info-list">
+              <li><span class="info-lbl">AGE</span>19</li>
+              <li><span class="info-lbl">BIRTHDAY</span>27 May 2006</li>
+              <li><span class="info-lbl">PRONOUNS</span>She / Her</li>
+              <li><span class="info-lbl">LANGUAGE</span>Nepali · Hindi · English</li>
+              <li><span class="info-lbl">VIBE</span>Stubborn but kind, aggressive yet loving</li>
+            </ul>
+
+            <div class="stats-grid" id="statsGrid">
+              <div class="stat-row"><span class="stat-lbl">WARMTH</span><div class="stat-bar-w"><div class="stat-bar" data-val="99"></div></div><span class="stat-n">99</span></div>
+              <div class="stat-row"><span class="stat-lbl">WRITING</span><div class="stat-bar-w"><div class="stat-bar" data-val="87"></div></div><span class="stat-n">87</span></div>
+              <div class="stat-row"><span class="stat-lbl">FEELS</span><div class="stat-bar-w"><div class="stat-bar" data-val="96"></div></div><span class="stat-n">96</span></div>
+              <div class="stat-row"><span class="stat-lbl">K-DRAMA</span><div class="stat-bar-w"><div class="stat-bar" data-val="98"></div></div><span class="stat-n">98</span></div>
+              <div class="stat-row"><span class="stat-lbl">LET GO</span><div class="stat-bar-w"><div class="stat-bar" data-val="12"></div></div><span class="stat-n">12</span></div>
+              <div class="stat-row"><span class="stat-lbl">MEAN</span><div class="stat-bar-w"><div class="stat-bar" data-val="04"></div></div><span class="stat-n">04</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BEFORE YOU FOLLOW -->
+        <div class="body-section" style="padding-top:26px">
+          <div class="sec-divider"><span class="sdlbl">BEFORE YOU FOLLOW</span><div class="sdline"></div></div>
+          <p class="sec-text">
+            Social person who loves people and connections. I hate calculations with a passion. I live for <strong>K-dramas</strong>, <strong>BTS</strong>, and <strong>Salman Khan</strong>. I can be aggressive when I need to be, but I'm always kind at heart — and I love deeply, sometimes too deeply.
+          </p>
+        </div>
+
+        <!-- LET'S KEEP IT KIND -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">LET'S KEEP IT KIND</span><div class="sdline"></div></div>
+          <div class="rules-list">
+            <div class="rule-item">Be kind — respect everyone's opinions — love drama (in peace)</div>
+            <div class="rule-item">No racism — believe in spirituality — positive vibes only</div>
+            <div class="rule-item">Share love — no hate — open hearts only</div>
+          </div>
+        </div>
+
+        <!-- THINGS I LOVE -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">THINGS I LOVE</span><div class="sdline"></div></div>
+          <div class="love-list">
+            <span class="love-tag">🍜 Food</span>
+            <span class="love-tag">🌍 New places</span>
+            <span class="love-tag">🎭 Different cultures</span>
+            <span class="love-tag">🌷 Lily & Tulip</span>
+            <span class="love-tag">🇳🇱 Netherlands (dream)</span>
+            <span class="love-tag">🎵 BTS</span>
+            <span class="love-tag">🎬 K-dramas</span>
+            <span class="love-tag">🌟 Salman Khan</span>
+            <span class="love-tag">✨ Peaceful vibes</span>
+            <span class="love-tag">💌 Deep connections</span>
+            <span class="love-tag">🌸 Flowers</span>
+            <span class="love-tag">🌿 Quiet mornings</span>
+          </div>
+        </div>
+
+        <!-- DREAM -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">MY DREAM</span><div class="sdline"></div></div>
+          <div class="dream-note">
+            <p class="dream-text">
+              The Netherlands is my dream place — tulip fields, canals, that soft European light. I want to go there someday and just exist in it for a while. I don't know how to let go easily, but I love deeply and I think that's worth it.
+            </p>
+            <span class="dream-sign">— maya 🌷</span>
+          </div>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">GALLERY</span><div class="sdline"></div></div>
+          <div class="mini-gallery">
+            <div class="mini-photo"><img src="img/charu4.webp" alt="charu"></div>
+            <div class="mini-photo"><img src="img/charu3.webp" alt="charu"></div>
+            <div class="mini-photo"><img src="img/charu2.webp" alt="charu"></div>
+          </div>
+        </div>
+
+        <!-- TW/CW -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">TW / CW</span><div class="sdline"></div></div>
+          <div class="cw-wrap">
+            <span class="cw-lbl">SENSITIVE TOPICS I MIGHT TOUCH:</span>
+            drama · strong opinions · emotional topics · spirituality · heartbreaks
+          </div>
+        </div>
+
+        <!-- NOTE -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">A NOTE</span><div class="sdline"></div></div>
+          <div class="letter-wrap">
+            <p class="letter-text">
+              If I ever say something wrong, just tell me calmly instead of being rude — I'll understand. I'm always willing to listen, learn, and do better. Let's keep this space kind.
+            </p>
+            <span class="letter-sign">— charu ♡</span>
+          </div>
+        </div>
+
+        <div style="height:32px"></div>
+        <div class="page-curl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div class="social-section">
+    <div class="social-heading">FIND ME</div>
+    <div class="social-cards">
+      <a class="social-card" href="https://instagram.com/my_angela" target="_blank" rel="noopener">
+        <span class="social-icon">📷</span>
+        <div>
+          <div class="social-label">Instagram</div>
+          <div class="social-handle">@my_angela</div>
+        </div>
+      </a>
+     
+      <a class="social-card" href="../index.html">
+        <span class="social-icon">📖</span>
+        <div>
+          <div class="social-label">HlyWor</div>
+          <div class="social-handle">read my posts</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobNav    = document.getElementById('mobNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobNav.classList.toggle('open');
+});
+mobNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobNav.classList.remove('open');
+}));
+
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress-bar').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, { passive: true });
+
+/* Floating petals / hearts */
+const pc = document.getElementById('petals');
+const symbols = ['🌸','🌷','✨','♡','🌺','💕'];
+for (let i = 0; i < 16; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  const sym = symbols[Math.floor(Math.random() * symbols.length)];
+  p.textContent = sym;
+  const size = 0.6 + Math.random() * 0.8;
+  p.style.cssText = `left:${Math.random()*100}%;top:0;font-size:${size}rem;animation-duration:${10+Math.random()*14}s;animation-delay:${Math.random()*12}s;--pd:${(Math.random()-.5)*80}px;`;
+  pc.appendChild(p);
+}
+
+/* Stat bars on scroll */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.stat-bar').forEach(bar => {
+        bar.style.width = (parseInt(bar.dataset.val)||50) + '%';
+      });
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const sg = document.getElementById('statsGrid');
+if (sg) ro.observe(sg);
+</script>
+</body>
+</html>

@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pin Yourself — HlyWor</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board:  #2a1f14;
+      --paper:  #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #ede3c8;
+      --ink:    #1a1208;
+      --ink2:   #3d3020;
+      --ink3:   #6a5840;
+      --ink4:   #a09078;
+      --rule:   rgba(180,160,120,0.22);
+      --fire:   #e8681a;
+      --gold:   #d4a020;
+      --pixel:  'Press Start 2P', monospace;
+      --serif:  'Crimson Pro', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      --hand:   'Caveat', cursive;
+      --shadow: 0 6px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--board);
+      font-family: var(--serif);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Cork texture */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 20% 30%, rgba(80,50,20,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(60,35,10,0.25) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+      background-size: auto, auto, 200px 200px;
+      pointer-events: none; z-index: 0;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--board); }
+    ::-webkit-scrollbar-thumb { background: var(--fire); border-radius: 2px; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ink);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 52px;
+    }
+    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .nav-logo {
+      font-family: var(--pixel); font-size: 0.55rem;
+      color: var(--gold); letter-spacing: 2px;
+      text-decoration: none;
+      text-shadow: 0 0 12px rgba(212,160,32,0.4);
+    }
+    .nav-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.1); }
+    .nav-title {
+      font-family: var(--hand); font-size: 1.1rem;
+      color: rgba(255,255,255,0.45); font-style: italic;
+    }
+    .nav-back {
+      font-family: var(--sans); font-size: 0.72rem;
+      color: rgba(255,255,255,0.35); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: rgba(255,255,255,0.8); }
+    .nav-back::before { content: '←'; margin-right: 5px; }
+
+    /* ── MAIN LAYOUT ── */
+    .diary-layout {
+      display: flex;
+      min-height: calc(100vh - 52px);
+      position: relative; z-index: 1;
+    }
+
+    /* ── TOOLS SIDEBAR ── */
+    .tools-panel {
+      width: 72px;
+      background: var(--ink);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex; flex-direction: column;
+      align-items: center; padding: 16px 0; gap: 4px;
+      position: sticky; top: 52px;
+      height: calc(100vh - 52px);
+      overflow-y: auto; overflow-x: hidden;
+      scrollbar-width: none; flex-shrink: 0;
+    }
+    .tools-panel::-webkit-scrollbar { display: none; }
+
+    .tool-group-label {
+      font-family: var(--pixel); font-size: 0.32rem;
+      color: rgba(255,255,255,0.2); letter-spacing: 2px;
+      margin: 8px 0 4px; text-align: center; width: 100%;
+    }
+    .tool-sep {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);
+      margin: 6px 0;
+    }
+
+    /* Color swatches */
+    .pen-swatches {
+      display: flex; flex-wrap: wrap; gap: 5px;
+      padding: 4px; justify-content: center;
+    }
+    .pen-swatch {
+      width: 22px; height: 22px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .pen-swatch:hover { transform: scale(1.2); }
+    .pen-swatch.active {
+      border-color: #fff;
+      box-shadow: 0 0 6px rgba(255,255,255,0.4);
+    }
+
+    /* ── DIARY AREA ── */
+    .diary-area {
+      flex: 1; padding: 40px 32px 80px;
+      display: flex; justify-content: center; align-items: flex-start;
+    }
+
+    .diary-book {
+      width: 100%; max-width: 760px;
+      display: flex;
+      box-shadow: var(--shadow);
+    }
+
+    /* Spine */
+    .diary-spine {
+      width: 26px; flex-shrink: 0;
+      background: linear-gradient(180deg,
+        #3d2210 0%, #2a1608 20%, #4a2a12 40%,
+        #2a1608 60%, #3d2210 80%, #2a1608 100%
+      );
+      border-right: 2px solid rgba(0,0,0,0.5);
+      border-radius: 3px 0 0 3px;
+      position: relative;
+    }
+    .diary-spine::before {
+      content: ''; position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%); width: 6px; bottom: 0;
+      background: repeating-linear-gradient(
+        to bottom,transparent 0px,transparent 28px,
+        rgba(0,0,0,0.35) 28px,rgba(0,0,0,0.35) 34px
+      );
+    }
+
+    /* Page */
+    .diary-page {
+      flex: 1; background: var(--paper);
+      position: relative; overflow: hidden;
+    }
+    .diary-page::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,transparent 0px,transparent 31px,
+        var(--rule) 31px,var(--rule) 32px
+      );
+      background-position: 0 56px;
+      pointer-events: none; z-index: 0;
+    }
+    .diary-page::after {
+      content: ''; position: absolute;
+      top: 0; bottom: 0; left: 68px;
+      width: 1px; background: rgba(220,80,80,0.2);
+      pointer-events: none; z-index: 0;
+    }
+    .page-curl {
+      position: absolute; bottom: 0; right: 0;
+      width: 40px; height: 40px;
+      background: linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.1) 50%,var(--paper2) 50%);
+      clip-path: polygon(100% 0,100% 100%,0 100%);
+      pointer-events: none; z-index: 10;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header-area {
+      padding: 28px 32px 22px 88px;
+      border-bottom: 3px solid var(--fire);
+      position: relative; z-index: 2;
+      background: linear-gradient(to right, rgba(232,104,26,0.04), transparent);
+    }
+    .page-eyebrow {
+      font-family: var(--pixel); font-size: 0.48rem;
+      color: var(--fire); letter-spacing: 2px; margin-bottom: 10px;
+    }
+    .page-heading {
+      font-family: var(--hand);
+      font-size: clamp(1.8rem,4vw,2.6rem);
+      color: var(--ink); font-weight: 700; line-height: 1.2; margin-bottom: 6px;
+    }
+    .page-hint {
+      font-family: var(--serif); font-size: 0.92rem;
+      font-style: italic; color: var(--ink3); line-height: 1.75;
+    }
+
+    /* ── FORM SECTIONS ── each is a distinct visual block ── */
+
+    /* The colored section block */
+    .sec-block {
+      padding: 20px 32px 22px 88px;
+      position: relative;
+      border-left: 4px solid var(--sec-color, var(--fire));
+      background: var(--sec-bg, transparent);
+      margin-bottom: 0;
+    }
+    /* Top washi tape label */
+    .sec-block::before {
+      content: var(--sec-label, '');
+      position: absolute;
+      top: 0; left: 88px;
+      font-family: var(--pixel); font-size: 0.42rem;
+      letter-spacing: 2px;
+      background: var(--sec-color, var(--fire));
+      color: #fff;
+      padding: 4px 14px;
+      line-height: 1.4;
+      transform: translateY(-50%);
+    }
+    /* Thin separator between blocks */
+    .sec-block + .sec-block {
+      border-top: 1px dashed var(--rule);
+    }
+    /* First block needs top spacing for the label to breathe */
+    .sec-block:first-of-type { padding-top: 28px; }
+
+    /* Section color variants */
+    .sec-basics {
+      --sec-color: #e8681a;
+      --sec-bg: rgba(232,104,26,0.025);
+      --sec-label: 'THE BASICS';
+    }
+    .sec-who {
+      --sec-color: #5c8ae8;
+      --sec-bg: rgba(92,138,232,0.025);
+      --sec-label: 'WHO YOU ARE';
+    }
+    .sec-photos {
+      --sec-color: #5cbc7a;
+      --sec-bg: rgba(92,188,122,0.025);
+      --sec-label: 'YOUR PHOTOS';
+    }
+    .sec-stats {
+      --sec-color: #a06ae8;
+      --sec-bg: rgba(160,106,232,0.025);
+      --sec-label: 'YOUR STATS';
+    }
+    .sec-about {
+      --sec-color: #e8901a;
+      --sec-bg: rgba(232,144,26,0.025);
+      --sec-label: 'ABOUT YOU';
+    }
+    .sec-social {
+      --sec-color: #e85c9a;
+      --sec-bg: rgba(232,92,154,0.025);
+      --sec-label: 'FIND ME';
+    }
+    .sec-intro {
+      --sec-color: #5ccfbc;
+      --sec-bg: rgba(92,207,188,0.025);
+      --sec-label: 'YOUR FULL INTRO';
+    }
+
+    /* Fields */
+    .field { margin-bottom: 18px; }
+    .field-row   { display: grid; grid-template-columns: 1fr 1fr;       gap: 16px; margin-bottom: 18px; }
+    .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr;   gap: 14px; margin-bottom: 18px; }
+
+    .field label {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--pixel); font-size: 0.42rem;
+      color: var(--ink3); letter-spacing: 1px; margin-bottom: 7px;
+    }
+    .field label::before {
+      content: '›'; font-family: var(--hand); font-size: 1.1rem;
+      color: var(--sec-color, var(--fire)); line-height: 1;
+      font-weight: 700;
+    }
+    .field label .req { color: var(--fire); margin-left: 2px; }
+    .field label .opt { font-size: 0.34rem; color: var(--ink4); font-weight: 400; }
+
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="url"],
+    .field input[type="number"],
+    .field select,
+    .field textarea {
+      width: 100%; background: rgba(26,18,8,0.03);
+      border: none;
+      border-bottom: 2px solid rgba(26,18,8,0.12);
+      border-radius: 3px 3px 0 0;
+      font-family: var(--hand); font-size: 1.05rem;
+      color: var(--ink); padding: 6px 8px; outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--sec-color, var(--fire));
+      background: rgba(26,18,8,0.05);
+    }
+    .field input::placeholder, .field textarea::placeholder {
+      color: var(--ink4); font-style: italic;
+    }
+    .field textarea { resize: none; min-height: 72px; line-height: 1.65; }
+    .field select { cursor: pointer; }
+    .field select option { background: var(--paper); color: var(--ink); }
+
+    /* ── PROFESSION HIGHLIGHT ── */
+    /* These show as colored tape strips on the card */
+    .profession-tags {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;
+    }
+    .prof-tag {
+      font-family: var(--hand); font-size: 0.85rem;
+      padding: 3px 12px; border: 1px dashed rgba(26,18,8,0.2);
+      color: var(--ink3); cursor: pointer; border-radius: 2px;
+      transition: all 0.15s; background: transparent;
+    }
+    .prof-tag:hover { background: var(--paper3); }
+    .prof-tag.active { background: var(--fire); color: #fff; border-color: var(--fire); border-style: solid; }
+    .prof-tag-input {
+      background: transparent; border: none;
+      border-bottom: 1px dashed var(--rule);
+      font-family: var(--hand); font-size: 0.9rem;
+      color: var(--ink3); padding: 2px 6px; outline: none;
+      width: 120px; margin-top: 4px;
+    }
+    .prof-hint {
+      font-family: var(--serif); font-size: 0.78rem;
+      font-style: italic; color: var(--ink4);
+      margin-top: 4px; display: block;
+    }
+
+    /* ── PHOTOS ── */
+    .photos-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 14px; margin-top: 4px;
+    }
+    .photo-slot {
+      position: relative; aspect-ratio: 4/3;
+      border: 2px dashed rgba(26,18,8,0.15);
+      background: rgba(26,18,8,0.02);
+      cursor: pointer;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 4px;
+      transition: all 0.2s; overflow: hidden;
+    }
+    .photo-slot:hover { border-color: var(--fire); background: rgba(232,104,26,0.03); }
+    .photo-slot input[type="file"] { display: none; }
+    .photo-slot-num {
+      font-family: var(--pixel); font-size: 0.38rem;
+      color: var(--ink4); letter-spacing: 1px;
+    }
+    .photo-slot-icon { font-size: 1.2rem; }
+    .photo-slot-hint {
+      font-family: var(--hand); font-size: 0.72rem;
+      color: var(--ink4); font-style: italic;
+    }
+    .photo-slot.filled { border-style: solid; border-color: rgba(26,18,8,0.12); }
+    .photo-slot.filled img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .photo-uploading {
+      position: absolute; inset: 0;
+      background: rgba(250,246,238,0.88);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--hand); font-size: 0.8rem;
+      color: var(--fire); font-style: italic;
+      animation: fadeFlicker 0.9s step-start infinite;
+    }
+    @keyframes fadeFlicker { 50%{opacity:0.3} }
+    .photo-clear {
+      position: absolute; top: 4px; right: 4px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(26,18,8,0.6); color: #fff;
+      font-size: 0.65rem; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 5;
+    }
+    .photo-caption-in {
+      width: 100%; background: transparent; border: none;
+      border-bottom: 1px dashed var(--rule);
+      font-family: var(--hand); font-size: 0.78rem;
+      color: var(--ink3); padding: 3px 0; outline: none;
+      margin-top: 6px;
+    }
+    .photo-caption-in::placeholder { color: var(--ink4); font-style: italic; }
+
+    /* ── ACCENT COLOR ── */
+    .color-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .color-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .color-dot:hover { transform: scale(1.2); }
+    .color-dot.active { border-color: var(--ink); box-shadow: 0 0 0 2px #fff; }
+
+    /* ── STATS BUILDER ── */
+    .stats-list { display: flex; flex-direction: column; gap: 10px; }
+    .stat-row-build {
+      display: grid; grid-template-columns: 1fr 90px 28px;
+      gap: 10px; align-items: end;
+    }
+    .stat-name-in {
+      background: transparent; border: none;
+      border-bottom: 1px solid rgba(26,18,8,0.15);
+      font-family: var(--hand); font-size: 1rem;
+      color: var(--ink); padding: 3px 0; outline: none;
+      width: 100%; transition: border-color 0.2s;
+    }
+    .stat-name-in:focus { border-color: var(--fire); }
+    .stat-name-in::placeholder { color: var(--ink4); font-style: italic; }
+    .stat-val-wrap { display: flex; flex-direction: column; gap: 3px; }
+    .stat-val-in {
+      background: transparent; border: none;
+      border-bottom: 1px solid rgba(26,18,8,0.15);
+      font-family: var(--pixel); font-size: 0.44rem;
+      color: var(--ink); padding: 3px 0; outline: none;
+      width: 100%; text-align: center;
+      transition: border-color 0.2s;
+    }
+    .stat-val-in:focus { border-color: var(--fire); }
+    .stat-bar-preview {
+      height: 4px; background: rgba(26,18,8,0.07);
+      border-radius: 1px; overflow: hidden;
+    }
+    .stat-bar-fill {
+      height: 100%; border-radius: 1px;
+      background: var(--fire); transition: width 0.25s;
+    }
+    .stat-del {
+      background: none; border: none;
+      font-family: var(--hand); font-size: 1rem;
+      color: var(--ink4); cursor: pointer;
+      transition: color 0.15s; padding: 0;
+    }
+    .stat-del:hover { color: var(--fire); }
+    .add-stat {
+      font-family: var(--hand); font-size: 0.9rem;
+      color: var(--fire); background: none; border: none;
+      cursor: pointer; padding: 6px 0;
+      transition: letter-spacing 0.2s; text-align: left;
+      margin-top: 2px;
+    }
+    .add-stat:hover { letter-spacing: 1px; }
+
+    /* ── SUBMIT ── */
+    .submit-section {
+      padding: 24px 32px 36px 88px;
+      border-top: 3px solid var(--fire);
+      background: rgba(232,104,26,0.03);
+      position: relative; z-index: 2;
+    }
+    .check-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-family: var(--sans); font-size: 0.75rem;
+      color: var(--ink3); line-height: 1.65; margin-bottom: 14px;
+    }
+    .check-row input[type="checkbox"] {
+      margin-top: 2px; accent-color: var(--fire); flex-shrink: 0;
+    }
+    .pin-btn {
+      font-family: var(--hand); font-size: 1.2rem;
+      padding: 12px 28px; background: var(--fire);
+      color: #fff; border: none; cursor: pointer;
+      font-weight: 700; transition: all 0.2s;
+    }
+    .pin-btn:hover { background: #ff7a2a; transform: translateY(-1px); }
+    .pin-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    .submit-status {
+      font-family: var(--hand); font-size: 0.9rem;
+      margin-top: 10px; font-style: italic; min-height: 20px;
+    }
+    .submit-status.ok  { color: #3a8a3a; }
+    .submit-status.err { color: var(--fire); }
+
+    /* Tape swatch */
+    .tape-swatch {
+      width: 44px; height: 14px; cursor: pointer;
+      border: 1px solid transparent; transition: all 0.15s; border-radius: 2px;
+    }
+    .tape-swatch:hover { transform: scale(1.07); }
+    .tape-swatch.active { border-color: #fff; }
+
+    /* Tool button (for writing tools in sidebar) */
+    .tool-btn {
+      width: 46px; height: 42px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; background: transparent;
+      border: 1px solid transparent; transition: all 0.18s;
+      color: rgba(255,255,255,0.45); font-size: 1.2rem;
+    }
+    .tool-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); }
+    .tool-btn.active { background: rgba(232,104,26,0.15); border-color: var(--fire); color: var(--fire); }
+
+    /* Sticker picker popup */
+    .sticker-picker {
+      position: fixed; background: var(--ink);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 12px;
+      z-index: 600; display: none; flex-wrap: wrap;
+      gap: 6px; width: 220px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    .sticker-picker.open { display: flex; }
+    .sticker-opt { font-size: 1.4rem; cursor: pointer; padding: 4px; border-radius: 6px; transition: background 0.15s; line-height: 1; }
+    .sticker-opt:hover { background: rgba(255,255,255,0.1); }
+
+    /* ── DIARY EDITOR (intro writing area) ── */
+    .intro-editor-wrap {
+      padding: 0 32px 0 88px;
+      position: relative; z-index: 2;
+    }
+    .intro-editor {
+      min-height: 320px; outline: none;
+      font-family: var(--serif);
+      font-size: 1.05rem; color: var(--ink);
+      line-height: 32px;
+      caret-color: var(--fire);
+      word-break: break-word;
+    }
+    .intro-editor:empty::before {
+      content: attr(data-placeholder);
+      color: var(--ink4); pointer-events: none;
+      font-style: italic; font-size: 1rem;
+      white-space: pre-line;
+    }
+    .intro-editor h2 { font-family: var(--hand); font-size: 1.7rem; color: var(--ink); margin: 16px 0 8px; font-weight: 600; line-height: 1.4; }
+    .intro-editor h3 { font-family: var(--hand); font-size: 1.25rem; color: var(--ink2); margin: 12px 0 6px; line-height: 1.4; }
+    .intro-editor blockquote { margin: 14px 0; padding: 10px 18px; border-left: 3px solid var(--fire); background: rgba(232,104,26,0.04); font-style: italic; color: var(--ink2); }
+    .intro-editor ul, .intro-editor ol { padding-left: 22px; margin: 8px 0; }
+    .intro-editor li { line-height: 32px; }
+    .intro-editor p { margin-bottom: 4px; }
+    /* Decorative elements */
+    .intro-editor .sticky-callout { display: block; background: #fef9c3; padding: 12px 16px; margin: 12px 0; transform: rotate(-1deg); box-shadow: 2px 3px 10px rgba(0,0,0,0.2); max-width: 360px; font-family: var(--hand); font-size: 1rem; color: var(--ink2); line-height: 1.6; position: relative; }
+    .intro-editor .sticky-callout::before { content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:48px; height:14px; background:rgba(240,190,40,0.65); }
+    .intro-editor .sticky-callout-blue  { background:#e8f0ff; }
+    .intro-editor .sticky-callout-blue::before  { background:rgba(80,130,220,0.55); }
+    .intro-editor .sticky-callout-green { background:#e8f5e8; }
+    .intro-editor .sticky-callout-green::before { background:rgba(80,180,100,0.55); }
+    .intro-editor .sticky-callout-pink  { background:#ffe8f0; }
+    .intro-editor .sticky-callout-pink::before  { background:rgba(220,80,120,0.55); }
+    .intro-editor .washi-tape { display:block;height:22px;margin:10px -32px 10px -88px;position:relative;overflow:hidden; }
+    .intro-editor .washi-tape::before { content:'';position:absolute;inset:0;background:var(--tape-color,rgba(240,190,40,0.65)); }
+    .intro-editor .doodle-divider { display:block;margin:16px 0;width:100%; }
+    .intro-editor .floating-sticker { display:inline-block;font-size:1.8rem;margin:0 4px;vertical-align:middle; }
+    .intro-editor .hl-y { background:rgba(255,220,50,0.4);padding:0 2px; }
+    .intro-editor .hl-r { background:rgba(255,100,100,0.3);padding:0 2px; }
+    .intro-editor .hl-g { background:rgba(100,220,100,0.3);padding:0 2px; }
+    .intro-editor .hl-b { background:rgba(100,150,255,0.3);padding:0 2px; }
+
+    /* Word count */
+    .editor-count {
+      padding: 6px 32px 14px 88px;
+      font-family: var(--hand); font-size: 0.82rem;
+      color: var(--ink4); font-style: italic;
+    }
+    @media (max-width: 768px) {
+      .tools-panel { width: 54px; }
+      .diary-area { padding: 20px 12px 60px; }
+      .page-header-area, .sec-block, .submit-section, .intro-editor-wrap, .editor-count { padding-left: 24px; }
+      .sec-block::before { left: 24px; }
+      .diary-page::after { left: 14px; }
+    }
+    @media (max-width: 560px) {
+      .tools-panel { display: none; }
+      .field-row,.field-row-3 { grid-template-columns: 1fr; }
+      .photos-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 360px) {
+      .photos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">HlYWoR</a>
+    <div class="nav-sep"></div>
+    <span class="nav-title">pin yourself</span>
+  </div>
+  <a href="character.html" class="nav-back">Back to the board</a>
+</nav>
+
+<div class="sticker-picker" id="istickerPicker">
+  <span class="sticker-opt">⭐</span><span class="sticker-opt">💫</span><span class="sticker-opt">🔥</span>
+  <span class="sticker-opt">💖</span><span class="sticker-opt">✨</span><span class="sticker-opt">🌙</span>
+  <span class="sticker-opt">☀️</span><span class="sticker-opt">🌸</span><span class="sticker-opt">🍃</span>
+  <span class="sticker-opt">🦋</span><span class="sticker-opt">🎵</span><span class="sticker-opt">📚</span>
+  <span class="sticker-opt">☕</span><span class="sticker-opt">🌿</span><span class="sticker-opt">💭</span>
+  <span class="sticker-opt">🎨</span><span class="sticker-opt">🏔️</span><span class="sticker-opt">🌊</span>
+  <span class="sticker-opt">🕯️</span><span class="sticker-opt">📷</span><span class="sticker-opt">✏️</span>
+  <span class="sticker-opt">💌</span><span class="sticker-opt">😭</span><span class="sticker-opt">😂</span>
+  <span class="sticker-opt">🥺</span><span class="sticker-opt">💀</span><span class="sticker-opt">🎭</span>
+  <span class="sticker-opt">🌺</span><span class="sticker-opt">🎬</span><span class="sticker-opt">🎮</span>
+</div>
+
+<div class="diary-layout">
+
+  <!-- TOOLS SIDEBAR -->
+  <div class="tools-panel">
+    <div class="tool-group-label">COLOR</div>
+    <div class="pen-swatches" id="colorSwatches">
+      <div class="pen-swatch active" data-color="#e8681a" style="background:#e8681a" title="Fire"></div>
+      <div class="pen-swatch" data-color="#5c8ae8" style="background:#5c8ae8" title="Blue"></div>
+      <div class="pen-swatch" data-color="#5cbc7a" style="background:#5cbc7a" title="Green"></div>
+      <div class="pen-swatch" data-color="#a06ae8" style="background:#a06ae8" title="Purple"></div>
+      <div class="pen-swatch" data-color="#e85c9a" style="background:#e85c9a" title="Pink"></div>
+      <div class="pen-swatch" data-color="#e8c01a" style="background:#e8c01a" title="Gold"></div>
+      <div class="pen-swatch" data-color="#5ccfbc" style="background:#5ccfbc" title="Teal"></div>
+    </div>
+    <div class="tool-sep"></div>
+    <div class="tool-group-label" style="font-size:0.28rem;padding:0 4px;text-align:center;line-height:1.6;color:rgba(255,255,255,0.18)">
+      COLOR<br>SETS<br>YOUR<br>CARD
+    </div>
+
+    <div class="tool-sep"></div>
+    <div class="tool-group-label">WRITE</div>
+
+    <button class="tool-btn" data-cmd="bold" title="Bold"><strong style="font-size:1rem">B</strong></button>
+    <button class="tool-btn" data-cmd="italic" title="Italic"><em style="font-size:1rem;font-family:Georgia">I</em></button>
+    <button class="tool-btn" data-cmd="h2" title="Heading"><span style="font-size:0.85rem;font-family:'Caveat',cursive;font-weight:700">H1</span></button>
+    <button class="tool-btn" data-cmd="h3" title="Subheading"><span style="font-size:0.75rem;font-family:'Caveat',cursive">H2</span></button>
+    <button class="tool-btn" data-cmd="blockquote" title="Quote"><span style="font-size:1.1rem">❝</span></button>
+    <button class="tool-btn" data-cmd="insertUnorderedList" title="List"><span style="font-size:1rem">•≡</span></button>
+
+    <div class="tool-sep"></div>
+    <div class="tool-group-label">MARK</div>
+    <button class="tool-btn" data-highlight="hl-y" title="Yellow highlight"><span style="font-size:0.9rem;background:rgba(255,220,50,0.5);padding:0 5px;color:#1a1208">ab</span></button>
+    <button class="tool-btn" data-highlight="hl-r" title="Red highlight"><span style="font-size:0.9rem;background:rgba(255,100,100,0.4);padding:0 5px;color:#1a1208">ab</span></button>
+    <button class="tool-btn" data-highlight="hl-b" title="Blue highlight"><span style="font-size:0.9rem;background:rgba(100,150,255,0.4);padding:0 5px;color:#1a1208">ab</span></button>
+    <button class="tool-btn" data-highlight="hl-g" title="Green highlight"><span style="font-size:0.9rem;background:rgba(100,220,100,0.35);padding:0 5px;color:#1a1208">ab</span></button>
+
+    <div class="tool-sep"></div>
+    <div class="tool-group-label">INSERT</div>
+    <button class="tool-btn" id="istickerBtn" title="Sticker"><span>✨</span></button>
+    <button class="tool-btn" id="istickyBtn" title="Sticky note"><span>🗒</span></button>
+    <button class="tool-btn" id="idoodleBtn" title="Divider"><span style="font-size:0.8rem">〰</span></button>
+
+    <div class="tool-sep"></div>
+    <div class="tool-group-label">TAPE</div>
+    <div style="display:flex;flex-direction:column;gap:5px;padding:4px">
+      <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,0.65)" title="Yellow tape"></div>
+      <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)"  style="background:rgba(220,80,80,0.55)"  title="Red tape"></div>
+      <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,0.55)" title="Blue tape"></div>
+      <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,0.55)" title="Green tape"></div>
+      <div class="tape-swatch" data-tape="rgba(160,80,220,0.5)"  style="background:rgba(160,80,220,0.5)"  title="Purple tape"></div>
+    </div>
+  </div>
+
+  <!-- DIARY -->
+  <div class="diary-area">
+    <div class="diary-book">
+      <div class="diary-spine"></div>
+      <div class="diary-page">
+
+        <!-- Header -->
+        <div class="page-header-area">
+          <div class="page-eyebrow">// YOUR CARD ON THE BOARD</div>
+          <h1 class="page-heading">Pin yourself.</h1>
+          <p class="page-hint">Fill this out and your card goes live on the crew wall. Photos, stats, who you are — as real as you want to be.</p>
+        </div>
+
+        <!-- BASICS -->
+        <div class="sec-block sec-basics" style="padding-top:28px">
+
+          <div class="field-row">
+            <div class="field">
+              <label>NAME <span class="req">*</span></label>
+              <input type="text" id="name" placeholder="what people call you">
+            </div>
+            <div class="field">
+              <label>HANDLE <span class="opt">(optional)</span></label>
+              <input type="text" id="handle" placeholder="e.g. PAWAN.EXE">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>EMAIL <span class="opt">(optional)</span></label>
+              <input type="email" id="email" placeholder="for contact">
+            </div>
+            <div class="field">
+              <label>PROFILE LINK <span class="opt">(optional)</span></label>
+              <input type="url" id="profileUrl" placeholder="instagram, portfolio...">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>YOUR BIO <span class="req">*</span></label>
+            <textarea id="bio" rows="2" placeholder="one or two lines. who are you, really?"></textarea>
+          </div>
+        </div>
+
+        <!-- WHO YOU ARE -->
+        <div class="sec-block sec-who">
+
+          <div class="field-row-3">
+            <div class="field">
+              <label>TYPE <span class="req">*</span></label>
+              <select id="type">
+                <option value="writer">Writer</option>
+                <option value="developer">Developer</option>
+                <option value="artist">Artist</option>
+                <option value="student">Student</option>
+                <option value="creator">Creator</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>AGE <span class="opt">(optional)</span></label>
+              <input type="number" id="age" min="13" max="99" placeholder="e.g. 20">
+            </div>
+            <div class="field">
+              <label>LOCATION <span class="opt">(optional)</span></label>
+              <input type="text" id="location" placeholder="city or state">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>ROLE / TITLE <span class="req">*</span></label>
+            <input type="text" id="role" placeholder="e.g. Developer · BTech Survivor · 2nd Year">
+          </div>
+
+          <!-- Profession tags — quick pick + custom -->
+          <div class="field">
+            <label>PROFESSION TAGS <span class="opt">(tap to pick, optional)</span></label>
+            <div class="profession-tags" id="profTags">
+              <button class="prof-tag" data-val="Student">Student</button>
+              <button class="prof-tag" data-val="1st Year">1st Year</button>
+              <button class="prof-tag" data-val="2nd Year">2nd Year</button>
+              <button class="prof-tag" data-val="3rd Year">3rd Year</button>
+              <button class="prof-tag" data-val="Final Year">Final Year</button>
+              <button class="prof-tag" data-val="Fresher">Fresher</button>
+              <button class="prof-tag" data-val="Graduate">Graduate</button>
+              <button class="prof-tag" data-val="BTech">BTech</button>
+              <button class="prof-tag" data-val="Working">Working</button>
+              <button class="prof-tag" data-val="Freelancer">Freelancer</button>
+              <button class="prof-tag" data-val="Artist">Artist</button>
+              <button class="prof-tag" data-val="Filmmaker">Filmmaker</button>
+              <button class="prof-tag" data-val="Photographer">Photographer</button>
+              <button class="prof-tag" data-val="Musician">Musician</button>
+              <button class="prof-tag" data-val="Gamer">Gamer</button>
+            </div>
+            <input class="prof-tag-input" id="customProf" placeholder="+ add your own tag...">
+            <span class="prof-hint">These show as tape labels on your card.</span>
+          </div>
+        </div>
+
+        <!-- PHOTOS -->
+        <div class="sec-block sec-photos">
+          <p style="font-family:var(--serif);font-style:italic;font-size:0.85rem;color:var(--ink3);margin-bottom:14px">
+            They'll be pasted on your card like diary photos — tilted, taped, overlapping.
+          </p>
+
+          <div class="photos-grid">
+            <!-- Slot 0 -->
+            <div>
+              <div class="photo-slot" id="slot-0">
+                <input type="file" id="file-0" accept="image/*">
+                <span class="photo-slot-num">PHOTO 1</span>
+                <span class="photo-slot-icon">📷</span>
+                <span class="photo-slot-hint">tap to add</span>
+              </div>
+              <input class="photo-caption-in" id="cap-0" placeholder="caption..." maxlength="40">
+            </div>
+            <!-- Slot 1 -->
+            <div>
+              <div class="photo-slot" id="slot-1">
+                <input type="file" id="file-1" accept="image/*">
+                <span class="photo-slot-num">PHOTO 2</span>
+                <span class="photo-slot-icon">📷</span>
+                <span class="photo-slot-hint">optional</span>
+              </div>
+              <input class="photo-caption-in" id="cap-1" placeholder="caption..." maxlength="40">
+            </div>
+            <!-- Slot 2 -->
+            <div>
+              <div class="photo-slot" id="slot-2">
+                <input type="file" id="file-2" accept="image/*">
+                <span class="photo-slot-num">PHOTO 3</span>
+                <span class="photo-slot-icon">📷</span>
+                <span class="photo-slot-hint">optional</span>
+              </div>
+              <input class="photo-caption-in" id="cap-2" placeholder="caption..." maxlength="40">
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="sec-block sec-stats">
+          <p style="font-family:var(--serif);font-style:italic;font-size:0.85rem;color:var(--ink3);margin-bottom:14px">
+            Be honest. Be funny. SLEEP: 22 is more interesting than SLEEP: 80.
+          </p>
+          <div class="stats-list" id="statsList"></div>
+          <button class="add-stat" id="addStatBtn">+ add a stat</button>
+        </div>
+
+        <!-- ABOUT YOU -->
+        <div class="sec-block sec-about">
+
+          <div class="field-row">
+            <div class="field">
+              <label>PRONOUNS <span class="opt">(optional)</span></label>
+              <input type="text" id="pronouns" placeholder="e.g. He/Him">
+            </div>
+            <div class="field">
+              <label>BIRTHDAY <span class="opt">(optional)</span></label>
+              <input type="text" id="birthday" placeholder="e.g. 10 November">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>MBTI <span class="opt">(optional)</span></label>
+              <input type="text" id="mbti" placeholder="e.g. INTP-T">
+            </div>
+            <div class="field">
+              <label>LANGUAGE <span class="opt">(optional)</span></label>
+              <input type="text" id="language" placeholder="e.g. Nepali, Hindi, Eng">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>BEFORE YOU FOLLOW <span class="opt">(optional)</span></label>
+            <textarea id="beforeFollow" rows="2" placeholder="What should people know before following you?"></textarea>
+          </div>
+
+          <div class="field">
+            <label>INTERESTS / LIKES <span class="opt">(optional)</span></label>
+            <textarea id="interests" rows="2" placeholder="moba games, F1, dark academia, photography, k-drama..."></textarea>
+            <span style="font-family:var(--serif);font-style:italic;font-size:0.75rem;color:var(--ink4);margin-top:3px;display:block">Separate with commas — they show as tags on your profile.</span>
+          </div>
+
+          <div class="field">
+            <label>NOT FOR ME <span class="opt">(optional)</span></label>
+            <textarea id="dislikes" rows="2" placeholder="drama, fake people, math..."></textarea>
+          </div>
+
+          <div class="field">
+            <label>TW / CW <span class="opt">(optional)</span></label>
+            <input type="text" id="cwList" placeholder="e.g. trypophobia, heavy nsfw, jumpscare">
+          </div>
+
+          <div class="field">
+            <label>EXTRA NOTE <span class="opt">(optional)</span></label>
+            <textarea id="extraNote" rows="2" placeholder="anything else you want to say..."></textarea>
+          </div>
+        </div>
+
+        <!-- FIND ME -->
+        <div class="sec-block sec-social">
+          <div class="field-row">
+            <div class="field">
+              <label>INSTAGRAM <span class="opt">(optional)</span></label>
+              <input type="url" id="instagram" placeholder="https://instagram.com/...">
+            </div>
+            <div class="field">
+              <label>TWITTER / X <span class="opt">(optional)</span></label>
+              <input type="url" id="twitter" placeholder="https://x.com/...">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>SPOTIFY <span class="opt">(optional)</span></label>
+              <input type="url" id="spotify" placeholder="https://open.spotify.com/...">
+            </div>
+            <div class="field">
+              <label>MAL / ANIME LIST <span class="opt">(optional)</span></label>
+              <input type="url" id="mal" placeholder="https://myanimelist.net/...">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>GITHUB <span class="opt">(optional)</span></label>
+              <input type="url" id="github" placeholder="https://github.com/...">
+            </div>
+            <div class="field">
+              <label>PORTFOLIO / OTHER <span class="opt">(optional)</span></label>
+              <input type="url" id="portfolio" placeholder="https://...">
+            </div>
+          </div>
+        </div>
+
+        <!-- FULL INTRO -->
+        <div class="sec-block sec-intro">
+          <p style="font-family:var(--serif);font-style:italic;font-size:0.88rem;color:var(--ink3);margin-bottom:16px;line-height:1.75">
+            This is your space. Write about yourself however you want — long, short, messy, honest. Use the tools on the left to decorate it. This shows up on your full profile page.
+          </p>
+        </div>
+
+        <!-- The actual writing canvas — same line-height as ruled lines -->
+        <div class="intro-editor-wrap">
+          <div
+            class="intro-editor"
+            id="introEditor"
+            contenteditable="true"
+            data-placeholder="Start writing...
+
+Who are you, really? What do you love? What do you hate? What are you working towards? What do people get wrong about you?
+
+Use the tools on the left — add highlights, sticky notes, tape strips, stickers. Make it yours."></div>
+        </div>
+        <div class="editor-count" id="editorCount">0 words</div>
+
+        <!-- SUBMIT -->
+        <div class="submit-section" style="margin-top:24px">
+          <div class="check-row">
+            <input type="checkbox" id="agreeCheck">
+            <span>This is really me and I'm okay with this card being on HlyWor's crew wall.</span>
+          </div>
+          <button class="pin-btn" id="pinBtn">Pin me to the board ✦</button>
+          <div class="submit-status" id="submitStatus"></div>
+        </div>
+
+        <div class="page-curl"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// 🔧 FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+  authDomain: "hlywor.firebaseapp.com",
+  projectId: "hlywor",
+  storageBucket: "hlywor.firebasestorage.app",
+  messagingSenderId: "697637160825",
+  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+  measurementId: "G-MQDXDWHLX8"
+};
+// 🔧 CLOUDINARY CONFIG
+const CLD_NAME   = "dgatfolot";
+const CLD_PRESET = "hlywor";
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+/* ── Accent color ── */
+let selectedColor = '#e8681a';
+document.querySelectorAll('.pen-swatch').forEach(sw => {
+  sw.addEventListener('click', () => {
+    document.querySelectorAll('.pen-swatch').forEach(s => s.classList.remove('active'));
+    sw.classList.add('active');
+    selectedColor = sw.dataset.color;
+    // Update stat bar previews
+    document.querySelectorAll('.stat-bar-fill').forEach(b => b.style.background = selectedColor);
+  });
+});
+
+/* ── Profession tags ── */
+const selectedProfs = new Set();
+document.querySelectorAll('.prof-tag').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const val = btn.dataset.val;
+    if (selectedProfs.has(val)) {
+      selectedProfs.delete(val);
+      btn.classList.remove('active');
+    } else if (selectedProfs.size < 4) {
+      selectedProfs.add(val);
+      btn.classList.add('active');
+    }
+  });
+});
+
+// Custom profession tag
+const customProfInput = document.getElementById('customProf');
+customProfInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && customProfInput.value.trim()) {
+    e.preventDefault();
+    const val = customProfInput.value.trim();
+    if (!selectedProfs.has(val) && selectedProfs.size < 4) {
+      selectedProfs.add(val);
+      // Add a visual chip
+      const chip = document.createElement('button');
+      chip.className = 'prof-tag active';
+      chip.dataset.val = val;
+      chip.textContent = val;
+      chip.addEventListener('click', () => {
+        selectedProfs.delete(val);
+        chip.remove();
+      });
+      document.getElementById('profTags').appendChild(chip);
+    }
+    customProfInput.value = '';
+  }
+});
+
+/* ── Photo slots ── */
+const photoUrls = [null, null, null];
+
+[0, 1, 2].forEach(idx => {
+  const slot     = document.getElementById(`slot-${idx}`);
+  const fileIn   = document.getElementById(`file-${idx}`);
+
+  slot.addEventListener('click', () => {
+    if (!slot.classList.contains('filled')) fileIn.click();
+  });
+
+  fileIn.addEventListener('change', async () => {
+    const file = fileIn.files[0];
+    if (!file) return;
+
+    // Instant local preview
+    const localUrl = URL.createObjectURL(file);
+    slot.classList.add('filled');
+    slot.innerHTML = `
+      <img src="${localUrl}" alt="">
+      <div class="photo-uploading">uploading...</div>
+      <button class="photo-clear" id="clear-${idx}">✕</button>`;
+    setupClear(idx);
+
+    // Upload to Cloudinary
+    const url = await uploadToCloudinary(file);
+    const uploading = slot.querySelector('.photo-uploading');
+    if (uploading) uploading.remove();
+
+    if (url) {
+      photoUrls[idx] = url;
+      slot.querySelector('img').src = url;
+      URL.revokeObjectURL(localUrl);
+    } else {
+      photoUrls[idx] = null;
+      const warn = document.createElement('div');
+      warn.style.cssText = 'position:absolute;bottom:2px;left:0;right:0;text-align:center;font-family:var(--hand);font-size:0.6rem;color:#b82020;background:rgba(250,246,238,0.85);padding:2px';
+      warn.textContent = '⚠ upload failed';
+      slot.appendChild(warn);
+    }
+  });
+});
+
+function setupClear(idx) {
+  const btn = document.getElementById(`clear-${idx}`);
+  if (!btn) return;
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    photoUrls[idx] = null;
+    document.getElementById(`file-${idx}`).value = '';
+    const slot = document.getElementById(`slot-${idx}`);
+    slot.classList.remove('filled');
+    slot.innerHTML = `
+      <input type="file" id="file-${idx}" accept="image/*">
+      <span class="photo-slot-num">PHOTO ${idx+1}</span>
+      <span class="photo-slot-icon">📷</span>
+      <span class="photo-slot-hint">${idx===0?'tap to add':'optional'}</span>`;
+    document.getElementById(`file-${idx}`).addEventListener('change', async function() {
+      const file = this.files[0];
+      if (!file) return;
+      const localUrl = URL.createObjectURL(file);
+      slot.classList.add('filled');
+      slot.innerHTML = `<img src="${localUrl}" alt=""><div class="photo-uploading">uploading...</div><button class="photo-clear" id="clear-${idx}">✕</button>`;
+      setupClear(idx);
+      const url = await uploadToCloudinary(file);
+      const up = slot.querySelector('.photo-uploading');
+      if (up) up.remove();
+      if (url) { photoUrls[idx]=url; slot.querySelector('img').src=url; URL.revokeObjectURL(localUrl); }
+      else { photoUrls[idx]=null; }
+    });
+  });
+}
+
+/* ── Stats builder ── */
+let statCount = 0;
+const MAX_STATS = 4;
+
+function addStat(label = '', val = 60) {
+  if (statCount >= MAX_STATS) return;
+  const list = document.getElementById('statsList');
+  const row  = document.createElement('div');
+  row.className = 'stat-row-build';
+  const clampedVal = Math.min(99, Math.max(1, val));
+  row.innerHTML = `
+    <div>
+      <input class="stat-name-in" placeholder="e.g. SLEEP, CHAOS, VIBES..." value="${label}" maxlength="8">
+    </div>
+    <div class="stat-val-wrap">
+      <input class="stat-val-in" type="number" min="1" max="99" value="${clampedVal}">
+      <div class="stat-bar-preview">
+        <div class="stat-bar-fill" style="width:${clampedVal}%;background:${selectedColor}"></div>
+      </div>
+    </div>
+    <button class="stat-del" title="Remove">✕</button>`;
+
+  const valIn = row.querySelector('.stat-val-in');
+  const fill  = row.querySelector('.stat-bar-fill');
+  valIn.addEventListener('input', () => {
+    const v = Math.min(99, Math.max(1, parseInt(valIn.value)||0));
+    fill.style.width = v + '%';
+    fill.style.background = selectedColor;
+  });
+
+  row.querySelector('.stat-del').addEventListener('click', () => {
+    row.remove(); statCount--;
+    document.getElementById('addStatBtn').style.display = 'block';
+  });
+
+  list.appendChild(row);
+  statCount++;
+  if (statCount >= MAX_STATS) {
+    document.getElementById('addStatBtn').style.display = 'none';
+  }
+}
+
+addStat('', 70);
+addStat('', 45);
+document.getElementById('addStatBtn').addEventListener('click', () => addStat());
+
+/* ── Writing toolbar ── */
+const introEditor = document.getElementById('introEditor');
+let savedRange = null;
+
+document.querySelectorAll('.tool-btn[data-cmd]').forEach(btn => {
+  btn.addEventListener('mousedown', e => {
+    e.preventDefault();
+    introEditor.focus();
+    const cmd = btn.dataset.cmd;
+    if (cmd === 'h2') document.execCommand('formatBlock', false, 'h2');
+    else if (cmd === 'h3') document.execCommand('formatBlock', false, 'h3');
+    else if (cmd === 'blockquote') document.execCommand('formatBlock', false, 'blockquote');
+    else document.execCommand(cmd);
+  });
+});
+
+/* Highlight */
+document.querySelectorAll('.tool-btn[data-highlight]').forEach(btn => {
+  btn.addEventListener('mousedown', e => {
+    e.preventDefault();
+    const cls = btn.dataset.highlight;
+    const sel = window.getSelection();
+    if (!sel.rangeCount || sel.isCollapsed) return;
+    const range = sel.getRangeAt(0);
+    const span  = document.createElement('span');
+    span.className = cls;
+    range.surroundContents(span);
+    sel.removeAllRanges();
+    introEditor.focus();
+  });
+});
+
+/* Word count */
+introEditor.addEventListener('input', () => {
+  const words = introEditor.innerText.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('editorCount').textContent = `${words} word${words !== 1 ? 's' : ''}`;
+});
+
+/* Insert at cursor */
+function insertInEditor(html) {
+  introEditor.focus();
+  if (savedRange) {
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(savedRange);
+  }
+  document.execCommand('insertHTML', false, html);
+}
+
+/* Save cursor range before any sidebar click */
+document.querySelector('.tools-panel').addEventListener('mousedown', () => {
+  const sel = window.getSelection();
+  if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
+});
+
+/* Sticker picker */
+const istickerPicker = document.getElementById('istickerPicker');
+document.getElementById('istickerBtn').addEventListener('click', e => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  istickerPicker.style.left = (rect.right + 8) + 'px';
+  istickerPicker.style.top  = Math.min(rect.top, window.innerHeight - 280) + 'px';
+  istickerPicker.classList.toggle('open');
+});
+document.querySelectorAll('.sticker-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    insertInEditor(`<span class="floating-sticker" contenteditable="false">${opt.textContent}</span>`);
+    istickerPicker.classList.remove('open');
+  });
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('#istickerPicker') && !e.target.closest('#istickerBtn')) {
+    istickerPicker.classList.remove('open');
+  }
+});
+
+/* Sticky note */
+document.getElementById('istickyBtn').addEventListener('mousedown', e => {
+  e.preventDefault();
+  const colors = ['','-blue','-green','-pink'];
+  const c = colors[Math.floor(Math.random()*colors.length)];
+  insertInEditor(`<div class="sticky-callout${c}" contenteditable="true">Write your note here...</div><p><br></p>`);
+});
+
+/* Doodle divider */
+document.getElementById('idoodleBtn').addEventListener('mousedown', e => {
+  e.preventDefault();
+  const waves = [
+    `<svg class="doodle-divider" viewBox="0 0 400 20" height="20"><path d="M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10" fill="none" stroke="${selectedColor}" stroke-width="1.5" opacity="0.4"/></svg>`,
+    `<svg class="doodle-divider" viewBox="0 0 400 20" height="20"><line x1="0" y1="10" x2="400" y2="10" stroke="${selectedColor}" stroke-width="1" stroke-dasharray="8 4" opacity="0.35"/></svg>`,
+    `<svg class="doodle-divider" viewBox="0 0 400 20" height="20"><path d="M0 10 L10 5 L20 15 L30 5 L40 15 L50 5 L60 15 L70 5 L80 15 L90 5 L100 15 L120 10 L400 10" fill="none" stroke="${selectedColor}" stroke-width="1" opacity="0.35"/></svg>`,
+  ];
+  insertInEditor(waves[Math.floor(Math.random()*waves.length)] + '<p><br></p>');
+});
+
+/* Tape strips */
+document.querySelectorAll('.tape-swatch').forEach(sw => {
+  sw.addEventListener('click', () => {
+    insertInEditor(`<div class="washi-tape" contenteditable="false" style="--tape-color:${sw.dataset.tape}"></div><p><br></p>`);
+    introEditor.focus();
+  });
+});
+
+/* Serialize intro content */
+function serializeIntro() {
+  const clone = introEditor.cloneNode(true);
+  clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  return clone.innerHTML;
+}
+
+/* Keyboard shortcuts */
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && document.activeElement === introEditor) {
+    if (e.key === 'b') { e.preventDefault(); document.execCommand('bold'); }
+    if (e.key === 'i') { e.preventDefault(); document.execCommand('italic'); }
+  }
+});
+async function uploadToCloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', CLD_PRESET);
+  fd.append('folder', 'hlywor/people');
+  try {
+    const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLD_NAME}/image/upload`,{method:'POST',body:fd});
+    const data = await res.json();
+    if (data.error) { console.error('Cloudinary:', data.error.message); return null; }
+    return data.secure_url || null;
+  } catch(e) { console.error(e); return null; }
+}
+
+/* ── Collect stats ── */
+function getStats() {
+  return [...document.querySelectorAll('.stat-row-build')].map(row => ({
+    label: row.querySelector('.stat-name-in').value.trim().toUpperCase().slice(0,7),
+    val:   Math.min(99, Math.max(1, parseInt(row.querySelector('.stat-val-in').value)||50))
+  })).filter(s => s.label);
+}
+
+/* ── Submit ── */
+document.getElementById('pinBtn').addEventListener('click', async () => {
+  const name        = document.getElementById('name').value.trim();
+  const handle      = document.getElementById('handle').value.trim();
+  const email       = document.getElementById('email').value.trim();
+  const profileUrl  = document.getElementById('profileUrl').value.trim();
+  const type        = document.getElementById('type').value;
+  const age         = document.getElementById('age').value.trim();
+  const location    = document.getElementById('location').value.trim();
+  const role        = document.getElementById('role').value.trim();
+  const bio         = document.getElementById('bio').value.trim();
+  const agree       = document.getElementById('agreeCheck').checked;
+  const photos      = photoUrls.filter(Boolean);
+  const captions    = [0,1,2].map(i => document.getElementById(`cap-${i}`).value.trim());
+  const stats       = getStats();
+  const profs       = [...selectedProfs];
+  const statusEl    = document.getElementById('submitStatus');
+
+  /* New fields */
+  const pronouns    = document.getElementById('pronouns').value.trim();
+  const birthday    = document.getElementById('birthday').value.trim();
+  const mbti        = document.getElementById('mbti').value.trim();
+  const language    = document.getElementById('language').value.trim();
+  const beforeFollow= document.getElementById('beforeFollow').value.trim();
+  const interestsRaw= document.getElementById('interests').value.trim();
+  const interests   = interestsRaw ? interestsRaw.split(',').map(s=>s.trim()).filter(Boolean) : [];
+  const dislikes    = document.getElementById('dislikes').value.trim();
+  const cwList      = document.getElementById('cwList').value.trim();
+  const extraNote   = document.getElementById('extraNote').value.trim();
+  const socials     = {
+    instagram: document.getElementById('instagram').value.trim(),
+    twitter:   document.getElementById('twitter').value.trim(),
+    spotify:   document.getElementById('spotify').value.trim(),
+    mal:       document.getElementById('mal').value.trim(),
+    github:    document.getElementById('github').value.trim(),
+    portfolio: document.getElementById('portfolio').value.trim(),
+  };
+
+  const aboutContent = serializeIntro();
+
+  if (!name)  { statusEl.textContent='⚠ Name is required'; statusEl.className='submit-status err'; return; }
+  if (!role)  { statusEl.textContent='⚠ Role / title is required'; statusEl.className='submit-status err'; return; }
+  if (!bio)   { statusEl.textContent='⚠ Bio is required'; statusEl.className='submit-status err'; return; }
+  if (!agree) { statusEl.textContent='⚠ Please confirm'; statusEl.className='submit-status err'; return; }
+
+  const btn = document.getElementById('pinBtn');
+  btn.disabled = true;
+  btn.textContent = 'Pinning...';
+  statusEl.textContent = '';
+
+  /* Generate slug from name */
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+  try {
+    await addDoc(collection(db, 'people'), {
+      name, handle, email, profileUrl,
+      type, age: age ? parseInt(age) : null,
+      location, role, bio,
+      slug, nameLower: name.toLowerCase(),
+      accent:        selectedColor,
+      photos, photoCaptions: captions,
+      professions:   profs,
+      stats,
+      pronouns, birthday, mbti, language,
+      beforeFollow, interests, dislikes, cwList, extraNote,
+      socials, aboutContent,
+      founder:       false,
+      ctaText:       `See ${name.split(' ')[0]}'s stories`,
+      status:        'published',
+      createdAt:     serverTimestamp()
+    });
+
+    btn.textContent = 'Pinned ✦';
+    statusEl.textContent = "✓ You're on the board! Redirecting...";
+    statusEl.className = 'submit-status ok';
+    setTimeout(() => window.location.href = 'character.html', 2200);
+
+  } catch(err) {
+    console.error(err);
+    btn.disabled = false;
+    btn.textContent = 'Pin me to the board ✦';
+    statusEl.textContent = '✕ Failed — check Firebase config';
+    statusEl.className = 'submit-status err';
+  }
+});
+</script>
+</body>
+</html>

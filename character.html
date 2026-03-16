@@ -1,98 +1,855 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Google tag (gtag.js) -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Crew — HlyWor</title>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
 
-      gtag('config', 'G-ZVLSVF6T3J');
-  </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Select Character</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="style/character.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board:  #2a1f14;
+      --paper:  #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #ede3c8;
+      --ink:    #1a1208;
+      --ink2:   #3d3020;
+      --ink3:   #6a5840;
+      --ink4:   #a09078;
+      --rule:   rgba(180,160,120,0.2);
+      --fire:   #e8681a;
+      --gold:   #d4a020;
+      --pin-shadow: 0 6px 28px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
+      --pixel:  'Press Start 2P', monospace;
+      --serif:  'Crimson Pro', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      --hand:   'Caveat', cursive;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--board);
+      font-family: var(--serif);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Cork */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 25%, rgba(100,70,30,0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 70%, rgba(70,45,15,0.28) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(50,30,10,0.18) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: auto,auto,auto,200px 200px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .amb {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      animation: ambF ease-in-out infinite;
+    }
+    .amb-1 { width:500px;height:500px;background:radial-gradient(circle,rgba(232,104,26,0.08) 0%,transparent 70%);top:-80px;left:10%;animation-duration:12s; }
+    .amb-2 { width:400px;height:400px;background:radial-gradient(circle,rgba(212,160,32,0.06) 0%,transparent 70%);bottom:0;right:8%;animation-duration:16s;animation-delay:4s; }
+    @keyframes ambF { 0%,100%{transform:translate(0,0) scale(1);opacity:.7} 50%{transform:translate(12px,-18px) scale(1.08);opacity:1} }
+
+    .embers { position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden; }
+    .ember {
+      position:absolute;border-radius:50%;
+      background:var(--fire);box-shadow:0 0 4px var(--fire);
+      animation:eR linear infinite;opacity:0;
+    }
+    @keyframes eR {
+      0%{transform:translateY(100vh) translateX(0);opacity:0}
+      8%{opacity:.8} 85%{opacity:.3}
+      100%{transform:translateY(-5vh) translateX(var(--ed));opacity:0}
+    }
+
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--board)}
+    ::-webkit-scrollbar-thumb{background:var(--fire);border-radius:2px}
+
+    /* ── NAV ── */
+    .nav {
+      position:sticky;top:0;z-index:200;
+      background:var(--ink);
+      border-bottom:1px solid rgba(255,255,255,0.07);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 28px;height:52px;
+    }
+    .nav-logo {
+      font-family:var(--pixel);font-size:0.55rem;
+      color:var(--gold);letter-spacing:2px;
+      text-decoration:none;
+      text-shadow:0 0 12px rgba(212,160,32,0.4);
+      animation:logoF 7s infinite;
+    }
+    @keyframes logoF { 0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1} }
+    .nav-right { display:flex;align-items:center;gap:20px; }
+    .nav-links { display:flex;gap:22px;list-style:none; }
+    .nav-links a {
+      font-family:var(--sans);font-size:0.78rem;
+      color:rgba(255,255,255,0.38);text-decoration:none;
+      transition:color 0.2s;
+    }
+    .nav-links a:hover { color:rgba(255,255,255,0.85); }
+    .nav-join {
+      font-family:var(--pixel);font-size:0.3rem;letter-spacing:1px;
+      padding:7px 14px;background:var(--fire);color:#fff;
+      text-decoration:none;transition:all 0.2s;white-space:nowrap;
+    }
+    .nav-join:hover { background:#ff7a2a; }
+    .hamburger {
+      display:none;flex-direction:column;gap:5px;
+      width:32px;height:32px;align-items:center;justify-content:center;
+      cursor:pointer;background:none;border:none;
+    }
+    .hamburger span {
+      display:block;width:18px;height:1.5px;
+      background:rgba(255,255,255,0.6);transition:all 0.28s;transform-origin:center;
+    }
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mob-nav {
+      display:none;position:fixed;top:52px;left:0;right:0;
+      background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.07);
+      padding:20px 28px;z-index:199;flex-direction:column;
+    }
+    .mob-nav.open { display:flex; }
+    .mob-nav a {
+      font-family:var(--sans);font-size:0.88rem;
+      color:rgba(255,255,255,0.45);padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      text-decoration:none;transition:color 0.2s;
+    }
+    .mob-nav a:last-child { border-bottom:none; }
+    .mob-nav a:hover { color:rgba(255,255,255,0.85); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      max-width:1100px;margin:0 auto;
+      padding:56px 28px 32px;
+      position:relative;z-index:1;
+      display:flex;align-items:flex-end;
+      justify-content:space-between;flex-wrap:wrap;gap:20px;
+    }
+    .header-tape {
+      display:inline-block;
+      font-family:var(--pixel);font-size:0.3rem;
+      letter-spacing:3px;padding:4px 16px;
+      background:rgba(232,104,26,0.7);
+      color:#fff;transform:rotate(-0.5deg);margin-bottom:16px;
+    }
+    .page-title {
+      font-family:var(--serif);
+      font-size:clamp(2rem,6vw,3.8rem);
+      font-weight:300;font-style:italic;
+      color:var(--paper);line-height:1.1;margin-bottom:10px;
+    }
+    .page-title em { font-weight:600;color:var(--fire);font-style:normal; }
+    .page-sub {
+      font-family:var(--sans);font-size:0.82rem;
+      color:rgba(245,230,200,0.45);line-height:1.8;max-width:440px;
+    }
+    .header-cta {
+      font-family:var(--hand);font-size:1.1rem;
+      padding:10px 24px;background:var(--fire);
+      color:#fff;text-decoration:none;font-weight:600;
+      transform:rotate(-1deg);
+      box-shadow:3px 4px 12px rgba(0,0,0,0.35);
+      transition:transform 0.2s,box-shadow 0.2s;
+      white-space:nowrap;display:inline-block;
+    }
+    .header-cta:hover { transform:rotate(0deg) translateY(-2px);box-shadow:4px 6px 18px rgba(0,0,0,0.45); }
+
+    /* ── BOARD ── */
+    .board {
+      max-width:1100px;margin:0 auto;
+      padding:0 28px 80px;
+      position:relative;z-index:1;
+    }
+
+    /* Section headers */
+    .section-head {
+      display:flex;align-items:center;gap:14px;
+      margin-bottom:24px;
+    }
+    .section-head-label {
+      font-family:var(--pixel);font-size:0.3rem;
+      letter-spacing:3px;white-space:nowrap;
+    }
+    .section-head-line {
+      flex:1;height:1px;background:var(--rule);
+    }
+    .founder-badge {
+      font-family:var(--pixel);font-size:0.22rem;
+      letter-spacing:1px;padding:2px 8px;
+      background:var(--gold);color:var(--ink);
+    }
+
+    /* Tape filter */
+    .tape-bar { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px; }
+    .tape-btn {
+      font-family:var(--pixel);font-size:0.28rem;
+      letter-spacing:1px;padding:6px 16px;
+      color:#fff;border:none;cursor:pointer;
+      opacity:0.65;transition:opacity 0.2s,transform 0.2s;
+      transform:rotate(-0.5deg);
+    }
+    .tape-btn:hover,.tape-btn.active { opacity:1;transform:rotate(0deg); }
+
+    /* ── PINBOARD ── */
+    .pinboard {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+      gap:36px 22px;align-items:start;
+    }
+
+    /* ── CHARACTER CARD ── */
+    .char-card {
+      position:relative;
+      background:var(--paper);
+      box-shadow:var(--pin-shadow);
+      transition:transform 0.3s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.3s;
+      cursor:pointer;text-decoration:none;color:var(--ink);
+      display:block;
+    }
+    .char-card:nth-child(4n+1){transform:rotate(-1.4deg)}
+    .char-card:nth-child(4n+2){transform:rotate(1.1deg)}
+    .char-card:nth-child(4n+3){transform:rotate(-0.6deg)}
+    .char-card:nth-child(4n+4){transform:rotate(1.8deg)}
+    .char-card:hover {
+      transform:rotate(0deg) translateY(-10px) scale(1.03) !important;
+      box-shadow:0 20px 50px rgba(0,0,0,0.55),0 4px 16px rgba(0,0,0,0.3);
+      z-index:10;
+    }
+
+    @keyframes cardIn {
+      from{opacity:0;transform:translateY(-20px) rotate(-1.5deg) scale(0.97)}
+      to{opacity:1}
+    }
+    .char-card.in { animation:cardIn 0.65s cubic-bezier(0.34,1.4,0.64,1) both; }
+
+    /* Pin */
+    .card-pin {
+      position:absolute;top:-11px;
+      width:14px;height:14px;border-radius:50%;
+      box-shadow:0 2px 5px rgba(0,0,0,0.55),inset 0 1px 2px rgba(255,255,255,0.3);
+      z-index:5;
+    }
+    .card-pin::after {
+      content:'';position:absolute;
+      top:100%;left:50%;transform:translateX(-50%);
+      width:2px;height:11px;
+      background:linear-gradient(to bottom,#888,#333);
+    }
+
+    /* Founder star */
+    .founder-star {
+      position:absolute;top:8px;right:8px;
+      font-family:var(--pixel);font-size:0.4rem;
+      letter-spacing:1px;padding:2px 7px;
+      background:var(--gold);color:var(--ink);
+      z-index:5;
+    }
+
+    /* ── PHOTOS COLLAGE ── */
+    .photos-area {
+      position:relative;height:190px;
+      margin:16px 14px 0;
+    }
+
+    .diary-photo {
+      position:absolute;
+      background:#fff;
+      padding:5px 5px 18px;
+      box-shadow:2px 3px 12px rgba(0,0,0,0.28),1px 1px 3px rgba(0,0,0,0.12);
+      transition:transform 0.25s,box-shadow 0.25s;
+    }
+    .diary-photo:hover {
+      box-shadow:4px 6px 20px rgba(0,0,0,0.42);
+      z-index:20 !important;
+    }
+    .diary-photo img {
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:sepia(7%) brightness(0.97);
+    }
+    .diary-photo-cap {
+      font-family:var(--hand);font-size:0.68rem;
+      color:var(--ink3);text-align:center;padding-top:3px;line-height:1.2;
+    }
+    /* Tape on photos */
+    .diary-photo::before {
+      content:'';position:absolute;
+      top:-7px;left:50%;transform:translateX(-50%) rotate(-1deg);
+      width:42px;height:13px;
+      background:rgba(240,190,40,0.65);z-index:3;
+    }
+    .diary-photo:nth-child(2)::before { background:rgba(80,130,220,0.55);transform:translateX(-50%) rotate(1.5deg); }
+    .diary-photo:nth-child(3)::before { background:rgba(80,180,100,0.55);transform:translateX(-50%) rotate(-0.5deg); }
+
+    /* 1 photo */
+    .photos-area.c1 .diary-photo:nth-child(1) { top:14px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:148px;height:138px; }
+    /* 2 photos */
+    .photos-area.c2 .diary-photo:nth-child(1) { top:10px;left:6px;width:132px;height:126px;transform:rotate(-3deg);z-index:2; }
+    .photos-area.c2 .diary-photo:nth-child(2) { top:22px;right:6px;width:128px;height:122px;transform:rotate(2.5deg);z-index:1; }
+    /* 3 photos */
+    .photos-area.c3 .diary-photo:nth-child(1) { top:4px;left:50%;transform:translateX(-50%) rotate(-2deg);width:126px;height:116px;z-index:3; }
+    .photos-area.c3 .diary-photo:nth-child(2) { bottom:0;left:2px;width:116px;height:106px;transform:rotate(3deg);z-index:2; }
+    .photos-area.c3 .diary-photo:nth-child(3) { bottom:0;right:2px;width:116px;height:106px;transform:rotate(-2.5deg);z-index:1; }
+
+    /* No photo */
+    .photos-area.c0 {
+      height:120px;background:var(--paper3);
+      display:flex;align-items:center;justify-content:center;
+      margin-top:14px;
+    }
+    .no-photo-hint {
+      font-family:var(--hand);font-size:0.9rem;
+      color:var(--ink4);font-style:italic;
+    }
+
+    /* ── CARD BODY ── */
+    .card-body { padding:14px 16px 16px; }
+    .card-ruled {
+      background-image:repeating-linear-gradient(
+        to bottom,transparent 0px,transparent 23px,
+        var(--rule) 23px,var(--rule) 24px
+      );
+      background-position:0 5px;
+      padding:4px 0;
+    }
+
+    .card-handle {
+      font-family:var(--pixel);font-size:0.4rem;
+      letter-spacing:1px;padding:2px 8px;
+      color:#fff;display:inline-block;
+      margin-bottom:7px;transform:rotate(-0.5deg);
+    }
+    .card-name {
+      font-family:var(--hand);font-size:1.5rem;
+      color:var(--ink);font-weight:700;line-height:1.2;margin-bottom:2px;
+    }
+    .card-role {
+      font-family:var(--pixel);font-size:0.35rem;
+      letter-spacing:2px;margin-bottom:7px;
+    }
+    .card-bio {
+      font-family:var(--serif);font-size:0.87rem;
+      font-style:italic;color:var(--ink3);
+      line-height:1.65;margin-bottom:10px;
+    }
+
+    /* Profession + age tags */
+    .card-prof-row {
+      display:flex;flex-wrap:wrap;gap:4px;
+      margin-bottom:10px;
+    }
+    .prof-chip {
+      font-family:var(--hand);font-size:0.75rem;
+      padding:2px 9px;
+      color:#fff;opacity:0.82;
+      border-radius:1px;
+    }
+    .age-chip {
+      font-family:var(--pixel);font-size:0.22rem;
+      padding:2px 7px;letter-spacing:1px;
+      color:var(--ink3);
+      border:1px solid rgba(26,18,8,0.15);
+      background:var(--paper3);
+    }
+
+    /* Stats */
+    .card-stats {
+      border-top:1px dashed var(--rule);
+      padding-top:9px;margin-bottom:10px;
+      display:flex;flex-direction:column;gap:6px;
+    }
+    .stat-r { display:flex;align-items:center;gap:7px; }
+    .stat-lbl {
+      font-family:var(--pixel);font-size:0.4rem;
+      color:var(--ink4);letter-spacing:1px;
+      width:50px;flex-shrink:0;
+    }
+    .stat-bar-w {
+      flex:1;height:5px;
+      background:rgba(26,18,8,0.07);
+      border-radius:1px;overflow:hidden;
+    }
+    .stat-bar {
+      height:100%;border-radius:1px;
+      background:var(--acc,var(--fire));
+      transform:scaleX(0);transform-origin:left;
+      transition:transform 0.9s cubic-bezier(0.34,1.2,0.64,1);
+    }
+    .char-card.stat-in .stat-bar { transform:scaleX(var(--sv,0.7)); }
+    .stat-n {
+      font-family:var(--pixel);font-size:0.2rem;
+      color:var(--ink4);width:18px;text-align:right;flex-shrink:0;
+    }
+
+    /* CTA */
+    .card-cta {
+      display:flex;align-items:center;justify-content:space-between;
+      padding:8px 12px;color:#fff;
+      font-family:var(--hand);font-size:0.95rem;font-weight:600;
+      background:var(--acc,var(--fire));
+    }
+    .cta-arr { transition:transform 0.2s; }
+    .char-card:hover .cta-arr { transform:translateX(4px); }
+
+    /* Torn edge */
+    .card-torn {
+      position:absolute;bottom:-7px;left:0;right:0;height:10px;
+      background:var(--paper);
+      clip-path:polygon(0% 0%, 3% 100%, 6% 20%, 9% 100%, 12% 30%, 15% 100%, 18% 10%, 21% 100%, 24% 40%, 27% 100%, 30% 20%, 33% 100%, 36% 30%, 39% 100%, 42% 10%, 45% 100%, 48% 40%, 51% 100%, 54% 20%, 57% 100%, 60% 30%, 63% 100%, 66% 10%, 69% 100%, 72% 40%, 75% 100%, 78% 20%, 81% 100%, 84% 30%, 87% 100%, 90% 10%, 93% 100%, 96% 30%, 100% 100%, 100% 0%);
+    }
+
+    /* Skeleton */
+    .skel { background:var(--paper);box-shadow:var(--pin-shadow); }
+    .skel:nth-child(odd){transform:rotate(-1.2deg)}
+    .skel:nth-child(even){transform:rotate(0.9deg)}
+    .skel-ph { height:170px;margin:14px 14px 0; }
+    .skel-bd { padding:14px 16px;display:flex;flex-direction:column;gap:9px; }
+    .skel-ln { height:8px;border-radius:1px; }
+    @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+    .shimmer {
+      background:linear-gradient(90deg,var(--paper3) 25%,var(--paper2) 50%,var(--paper3) 75%);
+      background-size:200% 100%;animation:shimmer 1.5s infinite;
+    }
+
+    .board-empty {
+      grid-column:1/-1;padding:60px;
+      text-align:center;font-family:var(--hand);
+      font-size:1.2rem;color:rgba(245,230,200,0.35);
+      font-style:italic;line-height:2;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top:1px solid rgba(255,255,255,0.06);
+      padding:20px 28px;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:10px;
+      position:relative;z-index:1;
+    }
+    footer p { font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.2); }
+    .footer-logo { font-family:var(--pixel);font-size:0.38rem;color:var(--gold);letter-spacing:2px; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:680px) {
+      .nav-links,.nav-join { display:none; }
+      .hamburger { display:flex; }
+      .page-header { padding:40px 16px 24px;flex-direction:column;align-items:flex-start; }
+      .board { padding:0 16px 60px; }
+      .char-card { transform:rotate(0deg) !important; }
+      .pinboard { gap:24px 12px; }
+    }
+    @media(max-width:400px) {
+      .pinboard { grid-template-columns:1fr; }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Top Navbar -->
-  <nav>
-    <div class="nav-left">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="goal.html">Goals</a>
-      
-      
-    </div>
-    <div class="nav-right">
-      <a href="about.html">About</a>
-    </div>
-  </nav>
 
-  <!-- Header -->
-  <header>
-    <h1>Select Your Character</h1>
-    <p>
-      Here — each one tells a different story.
-      Enter their world with different personality .
-    </p>
-  </header>
+<div class="amb amb-1"></div>
+<div class="amb amb-2"></div>
+<div class="embers" id="embers"></div>
 
-  <!-- Character Cards -->
-  <main class="card-section">
-    <div class="card">
-      <div class="card-header">
-        <span>PAWAN.EXE</span>
-        <span>✕</span>
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="goal.html">Goals</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="join.html" class="nav-join">Pin yourself →</a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="index.html">Home</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="goal.html">Goals</a>
+  <a href="about.html">About</a>
+  <a href="join.html" style="color:var(--fire)">Pin yourself →</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div>
+    <div class="header-tape">// THE CREW</div>
+    <h1 class="page-title">Meet the<br><em>people.</em></h1>
+    <p class="page-sub">Everyone who's pinned themselves here. Real people, real stories. You could be on this wall too.</p>
+  </div>
+  <a href="join.html" class="header-cta">Pin yourself →</a>
+</div>
+
+<!-- BOARD -->
+<div class="board">
+
+  <!-- Founders -->
+  <div class="section-head" style="margin-bottom:20px">
+    <span class="section-head-label" style="color:var(--gold)">THE FOUNDERS</span>
+    <div class="section-head-line"></div>
+    <span class="founder-badge">OG CREW</span>
+  </div>
+
+  <div class="pinboard" id="foundersBoard">
+    <!-- Hardcoded — Pawan -->
+    <a href="pawan.html" class="char-card" style="transform:rotate(-1.6deg)">
+      <div class="card-pin" style="left:36%;background:radial-gradient(circle at 35% 35%,#ff9999,#cc3333)"></div>
+      <div class="founder-star">★ FOUNDER</div>
+      <div class="photos-area c1">
+        <div class="diary-photo">
+          <img src="img/me1.jpg" alt="Pawan">
+        </div>
       </div>
-      <img src="style/images/paw.webp" alt="Pawan" class="char-img">
-      <h2>Pawan</h2>
-      <p>Writes stories and survives BTech.</p>
-      <a href="pawan.html" class="retro-btn">View Story</a>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <span>SUVAM.EXE</span>
-        <span>✕</span>
+      <div class="card-body">
+        <div class="card-ruled">
+          <span class="card-handle" style="background:#e8681a">PAWAN.EXE</span>
+          <div class="card-name">Pawan Limbu</div>
+          <div class="card-role" style="color:#e8681a">DEVELOPER · WRITER</div>
+          <p class="card-bio">Writes stories and survives BTech. Believes every bad day is just future writing material.</p>
+          <div class="card-prof-row">
+            <span class="prof-chip" style="background:#e8681a">Student</span>
+            <span class="prof-chip" style="background:#e8901a">BTech</span>
+            <span class="age-chip">AGE: 20</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-r"><span class="stat-lbl">WRITING</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e8681a;--sv:0.88"></div></div><span class="stat-n">88</span></div>
+            <div class="stat-r"><span class="stat-lbl">CODING</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e8681a;--sv:0.82"></div></div><span class="stat-n">82</span></div>
+            <div class="stat-r"><span class="stat-lbl">VIBES</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e8681a;--sv:0.91"></div></div><span class="stat-n">91</span></div>
+            <div class="stat-r"><span class="stat-lbl">SLEEP</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e8681a;--sv:0.22"></div></div><span class="stat-n">22</span></div>
+          </div>
+        </div>
+        <div class="card-cta" style="background:#e8681a">Read his stories <span class="cta-arr">→</span></div>
       </div>
-      <img src="style/images/suv.webp"Suvam" class="char-img">
-      <h2>Suvam</h2>
-      <p>Loves movies and chaos equally.</p>
-      <a href="atck.html" class="retro-btn">View Story</a>
-    </div>
+      <div class="card-torn"></div>
+    </a>
 
-    <div class="card">
-      <div class="card-header">
-        <span>EzaF.EXE</span>
-        <span>✕</span>
+    <!-- Suvam -->
+    <a href="suv.html" class="char-card" style="transform:rotate(1.3deg)">
+      <div class="card-pin" style="left:56%;background:radial-gradient(circle at 35% 35%,#99bbff,#2244cc)"></div>
+      <div class="founder-star">★ FOUNDER</div>
+      <div class="photos-area c1">
+        <div class="diary-photo">
+          <img src="img/suvm1.jpg" alt="Suvam">
+        </div>
       </div>
-      <img src="images/koushik.webp" alt="Rina" class="char-img">
-      <h2>MORAK</h2>
-      <p>Making My Own Shit.</p>
-      <a href="koushik.html" class="retro-btn">View Story</a>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <span>CML.EXE</span>
-        <span>✕</span>
+      <div class="card-body">
+        <div class="card-ruled">
+          <span class="card-handle" style="background:#5c8ae8">SUVAM.EXE</span>
+          <div class="card-name">Suvam Limbu</div>
+          <div class="card-role" style="color:#5c8ae8">DEVELOPER · MOVIE BRAIN</div>
+          <p class="card-bio">Loves movies and chaos equally. Strong opinions about everything, apologises for none.</p>
+          <div class="card-prof-row">
+            <span class="prof-chip" style="background:#5c8ae8">Student</span>
+            <span class="prof-chip" style="background:#5c8ae8">BTech</span>
+            <span class="age-chip">AGE: 20</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-r"><span class="stat-lbl">MOVIES</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5c8ae8;--sv:0.95"></div></div><span class="stat-n">95</span></div>
+            <div class="stat-r"><span class="stat-lbl">CODING</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5c8ae8;--sv:0.78"></div></div><span class="stat-n">78</span></div>
+            <div class="stat-r"><span class="stat-lbl">CHAOS</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5c8ae8;--sv:0.97"></div></div><span class="stat-n">97</span></div>
+            <div class="stat-r"><span class="stat-lbl">FILTER</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5c8ae8;--sv:0.18"></div></div><span class="stat-n">18</span></div>
+          </div>
+        </div>
+        <div class="card-cta" style="background:#5c8ae8">Read his stories <span class="cta-arr">→</span></div>
       </div>
-      <img src="style/images/charu6.webp" alt="Rina" class="char-img">
-      <h2>CHARU</h2>
-      <p>With love 💕</p>
-      <a href="post/charu.html" class="retro-btn">View Story</a>
-    </div>
-  </main>
+      <div class="card-torn"></div>
+    </a>
 
-  <footer>
-    © 2025 HlyWor Blog. Crafted with ❤️ in our style.
-  </footer>
+    <!-- Morak -->
+    <a href="koushik.html" class="char-card" style="transform:rotate(-0.8deg)">
+      <div class="card-pin" style="left:44%;background:radial-gradient(circle at 35% 35%,#aaeebb,#228844)"></div>
+      <div class="founder-star">★ FOUNDER</div>
+      <div class="photos-area c1">
+        <div class="diary-photo">
+          <img src="img/koushik.webp" alt="Morak">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-ruled">
+          <span class="card-handle" style="background:#5cbc7a">EzaF.EXE</span>
+          <div class="card-name">Morak</div>
+          <div class="card-role" style="color:#5cbc7a">CREATOR · OWN LANE</div>
+          <p class="card-bio">Making his own shit. Doesn't follow trends — sets them. Or at least that's the plan.</p>
+          <div class="card-prof-row">
+            <span class="prof-chip" style="background:#5cbc7a">Creator</span>
+            <span class="prof-chip" style="background:#5cbc7a">Freelancer</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-r"><span class="stat-lbl">GRIND</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5cbc7a;--sv:0.93"></div></div><span class="stat-n">93</span></div>
+            <div class="stat-r"><span class="stat-lbl">IDEAS</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5cbc7a;--sv:0.89"></div></div><span class="stat-n">89</span></div>
+            <div class="stat-r"><span class="stat-lbl">VIBE</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5cbc7a;--sv:0.85"></div></div><span class="stat-n">85</span></div>
+            <div class="stat-r"><span class="stat-lbl">CHILL</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#5cbc7a;--sv:0.55"></div></div><span class="stat-n">55</span></div>
+          </div>
+        </div>
+        <div class="card-cta" style="background:#5cbc7a">Read his stories <span class="cta-arr">→</span></div>
+      </div>
+      <div class="card-torn"></div>
+    </a>
+
+    <!-- Charu -->
+    <a href="charu.html" class="char-card" style="transform:rotate(1.9deg)">
+      <div class="card-pin" style="left:62%;background:radial-gradient(circle at 35% 35%,#ffaacc,#cc2266)"></div>
+      <div class="founder-star">★ 1st Poster</div>
+      <div class="photos-area c1">
+        <div class="diary-photo">
+          <img src="img/charu6.webp" alt="Charu">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-ruled">
+          <span class="card-handle" style="background:#e85c9a">CML.EXE</span>
+          <div class="card-name">Charu</div>
+          <div class="card-role" style="color:#e85c9a">WRITER · DREAMER</div>
+          <p class="card-bio">Writes with love. Sees the world softer than it is — and makes you see it that way too.</p>
+          <div class="card-prof-row">
+            <span class="prof-chip" style="background:#e85c9a">Writer</span>
+            <span class="prof-chip" style="background:#e85c9a">Student</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-r"><span class="stat-lbl">WARMTH</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e85c9a;--sv:0.99"></div></div><span class="stat-n">99</span></div>
+            <div class="stat-r"><span class="stat-lbl">WRITING</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e85c9a;--sv:0.87"></div></div><span class="stat-n">87</span></div>
+            <div class="stat-r"><span class="stat-lbl">FEELS</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e85c9a;--sv:0.96"></div></div><span class="stat-n">96</span></div>
+            <div class="stat-r"><span class="stat-lbl">MEAN</span><div class="stat-bar-w"><div class="stat-bar" style="--acc:#e85c9a;--sv:0.04"></div></div><span class="stat-n">04</span></div>
+          </div>
+        </div>
+        <div class="card-cta" style="background:#e85c9a">Read her stories <span class="cta-arr">→</span></div>
+      </div>
+      <div class="card-torn"></div>
+    </a>
+  </div>
+
+  <!-- Community -->
+  <div class="section-head" style="margin:52px 0 20px">
+    <span class="section-head-label" style="color:var(--fire)">THE COMMUNITY</span>
+    <div class="section-head-line"></div>
+    <span id="communityCount" style="font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:1px;white-space:nowrap">LOADING...</span>
+  </div>
+
+  <!-- Tape filter -->
+  <div class="tape-bar" id="tapeBar">
+    <button class="tape-btn active" data-tag="all"       style="background:#3d3020">ALL</button>
+    <button class="tape-btn" data-tag="writer"           style="background:#e85c5c">WRITER</button>
+    <button class="tape-btn" data-tag="developer"        style="background:#5c8ae8">DEV</button>
+    <button class="tape-btn" data-tag="artist"           style="background:#5cbc7a">ARTIST</button>
+    <button class="tape-btn" data-tag="student"          style="background:#e8901a">STUDENT</button>
+    <button class="tape-btn" data-tag="creator"          style="background:#a06ae8">CREATOR</button>
+    <button class="tape-btn" data-tag="other"            style="background:#888">OTHER</button>
+  </div>
+
+  <div class="pinboard" id="communityBoard">
+    <div class="skel"><div class="skel-ph shimmer"></div><div class="skel-bd"><div class="skel-ln shimmer" style="width:40%"></div><div class="skel-ln shimmer" style="width:70%"></div><div class="skel-ln shimmer" style="width:55%"></div></div></div>
+    <div class="skel"><div class="skel-ph shimmer"></div><div class="skel-bd"><div class="skel-ln shimmer" style="width:45%"></div><div class="skel-ln shimmer" style="width:60%"></div><div class="skel-ln shimmer" style="width:50%"></div></div></div>
+  </div>
+
+</div><!-- /board -->
+
+<footer>
+  <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, query, where, orderBy, onSnapshot }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// 🔧 YOUR FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+  authDomain: "hlywor.firebaseapp.com",
+  projectId: "hlywor",
+  storageBucket: "hlywor.firebasestorage.app",
+  messagingSenderId: "697637160825",
+  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+  measurementId: "G-MQDXDWHLX8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+/* ── Hamburger ── */
+const hamburger = document.getElementById('hamburger');
+const mobNav    = document.getElementById('mobNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobNav.classList.toggle('open');
+});
+
+/* ── Embers ── */
+const ec = document.getElementById('embers');
+for (let i = 0; i < 16; i++) {
+  const e = document.createElement('div');
+  e.className = 'ember';
+  const s = 1 + Math.random() * 2;
+  e.style.cssText = `left:${10+Math.random()*80}%;bottom:0;width:${s}px;height:${s}px;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;--ed:${(Math.random()-.5)*90}px;`;
+  ec.appendChild(e);
+}
+
+/* ── Mouse parallax ── */
+document.addEventListener('mousemove', ev => {
+  const px = (ev.clientX/window.innerWidth-.5)*22;
+  const py = (ev.clientY/window.innerHeight-.5)*22;
+  document.querySelectorAll('.amb').forEach((b,i) => {
+    b.style.transform = `translate(${px*(i+1)*.4}px,${py*(i+1)*.4}px)`;
+  });
+}, { passive: true });
+
+/* ── Stat bar animation for founders ── */
+const founderRO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('stat-in'); founderRO.unobserve(e.target); }
+  });
+}, { threshold: 0.25 });
+document.querySelectorAll('#foundersBoard .char-card').forEach(c => founderRO.observe(c));
+
+/* ── Tag filter ── */
+let allPeople = [];
+let activeTag = 'all';
+
+document.querySelectorAll('.tape-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tape-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTag = btn.dataset.tag;
+    renderCommunity();
+  });
+});
+
+/* ── Live Firestore feed ── */
+const q = query(
+  collection(db, 'people'),
+  where('status','==','published'),
+  orderBy('createdAt','desc')
+);
+
+onSnapshot(q, snap => {
+  allPeople = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const countEl = document.getElementById('communityCount');
+  countEl.textContent = `${allPeople.length} PINNED`;
+  renderCommunity();
+}, err => {
+  console.error(err);
+  document.getElementById('communityBoard').innerHTML =
+    `<div class="board-empty">Couldn't load the board.\nCheck Firebase config.</div>`;
+  document.getElementById('communityCount').textContent = 'ERROR';
+});
+
+/* ── Render community ── */
+const ACCENTS = ['#e8681a','#5c8ae8','#5cbc7a','#a06ae8','#e85c9a','#e8c01a','#5ccfbc'];
+const PIN_COLORS = [
+  'radial-gradient(circle at 35% 35%,#ff9999,#cc3333)',
+  'radial-gradient(circle at 35% 35%,#99bbff,#3355cc)',
+  'radial-gradient(circle at 35% 35%,#aaeeaa,#228844)',
+  'radial-gradient(circle at 35% 35%,#ffcc99,#cc6622)',
+  'radial-gradient(circle at 35% 35%,#ffaacc,#cc2266)',
+];
+
+function renderCommunity() {
+  const board = document.getElementById('communityBoard');
+  const list  = activeTag === 'all'
+    ? allPeople
+    : allPeople.filter(p => (p.type||'other').toLowerCase() === activeTag);
+
+  if (!list.length) {
+    board.innerHTML = `<div class="board-empty">Nobody here yet in this category.\n<a href="join.html" style="color:var(--fire)">Be the first →</a></div>`;
+    return;
+  }
+
+  board.innerHTML = '';
+  list.forEach((person, i) => {
+    const accent  = person.accent || ACCENTS[i % ACCENTS.length];
+    const photos  = (person.photos||[]).filter(Boolean).slice(0,3);
+    const stats   = person.stats||[];
+    const profs   = person.professions||[];
+    const pinLeft = [30,54,40,66,44][i%5];
+
+    /* Photos HTML */
+    let photosHtml = '';
+    if (!photos.length) {
+      photosHtml = `<div class="photos-area c0"><span class="no-photo-hint">no photo yet</span></div>`;
+    } else {
+      const imgs = photos.map((url,pi) => `
+        <div class="diary-photo">
+          <img src="${url}" alt="${person.name}" loading="lazy">
+          ${person.photoCaptions?.[pi] ? `<div class="diary-photo-cap">${person.photoCaptions[pi]}</div>` : ''}
+        </div>`).join('');
+      photosHtml = `<div class="photos-area c${photos.length}">${imgs}</div>`;
+    }
+
+    /* Profession + age chips */
+    const profChips = profs.slice(0,3).map(p =>
+      `<span class="prof-chip" style="background:${accent}">${p}</span>`
+    ).join('');
+    const ageChip = person.age ? `<span class="age-chip">AGE: ${person.age}</span>` : '';
+    const profRow = (profChips || ageChip)
+      ? `<div class="card-prof-row">${profChips}${ageChip}</div>` : '';
+
+    /* Stats */
+    const statsHtml = stats.length ? `
+      <div class="card-stats">
+        ${stats.slice(0,4).map(s => {
+          const v = Math.min(99,Math.max(1,parseInt(s.val)||50));
+          return `<div class="stat-r">
+            <span class="stat-lbl">${(s.label||'').slice(0,7)}</span>
+            <div class="stat-bar-w"><div class="stat-bar" style="--acc:${accent};--sv:${(v/100).toFixed(2)}"></div></div>
+            <span class="stat-n">${String(v).padStart(2,'0')}</span>
+          </div>`;
+        }).join('')}
+      </div>` : '';
+
+    const card = document.createElement('a');
+    card.className = 'char-card';
+    const slug = person.slug
+  || person.name?.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+card.href = slug ? `profile.html?slug=${slug}` : (person.profileUrl || '#');
+    card.style.cssText = `--acc:${accent}`;
+    card.innerHTML = `
+      <div class="card-pin" style="left:${pinLeft}%;background:${PIN_COLORS[i%PIN_COLORS.length]}"></div>
+      ${photosHtml}
+      <div class="card-body">
+        <div class="card-ruled">
+          <span class="card-handle" style="background:${accent}">${person.handle||person.name.split(' ')[0].toUpperCase()+'.EXE'}</span>
+          <div class="card-name">${person.name}</div>
+          <div class="card-role" style="color:${accent}">${(person.role||'').toUpperCase()}</div>
+          <p class="card-bio">${person.bio||''}</p>
+          ${profRow}
+          ${statsHtml}
+        </div>
+        <div class="card-cta" style="background:${accent}">
+          ${person.ctaText||'See their stories'} <span class="cta-arr">→</span>
+        </div>
+      </div>
+      <div class="card-torn"></div>`;
+
+    board.appendChild(card);
+    setTimeout(() => card.classList.add('in'), i * 60 + 40);
+  });
+
+  /* Stat bars on scroll */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('stat-in'); ro.unobserve(e.target); }
+    });
+  }, { threshold: 0.25 });
+  board.querySelectorAll('.char-card').forEach(c => ro.observe(c));
+}
+</script>
 </body>
-
 </html>

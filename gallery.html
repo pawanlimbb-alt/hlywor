@@ -2,374 +2,1794 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery — HlyWor</title>
 
-        gtag('config', 'G-ZVLSVF6T3J');
-    </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retro Gallery</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="style/gallery.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-ZVLSVF6T3J');</script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --board: #2a1f14;
+            --paper: #faf6ee;
+            --paper2: #f5edd8;
+            --paper3: #ede3c8;
+            --ink: #1a1208;
+            --ink2: #3d3020;
+            --ink3: #6a5840;
+            --ink4: #a09078;
+            --fire: #e8681a;
+            --gold: #d4a020;
+            --rule: rgba(180, 160, 120, 0.18);
+            --pixel: 'Press Start 2P', monospace;
+            --serif: 'Crimson Pro', Georgia, serif;
+            --sans: 'DM Sans', system-ui, sans-serif;
+            --hand: 'Caveat', cursive;
+
+            /* Sticky note colors */
+            --sticky-y: #fef3a0;
+            --sticky-b: #b8d4f0;
+            --sticky-g: #b8f0c8;
+            --sticky-p: #e8b8f0;
+            --sticky-o: #f0d0b8;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--board);
+            font-family: var(--sans);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Cork texture — same as homepage */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(ellipse at 15% 20%, rgba(100, 70, 30, 0.4) 0%, transparent 45%),
+                radial-gradient(ellipse at 85% 80%, rgba(70, 45, 15, 0.3) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(50, 30, 10, 0.2) 0%, transparent 60%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+            background-size: auto, auto, auto, 200px 200px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--board);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--fire);
+            border-radius: 2px;
+        }
+
+        /* ── NAV ── */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            background: var(--ink);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            height: 52px;
+        }
+
+        .nav-logo {
+            font-family: var(--pixel);
+            font-size: 0.55rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-shadow: 0 0 12px rgba(212, 160, 32, 0.4);
+            animation: flicker 7s infinite;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            91%,
+            100% {
+                opacity: 1
+            }
+
+            92% {
+                opacity: .3
+            }
+
+            93% {
+                opacity: 1
+            }
+
+            95% {
+                opacity: .65
+            }
+
+            96% {
+                opacity: 1
+            }
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--sans);
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.38);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .nav-add-btn {
+            font-family: var(--hand);
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 6px 18px;
+            background: var(--fire);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all .2s;
+            transform: rotate(-0.5deg);
+        }
+
+        .nav-add-btn:hover {
+            background: #ff7a2a;
+            transform: rotate(0deg) translateY(-1px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            width: 32px;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 18px;
+            height: 1.5px;
+            background: rgba(255, 255, 255, 0.6);
+            transition: all .28s;
+            transform-origin: center;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(6.5px) rotate(45deg)
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-6.5px) rotate(-45deg)
+        }
+
+        .mob-nav {
+            display: none;
+            position: fixed;
+            top: 52px;
+            left: 0;
+            right: 0;
+            background: var(--ink);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 20px 28px;
+            z-index: 499;
+            flex-direction: column;
+        }
+
+        .mob-nav.open {
+            display: flex;
+        }
+
+        .mob-nav a {
+            font-family: var(--sans);
+            font-size: .88rem;
+            color: rgba(255, 255, 255, .45);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .mob-nav a:last-child {
+            border-bottom: none;
+        }
+
+        /* ── PHOTO ALBUM HEADER ── */
+        .album-header {
+            position: relative;
+            z-index: 2;
+            padding: 36px 28px 0;
+            max-width: 1300px;
+            margin: 0 auto;
+            min-height: 220px;
+            display: flex;
+            align-items: flex-end;
+            gap: 0;
+            overflow: visible;
+        }
+
+        /* The scattered polaroids behind the title */
+        .header-photos {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .h-photo {
+            position: absolute;
+            background: #fff;
+            padding: 5px 5px 20px;
+            box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+            animation: hPhotoIn 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+        }
+
+        @keyframes hPhotoIn {
+            from {
+                opacity: 0;
+                transform: var(--from-t, translateY(-20px)) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: var(--to-t, rotate(0deg));
+            }
+        }
+
+        .h-photo img {
+            display: block;
+            object-fit: cover;
+            filter: sepia(6%) brightness(0.96);
+        }
+
+        /* Each photo position + size */
+        .h-photo:nth-child(1) {
+            width: 160px;
+            height: 150px;
+            top: 20px;
+            left: 8%;
+            transform: rotate(-8deg);
+            --from-t: translateY(-30px) rotate(-12deg) scale(0.9);
+            --to-t: rotate(-8deg);
+            animation-delay: 0.05s;
+        }
+
+        .h-photo:nth-child(2) {
+            width: 190px;
+            height: 170px;
+            top: 10px;
+            left: 18%;
+            transform: rotate(4deg);
+            z-index: 2;
+            --from-t: translateY(-25px) rotate(8deg) scale(0.9);
+            --to-t: rotate(4deg);
+            animation-delay: 0.12s;
+        }
+
+        .h-photo:nth-child(3) {
+            width: 148px;
+            height: 140px;
+            top: 35px;
+            left: 28%;
+            transform: rotate(-3deg);
+            --from-t: translateY(-20px) rotate(-6deg) scale(0.9);
+            --to-t: rotate(-3deg);
+            animation-delay: 0.18s;
+        }
+
+        .h-photo:nth-child(4) {
+            width: 175px;
+            height: 158px;
+            top: 14px;
+            left: 37%;
+            transform: rotate(6deg);
+            z-index: 2;
+            --from-t: translateY(-28px) rotate(10deg) scale(0.9);
+            --to-t: rotate(6deg);
+            animation-delay: 0.08s;
+        }
+
+        /* Tape on header photos */
+        .h-photo::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1.5deg);
+            width: 44px;
+            height: 14px;
+            z-index: 3;
+        }
+
+        .h-photo:nth-child(1)::before {
+            background: rgba(240, 190, 40, 0.65);
+        }
+
+        .h-photo:nth-child(2)::before {
+            background: rgba(80, 130, 220, 0.55);
+            transform: translateX(-50%) rotate(1.5deg);
+        }
+
+        .h-photo:nth-child(3)::before {
+            background: rgba(220, 80, 120, 0.5);
+            transform: translateX(-50%) rotate(-1deg);
+        }
+
+        .h-photo:nth-child(4)::before {
+            background: rgba(80, 180, 100, 0.5);
+            transform: translateX(-50%) rotate(2deg);
+        }
+
+        /* Title block — right side of header, over the photos */
+        .header-title-block {
+            position: relative;
+            z-index: 10;
+            margin-left: auto;
+            text-align: right;
+            padding-bottom: 16px;
+            padding-right: 4px;
+            animation: titleIn 0.8s cubic-bezier(0.34, 1.3, 0.64, 1) 0.25s both;
+        }
+
+        @keyframes titleIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px) rotate(2deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        .header-big-title {
+            font-family: var(--hand);
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            color: var(--paper);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -1px;
+            text-shadow: 3px 4px 20px rgba(0, 0, 0, 0.6);
+            transform: rotate(-1.5deg);
+            display: inline-block;
+        }
+
+        .header-sub-line {
+            font-family: var(--hand);
+            font-size: 1.1rem;
+            color: rgba(245, 230, 200, 0.55);
+            font-style: italic;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .header-live-count {
+            font-family: var(--pixel);
+            font-size: 0.32rem;
+            color: var(--fire);
+            letter-spacing: 2px;
+            margin-top: 8px;
+            display: block;
+            text-shadow: 0 0 8px rgba(232, 104, 26, 0.4);
+        }
+
+        /* Add photo button in header */
+        .header-add-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-family: var(--hand);
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 7px 20px;
+            background: var(--fire);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all .2s;
+            transform: rotate(-0.5deg);
+        }
+
+        .header-add-btn:hover {
+            background: #ff7a2a;
+            transform: rotate(0deg) translateY(-2px);
+        }
+
+        /* Fade gradient — photos blend into the cork below */
+        .album-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--board));
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @media(max-width: 768px) {
+            .album-header {
+                min-height: 160px;
+                padding: 24px 16px 0;
+            }
+
+            .h-photo:nth-child(1) {
+                width: 110px;
+                height: 104px;
+                left: 0%;
+            }
+
+            .h-photo:nth-child(2) {
+                width: 130px;
+                height: 118px;
+                left: 14%;
+            }
+
+            .h-photo:nth-child(3) {
+                width: 100px;
+                height: 96px;
+                left: 26%;
+            }
+
+            .h-photo:nth-child(4) {
+                display: none;
+            }
+
+            .header-big-title {
+                font-size: clamp(2.8rem, 10vw, 4.5rem);
+            }
+        }
+
+        /* ── FILTER TABS — torn paper tabs ── */
+        .filter-wrap {
+            position: sticky;
+            top: 52px;
+            z-index: 400;
+            padding: 12px 24px 0;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            background: linear-gradient(to bottom, rgba(42, 31, 20, 0.98), rgba(42, 31, 20, 0.95));
+        }
+
+        .filter-wrap::-webkit-scrollbar {
+            display: none;
+        }
+
+        .f-tab {
+            font-family: var(--pixel);
+            font-size: 0.26rem;
+            letter-spacing: 1px;
+            padding: 8px 14px 10px;
+            background: var(--paper3);
+            color: var(--ink3);
+            border: none;
+            cursor: pointer;
+            /* Torn top effect */
+            clip-path: polygon(0 8%, 3% 0%, 7% 6%, 11% 0%, 15% 5%, 19% 0%, 23% 7%, 100% 0%, 100% 100%, 0% 100%);
+            transition: all .18s;
+            white-space: nowrap;
+            position: relative;
+            top: 2px;
+        }
+
+        .f-tab:hover {
+            background: var(--paper2);
+            color: var(--ink2);
+            top: 0;
+        }
+
+        .f-tab.active {
+            background: var(--paper);
+            color: var(--ink);
+            top: 0;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .f-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--paper);
+        }
+
+        /* Count badge on ALL tab */
+        .f-tab-count {
+            font-family: var(--hand);
+            font-size: 0.75rem;
+            color: var(--fire);
+            margin-left: 4px;
+        }
+
+        /* ── SCRAPBOOK WALL ── */
+        .scrapbook {
+            position: relative;
+            z-index: 1;
+            padding: 24px 16px 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* CSS columns — true masonry, each photo its own natural height */
+        .masonry-cols {
+            columns: 5;
+            column-gap: 16px;
+        }
+
+        @media(max-width:1200px) {
+            .masonry-cols {
+                columns: 4
+            }
+        }
+
+        @media(max-width:900px) {
+            .masonry-cols {
+                columns: 3
+            }
+        }
+
+        @media(max-width:600px) {
+            .masonry-cols {
+                columns: 2;
+                column-gap: 10px
+            }
+        }
+
+        @media(max-width:360px) {
+            .masonry-cols {
+                columns: 2;
+                column-gap: 8px
+            }
+        }
+
+        /* ── PHOTO ITEM ── */
+        .photo-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        @media(max-width:600px) {
+            .photo-item {
+                margin-bottom: 12px
+            }
+        }
+
+        /* ── THE PRINT — white border like a physical photo print ── */
+        .print {
+            background: #fff;
+            padding: 6px 6px 22px;
+            box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition:
+                transform 0.4s cubic-bezier(0.34, 1.3, 0.64, 1),
+                box-shadow 0.4s ease;
+            transform-origin: 50% 30%;
+        }
+
+        /* Random rotation — set via JS */
+        /* Hover lift */
+        .photo-item:not(.open):hover .print {
+            box-shadow: 4px 12px 32px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+            filter: brightness(1.04);
+        }
+
+        /* Expanded — print slides UP */
+        .photo-item.open .print {
+            transform: translateY(-14px) scale(1.02) !important;
+            box-shadow: 4px 20px 40px rgba(0, 0, 0, 0.7), 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+
+        /* Tape strips on print — CSS only */
+        .tape {
+            position: absolute;
+            height: 18px;
+            background: rgba(240, 190, 40, 0.55);
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .tape-top {
+            width: 48px;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1.5deg);
+        }
+
+        .tape-tl {
+            width: 36px;
+            top: 2px;
+            left: -10px;
+            transform: rotate(45deg);
+        }
+
+        .tape-tr {
+            width: 36px;
+            top: 2px;
+            right: -10px;
+            transform: rotate(-45deg);
+        }
+
+        /* Different tape colors per item */
+        .tape-blue {
+            background: rgba(80, 130, 220, 0.5);
+        }
+
+        .tape-red {
+            background: rgba(220, 60, 60, 0.5);
+        }
+
+        .tape-green {
+            background: rgba(80, 180, 100, 0.5);
+        }
+
+        .tape-pink {
+            background: rgba(220, 80, 160, 0.5);
+        }
+
+        .print img {
+            width: 100%;
+            display: block;
+            /* Natural ratio — no fixed height */
+            filter: sepia(5%) brightness(0.97);
+            transition: filter 0.3s;
+        }
+
+        .photo-item.open .print img,
+        .photo-item:hover .print img {
+            filter: sepia(0%) brightness(1);
+        }
+
+        /* Bottom label inside print — handwritten */
+        .print-label {
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            font-family: var(--hand);
+            font-size: 0.78rem;
+            color: var(--ink3);
+            text-align: center;
+            padding: 0 4px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ── STICKY NOTE DETAIL — drops from bottom of print ── */
+        .sticky-detail {
+            position: relative;
+            margin: 0 4px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition:
+                max-height 0.45s cubic-bezier(0.34, 1.1, 0.64, 1),
+                opacity 0.3s ease;
+            /* Offset to appear glued to print bottom */
+            margin-top: -2px;
+            z-index: 4;
+        }
+
+        .photo-item.open .sticky-detail {
+            max-height: 280px;
+            opacity: 1;
+        }
+
+        /* The note itself */
+        .sticky-inner {
+            padding: 14px 14px 16px;
+            position: relative;
+            /* Slight fold shadow at top */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .sticky-inner::before {
+            /* Top fold crease */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Dog-ear bottom right */
+        .sticky-inner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(225deg, rgba(0, 0, 0, 0.12) 45%, var(--sn-color) 45%);
+        }
+
+        .sn-category {
+            font-family: var(--pixel);
+            font-size: 0.24rem;
+            letter-spacing: 1px;
+            padding: 2px 8px;
+            color: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.12);
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .sn-title {
+            font-family: var(--hand);
+            font-size: 1.05rem;
+            color: var(--ink);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+
+        .sn-caption {
+            font-family: var(--serif);
+            font-size: 0.85rem;
+            color: var(--ink2);
+            font-style: italic;
+            line-height: 1.55;
+            margin-bottom: 8px;
+        }
+
+        .sn-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-top: 1px dashed rgba(0, 0, 0, 0.15);
+            padding-top: 8px;
+            margin-top: 4px;
+        }
+
+        .sn-author {
+            font-family: var(--hand);
+            font-size: 0.95rem;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sn-author::before {
+            content: '📷';
+            font-size: 0.75rem;
+        }
+
+        .sn-date {
+            font-family: var(--sans);
+            font-size: 0.65rem;
+            color: var(--ink3);
+        }
+
+        .sn-loc {
+            font-family: var(--sans);
+            font-size: 0.65rem;
+            color: var(--ink3);
+        }
+
+        .sn-loc::before {
+            content: '📍';
+            margin-right: 2px;
+            font-size: 0.6rem;
+        }
+
+        .sn-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 5px;
+        }
+
+        .sn-fs {
+            font-family: var(--hand);
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            background: var(--ink);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        .sn-fs:hover {
+            background: var(--fire);
+        }
+
+        .sn-close {
+            font-family: var(--hand);
+            font-size: 0.85rem;
+            padding: 3px 9px;
+            background: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: var(--ink2);
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .sn-close:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        /* ── LIGHTBOX ── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 900;
+            background: rgba(0, 0, 0, 0.97);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s;
+        }
+
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 92vh;
+            object-fit: contain;
+            display: block;
+            animation: lbIn .3s ease both;
+            /* Natural ratio */
+        }
+
+        @keyframes lbIn {
+            from {
+                transform: scale(.95);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .lb-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-family: var(--hand);
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, .4);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color .2s;
+        }
+
+        .lb-close:hover {
+            color: #fff;
+        }
+
+        .lb-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--hand);
+            font-size: 1rem;
+            color: rgba(255, 255, 255, .45);
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        /* ── UPLOAD MODAL ── */
+        .upload-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 600;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-bg.open {
+            display: flex;
+        }
+
+        .upload-modal {
+            background: var(--paper);
+            width: 100%;
+            max-width: 480px;
+            margin: 16px;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        /* Torn top */
+        .upload-modal::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 14px;
+            background: var(--paper);
+            clip-path: polygon(0% 100%, 2% 0%, 5% 100%, 8% 0%, 11% 100%, 14% 0%, 17% 100%, 20% 0%, 23% 100%, 26% 0%, 29% 100%, 32% 0%, 35% 100%, 38% 0%, 41% 100%, 44% 0%, 47% 100%, 50% 0%, 53% 100%, 56% 0%, 59% 100%, 62% 0%, 65% 100%, 68% 0%, 71% 100%, 74% 0%, 77% 100%, 80% 0%, 83% 100%, 86% 0%, 89% 100%, 92% 0%, 95% 100%, 98% 0%, 100% 100%, 100% 100%, 0% 100%);
+        }
+
+        .um-head {
+            padding: 20px 22px 14px;
+            border-bottom: 1px solid var(--rule);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .um-title {
+            font-family: var(--hand);
+            font-size: 1.4rem;
+            color: var(--ink);
+            font-weight: 700;
+        }
+
+        .um-x {
+            font-family: var(--pixel);
+            font-size: 0.28rem;
+            color: var(--ink3);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .um-body {
+            padding: 18px 22px 26px;
+        }
+
+        /* Drop zone */
+        .dz {
+            border: 2px dashed rgba(26, 18, 8, 0.15);
+            background: rgba(26, 18, 8, 0.02);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s;
+            margin-bottom: 16px;
+        }
+
+        .dz:hover,
+        .dz.over {
+            border-color: var(--fire);
+            background: rgba(232, 104, 26, 0.03);
+        }
+
+        .dz input[type="file"] {
+            display: none;
+        }
+
+        .dz-icon {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .dz-text {
+            font-family: var(--hand);
+            font-size: 1rem;
+            color: var(--ink3);
+            font-style: italic;
+        }
+
+        .dz-preview {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .dz-preview img {
+            max-width: 100%;
+            max-height: 160px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .uploading-msg {
+            display: none;
+            font-family: var(--hand);
+            font-size: .88rem;
+            color: var(--fire);
+            text-align: center;
+            font-style: italic;
+            animation: fadeFlicker .9s step-start infinite;
+        }
+
+        @keyframes fadeFlicker {
+            50% {
+                opacity: .3
+            }
+        }
+
+        /* Fields — same diary style as join.html */
+        .uf {
+            margin-bottom: 14px;
+        }
+
+        .ul {
+            font-family: var(--pixel);
+            font-size: 0.32rem;
+            color: var(--ink4);
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .ul .req {
+            color: var(--fire);
+        }
+
+        .ul .opt {
+            font-size: .26rem;
+            color: var(--ink4);
+        }
+
+        .ui,
+        .ut {
+            width: 100%;
+            background: rgba(26, 18, 8, 0.03);
+            border: none;
+            border-bottom: 2px solid rgba(26, 18, 8, 0.12);
+            border-radius: 3px 3px 0 0;
+            font-family: var(--hand);
+            font-size: 1rem;
+            color: var(--ink);
+            padding: 6px 8px;
+            outline: none;
+            transition: border-color .2s;
+        }
+
+        .ui:focus,
+        .ut:focus {
+            border-color: var(--fire);
+        }
+
+        .ui::placeholder,
+        .ut::placeholder {
+            color: var(--ink4);
+            font-style: italic;
+        }
+
+        .ut {
+            resize: none;
+            min-height: 56px;
+            line-height: 1.6;
+        }
+
+        /* Category pills */
+        .cat-pills {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .cat-pill {
+            font-family: var(--hand);
+            font-size: 0.85rem;
+            padding: 3px 12px;
+            border: 1px dashed rgba(26, 18, 8, 0.2);
+            color: var(--ink3);
+            cursor: pointer;
+            border-radius: 2px;
+            background: transparent;
+            transition: all .15s;
+        }
+
+        .cat-pill:hover {
+            background: var(--paper3);
+        }
+
+        .cat-pill.active {
+            background: var(--fire);
+            color: #fff;
+            border-color: var(--fire);
+            border-style: solid;
+        }
+
+        .u-submit {
+            width: 100%;
+            font-family: var(--hand);
+            font-size: 1.1rem;
+            padding: 11px;
+            background: var(--fire);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all .2s;
+            margin-top: 6px;
+        }
+
+        .u-submit:hover {
+            background: #ff7a2a;
+        }
+
+        .u-submit:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        .u-status {
+            font-family: var(--hand);
+            font-size: .88rem;
+            margin-top: 7px;
+            font-style: italic;
+            text-align: center;
+            min-height: 16px;
+        }
+
+        .u-status.ok {
+            color: #3a8a3a;
+        }
+
+        .u-status.err {
+            color: var(--fire);
+        }
+
+        /* Mobile FAB */
+        .fab {
+            display: none;
+            position: fixed;
+            bottom: 22px;
+            right: 18px;
+            z-index: 300;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--fire);
+            color: #fff;
+            font-size: 1.3rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(232, 104, 26, 0.5);
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+        }
+
+        .fab:hover {
+            transform: scale(1.08);
+            background: #ff7a2a;
+        }
+
+        @media(max-width:768px) {
+            .fab {
+                display: flex
+            }
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        footer p {
+            font-family: var(--sans);
+            font-size: .68rem;
+            color: rgba(255, 255, 255, .2);
+        }
+
+        .f-logo {
+            font-family: var(--pixel);
+            font-size: .38rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        /* Responsive nav */
+        @media(max-width:768px) {
+
+            .nav-links,
+            .nav-add-btn {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .filter-wrap {
+                padding: 10px 16px 0;
+            }
+
+            .scrapbook {
+                padding: 16px 10px 60px;
+            }
+        }
+
+        /* Shimmer skeleton */
+        @keyframes shimmer {
+            from {
+                background-position: 200% 0
+            }
+
+            to {
+                background-position: -200% 0
+            }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, var(--paper3) 25%, var(--paper2) 50%, var(--paper3) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skel-print {
+            background: #fff;
+            padding: 6px 6px 22px;
+            margin-bottom: 20px;
+            break-inside: avoid;
+        }
+    </style>
 </head>
 
 <body>
- <nav>
-    <div class="nav-left">
-      <h1 class="logo">HlYWoR</h1>
-    </div>
 
-    <div class="nav-right">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="goal.html">Goals</a>
-      <a href="about.html">About</a>
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Compact Right Popup -->
-  <div class="popup-nav" id="popupNav">
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="goal.html">Goals</a>
-    <a href="about.html">About</a>
-  </div>
-
-  <header>
-    <h1>Gallery</h1>
-    <p>Community wall of memories.</p>
-  </header>
-
-  <main class="free-gallery">
-    <!-- Your backend will render images like this -->
-    <div class="photo">
-      <img src="style/images/gal1.png" alt="Photo 1">
-      <div class="author">By pawan</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/gal2.png" alt="Photo 2">
-      <div class="author">By Paw</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/gal4.webp" alt="Photo 3">
-      <div class="author">By Suv</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/IMG_20250527_172350033.jpg" alt="Photo 4">
-      <div class="author">By Pawan L.</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/gal5.webp" alt="Photo 5">
-      <div class="author">By Suv</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/IMG_20250709_181223731.jpg" alt="Photo 6">
-      <div class="author">By Morak M.</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/gal6.webp" alt="Photo 7">
-      <div class="author">By Suv</div>
-    </div>
-   
-    
-    
-   
-    <div class="photo">
-      <img src="style/images/gal3.webp" alt="Photo 8">
-      <div class="author">By Suvam L.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/garden.webp" alt="Photo 9">
-      <div class="author">By Suvam L.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/night.webp" alt="Photo 10">
-      <div class="author">By Suvam L.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/par.webp" alt="Photo 11">
-      <div class="author">By Pari K.</div>
-    </div>
-
-<div class="photo">
-      <img src="style/images/par2.webp" alt="Photo 12">
-      <div class="author">By pari K.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/par3.webp" alt="Photo 13">
-      <div class="author">By Pari K.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/par4.webp" alt="Photo 14">
-      <div class="author">By Pari K.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/par5.webp" alt="Photo 15">
-      <div class="author">By Pari K.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/par6.webp" alt="Photo 16">
-      <div class="author">By Pari K.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/par7.webp" alt="Photo 17">
-      <div class="author">By Pari K.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/par8.webp" alt="Photo 18">
-      <div class="author">By Pari K.</div>
-    </div>
-
-    <div class="photo">
-      <img src="style/images/shruti1 (1).webp" alt="Photo 19">
-      <div class="author">By Shruti K.</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/shruti1 (2).webp" alt="Photo 20">
-      <div class="author">By Shruti K.</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/shruti1 (3).webp" alt="Photo 21">
-      <div class="author">By Shruti K.</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/shruti1 (4).webp" alt="Photo 22">
-      <div class="author">By Shruti K.</div>
-    </div>
-    <div class="photo">
-      <img src="style/images/shruti1 (5).webp" alt="Photo 23">
-      <div class="author">By Shruti K.</div>
-    </div>
-
-
-
-
-
-  </main>
-
-  <!-- 🔮 Lightbox Container -->
-  <div id="lightbox">
-    <img src="" alt="">
-  </div>
-  
-
-<!--commnet-->
-<!-- === Comment Section Start === 
-<div id="comment-section" style="max-width:600px;margin:auto;">
-  <h3>Leave a Comment</h3>
-  <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
-  <textarea id="comment" rows="3" placeholder="Write your comment..." style="width:100%;margin:6px 0;padding:8px;"></textarea>
-  <button id="postBtn" style="padding:10px 15px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
-    Post Comment
-  </button>
-
-  <h3 style="margin-top:20px;">Comments</h3>
-  <div id="comments"></div>
-</div>
-
-<script>
-  const endpoint = '/.netlify/functions/postComment'; // Netlify function endpoint
-
-  async function loadComments() {
-    try {
-      const res = await fetch(endpoint);
-      const comments = await res.json();
-      const container = document.getElementById('comments');
-      container.innerHTML = comments.map(c => `
-        <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
-          <strong>${c.name}</strong><br>
-          <small>${new Date(c.timestamp).toLocaleString()}</small>
-          <p>${c.comment}</p>
+    <!-- NAV -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">HlYWoR</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="goal.html">Goals</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="nav-add-btn" id="openUpload">📷 Add photo</button>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
         </div>
-      `).join('');
-    } catch (err) {
-      console.error(err);
-      document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
-    }
-  }
+    </nav>
+    <div class="mob-nav" id="mobNav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="goal.html">Goals</a>
+        <a href="about.html">About</a>
+    </div>
 
-  async function postComment() {
-    const name = document.getElementById('name').value.trim();
-    const comment = document.getElementById('comment').value.trim();
-    if (!name || !comment) return alert('Please enter name and comment');
-    document.getElementById('postBtn').disabled = true;
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment })
-      });
-      const result = await res.json();
-      if (result.status === 'success') {
-        document.getElementById('name').value = '';
-        document.getElementById('comment').value = '';
-        loadComments();
-      } else {
-        alert('Error posting comment.');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Failed to send comment.');
-    }
-    document.getElementById('postBtn').disabled = false;
-  }
+    <!-- ALBUM HEADER -->
+    <div class="album-header" id="albumHeader">
+        <!-- Scattered polaroids — src filled by JS from actual photos -->
+        <div class="header-photos" id="headerPhotos">
+            <div class="h-photo" id="hp0"><img id="hpImg0" src="img/gal1.png" width="150" height="140" alt=""></div>
+            <div class="h-photo" id="hp1"><img id="hpImg1" src="img/par.webp" width="180" height="160" alt=""></div>
+            <div class="h-photo" id="hp2"><img id="hpImg2" src="img/garden.webp" width="138" height="130" alt=""></div>
+            <div class="h-photo" id="hp3"><img id="hpImg3" src="img/gal4.webp" width="165" height="150" alt=""></div>
+        </div>
 
-  document.getElementById('postBtn').addEventListener('click', postComment);
-  loadComments();
-</script> -->
-<!-- === Comment Section End === -->
-<!-- === Comment Section Start === -->
-<!-- === Comment Section Start === -->
-<div id="comment-section" style="max-width:600px;margin:auto;">
-  <h3>Leave a Comment</h3>
-  <input id="name" placeholder="Your name" style="width:100%;margin:6px 0;padding:8px;">
-  <textarea id="comment" rows="3" placeholder="Write your comment..." style="width:100%;margin:6px 0;padding:8px;"></textarea>
-  <button id="postBtn" style="padding:10px 15px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
-    Post Comment
-  </button>
+        <!-- Title block -->
+        <div class="header-title-block">
+            <span class="header-big-title">Gallery.</span>
+            <span class="header-sub-line">every photo someone wanted to keep.</span>
+            <span class="header-live-count" id="headerCount">— photos</span>
+            <button class="header-add-btn" id="headerAddBtn">📷 add yours</button>
+        </div>
+    </div>
 
-  <h3 style="margin-top:20px;">Comments</h3>
-  <div id="comments"></div>
-</div>
+    <!-- FILTER TABS -->
+    <div class="filter-wrap" id="filterWrap">
+        <button class="f-tab active" data-cat="all">ALL <span class="f-tab-count" id="totalCount"></span></button>
+        <button class="f-tab" data-cat="moments">MOMENTS</button>
+        <button class="f-tab" data-cat="nature">NATURE</button>
+        <button class="f-tab" data-cat="urban">URBAN</button>
+        <button class="f-tab" data-cat="people">PEOPLE</button>
+        <button class="f-tab" data-cat="abstract">ABSTRACT</button>
+        <button class="f-tab" data-cat="travel">TRAVEL</button>
+        <button class="f-tab" data-cat="other">OTHER</button>
+    </div>
 
-<script>
-  // 👇 Unique ID for this blog post (change on each post)
-  const POST_ID = 'gallery'; // e.g. 'travel-tips-2025', 'ai-future', etc.
-  const endpoint = '/api/postComment'; // ✅ Vercel function endpoint
-
-  async function loadComments() {
-    try {
-      const res = await fetch(`${endpoint}?postId=${encodeURIComponent(POST_ID)}`);
-      const comments = await res.json();
-      const container = document.getElementById('comments');
-      container.innerHTML = comments.length
-        ? comments.map(c => `
-            <div style="border:1px solid #ccc;border-radius:6px;padding:10px;margin:10px 0;">
-              <strong>${c.name}</strong><br>
-              <small>${new Date(c.timestamp).toLocaleString()}</small>
-              <p>${c.comment}</p>
+    <!-- SCRAPBOOK -->
+    <div class="scrapbook">
+        <div class="masonry-cols" id="masonry">
+            <!-- Skeletons -->
+            <div class="skel-print">
+                <div class="shimmer" style="height:160px"></div>
+                <div style="height:14px"></div>
             </div>
-          `).join('')
-        : '<p>No comments yet — be the first to share your thoughts!</p>';
-    } catch (err) {
-      console.error(err);
-      document.getElementById('comments').innerHTML = '<p>Failed to load comments.</p>';
-    }
-  }
+            <div class="skel-print">
+                <div class="shimmer" style="height:120px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:200px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:140px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:180px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:110px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:150px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:170px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:130px"></div>
+                <div style="height:14px"></div>
+            </div>
+            <div class="skel-print">
+                <div class="shimmer" style="height:190px"></div>
+                <div style="height:14px"></div>
+            </div>
+        </div>
+    </div>
 
-  async function postComment() {
-    const name = document.getElementById('name').value.trim();
-    const comment = document.getElementById('comment').value.trim();
-    if (!name || !comment) return alert('Please enter your name and a comment.');
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lb-close" id="lbClose">✕</button>
+        <img id="lbImg" src="" alt="">
+        <div class="lb-caption" id="lbCaption"></div>
+    </div>
 
-    document.getElementById('postBtn').disabled = true;
+    <!-- UPLOAD MODAL -->
+    <div class="upload-bg" id="uploadBg">
+        <div class="upload-modal">
+            <div class="um-head">
+                <span class="um-title">Stick a photo 📷</span>
+                <button class="um-x" id="closeUpload">[ close ]</button>
+            </div>
+            <div class="um-body">
+                <div class="dz" id="dz">
+                    <input type="file" id="photoFile" accept="image/*">
+                    <div class="dz-icon">📷</div>
+                    <p class="dz-text">Drop or tap to choose your photo</p>
+                    <div class="dz-preview" id="dzPreview"><img id="dzImg" src="" alt=""></div>
+                </div>
+                <div class="uploading-msg" id="upMsg">uploading your photo...</div>
+                <input type="hidden" id="photoUrl">
 
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment, postId: POST_ID })
-      });
-      const result = await res.json();
-      if (result.status === 'success') {
-        document.getElementById('name').value = '';
-        document.getElementById('comment').value = '';
-        loadComments();
-      } else {
-        alert('Error posting comment.');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Failed to send comment.');
-    }
+                <div class="uf">
+                    <label class="ul">YOUR NAME <span class="req">*</span></label>
+                    <input class="ui" id="uAuthor" placeholder="who took this?">
+                </div>
+                <div class="uf">
+                    <label class="ul">TITLE <span class="opt">(optional)</span></label>
+                    <input class="ui" id="uTitle" placeholder="name this moment...">
+                </div>
+                <div class="uf">
+                    <label class="ul">CAPTION <span class="opt">(optional)</span></label>
+                    <textarea class="ut" id="uCaption" rows="2" placeholder="the story behind it..."></textarea>
+                </div>
+                <div class="uf">
+                    <label class="ul">LOCATION <span class="opt">(optional)</span></label>
+                    <input class="ui" id="uLoc" placeholder="where was this?">
+                </div>
+                <div class="uf">
+                    <label class="ul">CATEGORY <span class="req">*</span></label>
+                    <div class="cat-pills" id="catPills">
+                        <button class="cat-pill active" data-cat="moments">Moments</button>
+                        <button class="cat-pill" data-cat="nature">Nature</button>
+                        <button class="cat-pill" data-cat="urban">Urban</button>
+                        <button class="cat-pill" data-cat="people">People</button>
+                        <button class="cat-pill" data-cat="abstract">Abstract</button>
+                        <button class="cat-pill" data-cat="travel">Travel</button>
+                        <button class="cat-pill" data-cat="other">Other</button>
+                    </div>
+                </div>
+                <button class="u-submit" id="uSubmit">Stick it on the wall ✦</button>
+                <div class="u-status" id="uStatus"></div>
+            </div>
+        </div>
+    </div>
 
-    document.getElementById('postBtn').disabled = false;
-  }
+    <!-- Mobile FAB -->
+    <button class="fab" id="fabBtn">📷</button>
 
-  document.getElementById('postBtn').addEventListener('click', postComment);
-  loadComments();
-</script>
-<!-- === Comment Section End === -->
+    <!-- HARDCODED -->
+    <script>
+        const HARDCODED = [
+            { url: 'img/gal1.png', author: 'Pawan', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/gal2.png', author: 'Pawan', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/gal4.webp', author: 'Suvam', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/IMG_20250527_172350033.jpg', author: 'Pawan L.', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/gal5.webp', author: 'Suvam', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/IMG_20250709_181223731.jpg', author: 'Morak M.', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/gal6.webp', author: 'Suvam', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/gal3.webp', author: 'Suvam L.', category: 'moments', title: '', caption: '', location: '', date: '' },
+            { url: 'img/garden.webp', author: 'Suvam L.', category: 'nature', title: 'Garden', caption: '', location: '', date: '' },
+            { url: 'img/night.webp', author: 'Suvam L.', category: 'urban', title: 'Night', caption: '', location: '', date: '' },
+            { url: 'img/par.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/par2.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/par3.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/par4.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/par5.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/par6.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/par7.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/par8.webp', author: 'Pari K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/shruti1 (1).webp', author: 'Shruti K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/shruti1 (2).webp', author: 'Shruti K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/shruti1 (3).webp', author: 'Shruti K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/shruti1 (4).webp', author: 'Shruti K.', category: 'people', title: '', caption: '', location: '', date: '' },
+            { url: 'img/shruti1 (5).webp', author: 'Shruti K.', category: 'people', title: '', caption: '', location: '', date: '' },
+        ];
+    </script>
 
-<!-- === Comment Section End === -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp }
+            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+        // 🔧 FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+            authDomain: "hlywor.firebaseapp.com",
+            projectId: "hlywor",
+            storageBucket: "hlywor.firebasestorage.app",
+            messagingSenderId: "697637160825",
+            appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+            measurementId: "G-MQDXDWHLX8"
+        };
+        // 🔧 CLOUDINARY
+        const CLD_NAME = "dgatfolot";
+        const CLD_PRESET = "hlywor";
 
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
+        /* ── State ── */
+        let allPhotos = [];
+        let activeFilter = 'all';
+        let expandedItem = null;
 
+        /* ── Sticky note colors cycle ── */
+        const SN_COLORS = ['#fef3a0', '#b8d4f0', '#b8f0c8', '#e8b8f0', '#f0d0b8', '#f0b8b8', '#d0f0e8'];
+        const TAPE_STYLES = [
+            { cls: 'tape-top', color: 'rgba(240,190,40,0.55)' },
+            { cls: 'tape-tl', color: 'rgba(80,130,220,0.5)' },
+            { cls: 'tape-tr', color: 'rgba(220,60,60,0.5)' },
+            { cls: 'tape-top', color: 'rgba(80,180,100,0.5)' },
+            { cls: 'tape-top', color: 'rgba(220,80,160,0.5)' },
+        ];
+        /* Slight rotations pool */
+        const ROTS = [-2.5, -1.8, -1.2, -0.7, -0.4, 0.4, 0.8, 1.3, 1.9, 2.6];
 
-  <footer>
-    © 2025 HlyWor Blog. Crafted with ❤️ in our style.
-  </footer>
+        /* ── Hamburger ── */
+        const hb = document.getElementById('hamburger'), mn = document.getElementById('mobNav');
+        hb.addEventListener('click', () => { hb.classList.toggle('open'); mn.classList.toggle('open') });
 
-  <!-- ⚙️ JS: Random layout (optional) + Lightbox -->
-  <script>
-    // Optional random layout (delete if handled in backend)
-    document.addEventListener("DOMContentLoaded", () => {
-      const spanClasses = ['span-1x1', 'span-2x1', 'span-1x2', 'span-2x2'];
-      document.querySelectorAll('.photo').forEach(photo => {
-        const randomClass = spanClasses[Math.floor(Math.random() * spanClasses.length)];
-        photo.classList.add(randomClass);
-      });
-    });
+        /* ── Filter tabs ── */
+        document.querySelectorAll('.f-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.f-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter = btn.dataset.cat;
+                if (expandedItem) { expandedItem.classList.remove('open'); expandedItem = null; }
+                renderGallery();
+            });
+        });
 
-    // 🎮 Simple Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox.querySelector('img');
+        /* ── Render ── */
+        function renderGallery() {
+            const masonry = document.getElementById('masonry');
+            const list = activeFilter === 'all'
+                ? allPhotos
+                : allPhotos.filter(p => (p.category || 'moments') === activeFilter);
 
-    document.querySelectorAll('.photo img').forEach(img => {
-      img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightbox.classList.add('active');
-      });
-    });
+            document.getElementById('totalCount').textContent = allPhotos.length || '';
+            document.getElementById('headerCount').textContent = `${allPhotos.length} photo${allPhotos.length !== 1 ? 's' : ''}`;
 
-    lightbox.addEventListener('click', () => {
-      lightbox.classList.remove('active');
-    });
+            /* Randomize header polaroids on every load — pick 4 random from the pool */
+            const shuffled = [...allPhotos].sort(() => Math.random() - 0.5);
+            shuffled.slice(0, 4).forEach((photo, i) => {
+                const img = document.getElementById(`hpImg${i}`);
+                if (img && photo?.url) {
+                    img.src = photo.url;
+                    /* Re-trigger the entry animation by cloning the parent */
+                    const hp = img.closest('.h-photo');
+                    if (hp) {
+                        hp.style.animation = 'none';
+                        hp.offsetHeight; /* force reflow */
+                        hp.style.animation = '';
+                    }
+                }
+            });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') lightbox.classList.remove('active');
-    });
-  </script>
+            if (!list.length) {
+                masonry.innerHTML = `<div style="column-span:all;padding:60px 0;text-align:center;font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.3);font-style:italic">Nothing here yet — add yours!</div>`;
+                return;
+            }
 
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const popupNav = document.getElementById('popupNav');
+            masonry.innerHTML = '';
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      popupNav.classList.toggle('active');
-    });
+            list.forEach((photo, i) => {
+                const cat = photo.category || 'moments';
+                const snCol = SN_COLORS[i % SN_COLORS.length];
+                const rot = ROTS[i % ROTS.length];
+                const tape = TAPE_STYLES[i % TAPE_STYLES.length];
+                const dateStr = photo.date
+                    ? new Date(photo.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                    : '';
 
-    document.addEventListener('click', (e) => {
-      if (!popupNav.contains(e.target) && !hamburger.contains(e.target)) {
-        popupNav.classList.remove('active');
-        hamburger.classList.remove('active');
-      }
-    });
-  </script>
- 
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+                item.style.animationDelay = `${i * 30}ms`;
 
+                item.innerHTML = `
+      <div class="print" style="transform:rotate(${rot}deg)">
+        <div class="tape ${tape.cls}" style="background:${tape.color}"></div>
+        <img src="${photo.url}" alt="${photo.title || photo.author || ''}" loading="lazy">
+        <div class="print-label">${photo.author || ''}</div>
+      </div>
+      <div class="sticky-detail">
+        <div class="sticky-inner" style="background:${snCol};--sn-color:${snCol}">
+          <span class="sn-category">${cat.toUpperCase()}</span>
+          <div class="sn-title">${photo.title || `A photo by ${photo.author || 'someone'}`}</div>
+          ${photo.caption ? `<p class="sn-caption">${photo.caption}</p>` : ''}
+          <div class="sn-meta">
+            <span class="sn-author">${photo.author || 'Anonymous'}</span>
+            ${dateStr ? `<span class="sn-date">${dateStr}</span>` : ''}
+            ${photo.location ? `<span class="sn-loc">${photo.location}</span>` : ''}
+            <div class="sn-actions">
+              <button class="sn-fs">⛶</button>
+              <button class="sn-close">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+
+                /* Click print to expand */
+                item.querySelector('.print').addEventListener('click', () => {
+                    if (expandedItem && expandedItem !== item) {
+                        expandedItem.classList.remove('open');
+                    }
+                    item.classList.toggle('open');
+                    expandedItem = item.classList.contains('open') ? item : null;
+                    /* Scroll into view so sticky note is visible */
+                    if (item.classList.contains('open')) {
+                        setTimeout(() => item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+                    }
+                });
+
+                /* Fullscreen */
+                item.querySelector('.sn-fs').addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.getElementById('lbImg').src = photo.url;
+                    document.getElementById('lbCaption').textContent = photo.author ? `📷 ${photo.author}` : '';
+                    document.getElementById('lightbox').classList.add('open');
+                });
+
+                /* Close note */
+                item.querySelector('.sn-close').addEventListener('click', e => {
+                    e.stopPropagation();
+                    item.classList.remove('open');
+                    expandedItem = null;
+                });
+
+                masonry.appendChild(item);
+            });
+        }
+
+        /* ── Lightbox ── */
+        document.getElementById('lbClose').addEventListener('click', () => document.getElementById('lightbox').classList.remove('open'));
+        document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('open') });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open') });
+
+        /* ── Firebase ── */
+        onSnapshot(query(collection(db, 'gallery'), orderBy('createdAt', 'desc')), snap => {
+            const fb = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            allPhotos = [...fb, ...HARDCODED];
+            renderGallery();
+        }, err => {
+            console.error(err);
+            allPhotos = [...HARDCODED];
+            renderGallery();
+        });
+
+        /* ── Upload modal ── */
+        [document.getElementById('openUpload'), document.getElementById('fabBtn'), document.getElementById('headerAddBtn')].forEach(b => {
+            if (b) b.addEventListener('click', () => document.getElementById('uploadBg').classList.add('open'));
+        });
+        document.getElementById('closeUpload').addEventListener('click', () => document.getElementById('uploadBg').classList.remove('open'));
+        document.getElementById('uploadBg').addEventListener('click', e => { if (e.target === document.getElementById('uploadBg')) document.getElementById('uploadBg').classList.remove('open') });
+
+        /* Category pills */
+        let selCat = 'moments';
+        document.querySelectorAll('.cat-pill').forEach(p => {
+            p.addEventListener('click', () => {
+                document.querySelectorAll('.cat-pill').forEach(x => x.classList.remove('active'));
+                p.classList.add('active'); selCat = p.dataset.cat;
+            });
+        });
+
+        /* File upload */
+        const dz = document.getElementById('dz'), pf = document.getElementById('photoFile');
+        dz.addEventListener('click', () => pf.click());
+        dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over') });
+        dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+        dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]) });
+        pf.addEventListener('change', () => { if (pf.files[0]) handleFile(pf.files[0]) });
+
+        function compressImage(file, quality = 0.75) {
+            return new Promise(resolve => {
+                const img = new Image();
+                const blobUrl = URL.createObjectURL(file);
+                img.onload = () => {
+                    const MAX = 2400;
+                    let w = img.width, h = img.height;
+                    if (w > MAX || h > MAX) {
+                        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+                        else { w = Math.round(w * MAX / h); h = MAX; }
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w; canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    canvas.toBlob(blob => {
+                        URL.revokeObjectURL(blobUrl);
+                        resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+                    }, 'image/jpeg', quality);
+                };
+                img.src = blobUrl;
+            });
+        }
+
+        async function handleFile(rawFile) {
+            const file = rawFile.size > 8 * 1024 * 1024
+                ? await compressImage(rawFile, 0.75)
+                : rawFile;
+            const local = URL.createObjectURL(file);
+            document.getElementById('dzImg').src = local;
+            document.getElementById('dzPreview').style.display = 'block';
+            document.querySelector('.dz-icon').style.display = 'none';
+            document.querySelector('.dz-text').style.display = 'none';
+            document.getElementById('upMsg').style.display = 'block';
+            const url = await uploadCld(file);
+            document.getElementById('upMsg').style.display = 'none';
+            if (url) {
+                document.getElementById('photoUrl').value = url;
+                document.getElementById('dzImg').src = url;
+                URL.revokeObjectURL(local);
+            } else {
+                document.getElementById('uStatus').textContent = '⚠ Upload failed — check Cloudinary config';
+                document.getElementById('uStatus').className = 'u-status err';
+            }
+        }
+
+        async function uploadCld(file) {
+            const fd = new FormData();
+            fd.append('file', file);
+            fd.append('upload_preset', CLD_PRESET);
+            fd.append('format', 'webp');
+            fd.append('quality', 'auto');
+            fd.append('folder', 'hlywor/gallery');
+            try {
+                const r = await fetch(`https://api.cloudinary.com/v1_1/${CLD_NAME}/image/upload`, { method: 'POST', body: fd });
+                const d = await r.json();
+                if (d.error) { console.error(d.error.message); return null }
+                return d.secure_url || null;
+            } catch (e) { console.error(e); return null }
+        }
+
+        /* Submit */
+        document.getElementById('uSubmit').addEventListener('click', async () => {
+            const url = document.getElementById('photoUrl').value;
+            const author = document.getElementById('uAuthor').value.trim();
+            const title = document.getElementById('uTitle').value.trim();
+            const cap = document.getElementById('uCaption').value.trim();
+            const loc = document.getElementById('uLoc').value.trim();
+            const st = document.getElementById('uStatus');
+
+            if (!url) { st.textContent = '⚠ Choose a photo first'; st.className = 'u-status err'; return }
+            if (!author) { st.textContent = '⚠ Your name is required'; st.className = 'u-status err'; return }
+
+            const btn = document.getElementById('uSubmit');
+            btn.disabled = true; btn.textContent = 'Sticking...'; st.textContent = '';
+
+            try {
+                await addDoc(collection(db, 'gallery'), {
+                    url, author, title, caption: cap, location: loc,
+                    category: selCat,
+                    date: new Date().toISOString(),
+                    createdAt: serverTimestamp()
+                });
+                btn.textContent = 'Stuck ✦';
+                st.textContent = '✓ Your photo is on the wall!'; st.className = 'u-status ok';
+                setTimeout(() => {
+                    document.getElementById('uploadBg').classList.remove('open');
+                    ['photoUrl', 'uAuthor', 'uTitle', 'uCaption', 'uLoc'].forEach(id => document.getElementById(id).value = '');
+                    document.getElementById('dzPreview').style.display = 'none';
+                    document.querySelector('.dz-icon').style.display = 'block';
+                    document.querySelector('.dz-text').style.display = 'block';
+                    pf.value = '';
+                    btn.disabled = false; btn.textContent = 'Stick it on the wall ✦';
+                    st.textContent = '';
+                }, 2000);
+            } catch (err) {
+                console.error(err);
+                btn.disabled = false; btn.textContent = 'Stick it on the wall ✦';
+                st.textContent = '✕ Failed — check Firebase config'; st.className = 'u-status err';
+            }
+        });
+    </script>
+
+    <footer>
+        <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+        <span class="f-logo">HlYWoR</span>
+    </footer>
 </body>
 
 </html>

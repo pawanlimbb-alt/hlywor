@@ -1,184 +1,2011 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-ZVLSVF6T3J');
-  </script>
 
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Submit to HlyWor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style/submit.css">
+  <title>Write — HlyWor</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-ZVLSVF6T3J');</script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --fire: #e8681a;
+      --gold: #d4a020;
+      --pixel: 'Press Start 2P', monospace;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+      --t-bg: #2a1f14;
+      --t-paper: #faf6ee;
+      --t-paper2: #f5edd8;
+      --t-paper3: #ede3c8;
+      --t-ink: #1a1208;
+      --t-ink2: #3d3020;
+      --t-ink3: #6a5840;
+      --t-ink4: #a09078;
+      --t-rule: rgba(180, 160, 120, 0.25);
+      --t-acc: #e8681a;
+      --t-acc2: #d4a020;
+      --t-spine: linear-gradient(180deg, #3d2210 0%, #2a1608 20%, #4a2a12 40%, #2a1608 60%, #3d2210 80%, #2a1608 100%);
+      --t-font: 'Crimson Pro', Georgia, serif;
+      --t-title: 'Caveat', cursive;
+      --t-margin: rgba(220, 80, 80, 0.22);
+      --t-spine-w: 28px;
+    }
+
+    body[data-t="magazine"] {
+      --t-bg: #f0ece4;
+      --t-paper: #fff;
+      --t-paper2: #f8f4ee;
+      --t-paper3: #ede8e0;
+      --t-ink: #0a0a0a;
+      --t-ink2: #1a1a1a;
+      --t-ink3: #444;
+      --t-ink4: #888;
+      --t-rule: rgba(0, 0, 0, 0.06);
+      --t-acc: #c0392b;
+      --t-acc2: #e67e22;
+      --t-spine: linear-gradient(180deg, #1a1a1a, #0a0a0a 40%, #1a1a1a 70%, #0a0a0a);
+      --t-font: 'Playfair Display', Georgia, serif;
+      --t-title: 'Playfair Display', Georgia, serif;
+      --t-margin: transparent;
+      --t-spine-w: 20px;
+    }
+
+    body[data-t="news"] {
+      --t-bg: #1a1612;
+      --t-paper: #f4f0e8;
+      --t-paper2: #ede8de;
+      --t-paper3: #e4ddd0;
+      --t-ink: #0c0a08;
+      --t-ink2: #1a1612;
+      --t-ink3: #4a4030;
+      --t-ink4: #8a7a66;
+      --t-rule: rgba(0, 0, 0, 0.12);
+      --t-acc: #1a1612;
+      --t-acc2: #c0392b;
+      --t-spine: linear-gradient(180deg, #0c0a08, #1a1612 30%, #0c0a08 70%, #1a1612);
+      --t-font: 'IM Fell English', Georgia, serif;
+      --t-title: 'IM Fell English', Georgia, serif;
+      --t-margin: transparent;
+      --t-spine-w: 16px;
+    }
+
+    body[data-t="tech"] {
+      --t-bg: #0d1117;
+      --t-paper: #161b22;
+      --t-paper2: #1c2128;
+      --t-paper3: #21262d;
+      --t-ink: #e6edf3;
+      --t-ink2: #c9d1d9;
+      --t-ink3: #8b949e;
+      --t-ink4: #484f58;
+      --t-rule: rgba(255, 255, 255, 0.05);
+      --t-acc: #58a6ff;
+      --t-acc2: #3fb950;
+      --t-spine: linear-gradient(180deg, #21262d, #161b22 30%, #21262d 70%, #161b22);
+      --t-font: 'DM Sans', system-ui, sans-serif;
+      --t-title: 'DM Sans', system-ui, sans-serif;
+      --t-margin: rgba(88, 166, 255, 0.15);
+      --t-spine-w: 18px;
+    }
+
+    body[data-t="college"] {
+      --t-bg: #3a2a4a;
+      --t-paper: #fef6ff;
+      --t-paper2: #f8eeff;
+      --t-paper3: #f0e4f8;
+      --t-ink: #1a1020;
+      --t-ink2: #2a1a38;
+      --t-ink3: #6a5078;
+      --t-ink4: #aa90b8;
+      --t-rule: rgba(160, 100, 200, 0.18);
+      --t-acc: #9b59b6;
+      --t-acc2: #e91e8c;
+      --t-spine: linear-gradient(180deg, #4a1a6a, #2a1040 40%, #4a1a6a 70%, #2a1040);
+      --t-font: 'Caveat', cursive;
+      --t-title: 'Caveat', cursive;
+      --t-margin: rgba(155, 89, 182, 0.25);
+      --t-spine-w: 24px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--t-bg);
+      min-height: 100vh;
+      font-family: var(--t-font);
+      overflow-x: hidden;
+      transition: background 0.4s
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(ellipse at 20% 30%, rgba(80, 50, 20, 0.3) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(60, 35, 10, 0.25) 0%, transparent 50%), url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+      background-size: auto, auto, 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 0.4s
+    }
+
+    body:not([data-t="diary"])::before {
+      opacity: 0
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--t-bg)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--t-acc);
+      border-radius: 2px
+    }
+
+    /* NAV */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 52px
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px
+    }
+
+    .nav-logo {
+      font-family: var(--pixel);
+      font-size: 0.55rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px rgba(212, 160, 32, 0.4);
+      text-decoration: none
+    }
+
+    .nav-sep {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1)
+    }
+
+    .nav-template-label {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.4);
+      font-style: italic;
+      transition: color 0.3s
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .nav-save-status {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.3);
+      transition: color 0.2s
+    }
+
+    .nav-save-status.saved {
+      color: #6abf6a
+    }
+
+    .publish-btn {
+      font-family: var(--pixel);
+      font-size: 0.34rem;
+      letter-spacing: 2px;
+      padding: 9px 18px;
+      background: var(--t-acc);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s
+    }
+
+    .publish-btn:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px)
+    }
+
+    .publish-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    /* TEMPLATE BAR */
+    .template-bar {
+      position: sticky;
+      top: 52px;
+      z-index: 190;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 24px;
+      overflow-x: auto;
+      scrollbar-width: none
+    }
+
+    .template-bar::-webkit-scrollbar {
+      display: none
+    }
+
+    .t-pill {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.45);
+      background: transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .t-pill:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.8)
+    }
+
+    .t-pill.active {
+      color: #fff;
+      background: var(--t-acc);
+      border-color: var(--t-acc)
+    }
+
+    /* LAYOUT */
+    .diary-layout {
+      display: flex;
+      min-height: calc(100vh - 96px);
+      position: relative;
+      z-index: 1
+    }
+
+    /* TOOLS */
+    .tools-panel {
+      width: 68px;
+      background: rgba(0, 0, 0, 0.75);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 0;
+      gap: 3px;
+      position: sticky;
+      top: 96px;
+      height: calc(100vh - 96px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      flex-shrink: 0
+    }
+
+    .tools-panel::-webkit-scrollbar {
+      display: none
+    }
+
+    .tg-label {
+      font-family: var(--pixel);
+      font-size: 0.2rem;
+      color: rgba(255, 255, 255, 0.18);
+      letter-spacing: 2px;
+      margin: 6px 0 3px;
+      text-align: center;
+      width: 100%
+    }
+
+    .t-sep {
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+      margin: 5px 0
+    }
+
+    .tool-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid transparent;
+      transition: all 0.18s;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 1.2rem
+    }
+
+    .tool-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9)
+    }
+
+    .tool-btn.active {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--t-acc);
+      color: var(--t-acc)
+    }
+
+    body:not([data-t="diary"]):not([data-t="college"]) .diary-tools {
+      display: none
+    }
+
+    .tech-tools {
+      display: none
+    }
+
+    body[data-t="tech"] .tech-tools {
+      display: flex
+    }
+
+    .mag-tools {
+      display: none
+    }
+
+    body[data-t="magazine"] .mag-tools {
+      display: flex
+    }
+
+    .pen-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 4px;
+      justify-content: center
+    }
+
+    .pen-swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s
+    }
+
+    .pen-swatch:hover {
+      transform: scale(1.2)
+    }
+
+    .pen-swatch.active {
+      border-color: #fff;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.3)
+    }
+
+    .tape-swatch {
+      width: 44px;
+      height: 14px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      border-radius: 2px
+    }
+
+    .tape-swatch:hover {
+      transform: scale(1.05)
+    }
+
+    /* BOOK */
+    .diary-area {
+      flex: 1;
+      padding: 36px 28px 80px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start
+    }
+
+    .diary-book {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.4s
+    }
+
+    .diary-spine {
+      width: var(--t-spine-w);
+      background: var(--t-spine);
+      border-right: 2px solid rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+      position: relative;
+      transition: width 0.4s, background 0.4s
+    }
+
+    .diary-spine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      bottom: 0;
+      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 28px, rgba(0, 0, 0, 0.3) 28px, rgba(0, 0, 0, 0.3) 33px)
+    }
+
+    body[data-t="tech"] .diary-spine::before {
+      display: none
+    }
+
+    .diary-page {
+      flex: 1;
+      background: var(--t-paper);
+      position: relative;
+      min-height: 900px;
+      overflow: hidden;
+      transition: background 0.4s
+    }
+
+    .diary-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, var(--t-rule) 31px, var(--t-rule) 32px);
+      background-position: 0 56px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 0.4s
+    }
+
+    body[data-t="magazine"] .diary-page::before,
+    body[data-t="tech"] .diary-page::before {
+      opacity: 0
+    }
+
+    body[data-t="news"] .diary-page::before {
+      opacity: 0.5
+    }
+
+    .diary-page::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 72px;
+      width: 1px;
+      background: var(--t-margin);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.4s
+    }
+
+    .page-curl {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(225deg, var(--t-paper3) 45%, rgba(0, 0, 0, 0.1) 50%, var(--t-paper2) 50%);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+      pointer-events: none;
+      z-index: 10
+    }
+
+    /* PAGE HEADER */
+    .page-header-area {
+      padding: 28px 32px 16px 88px;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s
+    }
+
+    body[data-t="tech"] .page-header-area {
+      padding-left: 32px
+    }
+
+    .template-badge {
+      display: none;
+      font-family: var(--pixel);
+      font-size: 0.28rem;
+      letter-spacing: 2px;
+      padding: 3px 10px;
+      color: #fff;
+      margin-bottom: 12px;
+      width: fit-content
+    }
+
+    body[data-t="magazine"] .badge-review {
+      display: block;
+      background: #c0392b
+    }
+
+    body[data-t="news"] .badge-news {
+      display: block;
+      background: #0c0a08
+    }
+
+    body[data-t="tech"] .badge-tech {
+      display: block;
+      background: #58a6ff;
+      color: #0d1117
+    }
+
+    body[data-t="college"] .badge-college {
+      display: block;
+      background: #9b59b6
+    }
+
+    .news-dateline {
+      display: none;
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 0.78rem;
+      color: var(--t-ink3);
+      border-top: 2px solid var(--t-ink);
+      border-bottom: 1px solid var(--t-ink);
+      padding: 3px 0;
+      margin-bottom: 10px;
+      letter-spacing: 1px
+    }
+
+    body[data-t="news"] .news-dateline {
+      display: block
+    }
+
+    .mag-rating {
+      display: none;
+      gap: 4px;
+      margin-bottom: 10px;
+      align-items: center
+    }
+
+    body[data-t="magazine"] .mag-rating {
+      display: flex
+    }
+
+    .star {
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0.3;
+      transition: opacity 0.15s
+    }
+
+    .star.lit {
+      opacity: 1
+    }
+
+    .page-date-line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px
+    }
+
+    body[data-t="magazine"] .page-date-line,
+    body[data-t="news"] .page-date-line,
+    body[data-t="tech"] .page-date-line {
+      display: none
+    }
+
+    .page-date {
+      font-family: var(--t-font);
+      font-size: 0.9rem;
+      color: var(--t-ink3);
+      font-style: italic
+    }
+
+    .mood-selector {
+      display: flex;
+      gap: 5px
+    }
+
+    .mood-opt {
+      font-size: 1.05rem;
+      cursor: pointer;
+      padding: 2px;
+      border-radius: 4px;
+      transition: all 0.15s;
+      opacity: 0.4;
+      border: 2px solid transparent
+    }
+
+    .mood-opt:hover {
+      opacity: .8;
+      transform: scale(1.2)
+    }
+
+    .mood-opt.selected {
+      opacity: 1;
+      border-color: var(--t-acc)
+    }
+
+    .diary-title-input {
+      width: 100%;
+      background: none;
+      border: none;
+      outline: none;
+      font-family: var(--t-title);
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      color: var(--t-ink);
+      font-weight: 700;
+      line-height: 1.2;
+      resize: none;
+      overflow: hidden;
+      transition: font-family 0.3s, color 0.3s
+    }
+
+    .diary-title-input::placeholder {
+      color: var(--t-ink4);
+      font-weight: 400
+    }
+
+    body[data-t="magazine"] .diary-title-input {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-style: italic
+    }
+
+    body[data-t="news"] .diary-title-input {
+      font-size: clamp(1.6rem, 4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.5px
+    }
+
+    body[data-t="tech"] .diary-title-input {
+      font-weight: 500;
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem)
+    }
+
+    .diary-desc-input {
+      width: 100%;
+      background: none;
+      border: none;
+      outline: none;
+      font-family: var(--t-font);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--t-ink3);
+      line-height: 1.6;
+      resize: none;
+      margin-top: 5px;
+      transition: all 0.3s
+    }
+
+    .diary-desc-input::placeholder {
+      color: var(--t-ink4)
+    }
+
+    body[data-t="magazine"] .diary-desc-input {
+      font-size: 1.1rem;
+      font-style: normal;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding-top: 8px;
+      margin-top: 8px
+    }
+
+    body[data-t="news"] .diary-desc-input {
+      font-family: 'IM Fell English', serif;
+      font-size: 1rem;
+      font-style: italic;
+      border-left: 3px solid var(--t-ink);
+      padding-left: 12px
+    }
+
+    body[data-t="tech"] .diary-desc-input {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-style: normal;
+      color: var(--t-ink3)
+    }
+
+    body[data-t="magazine"] .page-header-area {
+      border-bottom: 3px double rgba(0, 0, 0, 0.2);
+      padding-bottom: 20px
+    }
+
+    body[data-t="news"] .page-header-area {
+      border-top: 4px solid var(--t-ink);
+      border-bottom: 2px solid var(--t-ink);
+      padding-bottom: 16px
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      align-items: flex-start
+    }
+
+    .meta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px
+    }
+
+    .meta-label {
+      font-family: var(--pixel);
+      font-size: 0.24rem;
+      color: var(--t-ink4);
+      letter-spacing: 2px
+    }
+
+    .meta-input {
+      background: none;
+      border: none;
+      outline: none;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+      font-family: var(--t-font);
+      font-size: 0.9rem;
+      color: var(--t-ink3);
+      padding: 2px 4px
+    }
+
+    body[data-t="tech"] .meta-input {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      border-bottom-color: rgba(255, 255, 255, 0.1)
+    }
+
+    .meta-input::placeholder {
+      color: var(--t-ink4)
+    }
+
+    .cat-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px
+    }
+
+    .cat-pill {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      padding: 4px 12px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      color: var(--t-ink3);
+      cursor: pointer;
+      border-radius: 2px;
+      background: transparent;
+      transition: all 0.15s
+    }
+
+    body[data-t="tech"] .cat-pill {
+      border-color: rgba(255, 255, 255, 0.12);
+      color: var(--t-ink3)
+    }
+
+    .cat-pill:hover {
+      background: var(--t-paper2)
+    }
+
+    .cat-pill.active {
+      background: var(--t-acc);
+      color: #fff;
+      border-color: var(--t-acc)
+    }
+
+    /* COVER */
+    .cover-zone {
+      padding: 0 32px 20px 88px;
+      position: relative;
+      z-index: 2
+    }
+
+    body[data-t="tech"] .cover-zone {
+      padding-left: 32px
+    }
+
+    .cover-drop {
+      border: 2px dashed rgba(0, 0, 0, 0.12);
+      background: rgba(0, 0, 0, 0.02);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s
+    }
+
+    body[data-t="tech"] .cover-drop {
+      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.02)
+    }
+
+    .cover-drop:hover {
+      border-color: var(--t-acc)
+    }
+
+    .cover-drop input[type="file"] {
+      display: none
+    }
+
+    .cover-drop-hint {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--t-ink4);
+      font-style: italic
+    }
+
+    .cover-uploading {
+      display: none;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--t-acc);
+      font-style: italic;
+      text-align: center;
+      padding: 8px;
+      animation: fadeFlicker 1s step-start infinite
+    }
+
+    @keyframes fadeFlicker {
+      50% {
+        opacity: .3
+      }
+    }
+
+    .cover-preview {
+      display: none;
+      position: relative
+    }
+
+    .cover-preview img {
+      width: 100%;
+      display: block;
+      max-height: 340px;
+      object-fit: cover;
+      background: var(--t-paper3)
+    }
+
+    body[data-t="magazine"] .cover-preview img {
+      max-height: 420px
+    }
+
+    body[data-t="tech"] .cover-preview img {
+      max-height: 240px;
+      border: 1px solid rgba(255, 255, 255, 0.08)
+    }
+
+    .cover-clear {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-family: var(--pixel);
+      font-size: 0.28rem;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 4px 8px;
+      border: none;
+      cursor: pointer
+    }
+
+    /* EDITOR */
+    .writing-canvas {
+      padding: 20px 32px 40px 88px;
+      position: relative;
+      min-height: 600px;
+      z-index: 2
+    }
+
+    body[data-t="tech"] .writing-canvas {
+      padding-left: 32px
+    }
+
+    .diary-editor {
+      min-height: 500px;
+      outline: none;
+      font-family: var(--t-font);
+      font-size: 1.05rem;
+      color: var(--t-ink);
+      line-height: 32px;
+      position: relative;
+      z-index: 2;
+      word-break: break-word;
+      caret-color: var(--t-acc);
+      transition: all 0.3s
+    }
+
+    .diary-editor:empty::before {
+      content: attr(data-placeholder);
+      color: var(--t-ink4);
+      pointer-events: none;
+      font-style: italic;
+      white-space: pre-line
+    }
+
+    body[data-t="magazine"] .diary-editor {
+      font-size: 1.05rem;
+      line-height: 1.8
+    }
+
+    body[data-t="news"] .diary-editor {
+      font-size: 1rem;
+      line-height: 1.75;
+      columns: 2;
+      column-gap: 28px
+    }
+
+    body[data-t="tech"] .diary-editor {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.8
+    }
+
+    body[data-t="college"] .diary-editor {
+      font-size: 1.15rem;
+      line-height: 34px
+    }
+
+    .diary-editor h2 {
+      font-family: var(--t-title);
+      font-size: 1.8rem;
+      color: var(--t-ink);
+      line-height: 1.3;
+      margin: 16px 0 8px;
+      font-weight: 700
+    }
+
+    .diary-editor h3 {
+      font-family: var(--t-title);
+      font-size: 1.3rem;
+      color: var(--t-ink2);
+      line-height: 1.3;
+      margin: 12px 0 6px
+    }
+
+    body[data-t="news"] .diary-editor h2 {
+      column-span: all;
+      border-top: 1px solid var(--t-ink);
+      padding-top: 8px
+    }
+
+    .diary-editor blockquote {
+      margin: 16px 0;
+      padding: 10px 20px;
+      border-left: 3px solid var(--t-acc);
+      background: rgba(0, 0, 0, 0.03);
+      font-style: italic;
+      color: var(--t-ink2)
+    }
+
+    body[data-t="tech"] .diary-editor blockquote {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 0 4px 4px 0
+    }
+
+    .diary-editor ul,
+    .diary-editor ol {
+      padding-left: 24px;
+      margin: 8px 0
+    }
+
+    .diary-editor li {
+      line-height: 32px
+    }
+
+    .diary-editor pre {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      margin: 12px 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-x: auto;
+      line-height: 1.6;
+      color: var(--t-ink);
+      border-radius: 6px;
+      display: block
+    }
+
+    .diary-editor code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: #79c0ff
+    }
+
+    .sticky-callout {
+      display: block;
+      background: #fef9c3;
+      padding: 12px 16px;
+      margin: 14px 0;
+      transform: rotate(-1deg);
+      box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
+      max-width: 360px;
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      color: #1a1208;
+      line-height: 1.6;
+      position: relative
+    }
+
+    .sticky-callout::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 14px;
+      background: rgba(240, 190, 40, 0.65)
+    }
+
+    .sticky-callout-blue {
+      background: #e8f0ff
+    }
+
+    .sticky-callout-blue::before {
+      background: rgba(80, 130, 220, 0.55)
+    }
+
+    .sticky-callout-green {
+      background: #e8f5e8
+    }
+
+    .sticky-callout-green::before {
+      background: rgba(80, 180, 100, 0.55)
+    }
+
+    .sticky-callout-pink {
+      background: #ffe8f0
+    }
+
+    .sticky-callout-pink::before {
+      background: rgba(220, 80, 120, 0.55)
+    }
+
+    .polaroid {
+      display: inline-block;
+      background: #fff;
+      padding: 7px 7px 26px;
+      box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.3);
+      margin: 12px 8px;
+      max-width: 200px;
+      position: relative
+    }
+
+    .polaroid img {
+      width: 100%;
+      display: block;
+      height: 160px;
+      object-fit: cover
+    }
+
+    .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 0.85rem;
+      color: #6a5840;
+      text-align: center;
+      margin-top: 6px;
+      display: block
+    }
+
+    .polaroid::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 52px;
+      height: 16px;
+      background: rgba(240, 190, 40, 0.65);
+      z-index: 2
+    }
+
+    .polaroid.tilt-l {
+      transform: rotate(-3deg)
+    }
+
+    .polaroid.tilt-r {
+      transform: rotate(3deg)
+    }
+
+    .doodle-divider {
+      display: block;
+      margin: 16px 0;
+      width: 100%;
+      overflow: visible
+    }
+
+    .floating-sticker {
+      display: inline-block;
+      font-size: 1.8rem;
+      margin: 0 4px;
+      vertical-align: middle
+    }
+
+    .washi-tape {
+      display: block;
+      height: 22px;
+      margin: 10px -32px 10px -88px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .washi-tape::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--tape-color, rgba(240, 190, 40, 0.65))
+    }
+
+    .pull-quote {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 700;
+      color: var(--t-acc);
+      border-top: 2px solid var(--t-acc);
+      border-bottom: 2px solid var(--t-acc);
+      padding: 14px 0;
+      margin: 20px 0;
+      line-height: 1.4;
+      column-span: all
+    }
+
+    .highlight-y {
+      background: rgba(255, 220, 50, 0.4);
+      padding: 0 2px
+    }
+
+    .highlight-r {
+      background: rgba(255, 100, 100, 0.3);
+      padding: 0 2px
+    }
+
+    .highlight-g {
+      background: rgba(100, 220, 100, 0.3);
+      padding: 0 2px
+    }
+
+    .highlight-b {
+      background: rgba(100, 150, 255, 0.3);
+      padding: 0 2px
+    }
+
+    /* COUNT */
+    .count-strip {
+      position: sticky;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(4px);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 6px 24px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      z-index: 10
+    }
+
+    .count-item {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.3)
+    }
+
+    .count-item span {
+      color: rgba(255, 255, 255, 0.7)
+    }
+
+    /* POPUPS */
+    .sticker-picker {
+      position: fixed;
+      background: #0e0a06;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px;
+      z-index: 600;
+      display: none;
+      flex-wrap: wrap;
+      gap: 6px;
+      width: 220px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6)
+    }
+
+    .sticker-picker.open {
+      display: flex
+    }
+
+    .sticker-option {
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background 0.15s;
+      line-height: 1
+    }
+
+    .sticker-option:hover {
+      background: rgba(255, 255, 255, 0.08)
+    }
+
+    .img-popup {
+      position: fixed;
+      z-index: 600;
+      background: #0e0a06;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      width: 270px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      display: none
+    }
+
+    .img-popup.open {
+      display: block
+    }
+
+    .img-popup-title {
+      font-family: var(--pixel);
+      font-size: 0.28rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 12px
+    }
+
+    .img-popup input[type="file"] {
+      display: none
+    }
+
+    .img-popup-upload {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: #fff;
+      background: var(--fire);
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      border-radius: 6px
+    }
+
+    .img-popup-sep {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 10px 0
+    }
+
+    .img-popup label {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.4);
+      display: block;
+      margin-bottom: 4px
+    }
+
+    .img-popup select,
+    .img-popup input[type="text"] {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      padding: 6px 10px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      outline: none
+    }
+
+    .img-popup select option {
+      background: #0e0a06
+    }
+
+    /* MODAL */
+    .publish-modal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center
+    }
+
+    .publish-modal-bg.open {
+      display: flex
+    }
+
+    .publish-modal {
+      background: var(--t-paper);
+      width: 100%;
+      max-width: 500px;
+      margin: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      transition: background 0.4s
+    }
+
+    .publish-modal::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 0;
+      right: 0;
+      height: 14px;
+      background: var(--t-paper);
+      clip-path: polygon(0% 100%, 2% 0%, 5% 100%, 8% 0%, 11% 100%, 14% 0%, 17% 100%, 20% 0%, 23% 100%, 26% 0%, 29% 100%, 32% 0%, 35% 100%, 38% 0%, 41% 100%, 44% 0%, 47% 100%, 50% 0%, 53% 100%, 56% 0%, 59% 100%, 62% 0%, 65% 100%, 68% 0%, 71% 100%, 74% 0%, 77% 100%, 80% 0%, 83% 100%, 86% 0%, 89% 100%, 92% 0%, 95% 100%, 98% 0%, 100% 100%, 100% 100%, 0% 100%)
+    }
+
+    .modal-pin {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2222);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      z-index: 2
+    }
+
+    .modal-pin::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 10px;
+      background: linear-gradient(to bottom, #888, #444)
+    }
+
+    .modal-body {
+      padding: 28px
+    }
+
+    .modal-title {
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
+      color: var(--t-ink);
+      margin-bottom: 20px;
+      font-weight: 600
+    }
+
+    .modal-field {
+      margin-bottom: 16px
+    }
+
+    .modal-field label {
+      font-family: var(--pixel);
+      font-size: 0.26rem;
+      color: var(--t-ink3);
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 6px
+    }
+
+    .modal-field input,
+    .modal-field select {
+      width: 100%;
+      background: var(--t-paper2);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      color: var(--t-ink);
+      font-family: var(--t-font);
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      outline: none;
+      transition: border-color 0.2s
+    }
+
+    .modal-field input:focus,
+    .modal-field select:focus {
+      border-color: var(--t-acc)
+    }
+
+    .modal-field select option {
+      background: var(--t-paper)
+    }
+
+    .modal-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--t-ink3);
+      line-height: 1.6;
+      margin-bottom: 10px
+    }
+
+    .modal-check input[type="checkbox"] {
+      margin-top: 2px;
+      accent-color: var(--t-acc);
+      flex-shrink: 0
+    }
+
+    .tags-wrap {
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: var(--t-paper2);
+      min-height: 38px;
+      padding: 4px 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      cursor: text
+    }
+
+    .tags-wrap:focus-within {
+      border-color: var(--t-acc)
+    }
+
+    .tag-chip {
+      background: var(--t-acc);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      padding: 2px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 2px
+    }
+
+    .tag-chip .rm {
+      cursor: pointer;
+      opacity: .7
+    }
+
+    .tag-chip .rm:hover {
+      opacity: 1
+    }
+
+    .tags-wrap input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--t-ink);
+      flex: 1;
+      min-width: 80px
+    }
+
+    .modal-submit {
+      width: 100%;
+      font-family: 'Caveat', cursive;
+      font-size: 1.2rem;
+      padding: 12px;
+      background: var(--t-acc);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+      margin-top: 6px
+    }
+
+    .modal-submit:hover {
+      filter: brightness(1.1)
+    }
+
+    .modal-submit:disabled {
+      opacity: .5;
+      cursor: not-allowed
+    }
+
+    .modal-status {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      margin-top: 8px;
+      text-align: center;
+      font-style: italic;
+      min-height: 18px
+    }
+
+    .modal-status.ok {
+      color: #2a8a2a
+    }
+
+    .modal-status.err {
+      color: #c0392b
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: var(--pixel);
+      font-size: 0.26rem;
+      color: var(--t-ink3);
+      cursor: pointer;
+      background: none;
+      border: none
+    }
+
+    @media(max-width:768px) {
+      .diary-area {
+        padding: 16px 10px 60px
+      }
+
+      .writing-canvas,
+      .page-header-area,
+      .cover-zone {
+        padding-left: 20px
+      }
+
+      .diary-page::after {
+        left: 14px
+      }
+
+      .count-strip {
+        padding: 6px 14px
+      }
+
+      body[data-t="news"] .diary-editor {
+        columns: 1
+      }
+    }
+
+    @media(max-width:480px) {
+      .tools-panel {
+        width: 52px
+      }
+
+      .diary-spine {
+        width: 14px !important
+      }
+
+      .template-bar {
+        padding: 6px 14px
+      }
+    }
+  </style>
 </head>
 
-<body>
-  <!-- Top Navbar -->
-  <nav>
+<body data-t="diary">
+
+  <nav class="top-nav">
     <div class="nav-left">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="goal.html">Goals</a>
-      <a href="blogs.html">Blogs</a>
+      <a href="index.html" class="nav-logo">HlYWoR</a>
+      <div class="nav-sep"></div>
+      <span class="nav-template-label" id="navTemplateLabel">diary entry</span>
     </div>
     <div class="nav-right">
-      <a href="about.html">About</a>
+      <span class="nav-save-status" id="saveStatus">unsaved</span>
+      <button class="publish-btn" id="publishOpenBtn">Publish &rarr;</button>
     </div>
   </nav>
 
-  <!-- Header -->
-  <header>
-    <h1>Submit Your Story</h1>
-    <p>
-      Got a moment, a chaos, a late-night thought dump, or a full power emo blog?<br>
-      Drop it here and let it live on HlyWor.
-    </p>
-  </header>
+  <div class="template-bar">
+    <button class="t-pill active" data-t="diary" data-cat="story"> <span>&#128211;</span> Story / Thoughts</button>
+    <button class="t-pill" data-t="magazine" data-cat="movies"> <span>&#127916;</span> Movie / Book Review</button>
+    <button class="t-pill" data-t="news" data-cat="news"> <span>&#128240;</span> News</button>
+    <button class="t-pill" data-t="tech" data-cat="thoughts"><span>&#128187;</span> Tech / Ideas</button>
+    <button class="t-pill" data-t="college" data-cat="college"> <span>&#127968;</span> College / Life</button>
+  </div>
 
-  <!-- Submission Window -->
-  <main class="submit-wrapper">
-    <section class="submit-window">
-      <div class="window-top-bar">
-        <div class="window-dots">
-          <span></span><span></span><span></span>
-        </div>
-        <p class="window-title">HlyWor_Submission.exe</p>
+  <div class="sticker-picker" id="stickerPicker">
+    <span class="sticker-option">&#11088;</span><span class="sticker-option">&#128171;</span><span
+      class="sticker-option">&#128293;</span>
+    <span class="sticker-option">&#128150;</span><span class="sticker-option">&#10024;</span><span
+      class="sticker-option">&#127769;</span>
+    <span class="sticker-option">&#9728;&#65039;</span><span class="sticker-option">&#127800;</span><span
+      class="sticker-option">&#127811;</span>
+    <span class="sticker-option">&#129419;</span><span class="sticker-option">&#127925;</span><span
+      class="sticker-option">&#128218;</span>
+    <span class="sticker-option">&#9749;</span><span class="sticker-option">&#127807;</span><span
+      class="sticker-option">&#128173;</span>
+    <span class="sticker-option">&#127912;</span><span class="sticker-option">&#128507;</span><span
+      class="sticker-option">&#127754;</span>
+    <span class="sticker-option">&#128357;</span><span class="sticker-option">&#128247;</span><span
+      class="sticker-option">&#9999;&#65039;</span>
+    <span class="sticker-option">&#128140;</span><span class="sticker-option">&#128557;</span><span
+      class="sticker-option">&#128514;</span>
+    <span class="sticker-option">&#129402;</span><span class="sticker-option">&#128128;</span><span
+      class="sticker-option">&#127917;</span>
+  </div>
+
+  <div class="img-popup" id="imgPopup">
+    <div class="img-popup-title">INSERT PHOTO</div>
+    <input type="file" id="inlineImgFile" accept="image/*">
+    <button class="img-popup-upload" id="inlineImgUploadBtn">Choose Photo</button>
+    <div class="img-popup-sep"></div>
+    <label>Frame style</label>
+    <select id="inlineImgStyle">
+      <option value="tilt-l">Polaroid &mdash; tilt left</option>
+      <option value="tilt-r">Polaroid &mdash; tilt right</option>
+      <option value="">Polaroid &mdash; straight</option>
+      <option value="inline-full">Full width</option>
+    </select>
+    <label>Caption</label>
+    <input type="text" id="inlineImgCaption" placeholder="write something...">
+  </div>
+
+  <div class="diary-layout">
+    <div class="tools-panel" id="toolsPanel">
+      <div class="tg-label">TEXT</div>
+      <button class="tool-btn" data-cmd="bold"><strong>B</strong></button>
+      <button class="tool-btn" data-cmd="italic"><em style="font-family:Georgia">I</em></button>
+      <button class="tool-btn" data-cmd="h2"><span
+          style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
+      <button class="tool-btn" data-cmd="h3"><span
+          style="font-family:'Caveat',cursive;font-size:.9rem">H2</span></button>
+      <button class="tool-btn" data-cmd="blockquote">&#10077;</button>
+      <button class="tool-btn" data-cmd="insertUnorderedList">&bull;&#8801;</button>
+      <div class="t-sep"></div>
+      <div class="tg-label">PEN</div>
+      <div class="pen-swatches">
+        <div class="pen-swatch active" data-color="#1a1208" style="background:#1a1208"></div>
+        <div class="pen-swatch" data-color="#1a3a8a" style="background:#1a3a8a"></div>
+        <div class="pen-swatch" data-color="#b82020" style="background:#b82020"></div>
+        <div class="pen-swatch" data-color="#1a6a2a" style="background:#1a6a2a"></div>
+        <div class="pen-swatch" data-color="#5a1a8a" style="background:#5a1a8a"></div>
       </div>
+      <div class="t-sep"></div>
+      <div class="tg-label">MARK</div>
+      <button class="tool-btn" data-highlight="highlight-y"><span
+          style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-r"><span
+          style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-b"><span
+          style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-g"><span
+          style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <div class="t-sep"></div>
+      <div class="tg-label">INSERT</div>
+      <button class="tool-btn" id="insertStickerBtn">&#10024;</button>
+      <button class="tool-btn" id="insertImgBtn">&#128247;</button>
+      <button class="tool-btn diary-tools" id="insertStickyBtn">&#128221;</button>
+      <button class="tool-btn diary-tools" id="insertDoodleBtn"><span style="font-size:.75rem">&#12316;</span></button>
+      <button class="tool-btn mag-tools" id="insertPullBtn">&#10078;</button>
+      <button class="tool-btn tech-tools" id="insertCodeBtn"><span
+          style="font-family:'JetBrains Mono',monospace;font-size:.75rem">&lt;/&gt;</span></button>
+      <div class="t-sep diary-tools"></div>
+      <div class="tg-label diary-tools">TAPE</div>
+      <div class="diary-tools" style="display:flex;flex-direction:column;gap:5px;padding:4px">
+        <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)"></div>
+        <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)" style="background:rgba(220,80,80,.55)"></div>
+        <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)"></div>
+        <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)"></div>
+      </div>
+      <div class="t-sep"></div>
+      <button class="tool-btn" data-cmd="undo">&#8617;</button>
+      <button class="tool-btn" data-cmd="redo">&#8618;</button>
+    </div>
 
-      <!-- added id="submit-form" -->
-      <form class="submit-form" id="submit-form" method="post" enctype="multipart/form-data">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Your Name*</label>
-            <input type="text" id="name" name="name" placeholder="e.g. Pawan" required>
+    <div class="diary-area">
+      <div class="diary-book">
+        <div class="diary-spine"></div>
+        <div class="diary-page">
+          <div class="page-header-area">
+            <div class="template-badge badge-review">REVIEW</div>
+            <div class="template-badge badge-news">BREAKING</div>
+            <div class="template-badge badge-tech">TECH POST</div>
+            <div class="template-badge badge-college">CAMPUS LIFE</div>
+            <div class="news-dateline" id="newsDateline"></div>
+            <div class="mag-rating" id="magRating">
+              <span class="star" data-v="1">&#9733;</span>
+              <span class="star" data-v="2">&#9733;</span>
+              <span class="star" data-v="3">&#9733;</span>
+              <span class="star" data-v="4">&#9733;</span>
+              <span class="star" data-v="5">&#9733;</span>
+              <span style="font-family:var(--sans);font-size:.72rem;color:var(--t-ink4);margin-left:6px"
+                id="ratingText">no rating</span>
+            </div>
+            <div class="page-date-line">
+              <span class="page-date" id="todayDate"></span>
+              <div class="mood-selector">
+                <span class="mood-opt" data-mood="&#128522;">&#128522;</span>
+                <span class="mood-opt" data-mood="&#128532;">&#128532;</span>
+                <span class="mood-opt" data-mood="&#128548;">&#128548;</span>
+                <span class="mood-opt" data-mood="&#129402;">&#129402;</span>
+                <span class="mood-opt" data-mood="&#128524;">&#128524;</span>
+                <span class="mood-opt" data-mood="&#129321;">&#129321;</span>
+                <span class="mood-opt" data-mood="&#128514;">&#128514;</span>
+              </div>
+            </div>
+            <textarea class="diary-title-input" id="titleInput" placeholder="Title..." rows="1"
+              maxlength="160"></textarea>
+            <textarea class="diary-desc-input" id="descInput" placeholder="One line for the homepage card..." rows="1"
+              maxlength="220"></textarea>
+            <div class="meta-row">
+              <div class="meta-group">
+                <div class="meta-label">AUTHOR</div><input class="meta-input" id="authorInput" placeholder="your name"
+                  style="width:120px">
+              </div>
+              <div class="meta-group">
+                <div class="meta-label">EMAIL</div><input class="meta-input" id="emailInput" type="email"
+                  placeholder="optional" style="width:140px">
+              </div>
+              <div class="meta-group">
+                <div class="meta-label">READ TIME</div><input class="meta-input" id="readtimeInput" placeholder="5 min"
+                  style="width:70px">
+              </div>
+              <div class="meta-group tech-tools">
+                <div class="meta-label">TOPIC / LANG</div><input class="meta-input" id="techTagInput"
+                  placeholder="e.g. Python, AI" style="width:120px">
+              </div>
+            </div>
+            <div class="cat-pills" id="catPills">
+              <button class="cat-pill" data-cat="story">Story</button>
+              <button class="cat-pill" data-cat="movies">Movies</button>
+              <button class="cat-pill" data-cat="books">Books</button>
+              <button class="cat-pill" data-cat="thoughts">Thoughts</button>
+              <button class="cat-pill" data-cat="college">College</button>
+              <button class="cat-pill" data-cat="news">News</button>
+              <button class="cat-pill" data-cat="other">Other</button>
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="email">Email (optional)</label>
-            <input type="email" id="email" name="email" placeholder="for credit / contact">
+          <div class="cover-zone">
+            <div class="cover-drop" id="coverDrop">
+              <input type="file" id="coverFile" accept="image/*">
+              <p class="cover-drop-hint">&#128247; Drag a cover image here or click to choose</p>
+            </div>
+            <div class="cover-uploading" id="coverUploading">uploading...</div>
+            <div class="cover-preview" id="coverPreview">
+              <img id="coverPreviewImg" src="" alt="">
+              <button class="cover-clear" id="coverClear">&#10005; remove</button>
+            </div>
+            <input type="hidden" id="coverUrl">
           </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="type">Type</label>
-            <select id="type" name="type">
-              <option value="blog">Blog</option>
-              <option value="story">Story</option>
-              <option value="poem">Poem</option>
-              <option value="review">Review</option>
-              <option value="other">Other</option>
-            </select>
+          <div class="writing-canvas">
+            <div class="diary-editor" id="editor" contenteditable="true" data-placeholder="Start writing..."></div>
           </div>
-
-          <div class="form-group">
-            <label for="readtime">Estimated Read Time (optional)</label>
-            <input type="text" id="readtime" name="readtime" placeholder="e.g. 5-6 min">
+          <div class="count-strip">
+            <div class="count-item">words <span id="wordCount">0</span></div>
+            <div class="count-item">chars <span id="charCount">0</span></div>
+            <div class="count-item" id="readTimeCalc" style="margin-left:auto;color:rgba(255,255,255,.5)"></div>
           </div>
+          <div class="page-curl"></div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="form-group">
-          <label for="title">Title*</label>
-          <input type="text" id="title" name="title" placeholder="Give your chaos a title" required>
+  <div class="publish-modal-bg" id="publishModalBg">
+    <div class="publish-modal">
+      <div class="modal-pin"></div>
+      <button class="modal-close" id="modalClose">[ close ]</button>
+      <div class="modal-body">
+        <div class="modal-title">Ready to go live?</div>
+        <div class="modal-field">
+          <label>TAGS (enter to add)</label>
+          <div class="tags-wrap" id="tagsWrap"><input type="text" id="tagInput" placeholder="add a tag..."></div>
         </div>
-
-        <div class="form-group">
-          <label for="content">Your Writing*</label>
-          <textarea id="content" name="content" placeholder="Type your whole blog / story here..." required></textarea>
+        <div class="modal-field">
+          <label>TYPE</label>
+          <select id="typeSelect">
+            <option value="blog">Blog</option>
+            <option value="story">Story</option>
+            <option value="poem">Poem</option>
+            <option value="review">Review</option>
+            <option value="news">News</option>
+            <option value="tech">Tech</option>
+            <option value="other">Other</option>
+          </select>
         </div>
+        <div class="modal-check"><input type="checkbox" id="agreeCheck"><span>This is my original content and I'm okay
+            with it going live on HlyWor right now.</span></div>
+        <div class="modal-check"><input type="checkbox" id="agreeImgCheck"><span>I have rights to all images
+            included.</span></div>
+        <button class="modal-submit" id="submitBtn">Go live now &#10022;</button>
+        <div class="modal-status" id="modalStatus"></div>
+      </div>
+    </div>
+  </div>
 
-        <div class="form-group">
-          <label>Cover Image (optional)</label>
-          <label class="file-input-label">
-            <input type="file" name="image" accept="image/*">
-            <span class="file-btn">Choose File</span>
-            <span class="file-text">No file selected</span>
-          </label>
-          <p class="helper-text">Recommended: 16:9 image, under 2MB, .jpg/.png/.webp</p>
-        </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        <div class="form-group checkbox-group">
-          <label class="checkbox-label">
-            <input type="checkbox" name="agree" required>
-            <span>I confirm this is my original writing and I’m okay with it being posted on HlyWor.</span>
-          </label>
-        </div>
+    // FIREBASE CONFIG
+    const firebaseConfig = {
+            apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+            authDomain: "hlywor.firebaseapp.com",
+            projectId: "hlywor",
+            storageBucket: "hlywor.firebasestorage.app",
+            messagingSenderId: "697637160825",
+            appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+            measurementId: "G-MQDXDWHLX8"
+        };
+     const CLD_NAME = "dgatfolot";
+        const CLD_PRESET = "hlywor";
+    const app = initializeApp(firebaseConfig), db = getFirestore(app);
 
-        <button type="submit" class="submit-btn">Submit to HlyWor</button>
+    const TEMPLATES = {
+      diary: { label: "diary entry", ph: "Start writing...\n\nJust write. Use the tools on the left to format, add stickers, tape, photos, sticky notes.\n\nThis is your space." },
+      magazine: { label: "review", ph: "Start with a hook. What did you think before you even read it / watched it? Then get into it..." },
+      news: { label: "news article", ph: "Lead with the most important fact. Who, what, when, where, why — in the first paragraph." },
+      tech: { label: "tech post", ph: "What problem does this solve? Start with that. Then explain how.\n\nUse the </> button to add code blocks." },
+      college: { label: "college life", ph: "What happened today? What are you thinking about?\n\nAdd stickers, doodles, anything — this is your journal." },
+    };
 
-        <!-- added id for status text -->
-        <p class="helper-text bottom-note" id="form-message">
-          Note: Submissions won’t appear instantly. We read them first, then publish.
-        </p>
-      </form>
-    </section>
-  </main>
+    let activeTemplate = "diary", selectedCat = "story", selectedMood = "", starRating = 0, currentColor = "#1a1208", savedRange = null;
+    const body = document.body, editor = document.getElementById("editor");
 
-  <footer>
-    © 2025 HlyWor Blog. Crafted with ❤️ in our style.
-  </footer>
-
-  <script>
-    const endpoint = '/api/submitStory';
-
-    const form = document.getElementById('submit-form');
-    const msg = document.getElementById('form-message');
-
-    // file label
-    const fileInput = document.querySelector('.file-input-label input[type="file"]');
-    const fileText = document.querySelector('.file-text');
-    if (fileInput && fileText) {
-      fileInput.addEventListener('change', () => {
-        fileText.textContent = fileInput.files.length
-          ? fileInput.files[0].name
-          : 'No file selected';
+    // Template switcher
+    document.querySelectorAll(".t-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".t-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const t = btn.dataset.t, cat = btn.dataset.cat;
+        activeTemplate = t; body.setAttribute("data-t", t);
+        document.getElementById("navTemplateLabel").textContent = TEMPLATES[t].label;
+        editor.setAttribute("data-placeholder", TEMPLATES[t].ph);
+        document.querySelectorAll(".cat-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === cat));
+        selectedCat = cat;
+        currentColor = t === "tech" ? "#e6edf3" : "#1a1208";
+        editor.style.color = currentColor;
       });
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      msg.textContent = 'Sending your chaos to the void...';
-
-      const formData = new FormData(form);
-
-      const payload = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        type: formData.get('type'),
-        readtime: formData.get('readtime'),
-        title: formData.get('title'),
-        content: formData.get('content'),
-        agree: formData.get('agree') ? true : false
-        // image is not stored yet
-      };
-
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await res.json();
-
-        if (data.status === 'success') {
-          msg.textContent = 'Submitted. We\'ll read it soon 🫶';
-          form.reset();
-          if (fileText) fileText.textContent = 'No file selected';
-        } else {
-          msg.textContent = 'Something went wrong. Please try again.';
-        }
-      } catch (err) {
-        console.error(err);
-        msg.textContent = 'Failed to submit. Try again later.';
-      }
     });
+
+    // Date
+    const d = new Date();
+    document.getElementById("todayDate").textContent = d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    document.getElementById("newsDateline").textContent = d.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" }).toUpperCase() + " — HLYWOR NEWS";
+
+    // Auto-grow
+    function autoGrow(el) { el.style.height = "auto"; el.style.height = el.scrollHeight + "px"; }
+    ["titleInput", "descInput"].forEach(id => { const el = document.getElementById(id); if (el) { el.addEventListener("input", () => autoGrow(el)); autoGrow(el); } });
+
+    // Mood
+    document.querySelectorAll(".mood-opt").forEach(el => {
+      el.addEventListener("click", () => { document.querySelectorAll(".mood-opt").forEach(m => m.classList.remove("selected")); el.classList.add("selected"); selectedMood = el.dataset.mood; });
+    });
+
+    // Stars
+    document.querySelectorAll(".star").forEach(s => {
+      s.addEventListener("click", () => { starRating = parseInt(s.dataset.v); document.querySelectorAll(".star").forEach(st => st.classList.toggle("lit", parseInt(st.dataset.v) <= starRating)); document.getElementById("ratingText").textContent = starRating + "/5"; });
+      s.addEventListener("mouseenter", () => { const v = parseInt(s.dataset.v); document.querySelectorAll(".star").forEach(st => st.style.opacity = parseInt(st.dataset.v) <= v ? "1" : "0.3"); });
+      s.addEventListener("mouseleave", () => { document.querySelectorAll(".star").forEach(st => st.style.opacity = parseInt(st.dataset.v) <= starRating ? "1" : "0.3"); });
+    });
+
+    // Category pills
+    document.querySelectorAll(".cat-pill").forEach(btn => {
+      btn.addEventListener("click", () => { document.querySelectorAll(".cat-pill").forEach(b => b.classList.remove("active")); btn.classList.add("active"); selectedCat = btn.dataset.cat; });
+    });
+
+    // Word count
+    function updateCounts() { const text = editor.innerText.trim(); const words = text ? text.split(/\s+/).filter(Boolean).length : 0; document.getElementById("wordCount").textContent = words; document.getElementById("charCount").textContent = text.replace(/\s/g, "").length; document.getElementById("readTimeCalc").textContent = "~" + Math.max(1, Math.ceil(words / 200)) + " min read"; updateSaveStatus("unsaved"); }
+    editor.addEventListener("input", updateCounts);
+
+    function updateSaveStatus(s) { const el = document.getElementById("saveStatus"); el.textContent = s; el.className = "nav-save-status" + (s === "saved" ? " saved" : ""); }
+
+    // Toolbar
+    document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn => {
+      btn.addEventListener("mousedown", e => { e.preventDefault(); editor.focus(); const cmd = btn.dataset.cmd; if (cmd === "h2") document.execCommand("formatBlock", false, "h2"); else if (cmd === "h3") document.execCommand("formatBlock", false, "h3"); else if (cmd === "blockquote") document.execCommand("formatBlock", false, "blockquote"); else document.execCommand(cmd); });
+    });
+
+    // Pen color
+    document.querySelectorAll(".pen-swatch").forEach(sw => {
+      sw.addEventListener("click", () => { document.querySelectorAll(".pen-swatch").forEach(s => s.classList.remove("active")); sw.classList.add("active"); currentColor = sw.dataset.color; editor.style.color = currentColor; editor.focus(); });
+    });
+
+    // Highlight
+    document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn => {
+      btn.addEventListener("mousedown", e => { e.preventDefault(); const sel = window.getSelection(); if (!sel.rangeCount || sel.isCollapsed) return; const range = sel.getRangeAt(0); const span = document.createElement("span"); span.className = btn.dataset.highlight; range.surroundContents(span); sel.removeAllRanges(); editor.focus(); });
+    });
+
+    // Insert helper
+    function insertAtCursor(html) { editor.focus(); if (savedRange) { const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(savedRange); } document.execCommand("insertHTML", false, html); updateSaveStatus("unsaved"); }
+    document.getElementById("toolsPanel").addEventListener("mousedown", () => { const sel = window.getSelection(); if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange(); });
+
+    // Sticker
+    const sp = document.getElementById("stickerPicker");
+    document.getElementById("insertStickerBtn").addEventListener("click", e => { const r = e.currentTarget.getBoundingClientRect(); sp.style.left = (r.right + 8) + "px"; sp.style.top = r.top + "px"; sp.classList.toggle("open"); const sel = window.getSelection(); if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange(); });
+    document.querySelectorAll(".sticker-option").forEach(opt => { opt.addEventListener("click", () => { insertAtCursor("<span class='floating-sticker'>" + opt.textContent + "</span>"); sp.classList.remove("open"); }); });
+    document.addEventListener("click", e => { if (!e.target.closest("#stickerPicker") && !e.target.closest("#insertStickerBtn")) sp.classList.remove("open"); });
+
+    // Sticky
+    const stickyBtn = document.getElementById("insertStickyBtn");
+    if (stickyBtn) stickyBtn.addEventListener("mousedown", e => { e.preventDefault(); const c = ["", " sticky-callout-blue", " sticky-callout-green", " sticky-callout-pink"][Math.floor(Math.random() * 4)]; insertAtCursor("<div class='sticky-callout" + c + "' contenteditable='true'>Write your note...</div><p><br></p>"); });
+
+    // Doodle
+    const doodleBtn = document.getElementById("insertDoodleBtn");
+    if (doodleBtn) doodleBtn.addEventListener("mousedown", e => { e.preventDefault(); const w = ["<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='" + currentColor + "' stroke-width='1.5' opacity='0.4'/></svg>", "<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><line x1='0' y1='10' x2='400' y2='10' stroke='" + currentColor + "' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg>"]; insertAtCursor(w[Math.floor(Math.random() * 2)] + "<p><br></p>"); });
+
+    // Pull quote
+    const pullBtn = document.getElementById("insertPullBtn");
+    if (pullBtn) pullBtn.addEventListener("mousedown", e => { e.preventDefault(); insertAtCursor("<div class='pull-quote' contenteditable='true'>Your pull quote here...</div><p><br></p>"); });
+
+    // Code block
+    const codeBtn = document.getElementById("insertCodeBtn");
+    if (codeBtn) codeBtn.addEventListener("mousedown", e => { e.preventDefault(); insertAtCursor("<pre contenteditable='true'>// paste your code here</pre><p><br></p>"); });
+
+    // Tape
+    document.querySelectorAll(".tape-swatch").forEach(sw => { sw.addEventListener("click", () => { insertAtCursor("<div class='washi-tape' style='--tape-color:" + sw.dataset.tape + "'></div><p><br></p>"); editor.focus(); }); });
+
+    // Image popup
+    const imgPopup = document.getElementById("imgPopup");
+    document.getElementById("insertImgBtn").addEventListener("click", e => { const r = e.currentTarget.getBoundingClientRect(); imgPopup.style.left = (r.right + 8) + "px"; imgPopup.style.top = Math.min(r.top, window.innerHeight - 320) + "px"; imgPopup.classList.toggle("open"); const sel = window.getSelection(); if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange(); });
+    document.getElementById("inlineImgUploadBtn").addEventListener("click", () => document.getElementById("inlineImgFile").click());
+    document.getElementById("inlineImgFile").addEventListener("change", async () => {
+      const file = document.getElementById("inlineImgFile").files[0]; if (!file) return;
+      const style = document.getElementById("inlineImgStyle").value, caption = document.getElementById("inlineImgCaption").value.trim();
+      const localUrl = URL.createObjectURL(file), imgId = "img-" + Date.now();
+      const html = style === "inline-full"
+        ? "<figure id='" + imgId + "'><img src='" + localUrl + "' style='width:100%;display:block;margin:12px 0;min-height:120px' alt='" + caption + "'>" + (caption ? "<figcaption>" + caption + "</figcaption>" : "") + "</figure><p><br></p>"
+        : "<div id='" + imgId + "' class='polaroid " + style + "' style='display:inline-block'><img src='" + localUrl + "' alt='" + caption + "' style='width:100%;display:block;height:160px;object-fit:cover'>" + (caption ? "<span class='polaroid-caption'>" + caption + "</span>" : "") + "</div><p><br></p>";
+      insertAtCursor(html); imgPopup.classList.remove("open"); document.getElementById("inlineImgCaption").value = ""; document.getElementById("inlineImgFile").value = "";
+      const url = await uploadToCloudinary(file);
+      if (url) { const el = document.getElementById(imgId); if (el) { const img = el.querySelector("img"); if (img) img.src = url; } URL.revokeObjectURL(localUrl); }
+    });
+    document.addEventListener("click", e => { if (!e.target.closest("#imgPopup") && !e.target.closest("#insertImgBtn")) imgPopup.classList.remove("open"); });
+
+    // Cover
+    const coverDrop = document.getElementById("coverDrop"), coverFile = document.getElementById("coverFile"), coverPreview = document.getElementById("coverPreview"), coverUrlEl = document.getElementById("coverUrl");
+    coverDrop.addEventListener("click", () => coverFile.click());
+    coverDrop.addEventListener("dragover", e => { e.preventDefault(); coverDrop.style.borderColor = "var(--t-acc)"; });
+    coverDrop.addEventListener("dragleave", () => coverDrop.style.borderColor = "");
+    coverDrop.addEventListener("drop", e => { e.preventDefault(); coverDrop.style.borderColor = ""; if (e.dataTransfer.files[0]) uploadCover(e.dataTransfer.files[0]); });
+    coverFile.addEventListener("change", () => { if (coverFile.files[0]) uploadCover(coverFile.files[0]); });
+    document.getElementById("coverClear").addEventListener("click", () => { coverPreview.style.display = "none"; coverDrop.style.display = "block"; coverUrlEl.value = ""; coverFile.value = ""; });
+    async function uploadCover(file) { const local = URL.createObjectURL(file); document.getElementById("coverPreviewImg").src = local; coverDrop.style.display = "none"; document.getElementById("coverUploading").style.display = "block"; coverPreview.style.display = "block"; const url = await uploadToCloudinary(file); document.getElementById("coverUploading").style.display = "none"; if (url) { document.getElementById("coverPreviewImg").src = url; coverUrlEl.value = url; URL.revokeObjectURL(local); } else { coverUrlEl.value = ""; } }
+
+    // Cloudinary
+    async function uploadToCloudinary(file) { 
+      const fd = new FormData();
+       fd.append("file", file);
+        fd.append("upload_preset", CLD_PRESET);
+        fd.append('format', 'webp');
+            fd.append('quality', 'auto');
+         fd.append("folder", "hlywor"); fd.append("format", "webp"); fd.append("quality", "auto"); try { const res = await fetch("https://api.cloudinary.com/v1_1/" + CLD_NAME + "/image/upload", { method: "POST", body: fd }); const data = await res.json(); if (data.error) { console.error("Cloudinary:", data.error.message); return null; } return data.secure_url || null; } catch (e) { console.error(e); return null; } }
+
+    // Publish modal
+    document.getElementById("publishOpenBtn").addEventListener("click", () => document.getElementById("publishModalBg").classList.add("open"));
+    document.getElementById("modalClose").addEventListener("click", () => document.getElementById("publishModalBg").classList.remove("open"));
+    document.getElementById("publishModalBg").addEventListener("click", e => { if (e.target === document.getElementById("publishModalBg")) document.getElementById("publishModalBg").classList.remove("open"); });
+
+    // Tags
+    const tagsWrap = document.getElementById("tagsWrap"), tagInput = document.getElementById("tagInput"), tags = [];
+    tagInput.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === ",") && tagInput.value.trim()) { e.preventDefault(); const t = tagInput.value.trim().replace(/,/g, ""); if (!tags.includes(t)) { tags.push(t); const chip = document.createElement("span"); chip.className = "tag-chip"; chip.innerHTML = t + " <span class='rm'>&#10005;</span>"; chip.querySelector(".rm").addEventListener("click", () => { tags.splice(tags.indexOf(t), 1); chip.remove(); }); tagsWrap.insertBefore(chip, tagInput); } tagInput.value = ""; } });
+    tagsWrap.addEventListener("click", () => tagInput.focus());
+
+    // Serialize
+    function serializeContent() { const clone = editor.cloneNode(true); clone.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable")); return clone.innerHTML; }
+
+    // Submit
+    document.getElementById("submitBtn").addEventListener("click", async () => {
+      const name = document.getElementById("authorInput").value.trim(), email = document.getElementById("emailInput").value.trim(), title = document.getElementById("titleInput").value.trim(), desc = document.getElementById("descInput").value.trim(), readtime = document.getElementById("readtimeInput").value.trim() || document.getElementById("readTimeCalc").textContent, coverUrl = document.getElementById("coverUrl").value, content = serializeContent(), plainText = editor.innerText.trim(), type = document.getElementById("typeSelect").value, agree = document.getElementById("agreeCheck").checked, agreeImg = document.getElementById("agreeImgCheck").checked, techTag = (document.getElementById("techTagInput") || {}).value?.trim() || "", statusEl = document.getElementById("modalStatus");
+      if (!name) { statusEl.textContent = "⚠ Name is required"; statusEl.className = "modal-status err"; return; }
+      if (!title) { statusEl.textContent = "⚠ Title is required"; statusEl.className = "modal-status err"; return; }
+      if (!desc) { statusEl.textContent = "⚠ Homepage desc is required"; statusEl.className = "modal-status err"; return; }
+      if (plainText.length < 30) { statusEl.textContent = "⚠ Write a little more first"; statusEl.className = "modal-status err"; return; }
+      if (!agree) { statusEl.textContent = "⚠ Confirm your content"; statusEl.className = "modal-status err"; return; }
+      if (!agreeImg) { statusEl.textContent = "⚠ Confirm image rights"; statusEl.className = "modal-status err"; return; }
+      const btn = document.getElementById("submitBtn"); btn.disabled = true; btn.textContent = "Sending..."; statusEl.textContent = "";
+      try {
+        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        await addDoc(collection(db, "posts"), { name, email, type, readtime, title, desc, thumbnail: coverUrl || "", category: selectedCat, template: activeTemplate, mood: selectedMood, rating: starRating || null, techTag: techTag || null, tags, content, url: "post.html?slug=" + slug, slug, status: "published", author: name, date: new Date().toISOString(), publishedAt: serverTimestamp(), createdAt: serverTimestamp() });
+        btn.textContent = "Live ✦"; statusEl.textContent = "✓ Your post is live on the homepage! 🎉"; statusEl.className = "modal-status ok"; updateSaveStatus("saved");
+      } catch (err) { console.error(err); btn.disabled = false; btn.textContent = "Go live now ✦"; statusEl.textContent = "✕ Failed — check Firebase config"; statusEl.className = "modal-status err"; }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener("keydown", e => { if (e.metaKey || e.ctrlKey) { if (e.key === "b") { e.preventDefault(); document.execCommand("bold"); } if (e.key === "i") { e.preventDefault(); document.execCommand("italic"); } } });
   </script>
 </body>
+
 </html>

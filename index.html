@@ -1,251 +1,1428 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HlyWor</title>
 
-        gtag('config', 'G-ZVLSVF6T3J');
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HlyWor</title>
-    <link rel="stylesheet" href="style/style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap"
-        rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+
+
+
+  <style>
+    :root {
+      --board:    #2a1f14;
+      --cork:     #3d2e1e;
+      --cork2:    #4a3828;
+      --paper:    #faf6ee;
+      --paper2:   #f5edd8;
+      --paper3:   #eee5c8;
+      --torn:     #e8dcc0;
+      --ink:      #1a1208;
+      --ink2:     #3d3020;
+      --ink3:     #6a5840;
+      --tape-r:   #e85c5c;
+      --tape-b:   #5c8ae8;
+      --tape-g:   #5cbc7a;
+      --tape-y:   #f0c030;
+      --tape-p:   #a06ae8;
+      --tape-o:   #e8901a;
+      --fire:     #e8681a;
+      --gold:     #d4a020;
+      --pixel:    'Press Start 2P', monospace;
+      --serif:    'Crimson Pro', Georgia, serif;
+      --sans:     'DM Sans', system-ui, sans-serif;
+      --hand:     'Caveat', cursive;
+      --pin-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
+
+    body {
+      background: var(--board);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: var(--serif);
+      cursor: default;
+    }
+
+    /* Cork texture — richer, deeper */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(100,70,30,0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(70,45,15,0.3) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(50,30,10,0.2) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: auto, auto, auto, 200px 200px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Floating warm light blobs — like light bulbs above the board */
+    .light-blob {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      animation: blobFloat ease-in-out infinite;
+    }
+    .light-blob-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,104,26,0.07) 0%, transparent 70%);
+      top: -100px; left: 10%;
+      animation-duration: 12s; animation-delay: 0s;
+    }
+    .light-blob-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(212,160,32,0.06) 0%, transparent 70%);
+      top: 30%; right: 5%;
+      animation-duration: 15s; animation-delay: 3s;
+    }
+    .light-blob-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(232,104,26,0.05) 0%, transparent 70%);
+      bottom: 10%; left: 30%;
+      animation-duration: 18s; animation-delay: 6s;
+    }
+    @keyframes blobFloat {
+      0%,100%{transform:translate(0,0) scale(1);opacity:0.7}
+      33%{transform:translate(15px,-20px) scale(1.08);opacity:1}
+      66%{transform:translate(-10px,15px) scale(0.95);opacity:0.8}
+    }
+
+    /* Floating embers */
+    .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .ember {
+      position: absolute; border-radius: 50%;
+      background: var(--fire);
+      box-shadow: 0 0 4px var(--fire);
+      animation: emberRise linear infinite;
+      opacity: 0;
+    }
+    @keyframes emberRise {
+      0%{transform:translateY(100vh) translateX(0) scale(1);opacity:0}
+      10%{opacity:0.9}
+      80%{opacity:0.3}
+      100%{transform:translateY(-5vh) translateX(var(--edrift)) scale(0.3);opacity:0}
+    }
+
+    /* ══════════════════════════════════
+       NAV STRIP — left edge of board
+    ══════════════════════════════════ */
+    .nav-strip {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 72px; z-index: 1000;
+      background: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 24px 0 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Subtle warm glow on the strip */
+    .nav-strip::after {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(212,160,32,0.25), transparent);
+      pointer-events: none;
+    }
+
+    .nav-logo {
+      font-family: var(--pixel);
+      font-size: 0.55rem;
+      color: var(--gold);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      letter-spacing: 4px;
+      text-shadow: 0 0 16px rgba(212,160,32,0.5);
+      animation: logoFlicker 7s infinite;
+      margin-bottom: 32px;
+    }
+    @keyframes logoFlicker {
+      0%,91%,100%{opacity:1} 92%{opacity:.3} 93%{opacity:1} 95%{opacity:.65} 96%{opacity:1}
+    }
+
+    .nav-divider {
+      width: 32px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      margin: 10px 0;
+    }
+
+    .nav-icon-links {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 2px;
+      flex: 1; width: 100%;
+    }
+    .nav-icon-link {
+      width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.38);
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      transition: color 0.2s, background 0.2s;
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 12px 0;
+      letter-spacing: 1.5px;
+      position: relative;
+    }
+    .nav-icon-link::before {
+      content: '';
+      position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 2px; background: var(--fire);
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform 0.2s;
+    }
+    .nav-icon-link:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
+    .nav-icon-link:hover::before { transform: scaleY(1); }
+
+    .nav-bottom {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      margin-top: auto; padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      width: 100%;
+    }
+    .nav-btn {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.45);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s; cursor: pointer;
+      background: none;
+    }
+    .nav-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,160,32,0.06); }
+
+    /* ══════════════════════════════════
+       BOARD — the whole canvas
+    ══════════════════════════════════ */
+    .board {
+      margin-left: 72px;
+      min-height: 100vh;
+      position: relative;
+      padding: 40px 32px 80px 32px;
+    }
+
+    /* ══════════════════════════════════
+       HEADER TORN PAGE — top of board
+    ══════════════════════════════════ */
+    .board-header {
+      position: relative;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    /* Main title card — bigger, has a right column for photos */
+    .title-sheet {
+      background: var(--paper);
+      padding: 28px 28px 38px;
+      position: relative;
+      transform: rotate(-0.8deg);
+      box-shadow: var(--pin-shadow);
+      flex: 1;
+      min-width: 320px;
+      max-width: 780px;
+      /* Two-column inside: text left, photo collage right */
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      grid-template-rows: auto 1fr auto;
+      gap: 0 24px;
+    }
+
+    /* Torn bottom edge */
+    .title-sheet::after {
+      content: '';
+      position: absolute; bottom: -8px; left: 0; right: 0;
+      height: 12px;
+      background: var(--paper);
+      clip-path: polygon(0% 0%, 3% 100%, 6% 30%, 9% 100%, 12% 20%, 15% 100%, 18% 40%, 21% 100%, 24% 10%, 27% 100%, 30% 50%, 33% 100%, 36% 20%, 39% 100%, 42% 30%, 45% 100%, 48% 10%, 51% 100%, 54% 40%, 57% 100%, 60% 20%, 63% 100%, 66% 50%, 69% 100%, 72% 10%, 75% 100%, 78% 30%, 81% 100%, 84% 20%, 87% 100%, 90% 40%, 93% 100%, 96% 20%, 100% 100%, 100% 0%);
+    }
+    /* Pin */
+    .title-sheet .pin {
+      position: absolute; top: -10px; left: 50%;
+      transform: translateX(-50%);
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2222);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3);
+      z-index: 2;
+    }
+    .title-sheet .pin::after {
+      content: ''; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 12px;
+      background: linear-gradient(to bottom, #888, #444);
+    }
+
+    /* Left column — the text */
+    .sheet-text-col {
+      grid-column: 1;
+      grid-row: 1 / 4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Right column — photo collage */
+    .sheet-photo-col {
+      grid-column: 2;
+      grid-row: 1 / 4;
+      position: relative;
+      min-height: 280px;
+      padding-top: 8px;
+    }
+
+    /* Individual pasted photos */
+    .pasted-photo {
+      position: absolute;
+      background: #fff;
+      padding: 6px 6px 20px 6px;
+      box-shadow: 2px 3px 12px rgba(0,0,0,0.3), 1px 1px 3px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s, z-index 0s;
+      z-index: 1;
+    }
+    .pasted-photo:hover {
+      box-shadow: 4px 6px 20px rgba(0,0,0,0.45), 2px 2px 6px rgba(0,0,0,0.3);
+      z-index: 5;
+    }
+
+    /* Photo 1 — top left of the collage, slightly right-tilt */
+    .pasted-photo:nth-child(1) {
+      top: 0; left: -8px;
+      width: 130px;
+      transform: rotate(3.5deg);
+    }
+    .pasted-photo:nth-child(1):hover { transform: rotate(1deg) scale(1.05); }
+
+    /* Photo 2 — overlaps bottom of photo 1, left-tilt */
+    .pasted-photo:nth-child(2) {
+      top: 90px; left: 40px;
+      width: 120px;
+      transform: rotate(-4deg);
+      z-index: 2;
+    }
+    .pasted-photo:nth-child(2):hover { transform: rotate(-1.5deg) scale(1.05); z-index: 5; }
+
+    /* Photo 3 — bottom right, slight tilt */
+    .pasted-photo:nth-child(3) {
+      top: 175px; left: -12px;
+      width: 140px;
+      transform: rotate(2deg);
+    }
+    .pasted-photo:nth-child(3):hover { transform: rotate(0.5deg) scale(1.04); z-index: 5; }
+
+    /* Photo tape strips across corners */
+    .pasted-photo::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 44px; height: 14px;
+      background: rgba(240,200,60,0.65);
+      z-index: 3;
+    }
+    .pasted-photo:nth-child(2)::before { background: rgba(100,160,240,0.6); transform: translateX(-50%) rotate(1.5deg); }
+    .pasted-photo:nth-child(3)::before { background: rgba(100,200,120,0.55); transform: translateX(-50%) rotate(-0.5deg); }
+
+    /* The actual image inside pasted-photo */
+    .pasted-photo img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      filter: sepia(12%) brightness(0.96) contrast(1.02);
+    }
+
+    /* Handwritten caption under photo */
+    .photo-caption {
+      display: block;
+      font-family: var(--hand);
+      font-size: 0.75rem;
+      color: var(--ink3);
+      text-align: center;
+      padding-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* Placeholder photos — cork-colored boxes when no real images */
+    .pasted-photo-placeholder {
+      position: absolute;
+      background: #fff;
+      padding: 6px 6px 22px 6px;
+      box-shadow: 2px 3px 12px rgba(0,0,0,0.3);
+    }
+    .pasted-photo-placeholder::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: 50%;
+      transform: translateX(-50%);
+      width: 44px; height: 14px;
+      z-index: 3;
+    }
+    .photo-inner {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--paper3);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .photo-inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-size: 80px 80px;
+    }
+    .photo-inner-label {
+      font-family: var(--hand);
+      font-size: 0.75rem;
+      color: var(--ink3);
+      z-index: 1;
+    }
+
+    .sheet-eyebrow {
+      font-family: var(--pixel); font-size: 0.32rem;
+      color: var(--fire); letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+    .sheet-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300; font-style: italic;
+      color: var(--ink); line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .sheet-title em { font-weight: 600; color: var(--fire); }
+    .sheet-sub {
+      font-family: var(--sans); font-size: 0.82rem;
+      color: var(--ink3); line-height: 1.75;
+    }
+    .sheet-ctas {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    /* Sticky note style buttons */
+    .btn-sticky {
+      font-family: var(--hand); font-size: 1rem;
+      padding: 8px 18px;
+      background: var(--tape-y);
+      color: var(--ink); border: none;
+      transform: rotate(-1deg);
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block; cursor: pointer;
+    }
+    .btn-sticky:hover { transform: rotate(0deg) translateY(-2px); box-shadow: 3px 5px 12px rgba(0,0,0,0.3); }
+    .btn-sticky.fire { background: var(--fire); color: #fff; transform: rotate(0.8deg); }
+    .btn-sticky.fire:hover { transform: rotate(0deg) translateY(-2px); }
+
+    /* Handwritten sticky note beside title */
+    .sticky-about {
+      background: #fef9c3;
+      padding: 18px 16px 22px;
+      transform: rotate(2.5deg);
+      box-shadow: var(--pin-shadow);
+      max-width: 200px;
+      position: relative;
+      align-self: flex-start;
+      margin-top: 24px;
+    }
+    .sticky-about .pin {
+      position: absolute; top: -9px; left: 50%;
+      transform: translateX(-50%);
+      width: 12px; height: 12px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #6b9fff, #2244cc);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      z-index: 2;
+    }
+    .sticky-about p {
+      font-family: var(--hand); font-size: 1rem;
+      color: var(--ink2); line-height: 1.6;
+    }
+    .sticky-about .sticky-sign {
+      font-family: var(--hand); font-size: 0.9rem;
+      color: var(--fire); margin-top: 10px;
+      display: block;
+    }
+
+    /* "Est. 2025" tape label */
+    .tape-label {
+      display: inline-block;
+      background: var(--tape-b);
+      color: #fff; opacity: 0.85;
+      font-family: var(--pixel); font-size: 0.28rem;
+      letter-spacing: 2px; padding: 4px 16px;
+      transform: rotate(-2deg);
+      position: absolute; top: -12px; right: 20px;
+    }
+
+    /* ══════════════════════════════════
+       TAPE STRIP — category filter
+    ══════════════════════════════════ */
+    .tape-filter {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 32px;
+      padding-left: 4px;
+    }
+    .tape-tab {
+      font-family: var(--pixel); font-size: 0.3rem;
+      letter-spacing: 1px; padding: 6px 16px;
+      opacity: 0.7;
+      color: #fff; border: none; cursor: pointer;
+      transform: rotate(-0.5deg);
+      transition: opacity 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .tape-tab::before, .tape-tab::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0;
+      width: 8px;
+      background: inherit; opacity: 0.6;
+    }
+    .tape-tab::before { left: -6px; transform: skewX(-5deg); }
+    .tape-tab::after  { right: -6px; transform: skewX(5deg); }
+    .tape-tab:hover, .tape-tab.active { opacity: 1; transform: rotate(0deg); }
+    .tape-tab[data-tag="all"]     { background: var(--ink2); }
+    .tape-tab[data-tag="story"]   { background: var(--tape-r); }
+    .tape-tab[data-tag="movies"]  { background: var(--tape-b); }
+    .tape-tab[data-tag="books"]   { background: var(--tape-g); }
+    .tape-tab[data-tag="thoughts"]{ background: var(--tape-p); }
+    .tape-tab[data-tag="college"] { background: var(--tape-o); }
+    .tape-tab[data-tag="news"]    { background: var(--tape-y); color: var(--ink); }
+
+    /* ══════════════════════════════════
+       PINBOARD — posts as pinned notes
+    ══════════════════════════════════ */
+    .pinboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 32px 28px;
+      align-items: start;
+    }
+
+    /* Each post is a pinned sheet */
+    .pinned-post {
+      position: relative;
+      background: var(--paper);
+      box-shadow: var(--pin-shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    /* Alternate slight rotations — real bulletin board feel */
+    .pinned-post:nth-child(3n+1) { transform: rotate(-1.2deg); }
+    .pinned-post:nth-child(3n+2) { transform: rotate(0.8deg); }
+    .pinned-post:nth-child(3n+3) { transform: rotate(-0.4deg); }
+    .pinned-post:nth-child(4n)   { transform: rotate(1.5deg); }
+    .pinned-post:nth-child(5n)   { transform: rotate(-0.9deg); }
+
+    .pinned-post:hover {
+      transform: rotate(0deg) translateY(-6px) scale(1.02) !important;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 10;
+    }
+
+    /* Pin on each card */
+    .post-pin {
+      position: absolute; top: -11px;
+      width: 13px; height: 13px; border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3);
+      z-index: 2;
+    }
+    .post-pin::after {
+      content: ''; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 10px;
+      background: linear-gradient(to bottom, #777, #333);
+    }
+    .pinned-post:nth-child(odd)  .post-pin { left: 30%; background: radial-gradient(circle at 35% 35%, #ff9999, #cc3333); }
+    .pinned-post:nth-child(even) .post-pin { left: 65%; background: radial-gradient(circle at 35% 35%, #99bbff, #3355cc); }
+    .pinned-post:nth-child(3n)   .post-pin { left: 50%; background: radial-gradient(circle at 35% 35%, #aaeeaa, #228844); }
+
+    /* Tape strip at top of some cards */
+    .post-tape {
+      position: absolute; top: -4px; left: 20px; right: 20px;
+      height: 20px; opacity: 0.65;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tape-strip {
+      height: 100%; width: 60px;
+      position: absolute;
+    }
+    .tape-strip.left { left: 0; }
+    .tape-strip.right { right: 0; }
+
+    /* Thumbnail — like a photo taped to the note */
+    .post-photo {
+      position: relative; overflow: hidden;
+      margin: 14px 14px 0;
+    }
+    .post-photo img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      display: block;
+      filter: sepia(10%) brightness(0.95);
+      transition: filter 0.3s;
+    }
+    .pinned-post:hover .post-photo img { filter: sepia(0%) brightness(1); }
+
+    /* Photo corner tape */
+    .photo-corner {
+      position: absolute;
+      width: 20px; height: 20px;
+      background: rgba(240,192,48,0.7);
+      transform: rotate(45deg);
+    }
+    .photo-corner.tl { top: -5px; left: -5px; }
+    .photo-corner.tr { top: -5px; right: -5px; }
+    .photo-corner.bl { bottom: -5px; left: -5px; }
+    .photo-corner.br { bottom: -5px; right: -5px; }
+
+    /* No image placeholder */
+    .post-noimg {
+      margin: 14px 14px 0;
+      aspect-ratio: 4/3;
+      background: var(--paper3);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      border: 1px dashed rgba(26,18,8,0.15);
+    }
+    .post-noimg-num {
+      font-family: var(--pixel);
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      color: rgba(26,18,8,0.08);
+      line-height: 1;
+    }
+    .post-noimg-label {
+      font-family: var(--hand); font-size: 0.85rem;
+      color: var(--ink3); margin-top: 8px;
+    }
+
+    /* Post body text — the note itself */
+    .post-note-body { padding: 14px 16px 18px; }
+
+    /* Tape category label */
+    .post-cat-tape {
+      display: inline-block;
+      font-family: var(--pixel); font-size: 0.26rem;
+      letter-spacing: 2px; padding: 3px 10px;
+      color: #fff; margin-bottom: 10px;
+      opacity: 0.85; transform: rotate(-0.5deg);
+    }
+    .cat-story    { background: var(--tape-r); }
+    .cat-movies   { background: var(--tape-b); }
+    .cat-books    { background: var(--tape-g); }
+    .cat-thoughts { background: var(--tape-p); }
+    .cat-college  { background: var(--tape-o); }
+    .cat-news     { background: var(--tape-y); color: var(--ink); }
+    .cat-default  { background: var(--ink2); }
+
+    .post-note-title {
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 400; font-style: italic;
+      color: var(--ink); line-height: 1.45; margin-bottom: 8px;
+    }
+    .post-note-desc {
+      font-family: var(--sans); font-size: 0.75rem;
+      color: var(--ink3); line-height: 1.7; margin-bottom: 12px;
+    }
+
+    /* Handwritten meta */
+    .post-note-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px dashed rgba(26,18,8,0.15);
+      padding-top: 10px; margin-top: 4px;
+    }
+    .post-author-hand {
+      font-family: var(--hand); font-size: 0.88rem;
+      color: var(--ink3);
+    }
+    .post-read-hand {
+      font-family: var(--hand); font-size: 0.85rem;
+      color: var(--fire); transition: letter-spacing 0.2s;
+    }
+    .pinned-post:hover .post-read-hand { letter-spacing: 1px; }
+
+    /* Reactions — like stickers on the note */
+    .post-stickers {
+      display: flex; gap: 4px;
+      padding: 8px 16px 14px;
+    }
+    .sticker-btn {
+      font-size: 0.82rem; padding: 2px 8px;
+      background: var(--paper2);
+      border: 1px solid rgba(26,18,8,0.12);
+      color: var(--ink3);
+      display: flex; align-items: center; gap: 3px;
+      transition: all 0.14s;
+      font-family: var(--sans);
+      border-radius: 1px;
+    }
+    .sticker-btn:hover { background: var(--paper3); border-color: rgba(26,18,8,0.2); }
+    .sticker-btn.reacted { background: #fff3e0; border-color: var(--fire); color: var(--fire); }
+    .sticker-count { font-size: 0.65rem; }
+
+    /* Skeleton */
+    .skel-post {
+      background: var(--paper);
+      box-shadow: var(--pin-shadow);
+    }
+    .skel-post:nth-child(odd) { transform: rotate(-1deg); }
+    .skel-post:nth-child(even) { transform: rotate(0.8deg); }
+    .skel-img-box { aspect-ratio:4/3; margin:14px 14px 0; }
+    .skel-body-box { padding:14px 16px 18px; display:flex; flex-direction:column; gap:10px; }
+    .skel-line { height:9px; border-radius:1px; }
+    @keyframes shimmer { from{background-position:200% 0} to{background-position:-200% 0} }
+    .shimmer {
+      background: linear-gradient(90deg, var(--paper3) 25%, var(--paper2) 50%, var(--paper3) 75%);
+      background-size: 200% 100%; animation: shimmer 1.5s infinite;
+    }
+
+    .no-posts {
+      grid-column:1/-1; padding:48px;
+      text-align:center; font-family:var(--hand);
+      font-size:1.4rem; color:rgba(245,237,216,0.4);
+      line-height:2;
+    }
+
+    /* ══════════════════════════════════
+       BOTTOM STRIPS — About + Team + CTA
+       Not sections — just more pinned stuff
+    ══════════════════════════════════ */
+    .board-bottom {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* About — a bigger crumpled note */
+    .about-note {
+      background: var(--paper2);
+      padding: 26px 24px 30px;
+      transform: rotate(-1.5deg);
+      box-shadow: var(--pin-shadow);
+      position: relative;
+    }
+    .about-note .pin {
+      position: absolute; top: -10px; left: 40%;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffcc88, #cc8822);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.45);
+    }
+    .about-note .pin::after {
+      content: ''; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 10px;
+      background: linear-gradient(to bottom, #777, #333);
+    }
+    .note-header {
+      font-family: var(--pixel); font-size: 0.3rem;
+      color: var(--fire); letter-spacing: 3px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed rgba(26,18,8,0.2);
+    }
+    .note-text {
+      font-family: var(--serif); font-size: 0.95rem;
+      font-style: italic; color: var(--ink2);
+      line-height: 1.85;
+    }
+    .note-text strong { font-style: normal; color: var(--ink); }
+
+    /* Team — two smaller sticky notes side by side */
+    .team-stickies {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .team-sticky {
+      padding: 18px 16px 22px;
+      box-shadow: var(--pin-shadow);
+      position: relative; cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .team-sticky:nth-child(1) { background: #fef9c3; transform: rotate(1.2deg); }
+    .team-sticky:nth-child(2) { background: #f0f8ff; transform: rotate(-1deg); }
+    .team-sticky:hover { transform: rotate(0deg) translateY(-4px) !important; box-shadow: 0 12px 32px rgba(0,0,0,0.45); }
+    .team-sticky .pin {
+      position: absolute; top: -9px; left: 50%;
+      transform: translateX(-50%);
+      width: 11px; height: 11px; border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+    .team-sticky:nth-child(1) .pin { background: radial-gradient(circle at 35% 35%, #ff9999, #cc2222); }
+    .team-sticky:nth-child(2) .pin { background: radial-gradient(circle at 35% 35%, #aaddff, #2266cc); }
+    .team-sticky .pin::after {
+      content: ''; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 9px;
+      background: linear-gradient(to bottom, #777, #333);
+    }
+    .sticky-name {
+      font-family: var(--hand); font-size: 1.4rem;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .sticky-role {
+      font-family: var(--pixel); font-size: 0.26rem;
+      color: var(--ink3); letter-spacing: 2px; margin-bottom: 8px;
+    }
+    .sticky-bio {
+      font-family: var(--sans); font-size: 0.72rem;
+      color: var(--ink3); line-height: 1.65;
+    }
+    .sticky-link {
+      font-family: var(--hand); font-size: 0.85rem;
+      color: var(--fire); display: block; margin-top: 10px;
+    }
+
+    /* CTA — a big bold sticky with torn edge */
+    .cta-note {
+      background: var(--fire);
+      padding: 28px 24px 36px;
+      transform: rotate(1deg);
+      box-shadow: var(--pin-shadow);
+      position: relative;
+    }
+    .cta-note::after {
+      content: '';
+      position: absolute; bottom: -8px; left: 0; right: 0;
+      height: 12px; background: var(--fire);
+      clip-path: polygon(0% 0%, 4% 100%, 8% 20%, 12% 100%, 16% 40%, 20% 100%, 24% 10%, 28% 100%, 32% 50%, 36% 100%, 40% 20%, 44% 100%, 48% 30%, 52% 100%, 56% 10%, 60% 100%, 64% 40%, 68% 100%, 72% 20%, 76% 100%, 80% 50%, 84% 100%, 88% 10%, 92% 100%, 96% 30%, 100% 100%, 100% 0%);
+    }
+    .cta-note .pin {
+      position: absolute; top: -11px; right: 30%;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffaa, #cccc00);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.45);
+    }
+    .cta-note .pin::after {
+      content: ''; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 12px;
+      background: linear-gradient(to bottom, #777, #333);
+    }
+    .cta-title {
+      font-family: var(--serif);
+      font-size: 2rem; font-style: italic; font-weight: 600;
+      color: #fff; line-height: 1.2; margin-bottom: 14px;
+    }
+    .cta-text {
+      font-family: var(--sans); font-size: 0.82rem;
+      color: rgba(255,255,255,0.85); line-height: 1.75; margin-bottom: 22px;
+    }
+
+    /* Footer tape across bottom */
+    .board-footer {
+      margin-left: 72px;
+      background: var(--ink);
+      border-top: 2px solid rgba(255,255,255,0.06);
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-p { font-family: var(--sans); font-size: 0.7rem; color: rgba(255,255,255,0.3); }
+    .footer-logo { font-family: var(--pixel); font-size: 0.38rem; color: var(--gold); letter-spacing: 2px; }
+
+    /* ══════════════════════════════════
+       SEARCH OVERLAY
+    ══════════════════════════════════ */
+    .search-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(26,18,8,0.96);
+      display: none; align-items: flex-start; justify-content: center;
+      padding-top: 120px; backdrop-filter: blur(8px);
+    }
+    .search-overlay.open { display: flex; }
+    .search-box { width:100%; max-width:560px; padding:0 24px; }
+    .search-eyebrow { font-family:var(--pixel); font-size:0.32rem; color:var(--fire); letter-spacing:4px; margin-bottom:12px; }
+    .search-row {
+      display:flex; align-items:center; gap:12px;
+      border-bottom:1px solid rgba(245,237,216,0.3);
+      padding-bottom:14px; margin-bottom:24px;
+    }
+    .search-row input {
+      flex:1; background:none; border:none; outline:none;
+      font-family:var(--serif); font-size:1.6rem;
+      font-style:italic; color:var(--paper);
+    }
+    .search-row input::placeholder { color:rgba(245,237,216,0.3); }
+    .search-close-btn { font-family:var(--pixel); font-size:0.3rem; color:rgba(245,237,216,0.4); letter-spacing:2px; }
+    .search-results { display:flex; flex-direction:column; }
+    .sr-item {
+      padding:13px 0; border-bottom:1px solid rgba(245,237,216,0.08);
+      display:flex; justify-content:space-between; align-items:center;
+      transition:padding-left 0.2s; text-decoration:none;
+    }
+    .sr-item:hover { padding-left:8px; }
+    .sr-cat { font-family:var(--pixel); font-size:0.26rem; color:var(--fire); letter-spacing:2px; margin-bottom:3px; }
+    .sr-title { font-family:var(--serif); font-size:1rem; font-style:italic; color:var(--paper); }
+    .sr-arr { color:rgba(245,237,216,0.3); }
+    .search-msg { font-family:var(--sans); font-size:0.82rem; color:rgba(245,237,216,0.35); text-align:center; padding:40px 0; }
+
+    /* Reading progress */
+    #progress-bar {
+      position:fixed; top:0; left:56px; right:0;
+      height:2px; width:0%;
+      background:linear-gradient(90deg,var(--fire),var(--gold));
+      z-index:9999; transition:width 0.08s linear;
+    }
+
+    /* Mobile hamburger in top-right when nav is collapsed */
+    .mobile-nav-toggle {
+      display: none;
+      position: fixed; top:12px; right:16px; z-index:1001;
+      width:38px; height:38px; border-radius:50%;
+      background:var(--ink); border:1px solid rgba(255,255,255,0.12);
+      color:rgba(255,255,255,0.6);
+      align-items:center; justify-content:center;
+      font-size:1rem; cursor:pointer;
+    }
+
+    /* ══════════════════════════════════
+       REVEAL
+    ══════════════════════════════════ */
+    .reveal { opacity:0; transform:translateY(16px) rotate(var(--rot,0deg)); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity:1; transform:translateY(0) rotate(var(--rot,0deg)); }
+    /* But pinned posts keep their rotation on reveal */
+    .pinned-post.reveal { transform: rotate(var(--rot,0deg)) translateY(16px); }
+    .pinned-post.reveal.in { transform: rotate(var(--rot,0deg)) translateY(0); }
+
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
+    @media (max-width: 860px) {
+      .board-bottom { grid-template-columns: 1fr 1fr; }
+      .cta-note { grid-column: span 2; }
+      .title-sheet { grid-template-columns: 1fr; }
+      .sheet-photo-col { min-height: 200px; margin-top: 24px; }
+      .pasted-photo:nth-child(1) { top: 0; left: 0; width: 110px; }
+      .pasted-photo:nth-child(2) { top: 70px; left: 80px; width: 100px; }
+      .pasted-photo:nth-child(3) { top: 140px; left: 10px; width: 115px; }
+    }
+    @media (max-width: 640px) {
+      .nav-strip { display: none; }
+      .board { margin-left: 0; padding: 56px 16px 60px; }
+      .board-footer { margin-left: 0; }
+      #progress-bar { left: 0; }
+      .mobile-nav-toggle { display: flex; }
+      .board-bottom { grid-template-columns: 1fr; }
+      .cta-note { grid-column: span 1; }
+      .board-header { flex-direction: column; }
+      .title-sheet { transform: rotate(0); max-width: 100%; grid-template-columns: 1fr; }
+      .sheet-photo-col { min-height: 180px; }
+      .sticky-about { transform: rotate(0); max-width: 100%; }
+      .pinboard { grid-template-columns: 1fr 1fr; gap: 20px 14px; }
+      .pinned-post { transform: rotate(0deg) !important; }
+      .about-note, .cta-note, .team-sticky { transform: rotate(0deg) !important; }
+      .light-blob { display: none; }
+    }
+    @media (max-width: 420px) {
+      .pinboard { grid-template-columns: 1fr; }
+      .title-sheet { grid-template-columns: 1fr; }
+      .sheet-photo-col { display: none; }
+    }
+
+    /* Mobile nav drawer */
+    .mobile-nav-drawer {
+      display: none;
+      position: fixed; top:0; left:0; right:0; bottom:0;
+      background: rgba(26,18,8,0.97);
+      z-index: 1500;
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 28px;
+    }
+    .mobile-nav-drawer.open { display: flex; }
+    .mobile-nav-drawer a {
+      font-family: var(--hand); font-size: 1.8rem;
+      color: var(--paper); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-nav-drawer a:hover { color: var(--fire); }
+    .mobile-nav-close {
+      position: absolute; top:16px; right:16px;
+      font-family: var(--pixel); font-size: 0.36rem;
+      color: rgba(255,255,255,0.4); letter-spacing: 2px;
+      cursor: pointer; background: none; border: none;
+    }
+  </style>
 </head>
-
 <body>
-    <header>
-        <nav>
-            <h1 class="logo">HlYWoR</h1>
-            <ul class="nav-links">
-                <li><a href="about.html">About</a></li>
-                <li><a href="suggestion.html">Suggestion</a></li>
-                <li><a href="goal.html">Goals</a></li>
-                <li><a href="#team">Team</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
 
-    </header>
+<div id="progress-bar"></div>
 
-    <section id="home" class="hero">
-        <h2>Welcome to <span>HlyWor</span></h2>
-        <p>A website where you can find info about things that you cant imagine to find here :)</p>
-        <a href="#blog" class="btn">Start Reading</a>
-        <a href="#CATE" class="btn">Our Work</a>
-    </section>
+<!-- Immersive atmosphere layers -->
+<div class="light-blob light-blob-1"></div>
+<div class="light-blob light-blob-2"></div>
+<div class="light-blob light-blob-3"></div>
+<div class="embers" id="embers"></div>
 
-    <section id="CATE" class="section">
-        <h2 class="cate-title">OUR WORK</h2>
-        <div class="blog-layout">
+<!-- VERTICAL NAV STRIP -->
+<nav class="nav-strip">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-divider"></div>
+  <div class="nav-icon-links">
+    <a href="about.html" class="nav-icon-link">ABOUT</a>
+    <a href="suggestion.html" class="nav-icon-link">SUGGEST</a>
+    <a href="goal.html" class="nav-icon-link">GOALS</a>
+    <a href="blogs.html" class="nav-icon-link">ALL POSTS</a>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" id="searchOpenBtn" aria-label="Search">⌕</button>
+  </div>
+</nav>
 
+<!-- Mobile nav toggle -->
+<button class="mobile-nav-toggle" id="mobileToggle">☰</button>
 
-            <section class="welcome">
-                <a href="story.html">
-                    <h2>THE STORY</h2>
-                    <div class="stor"></div>
-                    <p>Where we share our personal expiriences....</p>
-                </a>
-            </section>
+<!-- Mobile nav drawer -->
+<div class="mobile-nav-drawer" id="mobileDrawer">
+  <button class="mobile-nav-close" id="mobileClose">[ CLOSE ]</button>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="suggestion.html">Suggestion</a>
+  <a href="goal.html">Goals</a>
+  <a href="blogs.html">All Posts</a>
+  <a href="submit.html">Submit →</a>
+  <button class="nav-btn" id="mobileSearchBtn" style="width:auto;height:auto;padding:8px 20px;border-radius:0;font-family:var(--pixel);font-size:0.34rem;color:var(--fire);letter-spacing:2px;border-color:var(--fire)">SEARCH</button>
+</div>
 
-            <section class="What-we-do">
-                <a href="movies.html">
-                    <h2>MOVIES REVIEWS</h2>
-                    <div class="mov"></div>
-                </a>
-            </section>
-            <section class="What-we-do">
-                <a href="gallery.html">
-                    <h2>GALLERY</h2>
-                    <div class="cam"></div>
-                </a>
-            </section>
-            <section class="What-we-do">
-                <a href="book.html">
-                    <h2>Book Reviews</h2>
-                    <div class="boo"></div>
-                </a>
-            </section>
-            <section class="What-we-do">
-                <a href="news.html">
-                    <h2>NEWS</h2>
-                    <div class="news"></div>
-                </a>
-            </section>
-            <section class="What-we-do">
-                <a href="utility.html">
-                    <h2>UTILITY</h2>
-                    <div class="uti"></div>
-                </a>
-            </section>
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-eyebrow">// SEARCH THE BOARD</div>
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="what are you looking for..." autocomplete="off"/>
+      <button class="search-close-btn" id="searchCloseBtn">close</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-msg">Start typing...</div>
+    </div>
+  </div>
+</div>
 
+<!-- THE BOARD -->
+<div class="board">
 
-            <!-- <section class="numbers">
-                <div class="stat">495%<br><small>Growth</small></div>
-                <div class="stat">750<br><small>Upload</small></div>
-                <div class="stat">60<br><small>Clients</small></div>
-            </section>
+  <!-- HEADER — title sheet + sticky note -->
+  <div class="board-header">
+    <div class="title-sheet reveal">
+      <div class="pin"></div>
+      <span class="tape-label">EST. 2025</span>
 
-            <section class="concept">
-                <div class="concept-box">Lorem Ipsum<br><small>Description here</small></div>
-                <div class="concept-box">Lorem Ipsum<br><small>Description here</small></div>
-                <div class="concept-box">Lorem Ipsum<br><small>Description here</small></div>
-            </section>
+      <!-- LEFT: text -->
+      <div class="sheet-text-col">
+        <div>
+          <div class="sheet-eyebrow">// GUWAHATI, ASSAM</div>
+          <h1 class="sheet-title">A place to<br><em>open up.</em></h1>
+          <p class="sheet-sub">College life, random thoughts, movie reviews, stories we had to write down. This is our open notebook. You're welcome here.</p>
         </div>
-            -->
-
-
-    </section>
-
-
-    <section id="about" class="section">
-        <h2>About</h2>
-        <p>hlywor.fun is kind of like our open notebook.
-            We write about our days, college life, random thoughts, movies we watch, and things we’ve learned along the
-            way.
-            <br>
-            Sometimes it’s deep, sometimes it’s just something that made us laugh — depends on the day, honestly.
-            <br>
-            We also share stories from others and moments that feel real to us.
-            <br>
-            It’s not about being perfect or planned — it’s just us, writing what feels right.
-        </p>
-    </section>
-
-    
-
-    <section id="blog" class="section blog">
-        <h2>Latest Posts</h2>
-        <div class="blog-grid">
-            <div class="card">
-                <h3>The highschool</h3>
-                <p>Just someone trying to make sense of life through stories. Not perfect, just honest.</p>
-                <a href="highschool.html" class="read-btn">Read More</a>
-            </div>
-            <!--<div class="card">
-                <h3>💾 Retro UI in Modern Web</h3>
-                <p>How old-school vibes are inspiring new-age interface trends.</p>
-                <a href="#" class="read-btn">Read More</a>
-            </div>
-            <div class="card">
-                <h3>🕹️ Building 8-bit Websites</h3>
-                <p>Step-by-step guide to creating pixel-style sites using pure HTML & CSS.</p>
-                <a href="#" class="read-btn">Read More</a>
-            </div>-->
+        <div class="sheet-ctas">
+          <a href="submit.html" class="btn-sticky fire">Share your story →</a>
+          <a href="#posts" class="btn-sticky">Start reading</a>
+          <a href="character.html" class="btn-sticky fire">Us →</a>
         </div>
-    </section>
-    <!--
-    <section id="concept" class="section">
-        <h2>Concept</h2>
-        <p>Every design begins with a concept — here, we merge retro aesthetics with clean, modern structure.</p>
-    </section>
+      </div>
 
-    <section id="flow" class="section">
-        <h2>Flow</h2>
-        <p>From idea to pixel — we follow a structured creative flow that keeps the process simple and fun.</p>
-    </section>
-
-    <section id="goals" class="section">
-        <h2>Goals</h2>
-        <p>Our goal is to inspire creators to mix the charm of the past with the power of modern technology.</p>
-    </section>
-    -->
-
-
-    <section id="team" class="section team">
-        <h2>US</h2>
-        <div class="team-grid">
-            <div class="member">
-                <a href="pawan.html">
-                    <div class="avatar1"></div>
-                </a>
-                <h3>Pawan Limbu</h3>
-                <p>Developer</p>
-            </div>
-            <div class="member">
-                <a href="atck.html">
-                    <div class="avatar2"></div>
-                </a>
-                <h3>Suvam Limbu</h3>
-                <p>Developer</p>
-            </div>
-
-
-
+      <!-- RIGHT: pasted photos -->
+      <div class="sheet-photo-col">
+        <!-- Photo 1 -->
+        <div class="pasted-photo">
+          <div class="photo-inner">
+            <span class="photo-inner-label">
+              <a href="gallery.html"><img src="img/suvm1.jpg" alt=""></a>
+              </span>
+          </div>
+          <span class="photo-caption">campus days ☀️</span>
         </div>
-    </section>
+        <!-- Photo 2 -->
+        <div class="pasted-photo">
+          <div class="photo-inner" style="background:#e8e0cc;">
+            <span class="photo-inner-label">
+              <a href="gallery.html"><img src="img/pawn1.jpg" alt=""></a>
+             </span>
+          </div>
+          <span class="photo-caption">late nights 🌙</span>
+        </div>
+        <!-- Photo 3 -->
+        <div class="pasted-photo">
+          <div class="photo-inner" style="background:#dde8d8;">
+            <span class="photo-inner-label">
+             <a href="gallery.html"> <img src="img/pawn2.jpg" alt=""> </a>
+            </span>
+          </div>
+          <span class="photo-caption">good times 📸</span>
+        </div>
+      </div>
+    </div>
 
-    <section id="contact" class="section contact">
-        <h2>Your story</h2>
-        <p>Got something interesting, unique. Well we are here for that. Just contact us.</p>
-        <a href="submit.html" class="btn">Send Email</a>
-    </section>
+    <div class="sticky-about reveal">
+      <div class="pin"></div>
+      <p>hlywor.fun is kind of like our open notebook. We write about our days, college life, and things that felt real to us.</p>
+      <p style="margin-top:8px">Not perfect, not planned — just honest.</p>
+      <span class="sticky-sign">— Pawan & Suvam</span>
+    </div>
+  </div>
 
-    <footer>
-        <p>© 2025 HlyWor Blog. Crafted with ❤️ in our style.</p>
-    </footer>
+  <!-- TAPE FILTER -->
+  <div class="tape-filter reveal" id="tagBar">
+    <button class="tape-tab active" data-tag="all">ALL</button>
+    <button class="tape-tab" data-tag="story">STORY</button>
+    <button class="tape-tab" data-tag="movies">MOVIES</button>
+    <button class="tape-tab" data-tag="books">BOOKS</button>
+    <button class="tape-tab" data-tag="thoughts">THOUGHTS</button>
+    <button class="tape-tab" data-tag="college">COLLEGE</button>
+    <button class="tape-tab" data-tag="news">NEWS</button>
+  </div>
 
-    <script>
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+  <!-- PINBOARD — posts -->
+  <div class="pinboard" id="postsGrid">
+    <!-- Skeletons -->
+    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:60%"></div></div></div>
+    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:75%"></div><div class="skel-line shimmer" style="width:55%"></div></div></div>
+    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:70%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
+    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:50%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:45%"></div></div></div>
+  </div>
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
-    </script>
+  <!-- BOTTOM — About, Team, CTA -->
+  <div class="board-bottom" style="margin-top:56px">
 
-    <script>
-        fetch("posts.json")
-            .then(r => r.json())
-            .then(posts => {
-                const container = document.querySelector(".blog-grid");
-                container.innerHTML = "";
+    <!-- About note -->
+    <div class="about-note reveal">
+      <div class="pin"></div>
+      <div class="note-header">// WHO WE ARE</div>
+      <p class="note-text">
+        <strong>hlywor.fun</strong> is kind of like our open notebook. We write about our days, college life, random thoughts, movies we watch, and things we've learned along the way.<br><br>
+        Sometimes it's deep, sometimes it's just something that made us laugh. We also share stories from others and moments that feel real.<br><br>
+        It's not about being perfect — it's just us, writing what feels right.
+      </p>
+    </div>
 
-                // Sort and take latest 6
-                const latest = posts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
+    <!-- Team stickies -->
+    <div class="team-stickies reveal">
+      <a href="pawan.html" class="team-sticky">
+        <div class="pin"></div>
+        <div class="sticky-name">Pawan Limbu</div>
+        <div class="sticky-role">DEVELOPER · WRITER</div>
+        <p class="sticky-bio">Writing what feels right, building what needs to exist.</p>
+        <span class="sticky-link">See posts →</span>
+      </a>
+      <a href="suv.html" class="team-sticky">
+        <div class="pin"></div>
+        <div class="sticky-name">Suvam Limbu</div>
+        <div class="sticky-role">DEVELOPER · WRITER</div>
+        <p class="sticky-bio">Turning late night thoughts into something worth reading.</p>
+        <span class="sticky-link">See posts →</span>
+      </a>
+    </div>
 
-                // Create post cards
-                latest.forEach(post => {
-                    const card = document.createElement("div");
-                    card.className = "card";
-                    card.innerHTML = `
-        <img src="${post.thumbnail}" alt="${post.title}" class="post-thumb" style="width:100%;border-radius:8px;">
-        <h3>${post.title}</h3>
-        <p>${post.desc}</p>
-        <a href="${post.url}" class="read-btn">Read More</a>
-      `;
-                    container.appendChild(card);
-                });
+    <!-- CTA note -->
+    <div class="cta-note reveal">
+      <div class="pin"></div>
+      <div class="cta-title">Got a story?</div>
+      <p class="cta-text">Something you've been meaning to say. Something that happened at 3am. Something you felt so hard you had to write it down. This is the place.</p>
+      <a href="submit.html" class="btn-sticky" style="background:#fff;color:var(--fire);display:inline-block">Pin your story →</a>
+    </div>
 
-                // Optional: Show "View All Posts" button if there are more than 6 posts
-                if (posts.length > 6) {
-                    const viewAll = document.createElement("div");
-                    viewAll.style.textAlign = "center";
-                    viewAll.style.marginTop = "20px";
-                    viewAll.innerHTML = `<a href="blogs.html" class="view-all-btn" style="display:inline-block;padding:10px 20px;background:#222;color:#fff;border-radius:8px;text-decoration:none;">View All Posts</a>`;
-                    container.parentElement.appendChild(viewAll);
-                }
-            })
-            .catch(err => {
-                console.error("Error loading posts:", err);
-                const container = document.querySelector(".blog-grid");
-                container.innerHTML = "<p style='text-align:center;color:#888;'>No posts found yet.</p>";
-            });
-    </script>
+  </div>
+
+  <!-- Our Work channels — compact row at the very bottom -->
+  <div style="margin-top:40px;border-top:1px dashed rgba(245,237,216,0.1);padding-top:32px">
+    <div style="font-family:var(--pixel);font-size:0.3rem;color:rgba(245,237,216,0.3);letter-spacing:4px;margin-bottom:20px">// WHAT WE MAKE</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <a href="story.html" class="btn-sticky" style="font-size:0.85rem;transform:rotate(-0.8deg)">📖 Story</a>
+      <a href="movies.html" class="btn-sticky" style="background:var(--tape-b);color:#fff;font-size:0.85rem;transform:rotate(0.5deg)">🎬 Movies</a>
+      <a href="gallery.html" class="btn-sticky" style="background:var(--tape-g);color:#fff;font-size:0.85rem;transform:rotate(-1deg)">📷 Gallery</a>
+      <a href="book.html" class="btn-sticky" style="background:var(--tape-p);color:#fff;font-size:0.85rem;transform:rotate(0.8deg)">📚 Books</a>
+      <a href="news.html" class="btn-sticky" style="background:var(--tape-r);color:#fff;font-size:0.85rem;transform:rotate(-0.5deg)">📰 News</a>
+      <a href="utility.html" class="btn-sticky" style="background:var(--ink2);color:var(--paper);font-size:0.85rem;transform:rotate(1deg)">🛠 Utility</a>
+    </div>
+  </div>
+
+</div><!-- /board -->
+
+<footer class="board-footer">
+  <p class="footer-p">© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
+
+<!-- ══════════════ JS ══════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, where }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ════════════════════════════════════
+// 🔧 PASTE YOUR FIREBASE CONFIG HERE
+// ════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+  authDomain: "hlywor.firebaseapp.com",
+  projectId: "hlywor",
+  storageBucket: "hlywor.firebasestorage.app",
+  messagingSenderId: "697637160825",
+  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+  measurementId: "G-MQDXDWHLX8"
+};
 
 
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+/* ── Floating embers ── */
+const emberContainer = document.getElementById('embers');
+if (emberContainer) {
+  for (let i = 0; i < 22; i++) {
+    const e = document.createElement('div');
+    e.className = 'ember';
+    const size = 1 + Math.random() * 2.5;
+    e.style.cssText = `left:${10+Math.random()*80}%;bottom:0;width:${size}px;height:${size}px;animation-duration:${7+Math.random()*12}s;animation-delay:${Math.random()*10}s;--edrift:${(Math.random()-0.5)*100}px;opacity:0;`;
+    emberContainer.appendChild(e);
+  }
+}
 
+/* ── Mouse parallax on light blobs ── */
+document.addEventListener('mousemove', ev => {
+  const px = (ev.clientX / window.innerWidth - 0.5) * 28;
+  const py = (ev.clientY / window.innerHeight - 0.5) * 28;
+  document.querySelectorAll('.light-blob').forEach((b, i) => {
+    const f = (i + 1) * 0.4;
+    b.style.transform = `translate(${px*f}px, ${py*f}px)`;
+  });
+}, { passive: true });
+
+/* Reading progress */
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress-bar').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, { passive: true });
+
+/* Mobile nav */
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileDrawer = document.getElementById('mobileDrawer');
+const mobileClose  = document.getElementById('mobileClose');
+mobileToggle.addEventListener('click', () => mobileDrawer.classList.add('open'));
+mobileClose.addEventListener('click',  () => mobileDrawer.classList.remove('open'));
+mobileDrawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileDrawer.classList.remove('open')));
+
+/* Mobile search */
+document.getElementById('mobileSearchBtn')?.addEventListener('click', () => {
+  mobileDrawer.classList.remove('open');
+  openSearch();
+});
+
+/* Scroll reveal */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
+    const idx = siblings.indexOf(e.target);
+    setTimeout(() => e.target.classList.add('in'), idx * 70);
+    ro.unobserve(e.target);
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ── Posts — live from Firestore ── */
+let allPosts = [];
+let activeTag = 'all';
+
+/* Cat → tape color class */
+function catClass(cat) {
+  const map = { story:'cat-story', movies:'cat-movies', books:'cat-books', thoughts:'cat-thoughts', college:'cat-college', news:'cat-news' };
+  return map[cat] || 'cat-default';
+}
+
+/* Live Firestore listener */
+function startLiveFeed() {
+  const q = query(
+    collection(db, 'posts'),
+    where('status', '==', 'published'),
+    orderBy('createdAt', 'desc')
+  );
+
+  onSnapshot(q, snap => {
+    allPosts = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    renderPosts();
+  }, err => {
+    console.error('Firestore error:', err);
+    document.getElementById('postsGrid').innerHTML =
+      `<div class="no-posts">Couldn't load posts.\nCheck Firebase config.</div>`;
+  });
+}
+
+startLiveFeed();
+
+/* Tag filter */
+
+function renderPosts() {
+  const grid = document.getElementById('postsGrid');
+  const rotations = [-1.2, 0.8, -0.4, 1.5, -0.9, 1.1, -1.6, 0.5, -0.7, 1.3, -0.3, 0.9];
+  const filtered = (activeTag === 'all'
+    ? allPosts
+    : allPosts.filter(p => (p.category||p.type||'').toLowerCase() === activeTag)
+  ).slice(0, 9);
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="no-posts">Nothing pinned yet.\nBe the first — share your story!</div>`;
+    return;
+  }
+
+  grid.innerHTML = '';
+  filtered.forEach((post, i) => {
+    const rot = rotations[i % rotations.length];
+    const rKey = 'react-' + post.url;
+    const reactions = JSON.parse(localStorage.getItem(rKey) || '{"🔥":0,"❤️":0,"😭":0}');
+    const cat = (post.category || post.type || 'post').toLowerCase();
+
+    const card = document.createElement('div');
+    card.className = 'pinned-post reveal';
+    card.style.cssText = `--rot:${rot}deg;`;
+    card.style.transitionDelay = `${i * 55}ms`;
+
+    /* Pin color varies */
+    const pinColors = [
+      'radial-gradient(circle at 35% 35%, #ff9999, #cc3333)',
+      'radial-gradient(circle at 35% 35%, #99bbff, #3355cc)',
+      'radial-gradient(circle at 35% 35%, #aaeeaa, #228844)',
+      'radial-gradient(circle at 35% 35%, #ffcc99, #cc6622)',
+    ];
+    const pinLeft = [28,55,42,65,35][i%5];
+    const pinColor = pinColors[i%4];
+
+    const thumb = post.thumbnail
+      ? `<div class="post-photo">
+           <img src="${post.thumbnail}" alt="${post.title}" loading="lazy">
+           <div class="photo-corner tl"></div>
+           <div class="photo-corner tr"></div>
+           <div class="photo-corner bl"></div>
+           <div class="photo-corner br"></div>
+         </div>`
+      : `<div class="post-noimg">
+           <div class="post-noimg-num">${String(i+1).padStart(2,'0')}</div>
+           <div class="post-noimg-label">no photo</div>
+         </div>`;
+
+    const dateStr = post.date
+      ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})
+      : '';
+
+    const authorName = post.author || 'HlyWor';
+
+    const reactionHtml = Object.entries(reactions).map(([emoji, count]) => {
+      const reacted = localStorage.getItem(`reacted-${post.url}-${emoji}`) === '1';
+      return `<button class="sticker-btn${reacted?' reacted':''}" data-url="${post.url}" data-emoji="${emoji}">
+        ${emoji}<span class="sticker-count">${count}</span></button>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="post-pin" style="left:${pinLeft}%;background:${pinColor}"></div>
+      ${thumb}
+      <div class="post-note-body">
+        <span class="post-cat-tape ${catClass(cat)}">${cat.toUpperCase()}</span>
+        <div class="post-note-title">${post.title}</div>
+        <p class="post-note-desc">${post.desc||''}</p>
+        <div class="post-note-meta">
+          <span class="post-author-hand">${authorName}${dateStr?' · '+dateStr:''}</span>
+          <span class="post-read-hand">read →</span>
+        </div>
+      </div>
+      <div class="post-stickers">${reactionHtml}</div>`;
+
+    /* Click to navigate — always use post.html?slug= */
+    card.addEventListener('click', e => {
+      if (e.target.closest('.sticker-btn')) return;
+      const slug = post.slug || post.url?.split('/').pop()?.replace('.html','');
+      window.location.href = `post.html?slug=${slug}`;
+    });
+
+    grid.appendChild(card);
+    requestAnimationFrame(() => {
+      ro.observe(card);
+    });
+  });
+
+  /* Reaction clicks */
+  grid.querySelectorAll('.sticker-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const {url, emoji} = btn.dataset;
+      const key = `reacted-${url}-${emoji}`;
+      const store = JSON.parse(localStorage.getItem('react-'+url)||'{"🔥":0,"❤️":0,"😭":0}');
+      const already = localStorage.getItem(key)==='1';
+      store[emoji] = Math.max(0,(store[emoji]||0)+(already?-1:1));
+      already ? localStorage.removeItem(key) : localStorage.setItem(key,'1');
+      btn.classList.toggle('reacted',!already);
+      btn.querySelector('.sticker-count').textContent = store[emoji];
+      localStorage.setItem('react-'+url, JSON.stringify(store));
+    });
+  });
+}
+
+/* Tag filter */
+document.querySelectorAll('.tape-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tape-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTag = btn.dataset.tag;
+    renderPosts();
+  });
+});
+
+
+/* ── Search ── */
+const searchOverlay = document.getElementById('searchOverlay');
+const searchInput   = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+function openSearch() { searchOverlay.classList.add('open'); setTimeout(()=>searchInput.focus(),80); }
+function closeSearch() {
+  searchOverlay.classList.remove('open');
+  searchInput.value = '';
+  searchResults.innerHTML = '<div class="search-msg">Start typing...</div>';
+}
+
+document.getElementById('searchOpenBtn').addEventListener('click', openSearch);
+document.getElementById('searchCloseBtn').addEventListener('click', closeSearch);
+searchOverlay.addEventListener('click', e => { if(e.target===searchOverlay) closeSearch(); });
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape') closeSearch();
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}
+});
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) { searchResults.innerHTML='<div class="search-msg">Start typing...</div>'; return; }
+  const hits = allPosts.filter(p =>
+    p.title.toLowerCase().includes(q) ||
+    (p.desc||'').toLowerCase().includes(q) ||
+    (p.category||p.type||'').toLowerCase().includes(q) ||
+    (p.author||'').toLowerCase().includes(q)
+  );
+  searchResults.innerHTML = hits.length
+    ? hits.slice(0,8).map(p=>`
+        <a href="${p.url}" class="sr-item" onclick="closeSearch()">
+          <div><div class="sr-cat">${(p.category||p.type||'POST').toUpperCase()}</div>
+          <div class="sr-title">${p.title}</div></div>
+          <span class="sr-arr">→</span>
+        </a>`).join('')
+    : '<div class="search-msg">Nothing found.</div>';
+});
+</script>
 </body>
-
 </html>

@@ -1,111 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Google tag (gtag.js) -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pawan Limbu — HlyWor</title>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
 
-    gtag('config', 'G-ZVLSVF6T3J');
-  </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pawan / paw</title>
-  <link rel="stylesheet" href="style/pawan.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board:  #2a1f14;
+      --paper:  #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #ede3c8;
+      --ink:    #1a1208;
+      --ink2:   #3d3020;
+      --ink3:   #6a5840;
+      --ink4:   #a09078;
+      --rule:   rgba(180,160,120,0.22);
+      --acc:    #e8681a;
+      --gold:   #d4a020;
+      --pin-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.3);
+      --pixel:  'Press Start 2P', monospace;
+      --serif:  'Crimson Pro', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      --hand:   'Caveat', cursive;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--board); font-family: var(--serif); min-height: 100vh; overflow-x: hidden; }
+
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(120,75,25,0.4) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(80,50,15,0.3) 0%, transparent 45%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: auto,auto,200px 200px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .fire-glow {
+      position: fixed; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,104,26,0.09) 0%, transparent 70%);
+      top: 10%; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+      animation: glowPulse 8s ease-in-out infinite;
+    }
+    @keyframes glowPulse { 0%,100%{opacity:.6;transform:translateX(-50%) scale(1)} 50%{opacity:1;transform:translateX(-50%) scale(1.12)} }
+
+    .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .ember { position: absolute; border-radius: 50%; background: var(--acc); box-shadow: 0 0 4px var(--acc); animation: eR linear infinite; opacity: 0; }
+    @keyframes eR { 0%{transform:translateY(100vh) translateX(0);opacity:0} 8%{opacity:.9} 85%{opacity:.2} 100%{transform:translateY(-5vh) translateX(var(--ed));opacity:0} }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--board); }
+    ::-webkit-scrollbar-thumb { background: var(--acc); border-radius: 2px; }
+
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg,var(--acc),var(--gold)); z-index: 9999; transition: width 0.08s linear; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 200; background: var(--ink); border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 52px; }
+    .nav-logo { font-family: var(--pixel); font-size: 0.55rem; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-shadow: 0 0 12px rgba(212,160,32,0.4); animation: flicker 7s infinite; }
+    @keyframes flicker { 0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1} }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
+    .nav-links a { font-family: var(--sans); font-size: 0.75rem; color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: rgba(255,255,255,0.85); }
+    .nav-back { font-family: var(--sans); font-size: 0.72rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: rgba(255,255,255,0.8); }
+    .nav-back::before { content: '←'; margin-right: 5px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; width: 32px; height: 32px; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 18px; height: 1.5px; background: rgba(255,255,255,0.6); transition: all 0.28s; transform-origin: center; }
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mob-nav { display: none; position: fixed; top: 52px; left: 0; right: 0; background: var(--ink); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 20px 28px; z-index: 199; flex-direction: column; }
+    .mob-nav.open { display: flex; }
+    .mob-nav a { font-family: var(--sans); font-size: 0.88rem; color: rgba(255,255,255,0.45); padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; transition: color 0.2s; }
+    .mob-nav a:last-child { border-bottom: none; }
+    .mob-nav a:hover { color: rgba(255,255,255,0.85); }
+
+    /* PAGE */
+    .page-wrap { max-width: 920px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
+
+    /* Book drop */
+    @keyframes bookDrop {
+      0%  { opacity:0; transform:translateY(-55px) rotate(-2deg) scale(0.95); }
+      65% { opacity:1; transform:translateY(7px) rotate(0.5deg) scale(1.004); }
+      82% { transform:translateY(-3px) rotate(-0.2deg); }
+      100%{ opacity:1; transform:translateY(0) rotate(0deg) scale(1); }
+    }
+
+    .profile-wrap { padding-top: 48px; position: relative; }
+    .profile-pin {
+      position: absolute; top: 34px; left: 50%; transform: translateX(-50%);
+      width: 17px; height: 17px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%,#ff8855,#cc3300);
+      box-shadow: 0 2px 7px rgba(0,0,0,0.65), inset 0 1px 2px rgba(255,255,255,0.3);
+      z-index: 10;
+      animation: pinDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) both 0.15s;
+    }
+    @keyframes pinDrop { from{opacity:0;transform:translateX(-50%) translateY(-20px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+    .profile-pin::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); width:2px; height:15px; background:linear-gradient(to bottom,#888,#333); }
+
+    .profile-sheet { display: flex; box-shadow: var(--pin-shadow); animation: bookDrop 0.9s cubic-bezier(0.34,1.4,0.64,1) both; }
+
+    .profile-spine {
+      width: 26px; flex-shrink: 0;
+      background: linear-gradient(180deg,#3d2210 0%,#2a1608 20%,#4a2a12 40%,#2a1608 60%,#3d2210 80%,#2a1608 100%);
+      border-right: 2px solid rgba(0,0,0,0.5);
+      border-radius: 3px 0 0 3px; position: relative;
+    }
+    .profile-spine::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:6px; bottom:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 28px,rgba(0,0,0,0.35) 28px,rgba(0,0,0,0.35) 34px); }
+
+    .profile-page { flex:1; background:var(--paper); position:relative; overflow:hidden; }
+    .profile-page::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px); background-position:0 100px; pointer-events:none; z-index:0; }
+    .profile-page::after { content:''; position:absolute; top:0; bottom:0; left:70px; width:1px; background:rgba(220,80,80,0.18); pointer-events:none; z-index:0; }
+    .page-curl { position:absolute; bottom:0; right:0; width:42px; height:42px; background:linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.1) 50%,var(--paper2) 50%); clip-path:polygon(100% 0,100% 100%,0 100%); pointer-events:none; z-index:10; transition:width 0.3s,height 0.3s; }
+    .profile-sheet:hover .page-curl { width:58px; height:58px; }
+
+    /* TOP */
+    .top-section { display: grid; grid-template-columns: 210px 1fr; gap: 32px; padding: 32px 36px 28px 88px; border-bottom: 1px solid var(--rule); position: relative; z-index: 2; }
+
+    /* Photos */
+    .photos-col { position: relative; height: 290px; }
+    .diary-photo { position: absolute; background: #fff; padding: 6px 6px 22px; box-shadow: 2px 4px 14px rgba(0,0,0,0.3), 1px 1px 3px rgba(0,0,0,0.12); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+    .diary-photo:hover { box-shadow: 5px 7px 24px rgba(0,0,0,0.45); z-index: 20 !important; }
+    .diary-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: sepia(6%) brightness(0.97); transition: filter 0.4s; }
+    .diary-photo:hover img { filter: sepia(0%) brightness(1); }
+    .diary-photo-cap { font-family: var(--hand); font-size: 0.72rem; color: var(--ink3); text-align: center; padding-top: 4px; line-height: 1.2; }
+    .diary-photo::before { content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%) rotate(-1.5deg); width:46px; height:14px; background:rgba(240,190,40,0.65); z-index:3; }
+    .diary-photo:nth-child(2)::before { background:rgba(232,104,26,0.55);transform:translateX(-50%) rotate(1.5deg); }
+    .diary-photo:nth-child(3)::before { background:rgba(80,130,220,0.5);transform:translateX(-50%) rotate(-0.5deg); }
+    .diary-photo:nth-child(1) { top:4px;left:50%;transform:translateX(-50%) rotate(-2deg);width:134px;height:126px;z-index:3; }
+    .diary-photo:nth-child(2) { bottom:8px;left:0;width:120px;height:112px;transform:rotate(3deg);z-index:2; }
+    .diary-photo:nth-child(3) { bottom:8px;right:0;width:120px;height:112px;transform:rotate(-2.5deg);z-index:1; }
+
+    /* Info */
+    .info-col { display: flex; flex-direction: column; gap: 10px; }
+    .exe-badge { font-family: var(--pixel); font-size: 0.4rem; letter-spacing: 1px; padding: 3px 10px; background: var(--acc); color: #fff; display: inline-block; align-self: flex-start; transform: rotate(-0.5deg); margin-bottom: 2px; }
+    .profile-name { font-family: var(--hand); font-size: clamp(2rem,5vw,3.2rem); color: var(--ink); font-weight: 700; line-height: 1.1; }
+    .profile-sub { font-family: var(--pixel); font-size: 0.35rem; color: var(--acc); letter-spacing: 2px; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .chip { font-family: var(--hand); font-size: 0.82rem; padding: 2px 10px; color: #fff; background: var(--acc); border-radius: 1px; opacity: 0.85; }
+    .chip-outline { font-family: var(--pixel); font-size: 0.22rem; padding: 2px 8px; letter-spacing: 1px; color: var(--ink3); border: 1px solid rgba(26,18,8,0.15); background: var(--paper3); border-radius: 1px; }
+
+    .ig-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--hand); font-size: 0.95rem; color: #fff; padding: 5px 16px; background: linear-gradient(135deg,#e8681a,#e8401a,#cc2277); text-decoration: none; transition: all 0.2s; align-self: flex-start; }
+    .ig-link:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+    .profile-bio { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--ink2); line-height: 1.8; max-width: 460px; }
+
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .info-list li { font-family: var(--hand); font-size: 0.95rem; color: var(--ink2); display: flex; gap: 8px; }
+    .info-lbl { font-family: var(--pixel); font-size: 0.37rem; color: var(--ink4); letter-spacing: 1px; width: 72px; flex-shrink: 0; padding-top: 3px; }
+
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+    .stat-row { display: flex; align-items: center; gap: 7px; }
+    .stat-lbl { font-family:var(--pixel);font-size:0.3rem;color:var(--ink4);letter-spacing:1px;width:56px;flex-shrink:0; }
+    .stat-bar-w { flex:1;height:5px;background:rgba(26,18,8,0.07);border-radius:1px;overflow:hidden; }
+    .stat-bar   { height:100%;border-radius:1px;background:var(--acc);width:0;transition:width 1s cubic-bezier(0.34,1.2,0.64,1); }
+    .stat-n     { font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);width:18px;text-align:right;flex-shrink:0; }
+
+    /* Sections */
+    .body-section { padding: 22px 36px 0 88px; position: relative; z-index: 2; }
+    .sec-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .sdlbl { font-family: var(--pixel); font-size: 0.4rem; color: var(--acc); letter-spacing: 3px; white-space: nowrap; }
+    .sdline { flex: 1; height: 1px; background: var(--rule); }
+
+    .sec-text { font-family: var(--serif); font-size: 1rem; color: var(--ink2); line-height: 1.85; font-style: italic; max-width: 580px; }
+    .sec-text strong { font-style: normal; color: var(--ink); }
+
+    .rules-list { display: flex; flex-direction: column; gap: 7px; max-width: 580px; }
+    .rule-item { font-family: var(--hand); font-size: 1rem; color: var(--ink2); display: flex; gap: 8px; align-items: baseline; }
+    .rule-item::before { content: '✦'; color: var(--acc); font-size: 0.7rem; flex-shrink: 0; }
+
+    .cw-wrap { font-family: var(--hand); font-size: 0.9rem; color: var(--ink3); line-height: 1.8; max-width: 580px; }
+    .cw-lbl { font-family: var(--pixel); font-size: 0.5rem; color: #e85c5c; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+    /* Mini gallery */
+    .mini-gallery { display: flex; gap: 14px; flex-wrap: wrap; }
+    .mini-photo { background: #fff; padding: 5px 5px 18px; box-shadow: 2px 3px 12px rgba(0,0,0,0.25); cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; position: relative; }
+    .mini-photo:nth-child(odd) { transform: rotate(-2deg); }
+    .mini-photo:nth-child(even) { transform: rotate(1.5deg); }
+    .mini-photo:hover { transform: rotate(0deg) scale(1.07) !important; box-shadow: 4px 6px 20px rgba(0,0,0,0.4); z-index: 5; }
+    .mini-photo img { width: 100px; height: 100px; object-fit: cover; display: block; filter: sepia(6%); }
+    .mini-photo::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:36px; height:11px; background:rgba(240,190,40,0.65); }
+
+    /* Letter */
+    .letter-wrap { max-width: 580px; background: var(--paper2); padding: 20px 24px; position: relative; transform: rotate(-0.3deg); box-shadow: 1px 2px 8px rgba(0,0,0,0.1); }
+    .letter-wrap::before { content:''; position:absolute; top:-9px; left:50%; transform:translateX(-50%) rotate(-0.5deg); width:56px; height:14px; background:rgba(232,104,26,0.6); }
+    .letter-text { font-family: var(--hand); font-size: 1rem; color: var(--ink2); line-height: 1.85; }
+    .letter-sign { font-family: var(--hand); font-size: 1.3rem; color: var(--ink); margin-top: 14px; display: block; text-align: right; }
+
+    /* Social section */
+    .social-section { margin-top: 44px; position: relative; z-index: 1; }
+    .social-heading { font-family: var(--pixel); font-size: 0.3rem; color: var(--acc); letter-spacing: 3px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .social-heading::before { content:''; display:inline-block; width:18px; height:1px; background:var(--acc); }
+    .social-cards { display: flex; flex-wrap: wrap; gap: 14px; }
+    .social-card { background: var(--paper); padding: 12px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.35); display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+    .social-card:nth-child(odd) { transform: rotate(-1deg); }
+    .social-card:nth-child(even) { transform: rotate(0.8deg); }
+    .social-card:hover { transform: rotate(0deg) translateY(-5px) !important; box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+    .social-card::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:36px; height:12px; background:rgba(240,190,40,0.65); }
+    .social-icon { font-size: 1.2rem; }
+    .social-label { font-family: var(--hand); font-size: 1rem; color: var(--ink); }
+    .social-handle { font-family: var(--pixel); font-size: 0.22rem; color: var(--ink4); letter-spacing: 1px; }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 20px 28px; margin-top: 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: relative; z-index: 1; }
+    .site-footer p { font-family: var(--sans); font-size: 0.68rem; color: rgba(255,255,255,0.2); }
+    .footer-logo { font-family: var(--pixel); font-size: 0.38rem; color: var(--gold); letter-spacing: 2px; }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .top-section { grid-template-columns: 1fr; padding: 24px 18px 20px 22px; }
+      .photos-col { height: 230px; }
+      .body-section { padding: 18px 18px 0 22px; }
+      .profile-page::after { left: 14px; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .page-wrap { padding: 0 10px 60px; }
+      .mini-photo img { width: 80px; height: 80px; }
+    }
+  </style>
 </head>
-
 <body>
-  <div class="container">
-    <header class="navbar">
-      <div class="nav-links">
-        <a href="index.html">home</a> |
-        <a href="#">gallery</a> |
-        <a href="#">moots</a> |
-        <a href="#">spotify</a> |
-        <a href="#">mal</a>
-      </div>
-      <div class="username"><a href="https://instagram.com/limbupaw" target="_blank" rel="noopener noreferrer">@limbupaw</a></div>
-    </header>
 
-    <main class="profile-card">
-      <section class="left">
-        <div class="profile-pic">
-          <img src="style/images/paw.webp" alt="profile" />
-          <p class="under-name">unkno</p>
+<div class="fire-glow"></div>
+<div class="embers" id="embers"></div>
+<div id="progress-bar"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="character.html">Crew</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="goal.html">Goals</a></li>
+    </ul>
+    <a href="character.html" class="nav-back">Back to crew</a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="index.html">Home</a>
+  <a href="character.html">Crew</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="goal.html">Goals</a>
+</div>
+
+<div class="page-wrap">
+
+  <div class="profile-wrap">
+    <div class="profile-pin"></div>
+    <div class="profile-sheet">
+      <div class="profile-spine"></div>
+      <div class="profile-page">
+
+        <!-- TOP -->
+        <div class="top-section">
+          <div class="photos-col">
+            <div class="diary-photo">
+              <img src="img/paw.webp" alt="Pawan">
+              <div class="diary-photo-cap">main character ✦</div>
+            </div>
+            <div class="diary-photo">
+              <img src="img/paw3.webp" alt="Pawan">
+              <div class="diary-photo-cap">vibing 🌙</div>
+            </div>
+            <div class="diary-photo">
+              <img src="img/paw4.webp" alt="Pawan">
+              <div class="diary-photo-cap">good times 📸</div>
+            </div>
+          </div>
+
+          <div class="info-col">
+            <span class="exe-badge">PAWAN.EXE</span>
+            <div class="profile-name">Pawan Limbu</div>
+            <div class="profile-sub">DEVELOPER · WRITER · BTECH SURVIVOR</div>
+
+            <div class="chip-row">
+              <span class="chip">Student</span>
+              <span class="chip">BTech</span>
+              <span class="chip-outline">He / Him</span>
+              <span class="chip-outline">INTP-T</span>
+            </div>
+
+            <a class="ig-link" href="https://instagram.com/limbupaw" target="_blank" rel="noopener">
+              📷 @limbupaw
+            </a>
+
+            <p class="profile-bio">
+              Friendly guy, partly nerdy, tech lover, quick learner with short-term memory. Starts projects late but always pulls through by end of day.
+            </p>
+
+            <ul class="info-list">
+              <li><span class="info-lbl">BIRTHDAY</span>10 November</li>
+              <li><span class="info-lbl">PRONOUNS</span>He / Him</li>
+              <li><span class="info-lbl">LANGUAGE</span>Nepali · Hindi · (broken) Eng</li>
+              <li><span class="info-lbl">MBTI</span>INTP-T</li>
+              <li><span class="info-lbl">PHOBIA</span>Nyctophobia</li>
+            </ul>
+
+            <div class="stats-grid" id="statsGrid">
+              <div class="stat-row"><span class="stat-lbl">WRITING</span><div class="stat-bar-w"><div class="stat-bar" data-val="88"></div></div><span class="stat-n">88</span></div>
+              <div class="stat-row"><span class="stat-lbl">CODING</span><div class="stat-bar-w"><div class="stat-bar" data-val="82"></div></div><span class="stat-n">82</span></div>
+              <div class="stat-row"><span class="stat-lbl">VIBES</span><div class="stat-bar-w"><div class="stat-bar" data-val="91"></div></div><span class="stat-n">91</span></div>
+              <div class="stat-row"><span class="stat-lbl">SLEEP</span><div class="stat-bar-w"><div class="stat-bar" data-val="22"></div></div><span class="stat-n">22</span></div>
+              <div class="stat-row"><span class="stat-lbl">F1 BRAIN</span><div class="stat-bar-w"><div class="stat-bar" data-val="74"></div></div><span class="stat-n">74</span></div>
+              <div class="stat-row"><span class="stat-lbl">DEADLINE</span><div class="stat-bar-w"><div class="stat-bar" data-val="18"></div></div><span class="stat-n">18</span></div>
+            </div>
+          </div>
         </div>
 
-        <div class="music-controls">
-          <button>&lt;</button>
-          <button>▶</button>
-          <button>&gt;</button>
-        </div>
-
-        <div class="warnings">
-          <p><strong>tw/cw</strong> trypophobia, animal abuse, heavy nsfw, ahegao face, jumpscare, ghost, bullying,
-            disgusting picture.</p>
-        </div>
-
-        <div class="dont-follow">
-          <h3>let’s keep it chill</h3>
-          <p> ✦ just be kind ✦ respect others ✦ spread good vibes only</p>
-          <p>✦ positive energy only ✦ no drama ✦ respect all opinions</p>
-          <p>✦ be respectful ✦ no hate ✦ be open-minded people</p>
-          <p>✦ chill space ✦ no negativity ✦ everyone’s welcome unless you’re rude</p>
-        </div>
-
-        <div class="ew">
-          <!-- <h3>ew...</h3>
-          <p>racist people, pedophilia, ants, cicak, math, school, homework, nekoma haters</p>
-        </div>
-        -->
-      </section>
-
-      <section class="right">
-        <h1>HELLO !</h1>
-        <ul class="info">
-          <li><span>name :</span> pawan Limbu</li>
-          <li><span>age :</span> ???</li>
-          <li><span>birthday :</span> 10 november</li>
-          <li><span>pronouns :</span> He/Him</li>
-          <li><span>language :</span> Nepali-Hind-(broken)eng</li>
-          <li><span>mbti :</span> intp-t</li>
-          <li><span>phobia :</span> nyctophobia</li>
-        </ul>
-
-        <div class="mini-gallery">
-          <img src="style/images/paw3.webp" alt="pawan" />
-          <img src="style/images/paw4.webp" alt="pawan" />
-        </div>
-
-        <div class="before-follow">
-          <h3>before you follow</h3>
-          <p>Friendly guy, partly nerdy, tech lover, quick learner with short-term memory. I start projects late but
-            always pull through by the end of the day.</p>
-        </div>
-
-        <div class="yes">
-          <h3>yes yes yess</h3>
-          <p>moba games, Love F1 racing even tho I don't know much, Fav team RedBull, Curious how programming language works but never learn,
-            Don't know how to treat a lady, RL DS3.
+        <!-- BEFORE YOU FOLLOW -->
+        <div class="body-section" style="padding-top:26px">
+          <div class="sec-divider"><span class="sdlbl">BEFORE YOU FOLLOW</span><div class="sdline"></div></div>
+          <p class="sec-text">
+            Friendly guy, partly nerdy, tech lover, quick learner with short-term memory. I start projects late but always pull through by the end of the day. I might disappear for days and come back like nothing happened — that's just how I am.
           </p>
         </div>
 
-        <div class="footer-note">
-          <img src="" alt="img3" />
-          <p>feel free to bub if u uncomfortable and dm me privately if i do some mistake instead of calling me out on
-            t!</p>
+        <!-- LET'S KEEP IT CHILL -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">LET'S KEEP IT CHILL</span><div class="sdline"></div></div>
+          <div class="rules-list">
+            <div class="rule-item">Just be kind — respect others — spread good vibes only</div>
+            <div class="rule-item">Positive energy only — no drama — respect all opinions</div>
+            <div class="rule-item">Be respectful — no hate — be open-minded people</div>
+            <div class="rule-item">Chill space — no negativity — everyone's welcome unless you're rude</div>
+          </div>
         </div>
-      </section>
-    </main>
-    <footer>
-      © 2025 HlyWor Blog. Crafted with ❤️ in our style.
-    </footer>
-  </div>
-  
-</body>
 
+        <!-- YES YES YESS -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">YES YES YESS</span><div class="sdline"></div></div>
+          <p class="sec-text">
+            <strong>Moba games</strong> are where I live. Love <strong>F1 racing</strong> even though I don't know much — favourite team is RedBull. Curious how programming languages work but somehow never actually learn them properly. Don't know how to treat a lady. Currently running through <strong>Rocket League</strong> and dying in <strong>Dark Souls 3</strong>. And i'm really into RL Craft(The hardest mod of minecraft).
+          </p>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">GALLERY</span><div class="sdline"></div></div>
+          <div class="mini-gallery">
+            <div class="mini-photo"><img src="img/paw3.webp" alt="pawan"></div>
+            <div class="mini-photo"><img src="img/paw4.webp" alt="pawan"></div>
+            <div class="mini-photo"><img src="img/paw.webp" alt="pawan"></div>
+          </div>
+        </div>
+
+        <!-- TW/CW -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">TW / CW</span><div class="sdline"></div></div>
+          <div class="cw-wrap">
+            <span class="cw-lbl">WILL NOT POST, BUT HEADS UP:</span>
+            trypophobia · animal abuse · heavy nsfw · ahegao face · jumpscare · ghost · bullying · disgusting pictures
+          </div>
+        </div>
+
+        <!-- NOTE -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">A NOTE</span><div class="sdline"></div></div>
+          <div class="letter-wrap">
+            <p class="letter-text">
+              Feel free to unfollow if you're uncomfortable — no hard feelings at all. And if I ever say or do something wrong, please dm me privately instead of calling me out publicly. I'm always open to learning and doing better.
+            </p>
+            <span class="letter-sign">— paw 🔥</span>
+          </div>
+        </div>
+
+        <div style="height:32px"></div>
+        <div class="page-curl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL LINKS -->
+  <div class="social-section">
+    <div class="social-heading">FIND ME</div>
+    <div class="social-cards">
+      <a class="social-card" href="https://instagram.com/limbupaw" target="_blank" rel="noopener">
+        <span class="social-icon">📷</span>
+        <div>
+          <div class="social-label">Instagram</div>
+          <div class="social-handle">@limbupaw</div>
+        </div>
+      </a>
+       <a class="social-card" href="https://www.youtube.com/@Limbupaw" target="_blank" rel="noopener">
+        <span class="social-icon">▶️</span>
+        <div>
+          <div class="social-label">YouTube</div>
+          <div class="social-handle">@limbupaw</div>
+        </div>
+      </a>
+      <a class="social-card" href="index.html">
+        <span class="social-icon">📖</span>
+        <div>
+          <div class="social-label">HlyWor</div>
+          <div class="social-handle">read my posts</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobNav    = document.getElementById('mobNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobNav.classList.toggle('open');
+});
+mobNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobNav.classList.remove('open');
+}));
+
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress-bar').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, { passive: true });
+
+/* Embers */
+const ec = document.getElementById('embers');
+for (let i = 0; i < 18; i++) {
+  const e = document.createElement('div');
+  e.className = 'ember';
+  const s = 1 + Math.random() * 2.5;
+  e.style.cssText = `left:${5+Math.random()*90}%;bottom:0;width:${s}px;height:${s}px;animation-duration:${7+Math.random()*12}s;animation-delay:${Math.random()*10}s;--ed:${(Math.random()-.5)*100}px;`;
+  ec.appendChild(e);
+}
+
+/* Stat bars on scroll */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.stat-bar').forEach(bar => {
+        bar.style.width = (parseInt(bar.dataset.val)||50) + '%';
+      });
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const sg = document.getElementById('statsGrid');
+if (sg) ro.observe(sg);
+</script>
+</body>
 </html>

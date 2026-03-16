@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suvam Limbu — HlyWor</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board:  #121820;  /* deep navy-dark for blue theme */
+      --paper:  #f6f8fb;
+      --paper2: #ecf0f8;
+      --paper3: #dde4f0;
+      --ink:    #08101a;
+      --ink2:   #1a2840;
+      --ink3:   #405878;
+      --ink4:   #7890a8;
+      --rule:   rgba(80,120,180,0.18);
+      --acc:    #3a6fd8;  /* Suvam's blue */
+      --acc2:   #1a4ab0;
+      --gold:   #d4a020;
+      --pin-shadow: 0 8px 40px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35);
+      --pixel:  'Press Start 2P', monospace;
+      --serif:  'Crimson Pro', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      --hand:   'Caveat', cursive;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--board); font-family: var(--serif); min-height: 100vh; overflow-x: hidden; }
+
+    /* Deep night texture */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(20,50,100,0.45) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 75%, rgba(10,30,70,0.35) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      background-size: auto,auto,200px 200px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Cold blue glow */
+    .blue-glow {
+      position: fixed; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(58,111,216,0.1) 0%, transparent 70%);
+      top: 5%; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+      animation: glowPulse 10s ease-in-out infinite;
+    }
+    .blue-glow-2 {
+      position: fixed; width: 350px; height: 350px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,74,176,0.08) 0%, transparent 70%);
+      bottom: 0; right: 5%;
+      pointer-events: none; z-index: 0;
+      animation: glowPulse 14s ease-in-out infinite reverse;
+    }
+    @keyframes glowPulse { 0%,100%{opacity:.5;transform:translateX(-50%) scale(1)} 50%{opacity:1;transform:translateX(-50%) scale(1.1)} }
+
+    /* Stars floating instead of embers */
+    .stars { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .star {
+      position: absolute; border-radius: 50%;
+      background: #fff;
+      animation: starTwinkle ease-in-out infinite;
+      opacity: 0;
+    }
+    @keyframes starTwinkle {
+      0%,100%{opacity:0;transform:scale(1)}
+      50%{opacity:var(--so,.8);transform:scale(1.4)}
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--board); }
+    ::-webkit-scrollbar-thumb { background: var(--acc); border-radius: 2px; }
+
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg,var(--acc),#88aaff); z-index: 9999; transition: width 0.08s linear; }
+
+    /* ── NAV ── */
+    .nav { position: sticky; top: 0; z-index: 200; background: #0a0e14; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 52px; }
+    .nav-logo { font-family: var(--pixel); font-size: 0.55rem; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-shadow: 0 0 12px rgba(212,160,32,0.4); animation: flicker 7s infinite; }
+    @keyframes flicker { 0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1} }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
+    .nav-links a { font-family: var(--sans); font-size: 0.75rem; color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: rgba(255,255,255,0.85); }
+    .nav-back { font-family: var(--sans); font-size: 0.72rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: rgba(255,255,255,0.8); }
+    .nav-back::before { content: '←'; margin-right: 5px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; width: 32px; height: 32px; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 18px; height: 1.5px; background: rgba(255,255,255,0.6); transition: all 0.28s; transform-origin: center; }
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mob-nav { display: none; position: fixed; top: 52px; left: 0; right: 0; background: #0a0e14; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 20px 28px; z-index: 199; flex-direction: column; }
+    .mob-nav.open { display: flex; }
+    .mob-nav a { font-family: var(--sans); font-size: 0.88rem; color: rgba(255,255,255,0.45); padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; transition: color 0.2s; }
+    .mob-nav a:last-child { border-bottom: none; }
+    .mob-nav a:hover { color: rgba(255,255,255,0.85); }
+
+    /* PAGE */
+    .page-wrap { max-width: 920px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
+
+    /* Book drop — drops from left slightly for variation */
+    @keyframes bookDrop {
+      0%  { opacity:0; transform:translateY(-50px) rotate(-1.5deg) scale(0.96); }
+      65% { opacity:1; transform:translateY(6px) rotate(0.3deg) scale(1.003); }
+      82% { transform:translateY(-2px) rotate(-0.1deg); }
+      100%{ opacity:1; transform:translateY(0) rotate(0deg) scale(1); }
+    }
+
+    .profile-wrap { padding-top: 48px; position: relative; }
+    .profile-pin {
+      position: absolute; top: 34px; left: 50%; transform: translateX(-50%);
+      width: 17px; height: 17px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%,#88aaff,#1a3a9a);
+      box-shadow: 0 2px 7px rgba(0,0,0,0.65), inset 0 1px 2px rgba(255,255,255,0.3);
+      z-index: 10;
+      animation: pinDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) both 0.15s;
+    }
+    @keyframes pinDrop { from{opacity:0;transform:translateX(-50%) translateY(-20px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+    .profile-pin::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); width:2px; height:15px; background:linear-gradient(to bottom,#888,#333); }
+
+    .profile-sheet { display: flex; box-shadow: var(--pin-shadow); animation: bookDrop 0.9s cubic-bezier(0.34,1.4,0.64,1) both; }
+
+    .profile-spine {
+      width: 26px; flex-shrink: 0;
+      background: linear-gradient(180deg,#0a1830 0%,#060e1e 20%,#0e2040 40%,#060e1e 60%,#0a1830 80%,#060e1e 100%);
+      border-right: 2px solid rgba(0,0,0,0.6);
+      border-radius: 3px 0 0 3px; position: relative;
+    }
+    .profile-spine::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:6px; bottom:0; background:repeating-linear-gradient(to bottom,transparent 0px,transparent 28px,rgba(58,111,216,0.2) 28px,rgba(58,111,216,0.2) 34px); }
+
+    .profile-page { flex:1; background:var(--paper); position:relative; overflow:hidden; }
+    .profile-page::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px); background-position:0 100px; pointer-events:none; z-index:0; }
+    .profile-page::after { content:''; position:absolute; top:0; bottom:0; left:70px; width:1px; background:rgba(58,111,216,0.18); pointer-events:none; z-index:0; }
+    .page-curl { position:absolute; bottom:0; right:0; width:42px; height:42px; background:linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.1) 50%,var(--paper2) 50%); clip-path:polygon(100% 0,100% 100%,0 100%); pointer-events:none; z-index:10; transition:width 0.3s,height 0.3s; }
+    .profile-sheet:hover .page-curl { width:58px; height:58px; }
+
+    /* TOP */
+    .top-section { display: grid; grid-template-columns: 210px 1fr; gap: 32px; padding: 32px 36px 28px 88px; border-bottom: 1px solid var(--rule); position: relative; z-index: 2; }
+
+    /* Photos */
+    .photos-col { position: relative; height: 290px; }
+    .diary-photo { position: absolute; background: #fff; padding: 6px 6px 22px; box-shadow: 2px 4px 14px rgba(0,0,0,0.28), 1px 1px 3px rgba(0,0,0,0.12); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+    .diary-photo:hover { box-shadow: 5px 7px 24px rgba(58,111,216,0.35); z-index: 20 !important; }
+    .diary-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: sepia(4%) brightness(0.96) contrast(1.04); transition: filter 0.4s; }
+    .diary-photo:hover img { filter: sepia(0%) brightness(1) contrast(1.06); }
+    .diary-photo-cap { font-family: var(--hand); font-size: 0.72rem; color: var(--ink3); text-align: center; padding-top: 4px; line-height: 1.2; }
+    .diary-photo::before { content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%) rotate(-1.5deg); width:46px; height:14px; background:rgba(58,111,216,0.55); z-index:3; }
+    .diary-photo:nth-child(2)::before { background:rgba(100,150,240,0.5); transform:translateX(-50%) rotate(1.5deg); }
+    .diary-photo:nth-child(3)::before { background:rgba(26,74,176,0.45); transform:translateX(-50%) rotate(-0.5deg); }
+    .diary-photo:nth-child(1) { top:4px;left:50%;transform:translateX(-50%) rotate(-2deg);width:134px;height:126px;z-index:3; }
+    .diary-photo:nth-child(2) { bottom:8px;left:0;width:120px;height:112px;transform:rotate(3deg);z-index:2; }
+    .diary-photo:nth-child(3) { bottom:8px;right:0;width:120px;height:112px;transform:rotate(-2.5deg);z-index:1; }
+
+    /* Info */
+    .info-col { display: flex; flex-direction: column; gap: 10px; }
+    .exe-badge { font-family: var(--pixel); font-size: 0.3rem; letter-spacing: 1px; padding: 3px 10px; background: var(--acc); color: #fff; display: inline-block; align-self: flex-start; transform: rotate(-0.5deg); margin-bottom: 2px; }
+    .profile-name { font-family: var(--hand); font-size: clamp(2rem,5vw,3.2rem); color: var(--ink); font-weight: 700; line-height: 1.1; }
+    .profile-sub { font-family: var(--pixel); font-size: 0.24rem; color: var(--acc); letter-spacing: 2px; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .chip { font-family: var(--hand); font-size: 0.82rem; padding: 2px 10px; color: #fff; background: var(--acc); border-radius: 1px; opacity: 0.88; }
+    .chip-dark { font-family: var(--hand); font-size: 0.82rem; padding: 2px 10px; color: #c8d8f0; border: 1px solid rgba(58,111,216,0.3); background: rgba(58,111,216,0.1); border-radius: 1px; }
+    .chip-outline { font-family: var(--pixel); font-size: 0.22rem; padding: 2px 8px; letter-spacing: 1px; color: var(--ink3); border: 1px solid rgba(8,16,26,0.15); background: var(--paper3); border-radius: 1px; }
+
+    .tw-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--hand); font-size: 0.95rem; color: #fff; padding: 5px 16px; background: var(--acc); text-decoration: none; transition: all 0.2s; align-self: flex-start; }
+    .tw-link:hover { transform: translateY(-2px); background: var(--acc2); }
+
+    .profile-bio { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--ink2); line-height: 1.8; max-width: 460px; }
+
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .info-list li { font-family: var(--hand); font-size: 0.95rem; color: var(--ink2); display: flex; gap: 8px; }
+    .info-lbl { font-family: var(--pixel); font-size: 0.2rem; color: var(--ink4); letter-spacing: 1px; width: 72px; flex-shrink: 0; padding-top: 3px; }
+
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+    .stat-row { display: flex; align-items: center; gap: 7px; }
+    .stat-lbl { font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);letter-spacing:1px;width:56px;flex-shrink:0; }
+    .stat-bar-w { flex:1;height:5px;background:rgba(8,16,26,0.07);border-radius:1px;overflow:hidden; }
+    .stat-bar { height:100%;border-radius:1px;background:var(--acc);width:0;transition:width 1s cubic-bezier(0.34,1.2,0.64,1); }
+    .stat-n { font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);width:18px;text-align:right;flex-shrink:0; }
+
+    /* Body sections */
+    .body-section { padding: 22px 36px 0 88px; position: relative; z-index: 2; }
+    .sec-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .sdlbl { font-family: var(--pixel); font-size: 0.24rem; color: var(--acc); letter-spacing: 3px; white-space: nowrap; }
+    .sdline { flex: 1; height: 1px; background: var(--rule); }
+
+    .sec-text { font-family: var(--serif); font-size: 1rem; color: var(--ink2); line-height: 1.9; font-style: italic; max-width: 580px; }
+    .sec-text strong { font-style: normal; color: var(--ink); }
+
+    .rules-list { display: flex; flex-direction: column; gap: 7px; max-width: 580px; }
+    .rule-item { font-family: var(--hand); font-size: 1rem; color: var(--ink2); display: flex; gap: 8px; align-items: baseline; }
+    .rule-item::before { content: '✦'; color: var(--acc); font-size: 0.7rem; flex-shrink: 0; }
+
+    /* Directors list */
+    .directors-grid {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      max-width: 580px;
+    }
+    .director-tag {
+      font-family: var(--hand); font-size: 0.9rem;
+      padding: 4px 14px;
+      color: var(--ink2);
+      background: var(--paper3);
+      border: 1px solid rgba(58,111,216,0.2);
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .director-tag:hover { background: rgba(58,111,216,0.08); border-color: var(--acc); }
+    .director-tag.fav { border-color: var(--acc); background: rgba(58,111,216,0.08); color: var(--acc2); }
+
+    /* Interests tags */
+    .interest-tags { display: flex; flex-wrap: wrap; gap: 7px; max-width: 580px; }
+    .int-tag {
+      font-family: var(--hand); font-size: 0.9rem;
+      padding: 3px 12px;
+      color: var(--ink2);
+      border: 1px solid rgba(58,111,216,0.2);
+      background: rgba(58,111,216,0.04);
+      border-radius: 2px; transition: all 0.15s;
+    }
+    .int-tag:hover { background: rgba(58,111,216,0.1); border-color: var(--acc); }
+
+    /* TW/CW */
+    .cw-wrap { font-family: var(--hand); font-size: 0.9rem; color: var(--ink3); line-height: 1.8; max-width: 580px; }
+    .cw-lbl { font-family: var(--pixel); font-size: 0.22rem; color: #e85c5c; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+    /* Mini gallery */
+    .mini-gallery { display: flex; gap: 14px; flex-wrap: wrap; }
+    .mini-photo { background: #fff; padding: 5px 5px 18px; box-shadow: 2px 3px 12px rgba(0,0,0,0.22); cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; position: relative; }
+    .mini-photo:nth-child(odd)  { transform: rotate(-2deg); }
+    .mini-photo:nth-child(even) { transform: rotate(1.5deg); }
+    .mini-photo:hover { transform: rotate(0deg) scale(1.07) !important; box-shadow: 4px 6px 20px rgba(58,111,216,0.3); z-index: 5; }
+    .mini-photo img { width: 100px; height: 100px; object-fit: cover; display: block; filter: sepia(4%) contrast(1.04); }
+    .mini-photo::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:36px; height:11px; background:rgba(58,111,216,0.5); }
+
+    /* Note / letter */
+    .letter-wrap { max-width: 580px; background: var(--paper2); padding: 20px 24px; position: relative; transform: rotate(-0.3deg); box-shadow: 1px 2px 8px rgba(0,0,0,0.1); border-left: 3px solid var(--acc); }
+    .letter-wrap::before { content:''; position:absolute; top:-9px; left:50%; transform:translateX(-50%); width:56px; height:14px; background:rgba(58,111,216,0.5); }
+    .letter-text { font-family: var(--hand); font-size: 1rem; color: var(--ink2); line-height: 1.85; }
+    .letter-sign { font-family: var(--hand); font-size: 1.3rem; color: var(--acc); margin-top: 14px; display: block; text-align: right; }
+
+    /* Social */
+    .social-section { margin-top: 44px; position: relative; z-index: 1; }
+    .social-heading { font-family: var(--pixel); font-size: 0.3rem; color: var(--acc); letter-spacing: 3px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .social-heading::before { content:''; display:inline-block; width:18px; height:1px; background:var(--acc); }
+    .social-cards { display: flex; flex-wrap: wrap; gap: 14px; }
+    .social-card { background: var(--paper); padding: 12px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.35); display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+    .social-card:nth-child(odd) { transform: rotate(-1deg); }
+    .social-card:nth-child(even) { transform: rotate(0.8deg); }
+    .social-card:hover { transform: rotate(0deg) translateY(-5px) !important; box-shadow: 0 12px 30px rgba(58,111,216,0.3); }
+    .social-card::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:36px; height:12px; background:rgba(58,111,216,0.5); }
+    .social-icon { font-size: 1.2rem; }
+    .social-label { font-family: var(--hand); font-size: 1rem; color: var(--ink); }
+    .social-handle { font-family: var(--pixel); font-size: 0.22rem; color: var(--ink4); letter-spacing: 1px; }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 20px 28px; margin-top: 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: relative; z-index: 1; }
+    .site-footer p { font-family: var(--sans); font-size: 0.68rem; color: rgba(255,255,255,0.2); }
+    .footer-logo { font-family: var(--pixel); font-size: 0.38rem; color: var(--gold); letter-spacing: 2px; }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .top-section { grid-template-columns: 1fr; padding: 24px 18px 20px 22px; }
+      .photos-col { height: 230px; }
+      .body-section { padding: 18px 18px 0 22px; }
+      .profile-page::after { left: 14px; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .page-wrap { padding: 0 10px 60px; }
+      .mini-photo img { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="blue-glow"></div>
+<div class="blue-glow-2"></div>
+<div class="stars" id="stars"></div>
+<div id="progress-bar"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="character.html">Crew</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="goal.html">Goals</a></li>
+    </ul>
+    <a href="character.html" class="nav-back">Back to crew</a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="index.html">Home</a>
+  <a href="character.html">Crew</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="goal.html">Goals</a>
+</div>
+
+<div class="page-wrap">
+
+  <div class="profile-wrap">
+    <div class="profile-pin"></div>
+    <div class="profile-sheet">
+      <div class="profile-spine"></div>
+      <div class="profile-page">
+
+        <!-- TOP -->
+        <div class="top-section">
+          <div class="photos-col">
+            <div class="diary-photo">
+              <img src="img/suv.webp" alt="Suvam">
+              <div class="diary-photo-cap">nogen ✦</div>
+            </div>
+            <div class="diary-photo">
+              <img src="img/suv23.webp" alt="Suvam">
+              <div class="diary-photo-cap">thinking 🎬</div>
+            </div>
+            <div class="diary-photo">
+              <img src="img/suv24.webp" alt="Suvam">
+              <div class="diary-photo-cap">good days 📽</div>
+            </div>
+          </div>
+
+          <div class="info-col">
+            <span class="exe-badge">SUVAM.EXE</span>
+            <div class="profile-name">Suvam Limbu</div>
+            <div class="profile-sub">DEVELOPER · MOVIE BRAIN · CHAOS AGENT</div>
+
+            <div class="chip-row">
+              <span class="chip">Student</span>
+              <span class="chip-dark">Cinephile</span>
+              <span class="chip-dark">History nerd</span>
+              <span class="chip-outline">He / Him</span>
+            </div>
+
+            <a class="tw-link" href="https://twitter.com/askeladd___artorius" target="_blank" rel="noopener">
+              🐦 @askeladd___artorius
+            </a>
+
+            <p class="profile-bio">
+              Can't appear friendly at first sight — but friendly once you get to know me. Sometimes a smooth talker, sometimes an awkward guy. Depends entirely on the other person.
+            </p>
+
+            <ul class="info-list">
+              <li><span class="info-lbl">AGE</span>18</li>
+              <li><span class="info-lbl">BIRTHDAY</span>3 January</li>
+              <li><span class="info-lbl">PRONOUNS</span>He / Him</li>
+              <li><span class="info-lbl">LANGUAGE</span>Hindi · Assamese · English · Nepali</li>
+              <li><span class="info-lbl">TYPE</span>Smart girls</li>
+              <li><span class="info-lbl">PHOBIA</span>Why should I tell you??</li>
+            </ul>
+
+            <div class="stats-grid" id="statsGrid">
+              <div class="stat-row"><span class="stat-lbl">MOVIES</span><div class="stat-bar-w"><div class="stat-bar" data-val="95"></div></div><span class="stat-n">95</span></div>
+              <div class="stat-row"><span class="stat-lbl">CODING</span><div class="stat-bar-w"><div class="stat-bar" data-val="78"></div></div><span class="stat-n">78</span></div>
+              <div class="stat-row"><span class="stat-lbl">CHAOS</span><div class="stat-bar-w"><div class="stat-bar" data-val="97"></div></div><span class="stat-n">97</span></div>
+              <div class="stat-row"><span class="stat-lbl">HISTORY</span><div class="stat-bar-w"><div class="stat-bar" data-val="88"></div></div><span class="stat-n">88</span></div>
+              <div class="stat-row"><span class="stat-lbl">FILTER</span><div class="stat-bar-w"><div class="stat-bar" data-val="18"></div></div><span class="stat-n">18</span></div>
+              <div class="stat-row"><span class="stat-lbl">FIRST SIGHT</span><div class="stat-bar-w"><div class="stat-bar" data-val="22"></div></div><span class="stat-n">22</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MORE ABOUT ME -->
+        <div class="body-section" style="padding-top:26px">
+          <div class="sec-divider"><span class="sdlbl">MORE ABOUT ME</span><div class="sdline"></div></div>
+          <p class="sec-text">
+            Interested in <strong>Coding, Electronics, Physics, Machine Learning,</strong> and <strong>History</strong> — but I'm actually a newbie in the whole tech thing. Still figuring it out. Can be a smooth talker when I want to be, or completely awkward. You'll find out which one depending on how you approach me.
+          </p>
+        </div>
+
+        <!-- DIRECTORS -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">DIRECTORS I SWEAR BY</span><div class="sdline"></div></div>
+          <div class="directors-grid">
+            <span class="director-tag fav">Christopher Nolan</span>
+            <span class="director-tag fav">Quentin Tarantino</span>
+            <span class="director-tag fav">Martin Scorsese</span>
+            <span class="director-tag fav">Denis Villeneuve</span>
+            <span class="director-tag">Steven Spielberg</span>
+            <span class="director-tag">David Fincher</span>
+          </div>
+        </div>
+
+        <!-- WHAT I LIKE -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">WHAT I LIKE</span><div class="sdline"></div></div>
+          <div class="interest-tags">
+            <span class="int-tag">🌍 Geopolitics</span>
+            <span class="int-tag">💼 Entrepreneurship</span>
+            <span class="int-tag">🎮 Video Games</span>
+            <span class="int-tag">🗣 Learning Languages</span>
+            <span class="int-tag">📜 WWI &amp; WWII History</span>
+            <span class="int-tag">🥶 Cold War</span>
+            <span class="int-tag">🇺🇸 History of USA</span>
+            <span class="int-tag">🤖 Machine Learning</span>
+            <span class="int-tag">⚡ Electronics</span>
+            <span class="int-tag">🎬 Cinema</span>
+          </div>
+        </div>
+
+        <!-- KEEP IT CHILL -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">LET'S KEEP IT CHILL</span><div class="sdline"></div></div>
+          <div class="rules-list">
+            <div class="rule-item">Just be kind — respect others — spread good vibes only</div>
+            <div class="rule-item">Positive energy only — no drama — respect all opinions</div>
+            <div class="rule-item">Be open-minded — no hate — chill space for everyone</div>
+          </div>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">GALLERY</span><div class="sdline"></div></div>
+          <div class="mini-gallery">
+            <div class="mini-photo"><img src="img/suv23.webp" alt="suvam"></div>
+            <div class="mini-photo"><img src="img/suv24.webp" alt="suvam"></div>
+            <div class="mini-photo"><img src="img/suv.webp" alt="suvam"></div>
+          </div>
+        </div>
+
+        <!-- ONE THING -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">ONE THING</span><div class="sdline"></div></div>
+          <div class="cw-wrap">
+            <span class="cw-lbl">WHAT I WON'T TAKE WELL:</span>
+            Betrayal.
+          </div>
+        </div>
+
+        <!-- NOTE -->
+        <div class="body-section" style="padding-top:22px">
+          <div class="sec-divider"><span class="sdlbl">A NOTE</span><div class="sdline"></div></div>
+          <div class="letter-wrap">
+            <p class="letter-text">
+              Feel free to point out my mistakes in anything — and I mean <em>anything</em>. So that I can improve. I'd rather know and fix it than not know at all.
+            </p>
+            <span class="letter-sign">— nogen 🎬</span>
+          </div>
+        </div>
+
+        <div style="height:32px"></div>
+        <div class="page-curl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div class="social-section">
+    <div class="social-heading">FIND ME</div>
+    <div class="social-cards">
+      <a class="social-card" href="https://instagram.com/askeladd___artorius" target="_blank" rel="noopener">
+        <span class="social-icon">📷</span>
+        <div>
+          <div class="social-label">Instagram</div>
+          <div class="social-handle">@askeladd___artorius</div>
+        </div>
+      </a>
+      <a class="social-card" href="index.html">
+        <span class="social-icon">📖</span>
+        <div>
+          <div class="social-label">HlyWor</div>
+          <div class="social-handle">read my posts</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobNav    = document.getElementById('mobNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobNav.classList.toggle('open');
+});
+mobNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobNav.classList.remove('open');
+}));
+
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress-bar').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, { passive: true });
+
+/* Twinkling stars */
+const sc = document.getElementById('stars');
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = 1 + Math.random() * 2.5;
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${size}px;height:${size}px;animation-duration:${2+Math.random()*5}s;animation-delay:${Math.random()*6}s;--so:${0.3+Math.random()*0.7};`;
+  sc.appendChild(s);
+}
+
+/* Stat bars on scroll */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.stat-bar').forEach(bar => {
+        bar.style.width = (parseInt(bar.dataset.val)||50) + '%';
+      });
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const sg = document.getElementById('statsGrid');
+if (sg) ro.observe(sg);
+</script>
+</body>
+</html>
