@@ -1949,7 +1949,9 @@
         ? "<figure id='" + imgId + "'><img src='" + localUrl + "' style='width:100%;display:block;margin:12px 0;min-height:120px' alt='" + caption + "'>" + (caption ? "<figcaption>" + caption + "</figcaption>" : "") + "</figure><p><br></p>"
         : "<div id='" + imgId + "' class='polaroid " + style + "' style='display:inline-block'><img src='" + localUrl + "' alt='" + caption + "' style='width:100%;display:block;height:160px;object-fit:cover'>" + (caption ? "<span class='polaroid-caption'>" + caption + "</span>" : "") + "</div><p><br></p>";
       insertAtCursor(html); imgPopup.classList.remove("open"); document.getElementById("inlineImgCaption").value = ""; document.getElementById("inlineImgFile").value = "";
+      uploadingCount++;
       const url = await uploadToCloudinary(file);
+      uploadingCount--;
       if (url) { const el = document.getElementById(imgId); if (el) { const img = el.querySelector("img"); if (img) img.src = url; } URL.revokeObjectURL(localUrl); }
     });
     document.addEventListener("click", e => { if (!e.target.closest("#imgPopup") && !e.target.closest("#insertImgBtn")) imgPopup.classList.remove("open"); });
@@ -1962,7 +1964,12 @@
     coverDrop.addEventListener("drop", e => { e.preventDefault(); coverDrop.style.borderColor = ""; if (e.dataTransfer.files[0]) uploadCover(e.dataTransfer.files[0]); });
     coverFile.addEventListener("change", () => { if (coverFile.files[0]) uploadCover(coverFile.files[0]); });
     document.getElementById("coverClear").addEventListener("click", () => { coverPreview.style.display = "none"; coverDrop.style.display = "block"; coverUrlEl.value = ""; coverFile.value = ""; });
-    async function uploadCover(file) { const local = URL.createObjectURL(file); document.getElementById("coverPreviewImg").src = local; coverDrop.style.display = "none"; document.getElementById("coverUploading").style.display = "block"; coverPreview.style.display = "block"; const url = await uploadToCloudinary(file); document.getElementById("coverUploading").style.display = "none"; if (url) { document.getElementById("coverPreviewImg").src = url; coverUrlEl.value = url; URL.revokeObjectURL(local); } else { coverUrlEl.value = ""; } }
+    async function uploadCover(file) { const local = URL.createObjectURL(file); document.getElementById("coverPreviewImg").src = local; coverDrop.style.display = "none"; document.getElementById("coverUploading").style.display = "block"; coverPreview.style.display = "block";
+     uploadingCount++;
+      const url = await uploadToCloudinary(file);
+      uploadingCount--;
+      document.getElementById("coverUploading").style.display = "none";
+      if (url) { document.getElementById("coverPreviewImg").src = url; coverUrlEl.value = url; URL.revokeObjectURL(local); } else { coverUrlEl.value = ""; } }
 
     // Cloudinary
     async function uploadToCloudinary(file) { 
@@ -1989,7 +1996,7 @@
     // Submit
     document.getElementById("submitBtn").addEventListener("click", async () => {
       const name = document.getElementById("authorInput").value.trim(), email = document.getElementById("emailInput").value.trim(), title = document.getElementById("titleInput").value.trim(), desc = document.getElementById("descInput").value.trim(), readtime = document.getElementById("readtimeInput").value.trim() || document.getElementById("readTimeCalc").textContent, coverUrl = document.getElementById("coverUrl").value, content = serializeContent(), plainText = editor.innerText.trim(), type = document.getElementById("typeSelect").value, agree = document.getElementById("agreeCheck").checked, agreeImg = document.getElementById("agreeImgCheck").checked, techTag = (document.getElementById("techTagInput") || {}).value?.trim() || "", statusEl = document.getElementById("modalStatus");
-      if (!name) { statusEl.textContent = "⚠ Name is required"; statusEl.className = "modal-status err"; return; }
+      if (uploadingCount > 0) { statusEl.textContent = "⚠ Images still uploading, wait a moment..."; statusEl.className = "modal-status err"; return; }
       if (!title) { statusEl.textContent = "⚠ Title is required"; statusEl.className = "modal-status err"; return; }
       if (!desc) { statusEl.textContent = "⚠ Homepage desc is required"; statusEl.className = "modal-status err"; return; }
       if (plainText.length < 30) { statusEl.textContent = "⚠ Write a little more first"; statusEl.className = "modal-status err"; return; }
