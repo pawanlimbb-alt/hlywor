@@ -4,683 +4,238 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HlyWor</title>
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
-
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
     :root {
-      --board:   #2a1f14;
-      --paper:   #faf6ee;
-      --paper2:  #f5edd8;
-      --paper3:  #ede3c8;
-      --ink:     #1a1208;
-      --ink2:    #3d3020;
-      --ink3:    #6a5840;
-      --ink4:    #a09078;
-      --rule:    rgba(180,160,120,0.22);
-      --fire:    #e8681a;
-      --gold:    #d4a020;
-      --pin-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
-      --pixel:   'Press Start 2P', monospace;
-      --serif:   'Crimson Pro', Georgia, serif;
-      --sans:    'DM Sans', system-ui, sans-serif;
-      --hand:    'Caveat', cursive;
+      --board:#2a1f14;--paper:#faf6ee;--paper2:#f5edd8;--paper3:#ede3c8;
+      --ink:#1a1208;--ink2:#3d3020;--ink3:#6a5840;--ink4:#a09078;
+      --rule:rgba(180,160,120,0.22);--fire:#e8681a;--gold:#d4a020;
+      --pin-shadow:0 8px 40px rgba(0,0,0,0.5),0 2px 8px rgba(0,0,0,0.3);
+      --pixel:'Press Start 2P',monospace;--serif:'Crimson Pro',Georgia,serif;
+      --sans:'DM Sans',system-ui,sans-serif;--hand:'Caveat',cursive;
     }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--board);font-family:var(--serif);min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 20% 30%,rgba(80,50,20,0.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(60,35,10,0.25) 0%,transparent 50%),url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");background-size:auto,auto,200px 200px;pointer-events:none;z-index:0}
+    body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,104,26,0.06) 0%,transparent 70%);top:20%;left:50%;transform:translateX(-50%);pointer-events:none;z-index:0;animation:ambientPulse 8s ease-in-out infinite}
+    @keyframes ambientPulse{0%,100%{opacity:0.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--board)}::-webkit-scrollbar-thumb{background:var(--fire);border-radius:2px}
+    #progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--fire),var(--gold));z-index:9999;transition:width 0.08s linear}
+    .nav{position:sticky;top:0;z-index:200;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px}
+    .nav-logo{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:2px;text-decoration:none;text-shadow:0 0 12px rgba(212,160,32,0.4);animation:flicker 7s infinite}
+    @keyframes flicker{0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1}}
+    .nav-right{display:flex;align-items:center;gap:14px}
+    .nav-back{font-family:var(--sans);font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;display:flex;align-items:center;gap:6px}
+    .nav-back:hover{color:rgba(255,255,255,0.85)}
+    .nav-back::before{content:'←'}
+    .loading-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:20px;position:relative;z-index:1}
+    .loading-book{display:flex;gap:0;animation:loadingWobble 1.2s ease-in-out infinite}
+    @keyframes loadingWobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+    .loading-spine-el{width:10px;height:70px;background:linear-gradient(180deg,#3d2210,#2a1608,#4a2a12);border-radius:2px 0 0 2px}
+    .loading-page-el{width:50px;height:70px;background:var(--paper);display:flex;align-items:center;justify-content:center}
+    .loading-page-el::after{content:'';width:30px;height:2px;background:linear-gradient(90deg,var(--fire),transparent);box-shadow:0 8px 0 var(--rule),0 16px 0 var(--rule),0 24px 0 var(--rule)}
+    .loading-text{font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.4);font-style:italic;animation:loadFade 1.2s ease-in-out infinite}
+    @keyframes loadFade{0%,100%{opacity:.4}50%{opacity:.9}}
+    .page-wrap{max-width:800px;margin:0 auto;padding:0 24px 100px;position:relative;z-index:1}
+    @keyframes bookDrop{0%{opacity:0;transform:translateY(-60px) rotate(-3deg) scale(0.96)}60%{opacity:1;transform:translateY(8px) rotate(0.5deg) scale(1.005)}80%{transform:translateY(-4px) rotate(-0.3deg) scale(0.999)}100%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}}
+    @keyframes shadowGrow{0%{opacity:0;transform:scaleX(0.7)}100%{opacity:1;transform:scaleX(1)}}
+    .diary-book-wrap{padding-top:40px;position:relative}
+    .book-shadow{height:16px;background:radial-gradient(ellipse at center,rgba(0,0,0,0.45) 0%,transparent 70%);margin:0 40px;animation:shadowGrow 0.8s cubic-bezier(0.34,1.56,0.64,1) both}
+    .diary-book{display:flex;box-shadow:var(--pin-shadow);animation:bookDrop 0.9s cubic-bezier(0.34,1.4,0.64,1) both;transform-origin:top center}
+    .book-pin{position:absolute;top:28px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,#cc2222);box-shadow:0 2px 6px rgba(0,0,0,0.6),inset 0 1px 2px rgba(255,255,255,0.3);z-index:10;animation:pinDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) both 0.1s}
+    @keyframes pinDrop{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+    .book-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:14px;background:linear-gradient(to bottom,#888,#444)}
+    .diary-spine{width:24px;flex-shrink:0;background:linear-gradient(180deg,#3d2210 0%,#2a1608 20%,#4a2a12 40%,#2a1608 60%,#3d2210 80%,#2a1608 100%);border-right:2px solid rgba(0,0,0,0.5);border-radius:3px 0 0 3px;position:relative}
+    .diary-spine::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:6px;bottom:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 28px,rgba(0,0,0,0.35) 28px,rgba(0,0,0,0.35) 34px)}
+    .diary-page{flex:1;background:var(--paper);position:relative;overflow:hidden}
+    .diary-page::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px);background-position:0 80px;pointer-events:none;z-index:0}
+    .diary-page::after{content:'';position:absolute;top:0;bottom:0;left:68px;width:1px;background:rgba(220,80,80,0.2);pointer-events:none;z-index:0}
+    .page-curl{position:absolute;bottom:0;right:0;width:40px;height:40px;background:linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.1) 50%,var(--paper2) 50%);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;z-index:10;transition:width 0.3s,height 0.3s}
+    .diary-book:hover .page-curl{width:55px;height:55px}
+    .post-header{padding:32px 36px 24px 84px;border-bottom:1px solid var(--rule);position:relative;z-index:2}
+    .post-date-mood{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .post-date{font-family:var(--hand);font-size:0.95rem;color:var(--ink3);font-style:italic}
+    .post-mood{font-size:1.3rem}
+    .post-title{font-family:var(--hand);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--ink);font-weight:600;line-height:1.2;margin-bottom:10px}
+    .post-desc{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--ink3);line-height:1.65;margin-bottom:16px}
+    .post-meta{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+    .post-meta-item{display:flex;align-items:center;gap:5px;font-family:var(--sans);font-size:0.72rem;color:var(--ink4)}
+    .post-meta-label{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px}
+    .post-meta-val{color:var(--ink2);font-weight:500}
+    .post-cat-tape{display:inline-block;font-family:var(--pixel);font-size:0.26rem;letter-spacing:2px;padding:3px 12px;color:#fff;opacity:0.85}
+    .cat-story{background:#e85c5c}.cat-movies{background:#5c8ae8}.cat-books{background:#5cbc7a}
+    .cat-thoughts{background:#a06ae8}.cat-college{background:#e8901a}
+    .cat-news{background:#f0c030;color:var(--ink)}.cat-default{background:var(--ink2)}
+    .post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .post-tag{font-family:var(--hand);font-size:0.82rem;color:var(--ink3);padding:2px 10px;border:1px solid rgba(26,18,8,0.15);border-radius:2px}
+    .post-cover{position:relative;z-index:2;margin:0 36px 0 84px}
+    .post-cover img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;filter:sepia(8%) brightness(0.96)}
+    .post-body{padding:24px 36px 40px 84px;position:relative;z-index:2;font-family:var(--serif);font-size:1.05rem;color:var(--ink);line-height:32px}
+    .post-body h2{font-family:var(--hand);font-size:1.8rem;color:var(--ink);line-height:1.4;margin:20px 0 10px;font-weight:600}
+    .post-body h3{font-family:var(--hand);font-size:1.3rem;color:var(--ink2);line-height:1.4;margin:16px 0 8px}
+    .post-body p{margin-bottom:8px}
+    .post-body blockquote{margin:16px 0;padding:10px 20px;border-left:3px solid var(--fire);background:rgba(232,104,26,0.04);font-style:italic;color:var(--ink2)}
+    .post-body ul,.post-body ol{padding-left:24px;margin:8px 0}
+    .post-body li{line-height:32px}
+    .post-body img{max-width:100%;display:block;margin:12px auto}
+    .post-body figure{margin:16px 0;display:block}
+    .post-body figcaption{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);text-align:center;margin-top:4px}
+    .post-body .sticky-callout{display:block;background:#fef9c3;padding:12px 16px;margin:14px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.15);max-width:360px;font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.6;position:relative}
+    .post-body .sticky-callout::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:48px;height:14px;background:rgba(240,190,40,0.65)}
+    .post-body .sticky-callout-blue{background:#e8f0ff}.post-body .sticky-callout-blue::before{background:rgba(80,130,220,0.55)}
+    .post-body .sticky-callout-green{background:#e8f5e8}.post-body .sticky-callout-green::before{background:rgba(80,180,100,0.55)}
+    .post-body .sticky-callout-pink{background:#ffe8f0}.post-body .sticky-callout-pink::before{background:rgba(220,80,120,0.55)}
+    .post-body .polaroid{display:inline-block;background:#fff;padding:8px 8px 28px;box-shadow:2px 4px 14px rgba(0,0,0,0.25);margin:12px 8px;max-width:200px;position:relative}
+    .post-body .polaroid img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
+    .post-body .polaroid-caption{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);text-align:center;margin-top:6px;display:block}
+    .post-body .polaroid::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(-1deg);width:52px;height:16px;background:rgba(240,190,40,0.65);z-index:2}
+    .post-body .polaroid.tilt-l{transform:rotate(-3deg)}.post-body .polaroid.tilt-r{transform:rotate(3deg)}
+    .post-body .washi-tape{display:block;height:22px;margin:10px -36px 10px -84px;position:relative;overflow:hidden}
+    .post-body .washi-tape::before{content:'';position:absolute;inset:0;background:var(--tape-color,rgba(240,190,40,0.65))}
+    .post-body .doodle-divider{display:block;margin:16px 0;width:100%}
+    .post-body .floating-sticker{display:inline-block;font-size:1.8rem;margin:0 4px;vertical-align:middle}
+    .post-body .highlight-y{background:rgba(255,220,50,0.4);padding:0 2px}
+    .post-body .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
+    .post-body .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
+    .post-body .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
+    .post-reactions{padding:18px 36px 20px 84px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--rule)}
+    .react-btn{font-size:0.85rem;padding:5px 14px;background:var(--paper2);border:1px solid rgba(26,18,8,0.12);color:var(--ink3);cursor:pointer;display:flex;align-items:center;gap:5px;font-family:var(--sans);border-radius:2px;transition:all 0.15s}
+    .react-btn:hover{background:var(--paper3)}
+    .react-btn.reacted{background:rgba(232,104,26,0.08);border-color:var(--fire);color:var(--fire)}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    /* ── AUTHOR TOOLBAR ── */
+    .author-toolbar{
+      display:none;
+      padding:14px 36px 14px 84px;
+      background:rgba(232,104,26,0.06);
+      border-top:1px solid rgba(232,104,26,0.2);
+      align-items:center;gap:10px;
+      position:relative;z-index:3;
+    }
+    .author-toolbar.visible{display:flex}
+    .author-toolbar-label{
+      font-family:var(--pixel);font-size:0.24rem;
+      color:rgba(232,104,26,0.7);letter-spacing:2px;
+      margin-right:4px;
+    }
+    .toolbar-btn{
+      font-family:var(--hand);font-size:0.95rem;font-weight:600;
+      padding:6px 18px;border:none;cursor:pointer;
+      transition:all 0.18s;border-radius:2px;
+    }
+    .toolbar-btn-edit{background:var(--fire);color:#fff}
+    .toolbar-btn-edit:hover{background:#ff7a2a;transform:translateY(-1px)}
+    .toolbar-btn-delete{background:transparent;color:#c0392b;border:1px solid rgba(192,57,43,0.35)}
+    .toolbar-btn-delete:hover{background:rgba(192,57,43,0.08);border-color:#c0392b}
+    .toolbar-btn-save{background:#2a8a2a;color:#fff}
+    .toolbar-btn-save:hover{background:#3aaa3a;transform:translateY(-1px)}
+    .toolbar-btn-cancel{background:transparent;color:var(--ink3);border:1px solid rgba(26,18,8,0.2)}
+    .toolbar-btn-cancel:hover{background:var(--paper3)}
+    .toolbar-save-status{font-family:var(--sans);font-size:0.72rem;color:#2a8a2a;margin-left:8px}
 
-    body {
-      background: var(--board);
-      font-family: var(--serif);
-      min-height: 100vh;
-      overflow-x: hidden;
+    /* ── EDIT MODE OVERRIDES ── */
+    .edit-mode .post-title,
+    .edit-mode .post-desc{
+      border-bottom:1.5px dashed var(--fire);
+      outline:none;
+      background:rgba(232,104,26,0.03);
+      border-radius:2px;
     }
+    .edit-mode #postBody{
+      outline:none;
+      border:1.5px dashed rgba(232,104,26,0.3);
+      background:rgba(232,104,26,0.02);
+      min-height:200px;
+      border-radius:2px;
+    }
+    .edit-hint{
+      display:none;
+      font-family:var(--pixel);font-size:0.22rem;
+      color:rgba(232,104,26,0.5);letter-spacing:1px;
+      padding:4px 36px 0 84px;position:relative;z-index:2;
+    }
+    .edit-mode ~ .edit-hint,.edit-mode + .edit-hint{display:block}
 
-    /* Cork texture */
-    body::before {
-      content: ''; position: fixed; inset: 0;
-      background-image:
-        radial-gradient(ellipse at 20% 30%, rgba(80,50,20,0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, rgba(60,35,10,0.25) 0%, transparent 50%),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
-      background-size: auto, auto, 200px 200px;
-      pointer-events: none; z-index: 0;
-    }
-
-    /* Warm ambient glow */
-    body::after {
-      content: ''; position: fixed;
-      width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(232,104,26,0.06) 0%, transparent 70%);
-      top: 20%; left: 50%; transform: translateX(-50%);
-      pointer-events: none; z-index: 0;
-      animation: ambientPulse 8s ease-in-out infinite;
-    }
-    @keyframes ambientPulse {
-      0%,100%{opacity:0.6;transform:translateX(-50%) scale(1)}
-      50%{opacity:1;transform:translateX(-50%) scale(1.1)}
-    }
-
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--board); }
-    ::-webkit-scrollbar-thumb { background: var(--fire); border-radius: 2px; }
-
-    /* Reading progress */
-    #progress-bar {
-      position: fixed; top: 0; left: 0;
-      height: 3px; width: 0%;
-      background: linear-gradient(90deg, var(--fire), var(--gold));
-      z-index: 9999; transition: width 0.08s linear;
-    }
-
-    /* ── NAV ── */
-    .nav {
-      position: sticky; top: 0; z-index: 200;
-      background: var(--ink);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 0 28px; height: 52px;
-    }
-    .nav-logo {
-      font-family: var(--pixel); font-size: 0.55rem;
-      color: var(--gold); letter-spacing: 2px;
-      text-decoration: none;
-      text-shadow: 0 0 12px rgba(212,160,32,0.4);
-      animation: flicker 7s infinite;
-    }
-    @keyframes flicker {
-      0%,91%,100%{opacity:1} 92%{opacity:.3} 93%{opacity:1} 95%{opacity:.65} 96%{opacity:1}
-    }
-    .nav-back {
-      font-family: var(--sans); font-size: 0.78rem;
-      color: rgba(255,255,255,0.4); text-decoration: none;
-      transition: color 0.2s; display: flex; align-items: center; gap: 6px;
-    }
-    .nav-back:hover { color: rgba(255,255,255,0.85); }
-    .nav-back::before { content: '←'; }
-
-    /* ── LOADING ── */
-    .loading-page {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      min-height: 80vh; gap: 20px;
-      position: relative; z-index: 1;
-    }
-    .loading-book {
-      display: flex; gap: 0;
-      animation: loadingWobble 1.2s ease-in-out infinite;
-    }
-    @keyframes loadingWobble {
-      0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)}
-    }
-    .loading-spine-el {
-      width: 10px; height: 70px;
-      background: linear-gradient(180deg, #3d2210, #2a1608, #4a2a12);
-      border-radius: 2px 0 0 2px;
-    }
-    .loading-page-el {
-      width: 50px; height: 70px;
-      background: var(--paper);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .loading-page-el::after {
-      content: '';
-      width: 30px; height: 2px;
-      background: linear-gradient(90deg, var(--fire), transparent);
-      box-shadow: 0 8px 0 var(--rule), 0 16px 0 var(--rule), 0 24px 0 var(--rule);
-    }
-    .loading-text {
-      font-family: var(--hand); font-size: 1.1rem;
-      color: rgba(245,230,200,0.4); font-style: italic;
-      animation: loadFade 1.2s ease-in-out infinite;
-    }
-    @keyframes loadFade { 0%,100%{opacity:.4} 50%{opacity:.9} }
-
-    /* ── PAGE WRAP ── */
-    .page-wrap {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 24px 100px;
-      position: relative; z-index: 1;
-    }
-
-    /* ── BOOK DROP ANIMATION ── */
-    @keyframes bookDrop {
-      0%   { opacity:0; transform: translateY(-60px) rotate(-3deg) scale(0.96); }
-      60%  { opacity:1; transform: translateY(8px) rotate(0.5deg) scale(1.005); }
-      80%  { transform: translateY(-4px) rotate(-0.3deg) scale(0.999); }
-      100% { opacity:1; transform: translateY(0) rotate(0deg) scale(1); }
-    }
-    @keyframes shadowGrow {
-      0%   { opacity:0; transform: scaleX(0.7); }
-      100% { opacity:1; transform: scaleX(1); }
-    }
-
-    .diary-book-wrap {
-      padding-top: 40px;
-      position: relative;
-    }
-
-    /* Shadow under the book */
-    .book-shadow {
-      height: 16px;
-      background: radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, transparent 70%);
-      margin: 0 40px;
-      animation: shadowGrow 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
-
-    /* ── THE DIARY BOOK ── */
-    .diary-book {
-      display: flex;
-      box-shadow: var(--pin-shadow);
-      animation: bookDrop 0.9s cubic-bezier(0.34, 1.4, 0.64, 1) both;
-      transform-origin: top center;
-    }
-
-    /* Pin at top of book */
-    .book-pin {
-      position: absolute;
-      top: 28px; left: 50%;
-      transform: translateX(-50%);
-      width: 16px; height: 16px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2222);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.3);
-      z-index: 10;
-      animation: pinDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.1s;
-    }
-    @keyframes pinDrop {
-      from { opacity:0; transform: translateX(-50%) translateY(-20px); }
-      to   { opacity:1; transform: translateX(-50%) translateY(0); }
-    }
-    .book-pin::after {
-      content: ''; position: absolute;
-      top: 100%; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 14px;
-      background: linear-gradient(to bottom, #888, #444);
-    }
-
-    /* Spine */
-    .diary-spine {
-      width: 24px; flex-shrink: 0;
-      background: linear-gradient(180deg,
-        #3d2210 0%, #2a1608 20%, #4a2a12 40%,
-        #2a1608 60%, #3d2210 80%, #2a1608 100%
-      );
-      border-right: 2px solid rgba(0,0,0,0.5);
-      border-radius: 3px 0 0 3px;
-      position: relative;
-    }
-    .diary-spine::before {
-      content: '';
-      position: absolute; top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 6px; bottom: 0;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px, transparent 28px,
-        rgba(0,0,0,0.35) 28px, rgba(0,0,0,0.35) 34px
-      );
-    }
-
-    /* Page */
-    .diary-page {
-      flex: 1; background: var(--paper);
-      position: relative; overflow: hidden;
-    }
-    /* Ruled lines */
-    .diary-page::before {
-      content: ''; position: absolute; inset: 0;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        transparent 0px, transparent 31px,
-        var(--rule) 31px, var(--rule) 32px
-      );
-      background-position: 0 80px;
-      pointer-events: none; z-index: 0;
-    }
-    /* Red margin */
-    .diary-page::after {
-      content: ''; position: absolute;
-      top: 0; bottom: 0; left: 68px;
-      width: 1px; background: rgba(220,80,80,0.2);
-      pointer-events: none; z-index: 0;
-    }
-    /* Page curl */
-    .page-curl {
-      position: absolute; bottom: 0; right: 0;
-      width: 40px; height: 40px;
-      background: linear-gradient(225deg, var(--paper3) 45%, rgba(0,0,0,0.1) 50%, var(--paper2) 50%);
-      clip-path: polygon(100% 0, 100% 100%, 0 100%);
-      pointer-events: none; z-index: 10;
-      transition: width 0.3s, height 0.3s;
-    }
-    .diary-book:hover .page-curl { width: 55px; height: 55px; }
-
-    /* ── POST HEADER ── */
-    .post-header {
-      padding: 32px 36px 24px 84px;
-      border-bottom: 1px solid var(--rule);
-      position: relative; z-index: 2;
-    }
-    .post-date-mood {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 14px;
-    }
-    .post-date {
-      font-family: var(--hand); font-size: 0.95rem;
-      color: var(--ink3); font-style: italic;
-    }
-    .post-mood { font-size: 1.3rem; }
-    .post-title {
-      font-family: var(--hand);
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      color: var(--ink); font-weight: 600;
-      line-height: 1.2; margin-bottom: 10px;
-    }
-    .post-desc {
-      font-family: var(--serif);
-      font-size: 1.05rem; font-style: italic;
-      color: var(--ink3); line-height: 1.65;
-      margin-bottom: 16px;
-    }
-    .post-meta {
-      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
-    }
-    .post-meta-item {
-      display: flex; align-items: center; gap: 5px;
-      font-family: var(--sans); font-size: 0.72rem; color: var(--ink4);
-    }
-    .post-meta-label {
-      font-family: var(--pixel); font-size: 0.24rem;
-      color: var(--ink4); letter-spacing: 2px;
-    }
-    .post-meta-val { color: var(--ink2); font-weight: 500; }
-    .post-cat-tape {
-      display: inline-block;
-      font-family: var(--pixel); font-size: 0.26rem;
-      letter-spacing: 2px; padding: 3px 12px; color: #fff; opacity: 0.85;
-    }
-    .cat-story    { background: #e85c5c; }
-    .cat-movies   { background: #5c8ae8; }
-    .cat-books    { background: #5cbc7a; }
-    .cat-thoughts { background: #a06ae8; }
-    .cat-college  { background: #e8901a; }
-    .cat-news     { background: #f0c030; color: var(--ink); }
-    .cat-default  { background: var(--ink2); }
-    .post-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .post-tag {
-      font-family: var(--hand); font-size: 0.82rem;
-      color: var(--ink3); padding: 2px 10px;
-      border: 1px solid rgba(26,18,8,0.15); border-radius: 2px;
-    }
-
-    /* ── COVER ── */
-    .post-cover {
-      position: relative; z-index: 2;
-      margin: 0 36px 0 84px;
-    }
-    .post-cover img {
-      width: 100%; display: block;
-      aspect-ratio: 16/9; object-fit: cover;
-      filter: sepia(8%) brightness(0.96);
-    }
-
-    /* ── BODY ── */
-    .post-body {
-      padding: 24px 36px 40px 84px;
-      position: relative; z-index: 2;
-      font-family: var(--serif);
-      font-size: 1.05rem; color: var(--ink);
-      line-height: 32px;
-    }
-    .post-body h2 {
-      font-family: var(--hand); font-size: 1.8rem;
-      color: var(--ink); line-height: 1.4; margin: 20px 0 10px; font-weight: 600;
-    }
-    .post-body h3 {
-      font-family: var(--hand); font-size: 1.3rem;
-      color: var(--ink2); line-height: 1.4; margin: 16px 0 8px;
-    }
-    .post-body p { margin-bottom: 8px; }
-    .post-body blockquote {
-      margin: 16px 0; padding: 10px 20px;
-      border-left: 3px solid var(--fire);
-      background: rgba(232,104,26,0.04);
-      font-style: italic; color: var(--ink2);
-    }
-    .post-body ul, .post-body ol { padding-left: 24px; margin: 8px 0; }
-    .post-body li { line-height: 32px; }
-    .post-body img { max-width: 100%; display: block; margin: 12px auto; }
-    .post-body figure { margin: 16px 0; display: block; }
-    .post-body figcaption {
-      font-family: var(--hand); font-size: 0.85rem;
-      color: var(--ink3); text-align: center; margin-top: 4px;
-    }
-    .post-body .sticky-callout {
-      display: block; background: #fef9c3; padding: 12px 16px;
-      margin: 14px 0; transform: rotate(-1deg);
-      box-shadow: 2px 3px 10px rgba(0,0,0,0.15);
-      max-width: 360px; font-family: var(--hand); font-size: 1rem;
-      color: var(--ink2); line-height: 1.6; position: relative;
-    }
-    .post-body .sticky-callout::before {
-      content: ''; position: absolute; top: -8px; left: 50%;
-      transform: translateX(-50%); width: 48px; height: 14px;
-      background: rgba(240,190,40,0.65);
-    }
-    .post-body .sticky-callout-blue  { background: #e8f0ff; }
-    .post-body .sticky-callout-blue::before  { background: rgba(80,130,220,0.55); }
-    .post-body .sticky-callout-green { background: #e8f5e8; }
-    .post-body .sticky-callout-green::before { background: rgba(80,180,100,0.55); }
-    .post-body .sticky-callout-pink  { background: #ffe8f0; }
-    .post-body .sticky-callout-pink::before  { background: rgba(220,80,120,0.55); }
-    .post-body .polaroid {
-      display: inline-block; background: #fff;
-      padding: 8px 8px 28px;
-      box-shadow: 2px 4px 14px rgba(0,0,0,0.25);
-      margin: 12px 8px; max-width: 200px; position: relative;
-    }
-    .post-body .polaroid img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
-    .post-body .polaroid-caption {
-      font-family: var(--hand); font-size: 0.85rem;
-      color: var(--ink3); text-align: center; margin-top: 6px; display: block;
-    }
-    .post-body .polaroid::before {
-      content: ''; position: absolute; top: -8px; left: 50%;
-      transform: translateX(-50%) rotate(-1deg);
-      width: 52px; height: 16px; background: rgba(240,190,40,0.65); z-index: 2;
-    }
-    .post-body .polaroid.tilt-l { transform: rotate(-3deg); }
-    .post-body .polaroid.tilt-r { transform: rotate(3deg); }
-    .post-body .polaroid.tilt-sl { transform: rotate(-1.5deg); }
-    .post-body .washi-tape {
-      display: block; height: 22px;
-      margin: 10px -36px 10px -84px; position: relative; overflow: hidden;
-    }
-    .post-body .washi-tape::before {
-      content: ''; position: absolute; inset: 0;
-      background: var(--tape-color, rgba(240,190,40,0.65));
-    }
-    .post-body .doodle-divider { display: block; margin: 16px 0; width: 100%; }
-    .post-body .floating-sticker {
-      display: inline-block; font-size: 1.8rem;
-      margin: 0 4px; vertical-align: middle;
-    }
-    .post-body .highlight-y { background: rgba(255,220,50,0.4); padding: 0 2px; }
-    .post-body .highlight-r { background: rgba(255,100,100,0.3); padding: 0 2px; }
-    .post-body .highlight-g { background: rgba(100,220,100,0.3); padding: 0 2px; }
-    .post-body .highlight-b { background: rgba(100,150,255,0.3); padding: 0 2px; }
-
-    /* ── REACTIONS ── */
-    .post-reactions {
-      padding: 18px 36px 20px 84px;
-      display: flex; gap: 8px; flex-wrap: wrap;
-      border-top: 1px dashed var(--rule);
-    }
-    .react-btn {
-      font-size: 0.85rem; padding: 5px 14px;
-      background: var(--paper2);
-      border: 1px solid rgba(26,18,8,0.12);
-      color: var(--ink3); cursor: pointer;
-      display: flex; align-items: center; gap: 5px;
-      font-family: var(--sans); border-radius: 2px; transition: all 0.15s;
-    }
-    .react-btn:hover { background: var(--paper3); }
-    .react-btn.reacted { background: rgba(232,104,26,0.08); border-color: var(--fire); color: var(--fire); }
-
-    /* ── COMMENTS SECTION ── */
-    .comments-section {
-      padding: 28px 36px 36px 84px;
-      border-top: 1px solid var(--rule);
-      position: relative; z-index: 2;
-    }
-    .comments-heading {
-      font-family: var(--hand); font-size: 1.4rem;
-      color: var(--ink); font-weight: 600; margin-bottom: 20px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .comments-count {
-      font-family: var(--pixel); font-size: 0.28rem;
-      color: var(--ink4); letter-spacing: 2px;
-      background: var(--paper3); padding: 3px 8px;
-    }
-
-    /* Comment form — looks like writing on the page */
-    .comment-form { margin-bottom: 28px; }
-    .comment-form-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-      margin-bottom: 12px;
-    }
-    .comment-input-wrap { position: relative; }
-    .comment-input-label {
-      font-family: var(--pixel); font-size: 0.24rem;
-      color: var(--ink4); letter-spacing: 2px;
-      display: block; margin-bottom: 4px;
-    }
-    .comment-input {
-      width: 100%; background: transparent;
-      border: none; border-bottom: 1px solid rgba(26,18,8,0.2);
-      font-family: var(--hand); font-size: 1rem;
-      color: var(--ink); padding: 4px 0; outline: none;
-      transition: border-color 0.2s;
-    }
-    .comment-input:focus { border-color: var(--fire); }
-    .comment-input::placeholder { color: var(--ink4); font-style: italic; }
-    .comment-textarea {
-      width: 100%; background: transparent;
-      border: none; border-bottom: 1px solid rgba(26,18,8,0.2);
-      font-family: var(--hand); font-size: 1rem;
-      color: var(--ink); padding: 4px 0; outline: none;
-      resize: none; min-height: 64px; line-height: 1.6;
-      transition: border-color 0.2s; margin-bottom: 12px;
-    }
-    .comment-textarea:focus { border-color: var(--fire); }
-    .comment-textarea::placeholder { color: var(--ink4); font-style: italic; }
-    .comment-submit {
-      font-family: var(--hand); font-size: 1rem;
-      padding: 8px 24px; background: var(--fire);
-      color: #fff; border: none; cursor: pointer;
-      transition: all 0.2s; font-weight: 600;
-    }
-    .comment-submit:hover { background: #ff7a2a; transform: translateY(-1px); }
-    .comment-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .comment-status {
-      font-family: var(--hand); font-size: 0.85rem;
-      color: var(--fire); margin-top: 8px;
-      font-style: italic; min-height: 20px;
-    }
-    .comment-status.ok { color: #3a8a3a; }
-
-    /* Comment list */
-    .comments-list { display: flex; flex-direction: column; gap: 0; }
-
-    /* Each comment — like a sticky note pasted on the page */
-    .comment-item {
-      padding: 16px 0;
-      border-bottom: 1px dashed var(--rule);
-      position: relative;
-      animation: commentIn 0.4s ease both;
-    }
-    @keyframes commentIn {
-      from { opacity:0; transform: translateY(8px); }
-      to   { opacity:1; transform: translateY(0); }
-    }
-    .comment-item:last-child { border-bottom: none; }
-    .comment-header {
-      display: flex; align-items: baseline; gap: 10px;
-      margin-bottom: 6px;
-    }
-    .comment-author {
-      font-family: var(--hand); font-size: 1.05rem;
-      color: var(--ink); font-weight: 600;
-    }
-    .comment-date {
-      font-family: var(--sans); font-size: 0.68rem;
-      color: var(--ink4);
-    }
-    .comment-text {
-      font-family: var(--hand); font-size: 1rem;
-      color: var(--ink2); line-height: 1.65;
-    }
-    .comment-empty {
-      font-family: var(--hand); font-size: 1rem;
-      color: var(--ink4); font-style: italic;
-      padding: 16px 0;
-    }
-
-    /* ── BACK STRIP ── */
-    .post-back-strip {
-      padding: 20px 36px 32px 84px;
-      border-top: 1px solid var(--rule);
-    }
-    .back-link {
-      font-family: var(--hand); font-size: 1rem;
-      color: var(--fire); text-decoration: none;
-      transition: letter-spacing 0.2s;
-    }
-    .back-link:hover { letter-spacing: 1px; }
-
-    /* ── MORE BY AUTHOR — outside the book, pinned below ── */
-    .more-by-author {
-      margin-top: 48px;
-      position: relative;
-    }
-    .more-heading {
-      font-family: var(--pixel); font-size: 0.36rem;
-      color: var(--fire); letter-spacing: 4px;
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 6px;
-    }
-    .more-heading::before {
-      content: ''; display: inline-block;
-      width: 18px; height: 1px;
-      background: var(--fire);
-    }
-    .more-subheading {
-      font-family: var(--serif); font-size: 1.4rem;
-      font-style: italic; color: var(--paper);
-      margin-bottom: 24px; font-weight: 300;
-    }
-    .more-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    /* More cards — small pinned notes */
-    .more-card {
-      background: var(--paper);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
-      position: relative; cursor: pointer;
-      text-decoration: none; display: block;
-      transition: transform 0.22s, box-shadow 0.22s;
-    }
-    .more-card:nth-child(odd)  { transform: rotate(-1.2deg); }
-    .more-card:nth-child(even) { transform: rotate(0.9deg); }
-    .more-card:hover {
-      transform: rotate(0deg) translateY(-6px) !important;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
-      z-index: 5;
-    }
-    .more-card-pin {
-      position: absolute; top: -9px; left: 40%;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ff9999, #cc3333);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-      z-index: 2;
-    }
-    .more-card-pin::after {
-      content: ''; position: absolute;
-      top: 100%; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 9px;
-      background: linear-gradient(to bottom, #777, #333);
-    }
-    .more-card-img {
-      width: 100%; aspect-ratio: 4/3; object-fit: cover;
-      display: block; filter: sepia(10%);
-    }
-    .more-card-noimg {
-      width: 100%; aspect-ratio: 4/3;
-      background: var(--paper3);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .more-card-noimg-num {
-      font-family: var(--pixel);
-      font-size: 1.8rem; color: transparent;
-      -webkit-text-stroke: 1px rgba(26,18,8,0.1);
-    }
-    .more-card-body { padding: 12px 14px 16px; }
-    .more-card-cat {
-      font-family: var(--pixel); font-size: 0.24rem;
-      color: var(--fire); letter-spacing: 2px; margin-bottom: 5px;
-    }
-    .more-card-title {
-      font-family: var(--hand); font-size: 1rem;
-      color: var(--ink); line-height: 1.4; font-weight: 600;
-    }
-    .more-card-date {
-      font-family: var(--sans); font-size: 0.65rem;
-      color: var(--ink4); margin-top: 6px;
-    }
-
-    /* empty more state */
-    .more-empty {
-      font-family: var(--hand); font-size: 1rem;
-      color: rgba(245,230,200,0.35); font-style: italic;
-    }
-
-    /* ── NOT FOUND ── */
-    .not-found {
-      text-align: center; padding: 80px 24px;
-      position: relative; z-index: 1;
-    }
-    .not-found h2 {
-      font-family: var(--hand); font-size: 2rem;
-      color: var(--paper); margin-bottom: 12px;
-    }
-    .not-found p {
-      font-family: var(--sans); font-size: 0.85rem;
-      color: rgba(245,230,200,0.4); margin-bottom: 24px;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .page-wrap { padding: 0 12px 80px; }
-      .diary-book-wrap { padding-top: 28px; }
-      .diary-spine { width: 14px; }
-      .post-header { padding: 24px 18px 18px 22px; }
-      .post-cover  { margin: 0 18px 0 22px; }
-      .post-body   { padding: 18px 18px 36px 22px; }
-      .diary-page::after { left: 14px; }
-      .post-reactions  { padding: 14px 18px 16px 22px; }
-      .comments-section { padding: 22px 18px 28px 22px; }
-      .post-back-strip { padding: 16px 18px 24px 22px; }
-      .post-body .washi-tape { margin: 10px -18px 10px -22px; }
-      .more-grid { grid-template-columns: 1fr 1fr; }
-      .comment-form-row { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 380px) {
-      .more-grid { grid-template-columns: 1fr; }
-    }
+    /* ── COMMENTS ── */
+    .comments-section{padding:28px 36px 36px 84px;border-top:1px solid var(--rule);position:relative;z-index:2}
+    .comments-heading{font-family:var(--hand);font-size:1.4rem;color:var(--ink);font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .comments-count{font-family:var(--pixel);font-size:0.28rem;color:var(--ink4);letter-spacing:2px;background:var(--paper3);padding:3px 8px}
+    .comment-form{margin-bottom:28px}
+    .comment-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+    .comment-input-wrap{position:relative}
+    .comment-input-label{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px;display:block;margin-bottom:4px}
+    .comment-input{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(26,18,8,0.2);font-family:var(--hand);font-size:1rem;color:var(--ink);padding:4px 0;outline:none;transition:border-color 0.2s}
+    .comment-input:focus{border-color:var(--fire)}
+    .comment-input::placeholder{color:var(--ink4);font-style:italic}
+    .comment-textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(26,18,8,0.2);font-family:var(--hand);font-size:1rem;color:var(--ink);padding:4px 0;outline:none;resize:none;min-height:64px;line-height:1.6;transition:border-color 0.2s;margin-bottom:12px}
+    .comment-textarea:focus{border-color:var(--fire)}
+    .comment-textarea::placeholder{color:var(--ink4);font-style:italic}
+    .comment-submit{font-family:var(--hand);font-size:1rem;padding:8px 24px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all 0.2s;font-weight:600}
+    .comment-submit:hover{background:#ff7a2a;transform:translateY(-1px)}
+    .comment-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+    .comment-status{font-family:var(--hand);font-size:0.85rem;color:var(--fire);margin-top:8px;font-style:italic;min-height:20px}
+    .comment-status.ok{color:#3a8a3a}
+    .comments-list{display:flex;flex-direction:column;gap:0}
+    .comment-item{padding:16px 0;border-bottom:1px dashed var(--rule);position:relative;animation:commentIn 0.4s ease both}
+    @keyframes commentIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .comment-item:last-child{border-bottom:none}
+    .comment-header{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+    .comment-author{font-family:var(--hand);font-size:1.05rem;color:var(--ink);font-weight:600}
+    .comment-date{font-family:var(--sans);font-size:0.68rem;color:var(--ink4)}
+    .comment-text{font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.65}
+    .comment-empty{font-family:var(--hand);font-size:1rem;color:var(--ink4);font-style:italic;padding:16px 0}
+    .post-back-strip{padding:20px 36px 32px 84px;border-top:1px solid var(--rule)}
+    .back-link{font-family:var(--hand);font-size:1rem;color:var(--fire);text-decoration:none;transition:letter-spacing 0.2s}
+    .back-link:hover{letter-spacing:1px}
+    .more-by-author{margin-top:48px;position:relative}
+    .more-heading{font-family:var(--pixel);font-size:0.36rem;color:var(--fire);letter-spacing:4px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .more-heading::before{content:'';display:inline-block;width:18px;height:1px;background:var(--fire)}
+    .more-subheading{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:var(--paper);margin-bottom:24px;font-weight:300}
+    .more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+    .more-card{background:var(--paper);box-shadow:0 4px 16px rgba(0,0,0,0.35);position:relative;cursor:pointer;text-decoration:none;display:block;transition:transform 0.22s,box-shadow 0.22s}
+    .more-card:nth-child(odd){transform:rotate(-1.2deg)}.more-card:nth-child(even){transform:rotate(0.9deg)}
+    .more-card:hover{transform:rotate(0deg) translateY(-6px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.5);z-index:5}
+    .more-card-pin{position:absolute;top:-9px;left:40%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9999,#cc3333);box-shadow:0 2px 4px rgba(0,0,0,0.5);z-index:2}
+    .more-card-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:9px;background:linear-gradient(to bottom,#777,#333)}
+    .more-card-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:sepia(10%)}
+    .more-card-noimg{width:100%;aspect-ratio:4/3;background:var(--paper3);display:flex;align-items:center;justify-content:center}
+    .more-card-noimg-num{font-family:var(--pixel);font-size:1.8rem;color:transparent;-webkit-text-stroke:1px rgba(26,18,8,0.1)}
+    .more-card-body{padding:12px 14px 16px}
+    .more-card-cat{font-family:var(--pixel);font-size:0.24rem;color:var(--fire);letter-spacing:2px;margin-bottom:5px}
+    .more-card-title{font-family:var(--hand);font-size:1rem;color:var(--ink);line-height:1.4;font-weight:600}
+    .more-card-date{font-family:var(--sans);font-size:0.65rem;color:var(--ink4);margin-top:6px}
+    .not-found{text-align:center;padding:80px 24px;position:relative;z-index:1}
+    .not-found h2{font-family:var(--hand);font-size:2rem;color:var(--paper);margin-bottom:12px}
+    .not-found p{font-family:var(--sans);font-size:0.85rem;color:rgba(245,230,200,0.4);margin-bottom:24px}
+    @media(max-width:640px){
+      .page-wrap{padding:0 12px 80px}.diary-book-wrap{padding-top:28px}.diary-spine{width:14px}
+      .post-header{padding:24px 18px 18px 22px}.post-cover{margin:0 18px 0 22px}
+      .post-body{padding:18px 18px 36px 22px}.diary-page::after{left:14px}
+      .post-reactions{padding:14px 18px 16px 22px}.comments-section{padding:22px 18px 28px 22px}
+      .post-back-strip{padding:16px 18px 24px 22px}.post-body .washi-tape{margin:10px -18px 10px -22px}
+      .more-grid{grid-template-columns:1fr 1fr}.comment-form-row{grid-template-columns:1fr}
+      .author-toolbar{padding:12px 18px 12px 22px}
+      .edit-hint{padding:4px 18px 0 22px}
+    }
+    @media(max-width:380px){.more-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-
 <div id="progress-bar"></div>
 
 <nav class="nav">
   <a href="index.html" class="nav-logo">HlYWoR</a>
-  <a href="index.html" class="nav-back">Back to board</a>
+  <div class="nav-right">
+    <!-- Auth slot -->
+    <div id="authSlot"></div>
+    <a href="index.html" class="nav-back">Back to board</a>
+  </div>
 </nav>
 
 <div class="page-wrap">
-
-  <!-- Loading -->
   <div class="loading-page" id="loadingState">
     <div class="loading-book">
       <div class="loading-spine-el"></div>
@@ -689,17 +244,28 @@
     <div class="loading-text">opening your diary...</div>
   </div>
 
-  <!-- Post -->
   <div id="postWrap" style="display:none">
     <div class="diary-book-wrap">
       <div class="book-pin" id="bookPin"></div>
       <div class="diary-book" id="postBook">
         <div class="diary-spine"></div>
         <div class="diary-page">
-          <div class="post-header"  id="postHeader"></div>
-          <div class="post-cover"   id="postCover"  style="display:none"></div>
-          <div class="post-body"    id="postBody"></div>
+          <div class="post-header" id="postHeader"></div>
+          <div class="post-cover" id="postCover" style="display:none"></div>
+          <div class="post-body" id="postBody"></div>
+
+          <!-- Edit hint — only visible in edit mode -->
+          <div class="edit-hint" id="editHint">✏ editing — click title, desc or body to change text</div>
+
           <div class="post-reactions" id="postReactions"></div>
+
+          <!-- ── AUTHOR TOOLBAR ── -->
+          <div class="author-toolbar" id="authorToolbar">
+            <span class="author-toolbar-label">YOUR POST</span>
+            <button class="toolbar-btn toolbar-btn-edit" id="toolbarEditBtn">✏ Edit</button>
+            <button class="toolbar-btn toolbar-btn-delete" id="toolbarDeleteBtn">✕ Delete</button>
+            <span class="toolbar-save-status" id="toolbarSaveStatus"></span>
+          </div>
 
           <!-- Comments -->
           <div class="comments-section">
@@ -707,8 +273,6 @@
               Leave a note
               <span class="comments-count" id="commentsCount">0 notes</span>
             </div>
-
-            <!-- Write comment form -->
             <div class="comment-form">
               <div class="comment-form-row">
                 <div class="comment-input-wrap">
@@ -725,8 +289,6 @@
               <button class="comment-submit" id="commentSubmit">Pin this note ✦</button>
               <div class="comment-status" id="commentStatus"></div>
             </div>
-
-            <!-- Comments list -->
             <div class="comments-list" id="commentsList">
               <div class="comment-empty">No notes yet — be the first to leave one.</div>
             </div>
@@ -741,7 +303,6 @@
       <div class="book-shadow"></div>
     </div>
 
-    <!-- More by author -->
     <div class="more-by-author" id="moreByAuthor" style="display:none">
       <div class="more-heading">MORE FROM THIS AUTHOR</div>
       <div class="more-subheading" id="moreSubheading">More by —</div>
@@ -749,25 +310,22 @@
     </div>
   </div>
 
-  <!-- Not found -->
   <div class="not-found" id="notFound" style="display:none">
     <h2>Page not found</h2>
     <p>This post doesn't exist or was removed.</p>
     <a href="index.html" class="back-link">← back to the board</a>
   </div>
-
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore, collection, query, where, getDocs,
-  addDoc, orderBy, limit, serverTimestamp, onSnapshot
+  addDoc, updateDoc, deleteDoc, doc,
+  orderBy, limit, serverTimestamp, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav, currentUser, onAuthChange, showConfirmDelete, getDisplayName } from "./auth.js";
 
-// ════════════════════════════════════
-// 🔧 PASTE YOUR FIREBASE CONFIG HERE
-// ════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
   authDomain: "hlywor.firebaseapp.com",
@@ -778,22 +336,44 @@ const firebaseConfig = {
   measurementId: "G-MQDXDWHLX8"
 };
 
-
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-/* ── Reading progress ── */
+// ── Auth nav ─────────────────────────────────────────
+injectAuthNav(document.getElementById('authSlot'), {
+  onSignIn(user) {
+    // Auto-fill comment name if empty
+    const nameEl = document.getElementById('commentName');
+    if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+    // Re-check toolbar visibility
+    if (currentPostData) maybeShowToolbar(currentPostData);
+  },
+  onSignOut() {
+    hideToolbar();
+  }
+});
+
+// ── Auth state — auto-fill comment name ─────────────
+onAuthChange(user => {
+  const nameEl = document.getElementById('commentName');
+  if (user && nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+});
+
+// ── Reading progress ─────────────────────────────────
 window.addEventListener('scroll', () => {
   const d = document.documentElement;
   document.getElementById('progress-bar').style.width =
     (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
 }, { passive: true });
 
-/* ── Slug from URL ── */
+// ── Slug from URL ────────────────────────────────────
 const slug = new URLSearchParams(window.location.search).get('slug');
 if (!slug) { showNotFound(); } else { loadPost(slug); }
 
-/* ── Load post ── */
+let currentPostData = null;
+let isEditMode = false;
+
+// ── Load post ────────────────────────────────────────
 async function loadPost(slug) {
   try {
     const snap = await getDocs(query(
@@ -803,32 +383,25 @@ async function loadPost(slug) {
       limit(1)
     ));
     if (snap.empty) { showNotFound(); return; }
-    const post = { id: snap.docs[0].id, ...snap.docs[0].data() };
-    renderPost(post);
-    loadComments(post.id);
-    loadMoreByAuthor(post.author, post.slug);
+    currentPostData = { id: snap.docs[0].id, ...snap.docs[0].data() };
+    renderPost(currentPostData);
+    loadComments(currentPostData.id);
+    loadMoreByAuthor(currentPostData.author, currentPostData.slug);
   } catch(err) {
     console.error(err); showNotFound();
   }
 }
 
-/* ── Render post ── */
+// ── Render post ──────────────────────────────────────
 function renderPost(post) {
   document.title = `${post.title} — HlyWor`;
-
   const dateStr = post.date
     ? new Date(post.date).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})
     : '';
-
-  const catClass = {
-    story:'cat-story',movies:'cat-movies',books:'cat-books',
-    thoughts:'cat-thoughts',college:'cat-college',news:'cat-news'
-  }[post.category] || 'cat-default';
-
+  const catClass = {story:'cat-story',movies:'cat-movies',books:'cat-books',thoughts:'cat-thoughts',college:'cat-college',news:'cat-news'}[post.category] || 'cat-default';
   const tagsHtml = (post.tags||[]).length
     ? `<div class="post-tags">${post.tags.map(t=>`<span class="post-tag">#${t}</span>`).join('')}</div>`
     : '';
-
   const readtime = post.readtime || calcReadTime(post.content||'');
 
   document.getElementById('postHeader').innerHTML = `
@@ -839,12 +412,11 @@ function renderPost(post) {
     <h1 class="post-title">${post.title}</h1>
     ${post.desc ? `<p class="post-desc">${post.desc}</p>` : ''}
     <div class="post-meta">
-      ${post.author  ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val">${post.author}</span></div>` : ''}
-      ${readtime     ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
+      ${post.author ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val">${post.author}</span></div>` : ''}
+      ${readtime   ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
       <span class="post-cat-tape ${catClass}">${(post.category||'post').toUpperCase()}</span>
     </div>
-    ${tagsHtml}
-  `;
+    ${tagsHtml}`;
 
   if (post.thumbnail) {
     const c = document.getElementById('postCover');
@@ -854,14 +426,13 @@ function renderPost(post) {
 
   document.getElementById('postBody').innerHTML = post.content || '<p>No content.</p>';
 
-  /* Reactions */
+  // Reactions
   const rKey = 'react-' + (post.slug || post.id);
   const reactions = JSON.parse(localStorage.getItem(rKey)||'{"🔥":0,"❤️":0,"😭":0}');
   const rEl = document.getElementById('postReactions');
   rEl.innerHTML = Object.entries(reactions).map(([emoji,count]) => {
     const reacted = localStorage.getItem(`reacted-${rKey}-${emoji}`) === '1';
-    return `<button class="react-btn${reacted?' reacted':''}" data-emoji="${emoji}">
-      ${emoji} <span>${count}</span></button>`;
+    return `<button class="react-btn${reacted?' reacted':''}" data-emoji="${emoji}">${emoji} <span>${count}</span></button>`;
   }).join('');
   rEl.querySelectorAll('.react-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -877,38 +448,191 @@ function renderPost(post) {
     });
   });
 
-  /* Show */
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('postWrap').style.display = 'block';
-
-  /* Comment submit — needs post.id */
   setupCommentForm(post.id);
+  maybeShowToolbar(post);
 }
 
-/* ── Comments — live listener ── */
+// ── Show/hide author toolbar ─────────────────────────
+function maybeShowToolbar(post) {
+  if (currentUser && post.authorUid && currentUser.uid === post.authorUid) {
+    document.getElementById('authorToolbar').classList.add('visible');
+  }
+}
+function hideToolbar() {
+  document.getElementById('authorToolbar').classList.remove('visible');
+  if (isEditMode) cancelEdit();
+}
+
+// ── EDIT MODE ────────────────────────────────────────
+function enterEditMode() {
+  if (isEditMode) return;
+  isEditMode = true;
+
+  // Make title editable
+  const titleEl = document.querySelector('.post-title');
+  if (titleEl) {
+    titleEl.contentEditable = 'true';
+    titleEl.focus();
+  }
+
+  // Make desc editable
+  const descEl = document.querySelector('.post-desc');
+  if (descEl) descEl.contentEditable = 'true';
+
+  // Make body editable
+  const bodyEl = document.getElementById('postBody');
+  if (bodyEl) bodyEl.contentEditable = 'true';
+
+  // Add edit-mode class to diary-page for visual feedback
+  document.querySelector('.diary-page').classList.add('edit-mode');
+
+  // Show edit hint
+  document.getElementById('editHint').style.display = 'block';
+
+  // Swap toolbar buttons
+  document.getElementById('authorToolbar').innerHTML = `
+    <span class="author-toolbar-label">EDITING</span>
+    <button class="toolbar-btn toolbar-btn-save" id="toolbarSaveBtn">✓ Save changes</button>
+    <button class="toolbar-btn toolbar-btn-cancel" id="toolbarCancelBtn">✕ Cancel</button>
+    <span class="toolbar-save-status" id="toolbarSaveStatus"></span>`;
+
+  document.getElementById('toolbarSaveBtn').addEventListener('click', saveEdit);
+  document.getElementById('toolbarCancelBtn').addEventListener('click', cancelEdit);
+}
+
+function cancelEdit() {
+  isEditMode = false;
+  // Restore original content
+  renderPost(currentPostData);
+  document.querySelector('.diary-page')?.classList.remove('edit-mode');
+  document.getElementById('editHint').style.display = 'none';
+  // Restore toolbar
+  restoreToolbar();
+}
+
+function restoreToolbar() {
+  document.getElementById('authorToolbar').innerHTML = `
+    <span class="author-toolbar-label">YOUR POST</span>
+    <button class="toolbar-btn toolbar-btn-edit" id="toolbarEditBtn">✏ Edit</button>
+    <button class="toolbar-btn toolbar-btn-delete" id="toolbarDeleteBtn">✕ Delete</button>
+    <span class="toolbar-save-status" id="toolbarSaveStatus"></span>`;
+  document.getElementById('toolbarEditBtn').addEventListener('click', enterEditMode);
+  document.getElementById('toolbarDeleteBtn').addEventListener('click', deletePost);
+}
+
+async function saveEdit() {
+  if (!currentUser || !currentPostData) return;
+
+  const titleEl = document.querySelector('.post-title');
+  const descEl  = document.querySelector('.post-desc');
+  const bodyEl  = document.getElementById('postBody');
+
+  const newTitle   = titleEl?.innerText.trim() || currentPostData.title;
+  const newDesc    = descEl?.innerText.trim()  || currentPostData.desc;
+
+  // Serialize body — strip contenteditable attrs
+  const bodyClone = bodyEl.cloneNode(true);
+  bodyClone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  const newContent = bodyClone.innerHTML;
+
+  const statusEl = document.getElementById('toolbarSaveStatus');
+  statusEl.textContent = 'Saving...';
+  statusEl.style.color = 'var(--ink3)';
+
+  try {
+    await updateDoc(doc(db, 'posts', currentPostData.id), {
+      title:   newTitle,
+      desc:    newDesc,
+      content: newContent,
+      updatedAt: serverTimestamp()
+    });
+
+    // Update local data
+    currentPostData.title   = newTitle;
+    currentPostData.desc    = newDesc;
+    currentPostData.content = newContent;
+
+    isEditMode = false;
+    document.querySelector('.diary-page')?.classList.remove('edit-mode');
+    document.getElementById('editHint').style.display = 'none';
+
+    statusEl.textContent = '✓ Saved!';
+    statusEl.style.color = '#2a8a2a';
+
+    // Make fields non-editable again
+    if (titleEl) titleEl.contentEditable = 'false';
+    if (descEl)  descEl.contentEditable  = 'false';
+    if (bodyEl)  bodyEl.contentEditable  = 'false';
+
+    restoreToolbar();
+    // Show saved status briefly
+    setTimeout(() => {
+      const s = document.getElementById('toolbarSaveStatus');
+      if (s) { s.textContent = '✓ Saved'; s.style.color = '#2a8a2a'; }
+    }, 100);
+    setTimeout(() => {
+      const s = document.getElementById('toolbarSaveStatus');
+      if (s) s.textContent = '';
+    }, 3000);
+
+  } catch(err) {
+    console.error(err);
+    statusEl.textContent = '✕ Failed: ' + err.message;
+    statusEl.style.color = '#c0392b';
+  }
+}
+
+// ── DELETE ───────────────────────────────────────────
+async function deletePost() {
+  const confirmed = await showConfirmDelete(
+    `Delete "${currentPostData.title}"? This cannot be undone — the post will be removed from the board permanently.`
+  );
+  if (!confirmed) return;
+
+  try {
+    await deleteDoc(doc(db, 'posts', currentPostData.id));
+    // Redirect to homepage after deletion
+    window.location.href = 'index.html';
+  } catch(err) {
+    console.error(err);
+    const s = document.getElementById('toolbarSaveStatus');
+    if (s) { s.textContent = '✕ Delete failed'; s.style.color = '#c0392b'; }
+  }
+}
+
+// Wire up toolbar buttons (initial render calls renderPost which calls maybeShowToolbar,
+// but buttons aren't in DOM until toolbar is visible)
+document.getElementById('authorToolbar').addEventListener('click', e => {
+  if (e.target.id === 'toolbarEditBtn')   enterEditMode();
+  if (e.target.id === 'toolbarDeleteBtn') deletePost();
+});
+
+// ── Comments ─────────────────────────────────────────
 function loadComments(postId) {
   const q = query(
-    collection(db, 'comments'),
-    where('postId','==', postId),
+    collection(db,'comments'),
+    where('postId','==',postId),
     orderBy('createdAt','asc')
   );
   onSnapshot(q, snap => {
-    const list = document.getElementById('commentsList');
+    const list    = document.getElementById('commentsList');
     const countEl = document.getElementById('commentsCount');
     const comments = snap.docs.map(d => ({id:d.id,...d.data()}));
-    countEl.textContent = `${comments.length} note${comments.length !== 1 ? 's' : ''}`;
+    countEl.textContent = `${comments.length} note${comments.length!==1?'s':''}`;
     if (!comments.length) {
       list.innerHTML = `<div class="comment-empty">No notes yet — be the first to leave one.</div>`;
       return;
     }
     list.innerHTML = comments.map((c,i) => {
-      const dateStr = c.createdAt?.toDate
+      const ds = c.createdAt?.toDate
         ? c.createdAt.toDate().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
         : '';
       return `<div class="comment-item" style="animation-delay:${i*50}ms">
         <div class="comment-header">
           <span class="comment-author">${c.mood||''} ${escHtml(c.name)}</span>
-          ${dateStr ? `<span class="comment-date">${dateStr}</span>` : ''}
+          ${ds?`<span class="comment-date">${ds}</span>`:''}
         </div>
         <div class="comment-text">${escHtml(c.text)}</div>
       </div>`;
@@ -916,48 +640,33 @@ function loadComments(postId) {
   });
 }
 
-/* ── Comment form ── */
 function setupCommentForm(postId) {
   const btn    = document.getElementById('commentSubmit');
   const status = document.getElementById('commentStatus');
-
   btn.addEventListener('click', async () => {
     const name = document.getElementById('commentName').value.trim();
     const mood = document.getElementById('commentMood').value.trim();
     const text = document.getElementById('commentText').value.trim();
-
-    if (!name) { status.textContent = '⚠ What should we call you?'; status.className='comment-status'; return; }
-    if (!text)  { status.textContent = '⚠ Write something first!';   status.className='comment-status'; return; }
-    if (text.length < 2) { status.textContent = '⚠ A little more please :)'; status.className='comment-status'; return; }
-
-    btn.disabled = true;
-    btn.textContent = 'Pinning...';
-    status.textContent = '';
-
+    if (!name) { status.textContent='⚠ What should we call you?';status.className='comment-status';return; }
+    if (!text) { status.textContent='⚠ Write something first!';status.className='comment-status';return; }
+    if (text.length<2) { status.textContent='⚠ A little more please :)';status.className='comment-status';return; }
+    btn.disabled=true; btn.textContent='Pinning...'; status.textContent='';
     try {
-      await addDoc(collection(db,'comments'), {
-        postId,
-        name, mood, text,
-        createdAt: serverTimestamp()
-      });
-      document.getElementById('commentName').value = '';
-      document.getElementById('commentMood').value = '';
-      document.getElementById('commentText').value = '';
-      status.textContent = '✓ Note pinned!';
-      status.className = 'comment-status ok';
-      setTimeout(() => { status.textContent = ''; }, 3000);
+      await addDoc(collection(db,'comments'),{postId,name,mood,text,createdAt:serverTimestamp()});
+      document.getElementById('commentName').value='';
+      document.getElementById('commentMood').value='';
+      document.getElementById('commentText').value='';
+      status.textContent='✓ Note pinned!'; status.className='comment-status ok';
+      setTimeout(()=>{status.textContent='';},3000);
     } catch(err) {
       console.error(err);
-      status.textContent = '✕ Failed — check Firebase config';
-      status.className = 'comment-status';
+      status.textContent='✕ Failed — check Firebase config';
+      status.className='comment-status';
     }
-
-    btn.disabled = false;
-    btn.textContent = 'Pin this note ✦';
+    btn.disabled=false; btn.textContent='Pin this note ✦';
   });
 }
 
-/* ── More by author ── */
 async function loadMoreByAuthor(author, currentSlug) {
   if (!author) return;
   try {
@@ -968,53 +677,38 @@ async function loadMoreByAuthor(author, currentSlug) {
       orderBy('createdAt','desc'),
       limit(4)
     ));
-    const others = snap.docs
-      .map(d => ({id:d.id,...d.data()}))
-      .filter(p => p.slug !== currentSlug);
-
+    const others = snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.slug!==currentSlug);
     if (!others.length) return;
-
     document.getElementById('moreSubheading').textContent = `More by ${author}`;
     const grid = document.getElementById('moreGrid');
     grid.innerHTML = others.map((p,i) => {
       const cat = (p.category||'post').toUpperCase();
-      const dateStr = p.date
-        ? new Date(p.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
-        : '';
+      const ds = p.date ? new Date(p.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
       const thumb = p.thumbnail
         ? `<img class="more-card-img" src="${p.thumbnail}" alt="${p.title}" loading="lazy">`
         : `<div class="more-card-noimg"><span class="more-card-noimg-num">${String(i+1).padStart(2,'0')}</span></div>`;
       return `<a href="post.html?slug=${p.slug}" class="more-card">
-        <div class="more-card-pin"></div>
-        ${thumb}
+        <div class="more-card-pin"></div>${thumb}
         <div class="more-card-body">
           <div class="more-card-cat">${cat}</div>
           <div class="more-card-title">${p.title}</div>
-          ${dateStr ? `<div class="more-card-date">${dateStr}</div>` : ''}
-        </div>
-      </a>`;
+          ${ds?`<div class="more-card-date">${ds}</div>`:''}
+        </div></a>`;
     }).join('');
-
     document.getElementById('moreByAuthor').style.display = 'block';
-  } catch(err) {
-    console.error('More by author:', err);
-  }
+  } catch(err) { console.error('More by author:',err); }
 }
 
 function showNotFound() {
   document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('notFound').style.display   = 'block';
+  document.getElementById('notFound').style.display = 'block';
 }
-
 function calcReadTime(html) {
   const words = html.replace(/<[^>]+>/g,'').trim().split(/\s+/).filter(Boolean).length;
-  return words > 0 ? `~${Math.max(1,Math.ceil(words/200))} min` : '';
+  return words>0 ? `~${Math.max(1,Math.ceil(words/200))} min` : '';
 }
-
 function escHtml(str) {
-  return String(str||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
