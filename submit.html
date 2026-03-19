@@ -203,8 +203,7 @@
     .tags-wrap{border:1px solid rgba(0,0,0,0.12);background:var(--t-paper2);min-height:38px;padding:4px 6px;display:flex;flex-wrap:wrap;gap:4px;cursor:text}
     .tags-wrap:focus-within{border-color:var(--t-acc)}
     .tag-chip{background:var(--t-acc);color:#fff;font-family:var(--sans);font-size:0.75rem;padding:2px 10px;display:flex;align-items:center;gap:5px;border-radius:2px}
-    .tag-chip .rm{cursor:pointer;opacity:.7}
-    .tag-chip .rm:hover{opacity:1}
+    .tag-chip .rm{cursor:pointer;opacity:.7}.tag-chip .rm:hover{opacity:1}
     .tags-wrap input{border:none;outline:none;background:transparent;font-family:var(--sans);font-size:0.85rem;color:var(--t-ink);flex:1;min-width:80px}
     .modal-submit{width:100%;font-family:'Caveat',cursive;font-size:1.2rem;padding:12px;background:var(--t-acc);color:#fff;border:none;cursor:pointer;transition:all 0.2s;font-weight:600;margin-top:6px}
     .modal-submit:hover{filter:brightness(1.1)}
@@ -212,6 +211,10 @@
     .modal-status{font-family:var(--sans);font-size:0.78rem;margin-top:8px;text-align:center;font-style:italic;min-height:18px}
     .modal-status.ok{color:#2a8a2a}.modal-status.err{color:#c0392b}
     .modal-close{position:absolute;top:12px;right:12px;font-family:var(--pixel);font-size:0.26rem;color:var(--t-ink3);cursor:pointer;background:none;border:none}
+    /* Auth user badge in nav */
+    .nav-user-badge{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:0.74rem;color:rgba(255,255,255,0.6)}
+    .nav-user-badge img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,0.25)}
+    .nav-user-badge .nav-user-name{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     @media(max-width:768px){.diary-area{padding:16px 10px 60px}.writing-canvas,.page-header-area,.cover-zone{padding-left:20px}.diary-page::after{left:14px}.count-strip{padding:6px 14px}body[data-t="news"] .diary-editor{columns:1}}
     @media(max-width:480px){.tools-panel{width:52px}.diary-spine{width:14px!important}.template-bar{padding:6px 14px}}
   </style>
@@ -226,6 +229,8 @@
   </div>
   <div class="nav-right">
     <span class="nav-save-status" id="saveStatus">unsaved</span>
+    <!-- Auth slot — filled by auth.js -->
+    <div id="authSlot"></div>
     <button class="publish-btn" id="publishOpenBtn">Publish &rarr;</button>
   </div>
 </nav>
@@ -418,6 +423,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { injectAuthNav, showLoginModal, currentUser, onAuthChange, getDisplayName } from "./auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
@@ -431,6 +437,45 @@
   const CLD_NAME = "dgatfolot";
   const CLD_PRESET = "hlywor";
   const app = initializeApp(firebaseConfig), db = getFirestore(app);
+
+  // ── Auth nav ─────────────────────────────────────────
+  injectAuthNav(document.getElementById("authSlot"), {
+    onSignIn(user) {
+      // Auto-fill author fields from Google account
+      const nameEl = document.getElementById("authorInput");
+      const emailEl = document.getElementById("emailInput");
+      if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+      if (emailEl && !emailEl.value) emailEl.value = user.email || "";
+    },
+    onSignOut() {
+      // Clear author fields on sign out
+      document.getElementById("authorInput").value = "";
+      document.getElementById("emailInput").value = "";
+    }
+  });
+
+  // ── Gate: require login to use this page ─────────────
+  onAuthChange(user => {
+    if (!user) {
+      showLoginModal({
+        closeable: true,
+        prompt: "Sign in to write and publish your story on HlyWor.",
+        onSuccess(u) {
+          // Auto-fill after signing in from the modal
+          const nameEl = document.getElementById("authorInput");
+          const emailEl = document.getElementById("emailInput");
+          if (nameEl && !nameEl.value) nameEl.value = getDisplayName(u);
+          if (emailEl && !emailEl.value) emailEl.value = u.email || "";
+        }
+      });
+    } else {
+      // Auto-fill on page load if already signed in
+      const nameEl = document.getElementById("authorInput");
+      const emailEl = document.getElementById("emailInput");
+      if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+      if (emailEl && !emailEl.value) emailEl.value = user.email || "";
+    }
+  });
 
   const TEMPLATES = {
     diary:   { label:"diary entry",   ph:"Start writing...\n\nJust write. Use the tools on the left to format, add stickers, tape, photos, sticky notes.\n\nThis is your space." },
@@ -505,7 +550,7 @@
   document.addEventListener("click",e=>{if(!e.target.closest("#stickerPicker")&&!e.target.closest("#insertStickerBtn"))sp.classList.remove("open");});
 
   const stickyBtn=document.getElementById("insertStickyBtn");
-  if(stickyBtn)stickyBtn.addEventListener("mousedown",e=>{e.preventDefault();const c=["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"][Math.floor(Math.random()*4)];insertAtCursor("<div class='sticky-callout"+(c?" "+c:"")+"'contenteditable='true'>Write your note...</div><p><br></p>");});
+  if(stickyBtn)stickyBtn.addEventListener("mousedown",e=>{e.preventDefault();const c=["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"][Math.floor(Math.random()*4)];insertAtCursor("<div class='sticky-callout"+(c?" "+c:"")+"' contenteditable='true'>Write your note...</div><p><br></p>");});
 
   const doodleBtn=document.getElementById("insertDoodleBtn");
   if(doodleBtn)doodleBtn.addEventListener("mousedown",e=>{e.preventDefault();const w=["<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='"+currentColor+"' stroke-width='1.5' opacity='0.4'/></svg>","<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><line x1='0' y1='10' x2='400' y2='10' stroke='"+currentColor+"' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg>"];insertAtCursor(w[Math.floor(Math.random()*2)]+"<p><br></p>");});
@@ -571,7 +616,13 @@
     }catch(e){console.error(e);return null;}
   }
 
-  document.getElementById("publishOpenBtn").addEventListener("click",()=>document.getElementById("publishModalBg").classList.add("open"));
+  document.getElementById("publishOpenBtn").addEventListener("click",()=>{
+    if(!currentUser){
+      showLoginModal({prompt:"Sign in to publish your post."});
+      return;
+    }
+    document.getElementById("publishModalBg").classList.add("open");
+  });
   document.getElementById("modalClose").addEventListener("click",()=>document.getElementById("publishModalBg").classList.remove("open"));
   document.getElementById("publishModalBg").addEventListener("click",e=>{if(e.target===document.getElementById("publishModalBg"))document.getElementById("publishModalBg").classList.remove("open");});
 
@@ -582,19 +633,70 @@
   function serializeContent(){const clone=editor.cloneNode(true);clone.querySelectorAll("[contenteditable]").forEach(el=>el.removeAttribute("contenteditable"));return clone.innerHTML;}
 
   document.getElementById("submitBtn").addEventListener("click",async()=>{
-    const name=document.getElementById("authorInput").value.trim(),email=document.getElementById("emailInput").value.trim(),title=document.getElementById("titleInput").value.trim(),desc=document.getElementById("descInput").value.trim(),readtime=document.getElementById("readtimeInput").value.trim()||document.getElementById("readTimeCalc").textContent,coverUrl=document.getElementById("coverUrl").value,content=serializeContent(),plainText=editor.innerText.trim(),type=document.getElementById("typeSelect").value,agree=document.getElementById("agreeCheck").checked,agreeImg=document.getElementById("agreeImgCheck").checked,techTag=(document.getElementById("techTagInput")||{}).value?.trim()||"",statusEl=document.getElementById("modalStatus");
+    // Double-check auth at submit time
+    if(!currentUser){
+      showLoginModal({prompt:"Sign in to publish your post."});
+      return;
+    }
+    const name=document.getElementById("authorInput").value.trim()||getDisplayName(currentUser),
+          email=document.getElementById("emailInput").value.trim()||currentUser.email||"",
+          title=document.getElementById("titleInput").value.trim(),
+          desc=document.getElementById("descInput").value.trim(),
+          readtime=document.getElementById("readtimeInput").value.trim()||document.getElementById("readTimeCalc").textContent,
+          coverUrl=document.getElementById("coverUrl").value,
+          content=serializeContent(),
+          plainText=editor.innerText.trim(),
+          type=document.getElementById("typeSelect").value,
+          agree=document.getElementById("agreeCheck").checked,
+          agreeImg=document.getElementById("agreeImgCheck").checked,
+          techTag=(document.getElementById("techTagInput")||{}).value?.trim()||"",
+          statusEl=document.getElementById("modalStatus");
+
     if(uploadingCount>0){statusEl.textContent="⚠ Images still uploading, wait a moment...";statusEl.className="modal-status err";return;}
     if(!title){statusEl.textContent="⚠ Title is required";statusEl.className="modal-status err";return;}
     if(!desc){statusEl.textContent="⚠ Homepage desc is required";statusEl.className="modal-status err";return;}
     if(plainText.length<30){statusEl.textContent="⚠ Write a little more first";statusEl.className="modal-status err";return;}
     if(!agree){statusEl.textContent="⚠ Confirm your content";statusEl.className="modal-status err";return;}
     if(!agreeImg){statusEl.textContent="⚠ Confirm image rights";statusEl.className="modal-status err";return;}
-    const btn=document.getElementById("submitBtn");btn.disabled=true;btn.textContent="Sending...";statusEl.textContent="";
+
+    const btn=document.getElementById("submitBtn");
+    btn.disabled=true;btn.textContent="Sending...";statusEl.textContent="";
+
     try{
       const slug=title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-      await addDoc(collection(db,"posts"),{name,email,type,readtime,title,desc,thumbnail:coverUrl||"",category:selectedCat,template:activeTemplate,mood:selectedMood,rating:starRating||null,techTag:techTag||null,tags,content,url:"post.html?slug="+slug,slug,status:"published",author:name,date:new Date().toISOString(),publishedAt:serverTimestamp(),createdAt:serverTimestamp()});
-      btn.textContent="Live ✦";statusEl.textContent="✓ Your post is live on the homepage! 🎉";statusEl.className="modal-status ok";updateSaveStatus("saved");
-    }catch(err){console.error(err);btn.disabled=false;btn.textContent="Go live now ✦";statusEl.textContent="✕ Failed — check Firebase config";statusEl.className="modal-status err";}
+      await addDoc(collection(db,"posts"),{
+        // content
+        name, email, type, readtime, title, desc,
+        thumbnail: coverUrl||"",
+        category: selectedCat,
+        template: activeTemplate,
+        mood: selectedMood,
+        rating: starRating||null,
+        techTag: techTag||null,
+        tags, content,
+        url: "post.html?slug="+slug,
+        slug,
+        status: "published",
+        author: name,
+        date: new Date().toISOString(),
+        // ── NEW: auth fields ──
+        authorUid: currentUser.uid,
+        authorEmail: currentUser.email||"",
+        authorPhoto: currentUser.photoURL||"",
+        publishedAt: serverTimestamp(),
+        createdAt: serverTimestamp()
+      });
+      btn.textContent="Live ✦";
+      statusEl.textContent="✓ Your post is live on the homepage! 🎉";
+      statusEl.className="modal-status ok";
+      updateSaveStatus("saved");
+    }catch(err){
+      console.error(err);
+      btn.disabled=false;
+      btn.textContent="Go live now ✦";
+      statusEl.textContent="✕ Failed — "+err.message;
+      statusEl.className="modal-status err";
+    }
   });
 
   document.addEventListener("keydown",e=>{if(e.metaKey||e.ctrlKey){if(e.key==="b"){e.preventDefault();document.execCommand("bold");}if(e.key==="i"){e.preventDefault();document.execCommand("italic");}}});

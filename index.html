@@ -960,6 +960,27 @@
       color: rgba(255,255,255,0.4); letter-spacing: 2px;
       cursor: pointer; background: none; border: none;
     }
+    /* Auth slot in vertical nav */
+    #authSlot .auth-nav-btn {
+      writing-mode: horizontal-tb !important;
+      width: 38px; height: 38px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+      font-size: 0;
+    }
+    #authSlot .auth-nav-btn svg { margin: 0; }
+    #authSlot .auth-user-btn {
+      padding: 3px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    #authSlot .auth-user-name,
+    #authSlot .auth-chevron { display: none; }
+    #authSlot .auth-dropdown {
+      left: 44px; right: auto; top: 0;
+    }
   </style>
 </head>
 <body>
@@ -984,6 +1005,7 @@
   </div>
   <div class="nav-bottom">
     <button class="nav-btn" id="searchOpenBtn" aria-label="Search">⌕</button>
+    <div id="authSlot" style="display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;margin-top:4px"></div>
   </div>
 </nav>
 
@@ -999,6 +1021,7 @@
   <a href="goal.html">Goals</a>
   <a href="blogs.html">All Posts</a>
   <a href="submit.html">Submit →</a>
+  <div id="authSlotMobile" style="margin-top:8px;width:100%;display:flex;justify-content:center"></div>
   <button class="nav-btn" id="mobileSearchBtn" style="width:auto;height:auto;padding:8px 20px;border-radius:0;font-family:var(--pixel);font-size:0.34rem;color:var(--fire);letter-spacing:2px;border-color:var(--fire)">SEARCH</button>
 </div>
 
@@ -1166,6 +1189,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, query, orderBy, onSnapshot, where }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav, requireLogin, currentUser } from "./auth.js";
 
 // ════════════════════════════════════
 // 🔧 PASTE YOUR FIREBASE CONFIG HERE
@@ -1183,6 +1207,27 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
+
+/* ── Auth nav ── */
+injectAuthNav(document.getElementById('authSlot'), {
+  onSignIn(user) {
+    // also update mobile slot
+    const mob = document.getElementById('authSlotMobile');
+    if (mob) injectAuthNav(mob);
+  }
+});
+// Mirror auth into mobile drawer slot too
+injectAuthNav(document.getElementById('authSlotMobile') || document.createElement('div'));
+
+/* ── Protect write/submit buttons ── */
+document.querySelectorAll('a[href="submit.html"]').forEach(btn => {
+  btn.addEventListener('click', async e => {
+    e.preventDefault();
+    const user = await requireLogin('Sign in to share your story on HlyWor.');
+    if (user) window.location.href = 'submit.html';
+  });
+});
+
 /* ── Floating embers ── */
 const emberContainer = document.getElementById('embers');
 if (emberContainer) {
