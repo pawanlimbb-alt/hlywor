@@ -579,7 +579,10 @@
 
 <nav class="nav">
   <a href="index.html" class="nav-logo">HlYWoR</a>
-  <a href="character.html" class="nav-back">Back to crew</a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div id="authSlot"></div>
+    <a href="character.html" class="nav-back">Back to crew</a>
+  </div>
 </nav>
 
 <div class="page-wrap">
@@ -653,6 +656,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, query, where, getDocs, limit, orderBy }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav } from "./auth.js";
 
 // 🔧 YOUR FIREBASE CONFIG
 const firebaseConfig = {
@@ -667,6 +671,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
+
+// ── Auth nav ──────────────────────────────────────────
+injectAuthNav(document.getElementById('authSlot'));
 
 /* Reading progress */
 window.addEventListener('scroll', () => {

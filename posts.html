@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Posts — HlyWor</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --board:  #1c1510;
+    --paper:  #faf6ee;
+    --paper2: #f5edd8;
+    --paper3: #ede3c8;
+    --ink:    #1a1208;
+    --ink2:   #3d3020;
+    --ink3:   #6a5840;
+    --ink4:   #a09078;
+    --fire:   #e8681a;
+    --gold:   #d4a020;
+    --rule:   rgba(180,160,120,0.2);
+    --pixel:  'Press Start 2P',monospace;
+    --serif:  'Crimson Pro',Georgia,serif;
+    --sans:   'DM Sans',system-ui,sans-serif;
+    --hand:   'Caveat',cursive;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--board);min-height:100vh;font-family:var(--sans);overflow-x:hidden}
+
+  /* Cork bg */
+  body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 15% 20%,rgba(80,50,20,0.35) 0%,transparent 50%),radial-gradient(ellipse at 85% 80%,rgba(60,35,10,0.28) 0%,transparent 50%),url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");background-size:auto,auto,200px 200px;pointer-events:none;z-index:0}
+
+  ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--board)}::-webkit-scrollbar-thumb{background:var(--fire);border-radius:2px}
+  #progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--fire),var(--gold));z-index:9999;transition:width .08s linear}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:300;background:rgba(18,12,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px}
+  .nav-logo{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:2px;text-decoration:none;text-shadow:0 0 12px rgba(212,160,32,0.4);animation:flicker 7s infinite}
+  @keyframes flicker{0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1}}
+  .nav-links{display:flex;gap:22px;list-style:none}
+  .nav-links a{font-family:var(--sans);font-size:.76rem;color:rgba(255,255,255,.38);text-decoration:none;transition:color .2s}
+  .nav-links a:hover,.nav-links a.active{color:rgba(255,255,255,.9)}
+  .nav-right{display:flex;align-items:center;gap:14px}
+  .nav-write{font-family:var(--hand);font-size:1rem;font-weight:700;padding:5px 16px;background:var(--fire);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:all .2s;transform:rotate(-.5deg)}
+  .nav-write:hover{background:#ff7a2a;transform:rotate(0deg) translateY(-1px)}
+  .hamburger{display:none;flex-direction:column;gap:5px;width:32px;height:32px;align-items:center;justify-content:center;cursor:pointer;background:none;border:none}
+  .hamburger span{display:block;width:18px;height:1.5px;background:rgba(255,255,255,.6);transition:all .28s;transform-origin:center}
+  .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0}
+  .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+  .mob-nav{display:none;position:fixed;top:52px;left:0;right:0;background:rgba(18,12,8,.98);border-bottom:1px solid rgba(255,255,255,.07);padding:20px 28px;z-index:299;flex-direction:column}
+  .mob-nav.open{display:flex}
+  .mob-nav a{font-family:var(--sans);font-size:.88rem;color:rgba(255,255,255,.45);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);text-decoration:none;transition:color .2s}
+  .mob-nav a:last-child{border-bottom:none}
+
+  /* SEARCH + FILTER STRIP */
+  .control-strip{position:sticky;top:52px;z-index:200;background:rgba(18,12,8,.93);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .search-wrap{position:relative;flex:1;min-width:180px;max-width:320px}
+  .search-wrap::before{content:'⌕';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:1rem;color:rgba(255,255,255,.25);pointer-events:none}
+  #searchInput{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.8);font-family:var(--sans);font-size:.78rem;padding:7px 10px 7px 30px;outline:none;border-radius:2px;transition:border-color .2s}
+  #searchInput:focus{border-color:var(--fire)}
+  #searchInput::placeholder{color:rgba(255,255,255,.25)}
+  .filter-pills{display:flex;gap:5px;flex-wrap:wrap;flex:1}
+  .f-pill{font-family:var(--pixel);font-size:.22rem;letter-spacing:1px;padding:5px 12px;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.35);background:transparent;cursor:pointer;transition:all .18s;border-radius:2px;white-space:nowrap}
+  .f-pill:hover{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7)}
+  .f-pill.active{background:var(--fire);border-color:var(--fire);color:#fff}
+  .post-count{font-family:var(--pixel);font-size:.22rem;color:rgba(255,255,255,.2);white-space:nowrap;margin-left:auto}
+
+  /* ARCHIVE WALL */
+  .archive-wall{max-width:1280px;margin:0 auto;padding:24px 20px 80px;position:relative;z-index:1}
+
+  /* MASONRY via CSS columns */
+  .post-columns{columns:4;column-gap:14px}
+  @media(max-width:1100px){.post-columns{columns:3}}
+  @media(max-width:750px){.post-columns{columns:2;column-gap:10px}}
+  @media(max-width:420px){.post-columns{columns:2;column-gap:8px}}
+
+  /* ── POST CARD ── */
+  .post-card{
+    break-inside:avoid;
+    margin-bottom:14px;
+    cursor:pointer;
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    position:relative;
+    transition:transform .3s cubic-bezier(.34,1.3,.64,1),box-shadow .3s ease;
+    animation:cardIn .5s ease both;
+  }
+  @keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media(min-width:751px){
+    .post-card:nth-child(4n+1){transform:rotate(-.4deg)}
+    .post-card:nth-child(4n+2){transform:rotate(.3deg)}
+    .post-card:nth-child(4n+3){transform:rotate(-.2deg)}
+    .post-card:nth-child(4n+4){transform:rotate(.5deg)}
+    .post-card:hover{transform:rotate(0deg) translateY(-6px) scale(1.02)!important;z-index:10}
+  }
+
+  /* Tape strip on top */
+  .post-card::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%);height:13px;width:var(--tape-w,44px);background:var(--tape-col,rgba(240,190,40,.65));z-index:3;pointer-events:none}
+
+  /* Card inner */
+  .card-inner{position:relative;overflow:hidden}
+
+  /* ── DIARY CARD ── */
+  .post-card.t-diary .card-inner{background:var(--paper);padding:14px 14px 16px;border-bottom:3px solid var(--paper3);box-shadow:2px 4px 18px rgba(0,0,0,.5),0 1px 4px rgba(0,0,0,.3)}
+  .post-card.t-diary .card-inner::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 23px,rgba(180,160,120,.18) 23px,rgba(180,160,120,.18) 24px);pointer-events:none}
+  .post-card.t-diary .card-inner::after{content:'';position:absolute;top:0;bottom:0;left:36px;width:1px;background:rgba(220,80,80,.18);pointer-events:none}
+
+  /* ── MAGAZINE CARD ── */
+  .post-card.t-magazine .card-inner{background:#fff;box-shadow:2px 4px 18px rgba(0,0,0,.5)}
+  .post-card.t-magazine .card-thumb{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;filter:sepia(5%) contrast(1.04)}
+  .post-card.t-magazine .card-body{padding:12px 14px 14px;border-top:3px double rgba(0,0,0,.15)}
+
+  /* ── NEWS CARD ── */
+  .post-card.t-news .card-inner{background:#f4f0e8;box-shadow:2px 4px 18px rgba(0,0,0,.5)}
+  .post-card.t-news .card-body{padding:10px 14px 12px;border-top:4px solid #0c0a08}
+  .post-card.t-news .card-dateline{font-family:'IM Fell English',Georgia,serif;font-size:.65rem;color:#4a4030;border-bottom:1px solid #0c0a08;padding-bottom:4px;margin-bottom:6px;letter-spacing:.5px}
+  /* news has no image by default — feels like a text clipping */
+
+  /* ── TECH CARD ── */
+  .post-card.t-tech .card-inner{background:#161b22;border:1px solid rgba(88,166,255,.15);box-shadow:2px 4px 18px rgba(0,0,0,.6),0 0 20px rgba(88,166,255,.06)}
+  .post-card.t-tech .card-body{padding:12px 14px 14px;border-top:1px solid rgba(88,166,255,.15)}
+  .post-card.t-tech::before{background:rgba(88,166,255,.4)}
+
+  /* ── COLLEGE CARD ── */
+  .post-card.t-college .card-inner{background:#fef6ff;box-shadow:2px 4px 18px rgba(0,0,0,.5)}
+  .post-card.t-college .card-body{padding:10px 14px 14px}
+  .post-card.t-college::before{background:rgba(155,89,182,.55)}
+
+  /* ── SHARED CARD BODY ── */
+  .card-body{padding:12px 14px 14px}
+  .card-cat{font-family:var(--pixel);font-size:.2rem;letter-spacing:1px;padding:2px 8px;color:#fff;display:inline-block;margin-bottom:8px}
+  .post-card.t-diary    .card-cat{background:var(--fire)}
+  .post-card.t-magazine .card-cat{background:#c0392b}
+  .post-card.t-news     .card-cat{background:#0c0a08;color:#f4f0e8}
+  .post-card.t-tech     .card-cat{background:#58a6ff;color:#0d1117}
+  .post-card.t-college  .card-cat{background:#9b59b6}
+
+  .card-title{font-family:var(--hand);font-size:1.05rem;font-weight:700;line-height:1.3;margin-bottom:5px;color:var(--ink)}
+  .post-card.t-magazine .card-title{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:#0a0a0a}
+  .post-card.t-news     .card-title{font-family:'IM Fell English',Georgia,serif;font-size:.98rem;line-height:1.25;letter-spacing:-.2px;color:#0c0a08}
+  .post-card.t-tech     .card-title{font-family:var(--sans);font-weight:600;font-size:.9rem;color:#e6edf3;line-height:1.35}
+  .post-card.t-college  .card-title{font-family:var(--hand);font-size:1.1rem;color:#1a1020}
+
+  .card-desc{font-family:var(--serif);font-size:.85rem;font-style:italic;color:var(--ink3);line-height:1.55;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .post-card.t-tech .card-desc{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-style:normal;color:#8b949e;line-height:1.5}
+  .post-card.t-news .card-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:.8rem;color:#4a4030}
+
+  .card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card-author{font-family:var(--hand);font-size:.82rem;color:var(--fire)}
+  .post-card.t-tech .card-author{color:#58a6ff;font-family:var(--sans);font-size:.72rem}
+  .post-card.t-news .card-author{color:#0c0a08;font-family:'IM Fell English',serif}
+  .card-date{font-family:var(--sans);font-size:.64rem;color:var(--ink4)}
+  .post-card.t-tech .card-date{color:#484f58}
+  .card-read{font-family:var(--pixel);font-size:.18rem;color:var(--ink4);margin-left:auto}
+  .post-card.t-tech .card-read{color:#3fb950}
+
+  /* Stars for magazine */
+  .card-stars{font-size:.75rem;color:#c0392b;margin-bottom:4px;letter-spacing:2px}
+
+  /* Mood badge on diary */
+  .card-mood{position:absolute;top:8px;right:8px;font-size:1.1rem;z-index:2}
+
+  /* Hover shadow glow per template */
+  .post-card.t-diary:hover    .card-inner{box-shadow:4px 14px 32px rgba(0,0,0,.65),0 0 24px rgba(232,104,26,.1)}
+  .post-card.t-magazine:hover .card-inner{box-shadow:4px 14px 32px rgba(0,0,0,.65),0 0 24px rgba(192,57,43,.1)}
+  .post-card.t-news:hover     .card-inner{box-shadow:4px 14px 32px rgba(0,0,0,.65)}
+  .post-card.t-tech:hover     .card-inner{box-shadow:4px 14px 32px rgba(0,0,0,.7),0 0 30px rgba(88,166,255,.15)}
+  .post-card.t-college:hover  .card-inner{box-shadow:4px 14px 32px rgba(0,0,0,.65),0 0 24px rgba(155,89,182,.12)}
+
+  /* EMPTY / LOADING */
+  .wall-empty{padding:80px 0;text-align:center;font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,.3);font-style:italic}
+  .skel-card{break-inside:avoid;margin-bottom:14px}
+  .skel-inner{background:rgba(250,246,238,.05);padding:14px}
+  .skel-line{height:10px;border-radius:2px;margin-bottom:8px}
+  @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+  .shimmer{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.04) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+
+  /* NO RESULTS */
+  .no-results{column-span:all;padding:60px 0;text-align:center;font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,.3);font-style:italic}
+
+  /* FOOTER */
+  footer{border-top:1px solid rgba(255,255,255,.06);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
+  footer p{font-family:var(--sans);font-size:.68rem;color:rgba(255,255,255,.2)}
+  .f-logo{font-family:var(--pixel);font-size:.38rem;color:var(--gold);letter-spacing:2px}
+
+  @media(max-width:680px){
+    .nav-links,.nav-write{display:none}
+    .hamburger{display:flex}
+    .control-strip{padding:8px 14px;gap:8px}
+    .archive-wall{padding:16px 10px 60px}
+    .post-columns{column-gap:8px}
+    .card-title{font-size:.95rem}
+    .post-card{margin-bottom:10px}
+  }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="posts.html" class="active">Posts</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="character.html">Crew</a></li>
+    <li><a href="goal.html">Goals</a></li>
+  </ul>
+  <div class="nav-right">
+    <div id="authSlot"></div>
+    <a href="submit.html" class="nav-write">+ Write</a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="index.html">Home</a>
+  <a href="posts.html">Posts</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="character.html">Crew</a>
+  <a href="goal.html">Goals</a>
+  <a href="submit.html">+ Write something</a>
+</div>
+
+<!-- SEARCH + FILTER -->
+<div class="control-strip">
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="search posts...">
+  </div>
+  <div class="filter-pills">
+    <button class="f-pill active" data-cat="all">ALL</button>
+    <button class="f-pill" data-cat="story">STORY</button>
+    <button class="f-pill" data-cat="movies">MOVIES</button>
+    <button class="f-pill" data-cat="books">BOOKS</button>
+    <button class="f-pill" data-cat="thoughts">THOUGHTS</button>
+    <button class="f-pill" data-cat="college">COLLEGE</button>
+    <button class="f-pill" data-cat="news">NEWS</button>
+    <button class="f-pill" data-cat="other">OTHER</button>
+  </div>
+  <span class="post-count" id="postCount">—</span>
+</div>
+
+<!-- WALL -->
+<div class="archive-wall">
+  <div class="post-columns" id="postColumns">
+    <!-- Skeletons -->
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="width:40%;height:8px"></div><div class="skel-line shimmer" style="width:85%"></div><div class="skel-line shimmer" style="width:70%"></div><div class="skel-line shimmer" style="width:50%;height:8px"></div></div></div>
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="width:45%;height:8px"></div><div class="skel-line shimmer" style="width:90%"></div><div class="skel-line shimmer" style="width:60%;height:8px"></div></div></div>
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="height:120px;margin-bottom:10px"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:55%"></div></div></div>
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="width:35%;height:8px"></div><div class="skel-line shimmer" style="width:88%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:48%;height:8px"></div></div></div>
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="height:100px;margin-bottom:10px"></div><div class="skel-line shimmer" style="width:75%"></div><div class="skel-line shimmer" style="width:50%"></div></div></div>
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="width:42%;height:8px"></div><div class="skel-line shimmer" style="width:92%"></div><div class="skel-line shimmer" style="width:68%"></div></div></div>
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="width:38%;height:8px"></div><div class="skel-line shimmer" style="width:86%"></div><div class="skel-line shimmer" style="width:72%;height:8px"></div></div></div>
+    <div class="skel-card"><div class="skel-inner"><div class="skel-line shimmer" style="height:140px;margin-bottom:10px"></div><div class="skel-line shimmer" style="width:82%"></div><div class="skel-line shimmer" style="width:58%"></div></div></div>
+  </div>
+</div>
+
+<footer>
+  <p>&#169; 2025 HlyWor Blog &#8212; crafted with &#10084;&#65039; in Guwahati</p>
+  <span class="f-logo">HlYWoR</span>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, where }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav } from "./auth.js";
+
+// FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey:"YOUR_API_KEY",authDomain:"YOUR_PROJECT.firebaseapp.com",projectId:"YOUR_PROJECT_ID",
+  storageBucket:"YOUR_PROJECT.appspot.com",messagingSenderId:"YOUR_SENDER_ID",appId:"YOUR_APP_ID"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── Auth nav ──────────────────────────────────────────
+injectAuthNav(document.getElementById('authSlot'));
+
+/* State */
+let allPosts = [], activeFilter = 'all', searchQuery = '';
+
+/* Progress bar */
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress').style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, {passive:true});
+
+/* Hamburger */
+const hb = document.getElementById('hamburger'), mn = document.getElementById('mobNav');
+hb.addEventListener('click', () => { hb.classList.toggle('open'); mn.classList.toggle('open'); });
+
+/* Filter */
+document.querySelectorAll('.f-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.f-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.cat;
+    render();
+  });
+});
+
+/* Search */
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  render();
+});
+
+/* Template type → card class */
+function tClass(post) {
+  const t = post.template || '';
+  const c = (post.category || post.type || '').toLowerCase();
+  if (t === 'magazine' || c === 'movies' || c === 'books') return 't-magazine';
+  if (t === 'news'     || c === 'news')    return 't-news';
+  if (t === 'tech')                        return 't-tech';
+  if (t === 'college'  || c === 'college') return 't-college';
+  return 't-diary';
+}
+
+/* Tape colors per template */
+const TAPE = {
+  't-diary':   ['rgba(240,190,40,.65)','rgba(220,80,80,.55)','rgba(80,130,220,.55)','rgba(80,180,100,.55)'],
+  't-magazine':['rgba(192,57,43,.65)','rgba(220,60,60,.55)'],
+  't-news':    ['rgba(20,16,12,.55)','rgba(80,70,50,.5)'],
+  't-tech':    ['rgba(88,166,255,.5)','rgba(63,185,80,.45)'],
+  't-college': ['rgba(155,89,182,.6)','rgba(233,30,140,.45)','rgba(240,190,40,.55)'],
+};
+
+/* Render */
+function render() {
+  const cols = document.getElementById('postColumns');
+  let list = allPosts.filter(p => {
+    const catMatch = activeFilter === 'all' || (p.category || p.type || '').toLowerCase() === activeFilter;
+    const searchMatch = !searchQuery ||
+      (p.title || '').toLowerCase().includes(searchQuery) ||
+      (p.desc  || '').toLowerCase().includes(searchQuery) ||
+      (p.author|| '').toLowerCase().includes(searchQuery);
+    return catMatch && searchMatch;
+  });
+
+  document.getElementById('postCount').textContent = list.length + ' POST' + (list.length !== 1 ? 'S' : '');
+
+  if (!list.length) {
+    cols.innerHTML = '<div class="no-results">' + (searchQuery ? 'No posts matching "' + searchQuery + '"' : 'Nothing in this category yet.') + '</div>';
+    return;
+  }
+
+  cols.innerHTML = '';
+  list.forEach((post, i) => {
+    const tc    = tClass(post);
+    const tapes = TAPE[tc];
+    const tape  = tapes[i % tapes.length];
+    const tapeW = 36 + (i % 3) * 10;
+    const cat   = (post.category || post.type || 'post').toUpperCase();
+    const dateStr = post.date
+      ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+      : '';
+    const slug = post.slug || post.url || '#';
+    const href = slug.startsWith('post') ? slug : 'post.html?slug=' + slug;
+
+    let thumbHtml = '';
+    if (post.thumbnail && (tc === 't-magazine' || tc === 't-college')) {
+      thumbHtml = '<img class="card-thumb" src="' + post.thumbnail + '" alt="' + (post.title||'') + '" loading="lazy">';
+    }
+
+    let starsHtml = '';
+    if (tc === 't-magazine' && post.rating) {
+      starsHtml = '<div class="card-stars">' + '★'.repeat(post.rating) + '☆'.repeat(5 - post.rating) + '</div>';
+    }
+
+    let dateline = '';
+    if (tc === 't-news') {
+      dateline = '<div class="card-dateline">' + (dateStr || 'HLYWOR NEWS') + '</div>';
+    }
+
+    let moodHtml = '';
+    if (tc === 't-diary' && post.mood) {
+      moodHtml = '<div class="card-mood">' + post.mood + '</div>';
+    }
+
+    let techTag = '';
+    if (tc === 't-tech' && post.techTag) {
+      techTag = '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.64rem;color:#3fb950;margin-left:4px">' + post.techTag + '</span>';
+    }
+
+    const a = document.createElement('a');
+    a.className = 'post-card ' + tc;
+    a.href = href;
+    a.style.setProperty('--tape-col', tape);
+    a.style.setProperty('--tape-w', tapeW + 'px');
+    a.style.animationDelay = (i * 28) + 'ms';
+    a.innerHTML =
+      '<div class="card-inner">' +
+        moodHtml +
+        thumbHtml +
+        '<div class="card-body">' +
+          dateline +
+          '<span class="card-cat">' + cat + '</span>' +
+          starsHtml +
+          '<div class="card-title">' + (post.title || 'Untitled') + '</div>' +
+          (post.desc ? '<div class="card-desc">' + post.desc + '</div>' : '') +
+          '<div class="card-meta">' +
+            '<span class="card-author">' + (post.author || 'HlyWor') + '</span>' +
+            techTag +
+            (dateStr ? '<span class="card-date">' + dateStr + '</span>' : '') +
+            (post.readtime ? '<span class="card-read">' + post.readtime + '</span>' : '') +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    cols.appendChild(a);
+  });
+}
+
+/* Firebase */
+const q = query(collection(db,'posts'), where('status','==','published'), orderBy('createdAt','desc'));
+onSnapshot(q, snap => {
+  allPosts = snap.docs.map(d => ({id:d.id,...d.data()}));
+  render();
+}, err => {
+  console.error(err);
+  document.getElementById('postColumns').innerHTML = '<div class="wall-empty">Could not load posts.</div>';
+});
+</script>
+</body>
+</html>
