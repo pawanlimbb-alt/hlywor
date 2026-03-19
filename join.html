@@ -600,7 +600,10 @@
     <div class="nav-sep"></div>
     <span class="nav-title">pin yourself</span>
   </div>
-  <a href="character.html" class="nav-back">Back to the board</a>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div id="authSlot"></div>
+    <a href="character.html" class="nav-back">Back to the board</a>
+  </div>
 </nav>
 
 <div class="sticker-picker" id="istickerPicker">
@@ -944,6 +947,8 @@ Use the tools on the left — add highlights, sticky notes, tape strips, sticker
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav, currentUser, onAuthChange, showLoginModal, getDisplayName }
+  from "./auth.js";
 
 // 🔧 FIREBASE CONFIG
 const firebaseConfig = {
@@ -961,6 +966,32 @@ const CLD_PRESET = "hlywor";
 
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
+
+// ── Auth nav ─────────────────────────────────────────
+injectAuthNav(document.getElementById('authSlot'), {
+  onSignIn(user) { prefillFromAuth(user); },
+  onSignOut()    {}
+});
+
+// ── Gate: require login ───────────────────────────────
+onAuthChange(user => {
+  if (!user) {
+    showLoginModal({
+      closeable: true,
+      prompt: "Sign in to pin yourself on the HlyWor crew wall.",
+      onSuccess(u) { prefillFromAuth(u); }
+    });
+  } else {
+    prefillFromAuth(user);
+  }
+});
+
+function prefillFromAuth(user) {
+  const nameEl  = document.getElementById('name');
+  const emailEl = document.getElementById('email');
+  if (nameEl  && !nameEl.value)  nameEl.value  = getDisplayName(user);
+  if (emailEl && !emailEl.value) emailEl.value = user.email || '';
+}
 
 /* ── Accent color ── */
 let selectedColor = '#e8681a';
@@ -1312,6 +1343,10 @@ document.getElementById('pinBtn').addEventListener('click', async () => {
   if (!role)  { statusEl.textContent='⚠ Role / title is required'; statusEl.className='submit-status err'; return; }
   if (!bio)   { statusEl.textContent='⚠ Bio is required'; statusEl.className='submit-status err'; return; }
   if (!agree) { statusEl.textContent='⚠ Please confirm'; statusEl.className='submit-status err'; return; }
+  if (!currentUser) {
+    showLoginModal({ prompt: "Sign in to pin yourself on the crew wall." });
+    return;
+  }
 
   const btn = document.getElementById('pinBtn');
   btn.disabled = true;
@@ -1337,6 +1372,8 @@ document.getElementById('pinBtn').addEventListener('click', async () => {
       founder:       false,
       ctaText:       `See ${name.split(' ')[0]}'s stories`,
       status:        'published',
+      authorUid:     currentUser.uid,
+      authorEmail:   currentUser.email || '',
       createdAt:     serverTimestamp()
     });
 

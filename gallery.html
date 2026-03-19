@@ -138,8 +138,28 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 12px;
         }
+
+        /* ── Delete button on own photos ── */
+        .photo-delete-btn {
+            display: none;
+            position: absolute;
+            top: 6px; right: 6px;
+            z-index: 10;
+            font-family: var(--pixel);
+            font-size: 0.22rem;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            background: rgba(192,57,43,0.88);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.15s;
+        }
+        .photo-delete-btn:hover { background: #e74c3c; }
+        .photo-item.is-author .photo-delete-btn { display: block; }
 
         .nav-links {
             display: flex;
@@ -1310,6 +1330,7 @@
             <li><a href="about.html">About</a></li>
         </ul>
         <div class="nav-right">
+            <div id="authSlot"></div>
             <button class="nav-add-btn" id="openUpload">📷 Add photo</button>
             <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
         </div>
@@ -1491,8 +1512,10 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp }
+        import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, serverTimestamp }
             from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { injectAuthNav, currentUser, onAuthChange, requireLogin, showConfirmDelete, getDisplayName }
+            from "./auth.js";
 
         // 🔧 FIREBASE CONFIG
         const firebaseConfig = {
@@ -1504,12 +1527,29 @@
             appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
             measurementId: "G-MQDXDWHLX8"
         };
-        // 🔧 CLOUDINARY
         const CLD_NAME = "dgatfolot";
         const CLD_PRESET = "hlywor";
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        // ── Auth nav ─────────────────────────────────────────
+        injectAuthNav(document.getElementById('authSlot'), {
+            onSignIn(user) {
+                // Auto-fill author name in upload modal
+                const el = document.getElementById('uAuthor');
+                if (el && !el.value) el.value = getDisplayName(user);
+                // Re-render so own photos get delete buttons
+                renderGallery();
+            },
+            onSignOut() { renderGallery(); }
+        });
+
+        // Auto-fill author on auth change
+        onAuthChange(user => {
+            const el = document.getElementById('uAuthor');
+            if (user && el && !el.value) el.value = getDisplayName(user);
+        });
 
         /* ── State ── */
         let allPhotos = [];
@@ -1520,12 +1560,11 @@
         const SN_COLORS = ['#fef3a0', '#b8d4f0', '#b8f0c8', '#e8b8f0', '#f0d0b8', '#f0b8b8', '#d0f0e8'];
         const TAPE_STYLES = [
             { cls: 'tape-top', color: 'rgba(240,190,40,0.55)' },
-            { cls: 'tape-tl', color: 'rgba(80,130,220,0.5)' },
-            { cls: 'tape-tr', color: 'rgba(220,60,60,0.5)' },
+            { cls: 'tape-tl',  color: 'rgba(80,130,220,0.5)' },
+            { cls: 'tape-tr',  color: 'rgba(220,60,60,0.5)' },
             { cls: 'tape-top', color: 'rgba(80,180,100,0.5)' },
             { cls: 'tape-top', color: 'rgba(220,80,160,0.5)' },
         ];
-        /* Slight rotations pool */
         const ROTS = [-2.5, -1.8, -1.2, -0.7, -0.4, 0.4, 0.8, 1.3, 1.9, 2.6];
 
         /* ── Hamburger ── */
@@ -1553,19 +1592,13 @@
             document.getElementById('totalCount').textContent = allPhotos.length || '';
             document.getElementById('headerCount').textContent = `${allPhotos.length} photo${allPhotos.length !== 1 ? 's' : ''}`;
 
-            /* Randomize header polaroids on every load — pick 4 random from the pool */
             const shuffled = [...allPhotos].sort(() => Math.random() - 0.5);
             shuffled.slice(0, 4).forEach((photo, i) => {
                 const img = document.getElementById(`hpImg${i}`);
                 if (img && photo?.url) {
                     img.src = photo.url;
-                    /* Re-trigger the entry animation by cloning the parent */
                     const hp = img.closest('.h-photo');
-                    if (hp) {
-                        hp.style.animation = 'none';
-                        hp.offsetHeight; /* force reflow */
-                        hp.style.animation = '';
-                    }
+                    if (hp) { hp.style.animation = 'none'; hp.offsetHeight; hp.style.animation = ''; }
                 }
             });
 
@@ -1585,8 +1618,11 @@
                     ? new Date(photo.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
                     : '';
 
+                // Check if current user is the author of this photo
+                const isAuthor = !!(currentUser && photo.authorUid && currentUser.uid === photo.authorUid);
+
                 const item = document.createElement('div');
-                item.className = 'photo-item';
+                item.className = 'photo-item' + (isAuthor ? ' is-author' : '');
                 item.style.animationDelay = `${i * 30}ms`;
 
                 item.innerHTML = `
@@ -1594,6 +1630,7 @@
         <div class="tape ${tape.cls}" style="background:${tape.color}"></div>
         <img src="${photo.url}" alt="${photo.title || photo.author || ''}" loading="lazy">
         <div class="print-label">${photo.author || ''}</div>
+        ${isAuthor && photo.id ? `<button class="photo-delete-btn" data-id="${photo.id}" title="Delete photo">✕ delete</button>` : ''}
       </div>
       <div class="sticky-detail">
         <div class="sticky-inner" style="background:${snCol};--sn-color:${snCol}">
@@ -1613,17 +1650,36 @@
       </div>`;
 
                 /* Click print to expand */
-                item.querySelector('.print').addEventListener('click', () => {
-                    if (expandedItem && expandedItem !== item) {
-                        expandedItem.classList.remove('open');
-                    }
+                item.querySelector('.print').addEventListener('click', e => {
+                    // Don't expand if delete button clicked
+                    if (e.target.classList.contains('photo-delete-btn')) return;
+                    if (expandedItem && expandedItem !== item) expandedItem.classList.remove('open');
                     item.classList.toggle('open');
                     expandedItem = item.classList.contains('open') ? item : null;
-                    /* Scroll into view so sticky note is visible */
                     if (item.classList.contains('open')) {
                         setTimeout(() => item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
                     }
                 });
+
+                /* Delete button */
+                const delBtn = item.querySelector('.photo-delete-btn');
+                if (delBtn) {
+                    delBtn.addEventListener('click', async e => {
+                        e.stopPropagation();
+                        const photoId = delBtn.dataset.id;
+                        const confirmed = await showConfirmDelete(
+                            `Delete this photo? It will be removed from the wall permanently.`
+                        );
+                        if (!confirmed) return;
+                        try {
+                            await deleteDoc(doc(db, 'gallery', photoId));
+                            // onSnapshot will auto-refresh the wall
+                        } catch(err) {
+                            console.error('Delete failed:', err);
+                            alert('Delete failed — ' + err.message);
+                        }
+                    });
+                }
 
                 /* Fullscreen */
                 item.querySelector('.sn-fs').addEventListener('click', e => {
@@ -1649,7 +1705,7 @@
         document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('open') });
         document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open') });
 
-        /* ── Firebase ── */
+        /* ── Firebase live feed ── */
         onSnapshot(query(collection(db, 'gallery'), orderBy('createdAt', 'desc')), snap => {
             const fb = snap.docs.map(d => ({ id: d.id, ...d.data() }));
             allPhotos = [...fb, ...HARDCODED];
@@ -1660,9 +1716,18 @@
             renderGallery();
         });
 
-        /* ── Upload modal ── */
+        /* ── Upload modal — require login ── */
+        async function openUploadModal() {
+            const user = await requireLogin('Sign in to add your photo to the HlyWor gallery.');
+            if (!user) return;
+            // Auto-fill name
+            const el = document.getElementById('uAuthor');
+            if (el && !el.value) el.value = getDisplayName(user);
+            document.getElementById('uploadBg').classList.add('open');
+        }
+
         [document.getElementById('openUpload'), document.getElementById('fabBtn'), document.getElementById('headerAddBtn')].forEach(b => {
-            if (b) b.addEventListener('click', () => document.getElementById('uploadBg').classList.add('open'));
+            if (b) b.addEventListener('click', openUploadModal);
         });
         document.getElementById('closeUpload').addEventListener('click', () => document.getElementById('uploadBg').classList.remove('open'));
         document.getElementById('uploadBg').addEventListener('click', e => { if (e.target === document.getElementById('uploadBg')) document.getElementById('uploadBg').classList.remove('open') });
@@ -1708,9 +1773,7 @@
         }
 
         async function handleFile(rawFile) {
-            const file = rawFile.size > 8 * 1024 * 1024
-                ? await compressImage(rawFile, 0.75)
-                : rawFile;
+            const file = rawFile.size > 8 * 1024 * 1024 ? await compressImage(rawFile, 0.75) : rawFile;
             const local = URL.createObjectURL(file);
             document.getElementById('dzImg').src = local;
             document.getElementById('dzPreview').style.display = 'block';
@@ -1733,9 +1796,8 @@
             const fd = new FormData();
             fd.append('file', file);
             fd.append('upload_preset', CLD_PRESET);
-            fd.append('format', 'webp');
-            fd.append('quality', 'auto');
             fd.append('folder', 'hlywor/gallery');
+            // Note: format/quality set in Cloudinary preset, not here
             try {
                 const r = await fetch(`https://api.cloudinary.com/v1_1/${CLD_NAME}/image/upload`, { method: 'POST', body: fd });
                 const d = await r.json();
@@ -1746,15 +1808,20 @@
 
         /* Submit */
         document.getElementById('uSubmit').addEventListener('click', async () => {
-            const url = document.getElementById('photoUrl').value;
+            const url    = document.getElementById('photoUrl').value;
             const author = document.getElementById('uAuthor').value.trim();
-            const title = document.getElementById('uTitle').value.trim();
-            const cap = document.getElementById('uCaption').value.trim();
-            const loc = document.getElementById('uLoc').value.trim();
-            const st = document.getElementById('uStatus');
+            const title  = document.getElementById('uTitle').value.trim();
+            const cap    = document.getElementById('uCaption').value.trim();
+            const loc    = document.getElementById('uLoc').value.trim();
+            const st     = document.getElementById('uStatus');
 
-            if (!url) { st.textContent = '⚠ Choose a photo first'; st.className = 'u-status err'; return }
+            if (!url)    { st.textContent = '⚠ Choose a photo first'; st.className = 'u-status err'; return }
             if (!author) { st.textContent = '⚠ Your name is required'; st.className = 'u-status err'; return }
+            if (!currentUser) {
+                st.textContent = '⚠ Sign in first';
+                st.className = 'u-status err';
+                return;
+            }
 
             const btn = document.getElementById('uSubmit');
             btn.disabled = true; btn.textContent = 'Sticking...'; st.textContent = '';
@@ -1764,24 +1831,29 @@
                     url, author, title, caption: cap, location: loc,
                     category: selCat,
                     date: new Date().toISOString(),
+                    // ── auth fields ──
+                    authorUid: currentUser.uid,
+                    authorEmail: currentUser.email || '',
                     createdAt: serverTimestamp()
                 });
                 btn.textContent = 'Stuck ✦';
                 st.textContent = '✓ Your photo is on the wall!'; st.className = 'u-status ok';
                 setTimeout(() => {
                     document.getElementById('uploadBg').classList.remove('open');
-                    ['photoUrl', 'uAuthor', 'uTitle', 'uCaption', 'uLoc'].forEach(id => document.getElementById(id).value = '');
+                    ['photoUrl','uAuthor','uTitle','uCaption','uLoc'].forEach(id => document.getElementById(id).value = '');
                     document.getElementById('dzPreview').style.display = 'none';
                     document.querySelector('.dz-icon').style.display = 'block';
                     document.querySelector('.dz-text').style.display = 'block';
                     pf.value = '';
                     btn.disabled = false; btn.textContent = 'Stick it on the wall ✦';
                     st.textContent = '';
+                    // Re-fill name after reset
+                    if (currentUser) document.getElementById('uAuthor').value = getDisplayName(currentUser);
                 }, 2000);
             } catch (err) {
                 console.error(err);
                 btn.disabled = false; btn.textContent = 'Stick it on the wall ✦';
-                st.textContent = '✕ Failed — check Firebase config'; st.className = 'u-status err';
+                st.textContent = '✕ Failed — ' + err.message; st.className = 'u-status err';
             }
         });
     </script>
