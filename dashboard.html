@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Board — HlyWor</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --board:#2a1f14;--paper:#faf6ee;--paper2:#f5edd8;--paper3:#ede3c8;
+      --ink:#1a1208;--ink2:#3d3020;--ink3:#6a5840;--ink4:#a09078;
+      --rule:rgba(180,160,120,0.22);--fire:#e8681a;--gold:#d4a020;
+      --pixel:'Press Start 2P',monospace;--serif:'Crimson Pro',Georgia,serif;
+      --sans:'DM Sans',system-ui,sans-serif;--hand:'Caveat',cursive;
+      --shadow:0 6px 32px rgba(0,0,0,0.45),0 2px 8px rgba(0,0,0,0.25);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--board);font-family:var(--serif);min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 20% 30%,rgba(80,50,20,0.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(60,35,10,0.25) 0%,transparent 50%),url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");background-size:auto,auto,200px 200px;pointer-events:none;z-index:0}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--board)}::-webkit-scrollbar-thumb{background:var(--fire);border-radius:2px}
+    #progress-bar{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--fire),var(--gold));z-index:9999;transition:width .08s linear}
+
+    /* ── NAV ── */
+    .nav{position:sticky;top:0;z-index:300;background:rgba(18,12,8,0.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px}
+    .nav-logo{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:2px;text-decoration:none;text-shadow:0 0 12px rgba(212,160,32,0.4);animation:flicker 7s infinite}
+    @keyframes flicker{0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1}}
+    .nav-right{display:flex;align-items:center;gap:14px}
+    .nav-back{font-family:var(--sans);font-size:0.76rem;color:rgba(255,255,255,0.38);text-decoration:none;transition:color .2s}
+    .nav-back:hover{color:rgba(255,255,255,.85)}
+    .nav-back::before{content:'←';margin-right:5px}
+
+    /* ── LOGIN WALL ── */
+    .login-wall{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:20px;position:relative;z-index:1;text-align:center;padding:40px}
+    .login-wall.show{display:flex}
+    .lw-title{font-family:var(--hand);font-size:2rem;color:var(--paper);font-weight:700}
+    .lw-sub{font-family:var(--serif);font-size:1rem;font-style:italic;color:rgba(245,230,200,0.5);max-width:340px;line-height:1.75}
+    .lw-btn{font-family:var(--hand);font-size:1.1rem;font-weight:700;padding:10px 28px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all .2s;margin-top:8px}
+    .lw-btn:hover{background:#ff7a2a;transform:translateY(-2px)}
+
+    /* ── DASHBOARD HEADER ── */
+    .dash-header{position:relative;z-index:1;padding:40px 28px 0;max-width:1200px;margin:0 auto}
+    .dash-user-strip{display:flex;align-items:center;gap:18px;margin-bottom:32px;flex-wrap:wrap}
+    .dash-avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--fire);box-shadow:0 0 0 4px rgba(232,104,26,0.15)}
+    .dash-avatar-placeholder{width:64px;height:64px;border-radius:50%;background:var(--fire);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:1.8rem;color:#fff;font-weight:700;border:3px solid var(--fire);box-shadow:0 0 0 4px rgba(232,104,26,0.15)}
+    .dash-user-info{display:flex;flex-direction:column;gap:3px}
+    .dash-greeting{font-family:var(--pixel);font-size:0.32rem;color:var(--fire);letter-spacing:2px}
+    .dash-name{font-family:var(--hand);font-size:1.8rem;color:var(--paper);font-weight:700;line-height:1.1}
+    .dash-email{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.3)}
+    .dash-stats-row{display:flex;gap:20px;flex-wrap:wrap;margin-left:auto}
+    .dash-stat{text-align:center;padding:8px 18px;background:rgba(250,246,238,0.05);border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:all .2s}
+    .dash-stat:hover{background:rgba(250,246,238,0.08);border-color:rgba(232,104,26,0.3)}
+    .dash-stat-n{font-family:var(--pixel);font-size:0.6rem;color:var(--fire);display:block;margin-bottom:3px}
+    .dash-stat-l{font-family:var(--hand);font-size:0.85rem;color:rgba(255,255,255,0.45)}
+
+    /* ── TABS ── */
+    .tabs-wrap{position:sticky;top:52px;z-index:200;background:rgba(18,12,8,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.06);max-width:100%;overflow-x:auto;scrollbar-width:none}
+    .tabs-wrap::-webkit-scrollbar{display:none}
+    .tabs{display:flex;padding:0 28px;max-width:1200px;margin:0 auto}
+    .tab{font-family:var(--pixel);font-size:0.28rem;letter-spacing:1px;padding:14px 18px;color:rgba(255,255,255,0.3);border:none;background:none;cursor:pointer;white-space:nowrap;transition:color .2s;position:relative;border-bottom:2px solid transparent}
+    .tab:hover{color:rgba(255,255,255,.7)}
+    .tab.active{color:var(--fire);border-bottom-color:var(--fire)}
+    .tab-badge{display:inline-block;font-family:var(--hand);font-size:0.75rem;color:var(--fire);margin-left:5px}
+
+    /* ── CONTENT AREA ── */
+    .content-area{max-width:1200px;margin:0 auto;padding:28px 28px 80px;position:relative;z-index:1}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    /* ── SECTION HEADING ── */
+    .section-heading{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+    .sh-text{font-family:var(--pixel);font-size:0.3rem;color:var(--fire);letter-spacing:3px}
+    .sh-line{flex:1;height:1px;background:var(--rule)}
+    .sh-count{font-family:var(--pixel);font-size:0.26rem;color:var(--ink4);letter-spacing:1px}
+
+    /* ── MY POSTS GRID ── */
+    .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:rgba(245,230,200,0.06)}
+    .post-card{background:var(--paper);display:flex;flex-direction:column;text-decoration:none;color:var(--ink);transition:background .2s;position:relative}
+    .post-card:hover{background:var(--paper2)}
+    .post-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--fire);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
+    .post-card:hover::before{transform:scaleY(1)}
+    .post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:sepia(8%);transition:filter .4s}
+    .post-card:hover .post-thumb{filter:sepia(0%)}
+    .post-noimg{width:100%;aspect-ratio:16/9;background:var(--paper3);display:flex;align-items:center;justify-content:center}
+    .post-noimg-n{font-family:var(--pixel);font-size:2rem;color:transparent;-webkit-text-stroke:1px rgba(26,18,8,0.08)}
+    .post-card-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:6px}
+    .post-card-cat{font-family:var(--pixel);font-size:0.24rem;color:var(--fire);letter-spacing:2px}
+    .post-card-title{font-family:var(--hand);font-size:1.05rem;color:var(--ink);font-weight:600;line-height:1.35}
+    .post-card-desc{font-family:var(--sans);font-size:0.72rem;color:var(--ink3);line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .post-card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+    .post-card-date{font-family:var(--sans);font-size:0.62rem;color:var(--ink4)}
+    .post-card-edit{font-family:var(--pixel);font-size:0.22rem;color:var(--fire);letter-spacing:1px;text-decoration:none;padding:3px 8px;border:1px solid rgba(232,104,26,0.3);transition:all .15s}
+    .post-card-edit:hover{background:rgba(232,104,26,0.08)}
+
+    /* ── MY PHOTOS (masonry) ── */
+    .photos-masonry{columns:4;column-gap:12px}
+    @media(max-width:1000px){.photos-masonry{columns:3}}
+    @media(max-width:640px){.photos-masonry{columns:2}}
+    .photo-item{break-inside:avoid;margin-bottom:12px;position:relative;cursor:pointer}
+    .photo-print{background:#fff;padding:5px 5px 18px;box-shadow:2px 4px 14px rgba(0,0,0,0.4);position:relative;transition:transform .3s,box-shadow .3s}
+    .photo-print:hover{transform:translateY(-4px) scale(1.02);box-shadow:4px 12px 28px rgba(0,0,0,0.55)}
+    .photo-print img{width:100%;display:block;filter:sepia(5%) brightness(0.97)}
+    .photo-print-label{position:absolute;bottom:3px;left:0;right:0;font-family:var(--hand);font-size:0.72rem;color:var(--ink3);text-align:center;padding:0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .photo-del-btn{display:none;position:absolute;top:5px;right:5px;z-index:5;font-family:var(--pixel);font-size:0.2rem;padding:3px 7px;background:rgba(192,57,43,0.85);color:#fff;border:none;cursor:pointer;border-radius:2px}
+    .photo-item:hover .photo-del-btn{display:block}
+
+    /* ── MY CARD ── */
+    .my-card-wrap{max-width:560px}
+    .no-card-msg{font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.35);font-style:italic;padding:40px 0}
+    .profile-preview-card{background:var(--paper);box-shadow:var(--shadow);display:flex;position:relative;transform:rotate(-0.5deg)}
+    .ppc-spine{width:18px;flex-shrink:0;background:linear-gradient(180deg,#3d2210 0%,#2a1608 20%,#4a2a12 40%,#2a1608 60%,#3d2210 80%,#2a1608 100%);border-right:2px solid rgba(0,0,0,0.4)}
+    .ppc-page{flex:1;padding:20px 22px 24px;background:var(--paper);position:relative}
+    .ppc-page::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px);background-position:0 60px;pointer-events:none;z-index:0}
+    .ppc-handle{font-family:var(--pixel);font-size:0.36rem;letter-spacing:1px;padding:3px 10px;color:#fff;display:inline-block;margin-bottom:8px;position:relative;z-index:1}
+    .ppc-name{font-family:var(--hand);font-size:1.6rem;color:var(--ink);font-weight:700;position:relative;z-index:1;line-height:1.1}
+    .ppc-role{font-family:var(--pixel);font-size:0.3rem;letter-spacing:1px;margin-top:4px;position:relative;z-index:1}
+    .ppc-bio{font-family:var(--serif);font-size:0.92rem;font-style:italic;color:var(--ink2);line-height:1.7;margin-top:8px;position:relative;z-index:1}
+    .ppc-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;position:relative;z-index:1}
+    .ppc-chip{font-family:var(--hand);font-size:0.82rem;padding:2px 10px;color:#fff;border-radius:1px;opacity:.85}
+    .ppc-edit-link{display:inline-block;margin-top:16px;font-family:var(--hand);font-size:0.92rem;color:var(--fire);text-decoration:none;border-bottom:1px dashed rgba(232,104,26,0.4);padding-bottom:2px;transition:letter-spacing .2s;position:relative;z-index:1}
+    .ppc-edit-link:hover{letter-spacing:1px}
+
+    /* ── STUCK / STICKING people grids ── */
+    .people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+    .person-card{background:var(--paper);box-shadow:0 4px 16px rgba(0,0,0,0.3);position:relative;cursor:pointer;text-decoration:none;display:block;transition:transform .22s,box-shadow .22s}
+    .person-card:nth-child(odd){transform:rotate(-1deg)}
+    .person-card:nth-child(even){transform:rotate(.8deg)}
+    .person-card:hover{transform:rotate(0deg) translateY(-5px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.5);z-index:5}
+    .person-card-pin{position:absolute;top:-9px;left:40%;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9999,#cc3333);box-shadow:0 2px 4px rgba(0,0,0,0.45);z-index:2}
+    .person-card-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:8px;background:linear-gradient(to bottom,#777,#333)}
+    .person-card-body{padding:14px 14px 16px}
+    .person-card-name{font-family:var(--hand);font-size:1.1rem;color:var(--ink);font-weight:600;margin-bottom:3px}
+    .person-card-role{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:1px;margin-bottom:6px}
+    .person-card-bio{font-family:var(--sans);font-size:0.7rem;color:var(--ink3);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .unstick-btn{font-family:var(--pixel);font-size:0.22rem;letter-spacing:1px;padding:4px 10px;background:transparent;border:1px solid rgba(192,57,43,0.3);color:rgba(192,57,43,0.7);cursor:pointer;transition:all .15s;margin-top:10px;display:block}
+    .unstick-btn:hover{background:rgba(192,57,43,0.08);border-color:#c0392b;color:#c0392b}
+
+    /* ── COMMENTS ── */
+    .comments-list-dash{display:flex;flex-direction:column;gap:0}
+    .comment-dash-item{padding:16px 0;border-bottom:1px dashed var(--rule);display:flex;flex-direction:column;gap:6px;animation:fadeIn .4s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .comment-dash-item:last-child{border-bottom:none}
+    .comment-dash-on{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:1px}
+    .comment-dash-on a{color:var(--fire);text-decoration:none}
+    .comment-dash-on a:hover{text-decoration:underline}
+    .comment-dash-text{font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.6}
+    .comment-dash-date{font-family:var(--sans);font-size:0.62rem;color:var(--ink4)}
+
+    /* ── EMPTY STATES ── */
+    .empty-state{padding:60px 0;text-align:center;font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.3);font-style:italic;line-height:2}
+    .empty-state a{color:var(--fire);text-decoration:none}
+    .empty-state a:hover{text-decoration:underline}
+
+    /* ── SKELETON ── */
+    @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+    .shimmer{background:linear-gradient(90deg,var(--paper3) 25%,var(--paper2) 50%,var(--paper3) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+    .skel-card{background:var(--paper)}
+    .skel-img{width:100%;aspect-ratio:16/9}
+    .skel-body{padding:16px;display:flex;flex-direction:column;gap:8px}
+    .skel-line{height:8px;border-radius:1px}
+
+    /* ── LIGHTBOX ── */
+    .lightbox{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,0.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+    .lightbox.open{opacity:1;pointer-events:all}
+    .lightbox img{max-width:95vw;max-height:92vh;object-fit:contain;display:block;animation:lbIn .3s ease both}
+    @keyframes lbIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+    .lb-close{position:absolute;top:20px;right:24px;font-family:var(--hand);font-size:1.3rem;color:rgba(255,255,255,.4);cursor:pointer;background:none;border:none;transition:color .2s}
+    .lb-close:hover{color:#fff}
+
+    /* footer */
+    footer{border-top:1px solid rgba(255,255,255,0.06);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
+    footer p{font-family:var(--sans);font-size:.68rem;color:rgba(255,255,255,.2)}
+    .f-logo{font-family:var(--pixel);font-size:.38rem;color:var(--gold);letter-spacing:2px}
+
+    @media(max-width:640px){
+      .content-area{padding:20px 16px 60px}
+      .dash-header{padding:28px 16px 0}
+      .tabs{padding:0 16px}
+      .dash-stats-row{margin-left:0;width:100%}
+      .people-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:400px){
+      .people-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-right">
+    <div id="authSlot"></div>
+    <a href="index.html" class="nav-back">Home</a>
+  </div>
+</nav>
+
+<!-- Login wall -->
+<div class="login-wall" id="loginWall">
+  <div class="lw-title">Your board is private.</div>
+  <p class="lw-sub">Sign in to see your posts, photos, profile card, and everyone you've stuck.</p>
+  <button class="lw-btn" id="loginWallBtn">Sign in with Google</button>
+</div>
+
+<!-- Dashboard -->
+<div id="dashWrap" style="display:none">
+
+  <div class="dash-header">
+    <div class="dash-user-strip">
+      <div id="dashAvatarWrap"></div>
+      <div class="dash-user-info">
+        <span class="dash-greeting">// YOUR BOARD</span>
+        <span class="dash-name" id="dashName">—</span>
+        <span class="dash-email" id="dashEmail">—</span>
+      </div>
+      <div class="dash-stats-row" id="dashStatsRow">
+        <div class="dash-stat" data-tab="posts"><span class="dash-stat-n" id="statPosts">—</span><span class="dash-stat-l">posts</span></div>
+        <div class="dash-stat" data-tab="photos"><span class="dash-stat-n" id="statPhotos">—</span><span class="dash-stat-l">photos</span></div>
+        <div class="dash-stat" data-tab="sticking"><span class="dash-stat-n" id="statSticking">—</span><span class="dash-stat-l">sticking</span></div>
+        <div class="dash-stat" data-tab="stuck"><span class="dash-stat-n" id="statStuck">—</span><span class="dash-stat-l">stuck you</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab active" data-tab="posts">MY POSTS <span class="tab-badge" id="tabBadgePosts"></span></button>
+      <button class="tab" data-tab="photos">MY PHOTOS <span class="tab-badge" id="tabBadgePhotos"></span></button>
+      <button class="tab" data-tab="card">MY CARD</button>
+      <button class="tab" data-tab="sticking">STICKING <span class="tab-badge" id="tabBadgeSticking"></span></button>
+      <button class="tab" data-tab="stuck">STUCK YOU <span class="tab-badge" id="tabBadgeStuck"></span></button>
+      <button class="tab" data-tab="notes">MY NOTES <span class="tab-badge" id="tabBadgeNotes"></span></button>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- POSTS TAB -->
+    <div class="tab-panel active" id="panel-posts">
+      <div class="section-heading">
+        <span class="sh-text">YOUR POSTS</span>
+        <div class="sh-line"></div>
+        <span class="sh-count" id="postsCountLabel"></span>
+      </div>
+      <div class="posts-grid" id="postsGrid">
+        <div class="skel-card"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:70%"></div></div></div>
+        <div class="skel-card"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
+        <div class="skel-card"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:75%"></div></div></div>
+      </div>
+    </div>
+
+    <!-- PHOTOS TAB -->
+    <div class="tab-panel" id="panel-photos">
+      <div class="section-heading">
+        <span class="sh-text">YOUR PHOTOS</span>
+        <div class="sh-line"></div>
+        <span class="sh-count" id="photosCountLabel"></span>
+      </div>
+      <div class="photos-masonry" id="photosGrid"></div>
+    </div>
+
+    <!-- CARD TAB -->
+    <div class="tab-panel" id="panel-card">
+      <div class="section-heading">
+        <span class="sh-text">YOUR PROFILE CARD</span>
+        <div class="sh-line"></div>
+      </div>
+      <div class="my-card-wrap" id="myCardWrap">
+        <div class="empty-state">Loading your card...</div>
+      </div>
+    </div>
+
+    <!-- STICKING TAB -->
+    <div class="tab-panel" id="panel-sticking">
+      <div class="section-heading">
+        <span class="sh-text">PEOPLE YOU'VE STUCK</span>
+        <div class="sh-line"></div>
+        <span class="sh-count" id="stickingCountLabel"></span>
+      </div>
+      <div class="people-grid" id="stickingGrid"></div>
+    </div>
+
+    <!-- STUCK YOU TAB -->
+    <div class="tab-panel" id="panel-stuck">
+      <div class="section-heading">
+        <span class="sh-text">PEOPLE WHO STUCK YOU</span>
+        <div class="sh-line"></div>
+        <span class="sh-count" id="stuckCountLabel"></span>
+      </div>
+      <div class="people-grid" id="stuckGrid"></div>
+    </div>
+
+    <!-- NOTES TAB -->
+    <div class="tab-panel" id="panel-notes">
+      <div class="section-heading">
+        <span class="sh-text">YOUR NOTES ON POSTS</span>
+        <div class="sh-line"></div>
+        <span class="sh-count" id="notesCountLabel"></span>
+      </div>
+      <div class="comments-list-dash" id="notesGrid"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<footer>
+  <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="f-logo">HlYWoR</span>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, collection, query, where, getDocs,
+  deleteDoc, doc, onSnapshot, orderBy, limit
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav, currentUser, onAuthChange, signIn, showConfirmDelete, getDisplayName } from "./auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+  authDomain: "hlywor.firebaseapp.com",
+  projectId: "hlywor",
+  storageBucket: "hlywor.firebasestorage.app",
+  messagingSenderId: "697637160825",
+  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+  measurementId: "G-MQDXDWHLX8"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── Reading progress ─────────────────────────────────
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress-bar').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, { passive: true });
+
+// ── Auth nav ─────────────────────────────────────────
+injectAuthNav(document.getElementById('authSlot'));
+
+// ── Login wall button ─────────────────────────────────
+document.getElementById('loginWallBtn').addEventListener('click', () => signIn());
+
+// ── Auth state ────────────────────────────────────────
+onAuthChange(user => {
+  if (!user) {
+    document.getElementById('loginWall').classList.add('show');
+    document.getElementById('dashWrap').style.display = 'none';
+  } else {
+    document.getElementById('loginWall').classList.remove('show');
+    document.getElementById('dashWrap').style.display = 'block';
+    loadDashboard(user);
+  }
+});
+
+// ── Tab switching ─────────────────────────────────────
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// stat row clicks jump to tab
+document.querySelectorAll('.dash-stat[data-tab]').forEach(s => {
+  s.addEventListener('click', () => {
+    const tab = document.querySelector(`.tab[data-tab="${s.dataset.tab}"]`);
+    if (tab) tab.click();
+    window.scrollTo({ top: document.querySelector('.tabs-wrap').offsetTop - 60, behavior: 'smooth' });
+  });
+});
+
+// ── Main loader ───────────────────────────────────────
+async function loadDashboard(user) {
+  // Header
+  const name = getDisplayName(user);
+  document.getElementById('dashName').textContent = name;
+  document.getElementById('dashEmail').textContent = user.email || '';
+  document.title = `${name}'s Board — HlyWor`;
+
+  const avatarWrap = document.getElementById('dashAvatarWrap');
+  if (user.photoURL) {
+    avatarWrap.innerHTML = `<img class="dash-avatar" src="${user.photoURL}" alt="${name}" referrerpolicy="no-referrer">`;
+  } else {
+    avatarWrap.innerHTML = `<div class="dash-avatar-placeholder">${name[0].toUpperCase()}</div>`;
+  }
+
+  // Load all sections in parallel
+  loadPosts(user);
+  loadPhotos(user);
+  loadCard(user);
+  loadSticking(user);
+  loadStuck(user);
+  loadNotes(user);
+}
+
+// ── MY POSTS ──────────────────────────────────────────
+async function loadPosts(user) {
+  try {
+    const snap = await getDocs(query(
+      collection(db,'posts'),
+      where('authorUid','==',user.uid),
+      where('status','==','published'),
+      orderBy('createdAt','desc')
+    ));
+    const posts = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    document.getElementById('statPosts').textContent = posts.length;
+    document.getElementById('tabBadgePosts').textContent = posts.length || '';
+    document.getElementById('postsCountLabel').textContent = `${posts.length} POST${posts.length!==1?'S':''}`;
+
+    const grid = document.getElementById('postsGrid');
+    if (!posts.length) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">Nothing published yet.<br><a href="submit.html">Write your first post →</a></div>`;
+      return;
+    }
+
+    grid.innerHTML = '';
+    posts.forEach((post, i) => {
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      const thumb = post.thumbnail
+        ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
+        : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
+      const dateStr = post.date
+        ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
+
+      card.innerHTML = `
+        ${thumb}
+        <div class="post-card-body">
+          <div class="post-card-cat">${(post.category||post.type||'post').toUpperCase()}</div>
+          <div class="post-card-title">${post.title}</div>
+          <p class="post-card-desc">${post.desc||''}</p>
+          <div class="post-card-meta">
+            <span class="post-card-date">${dateStr}</span>
+            <a class="post-card-edit" href="post.html?slug=${post.slug}">READ →</a>
+          </div>
+        </div>`;
+
+      // Click opens post
+      card.addEventListener('click', e => {
+        if (e.target.closest('.post-card-edit')) return;
+        window.location.href = `post.html?slug=${post.slug}`;
+      });
+      card.style.cursor = 'pointer';
+      grid.appendChild(card);
+    });
+  } catch(err) {
+    console.error('Posts:', err);
+    document.getElementById('postsGrid').innerHTML =
+      `<div class="empty-state" style="grid-column:1/-1">Could not load posts.</div>`;
+  }
+}
+
+// ── MY PHOTOS ─────────────────────────────────────────
+async function loadPhotos(user) {
+  try {
+    const snap = await getDocs(query(
+      collection(db,'gallery'),
+      where('authorUid','==',user.uid),
+      orderBy('createdAt','desc')
+    ));
+    const photos = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    document.getElementById('statPhotos').textContent = photos.length;
+    document.getElementById('tabBadgePhotos').textContent = photos.length || '';
+    document.getElementById('photosCountLabel').textContent = `${photos.length} PHOTO${photos.length!==1?'S':''}`;
+
+    const grid = document.getElementById('photosGrid');
+    if (!photos.length) {
+      grid.innerHTML = `<div class="empty-state">No photos yet.<br><a href="gallery.html">Add to the gallery →</a></div>`;
+      return;
+    }
+
+    const ROTS = [-2.5,-1.8,-1.2,-0.5,0.5,1.2,1.9,2.4];
+    grid.innerHTML = '';
+    photos.forEach((photo, i) => {
+      const rot = ROTS[i % ROTS.length];
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      item.innerHTML = `
+        <div class="photo-print" style="transform:rotate(${rot}deg)">
+          <img src="${photo.url}" alt="${photo.author||''}" loading="lazy">
+          <div class="photo-print-label">${photo.title||photo.author||''}</div>
+          <button class="photo-del-btn" data-id="${photo.id}">✕ delete</button>
+        </div>`;
+
+      // Click to lightbox
+      item.querySelector('img').addEventListener('click', () => {
+        document.getElementById('lbImg').src = photo.url;
+        document.getElementById('lightbox').classList.add('open');
+      });
+
+      // Delete
+      item.querySelector('.photo-del-btn').addEventListener('click', async e => {
+        e.stopPropagation();
+        const confirmed = await showConfirmDelete('Delete this photo from the gallery?');
+        if (!confirmed) return;
+        try {
+          await deleteDoc(doc(db,'gallery',photo.id));
+          item.remove();
+          const cur = parseInt(document.getElementById('statPhotos').textContent)||0;
+          document.getElementById('statPhotos').textContent = Math.max(0,cur-1);
+        } catch(err) { console.error(err); }
+      });
+
+      grid.appendChild(item);
+    });
+  } catch(err) {
+    console.error('Photos:', err);
+    document.getElementById('photosGrid').innerHTML =
+      `<div class="empty-state">Could not load photos.</div>`;
+  }
+}
+
+// ── MY CARD ───────────────────────────────────────────
+async function loadCard(user) {
+  const wrap = document.getElementById('myCardWrap');
+  try {
+    const snap = await getDocs(query(
+      collection(db,'people'),
+      where('authorUid','==',user.uid),
+      limit(1)
+    ));
+    if (snap.empty) {
+      wrap.innerHTML = `<div class="no-card-msg">You haven't pinned yourself yet.<br><a href="join.html" style="color:var(--fire)">Pin yourself to the crew wall →</a></div>`;
+      return;
+    }
+    const p = {id:snap.docs[0].id,...snap.docs[0].data()};
+    const acc = p.accent||'#e8681a';
+    const chips = (p.professions||[]).slice(0,3).map(pr =>
+      `<span class="ppc-chip" style="background:${acc}">${pr}</span>`).join('');
+
+    wrap.innerHTML = `
+      <div class="profile-preview-card">
+        <div class="ppc-spine"></div>
+        <div class="ppc-page">
+          <div class="ppc-handle" style="background:${acc}">${p.handle||p.name.split(' ')[0].toUpperCase()+'.EXE'}</div>
+          <div class="ppc-name">${p.name}</div>
+          <div class="ppc-role" style="color:${acc}">${(p.role||'').toUpperCase()}</div>
+          <p class="ppc-bio">${p.bio||''}</p>
+          <div class="ppc-chips">${chips}</div>
+          <a class="ppc-edit-link" href="profile.html?slug=${p.slug}">View full profile →</a>
+        </div>
+      </div>
+      <p style="font-family:var(--serif);font-size:0.8rem;font-style:italic;color:var(--ink4);margin-top:12px">
+        To update your card, submit a new one at <a href="join.html" style="color:var(--fire)">join.html</a> — editable profiles coming soon.
+      </p>`;
+  } catch(err) {
+    console.error('Card:', err);
+    wrap.innerHTML = `<div class="no-card-msg">Could not load your card.</div>`;
+  }
+}
+
+// ── STICKING (people I follow) ────────────────────────
+async function loadSticking(user) {
+  try {
+    const snap = await getDocs(query(
+      collection(db,'sticks'),
+      where('fromUid','==',user.uid),
+      orderBy('createdAt','desc')
+    ));
+    const sticks = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    document.getElementById('statSticking').textContent = sticks.length;
+    document.getElementById('tabBadgeSticking').textContent = sticks.length||'';
+    document.getElementById('stickingCountLabel').textContent = `${sticks.length} PERSON${sticks.length!==1?'S':''}`;
+
+    const grid = document.getElementById('stickingGrid');
+    if (!sticks.length) {
+      grid.innerHTML = `<div class="empty-state">You haven't stuck anyone yet.<br><a href="character.html">Browse the crew wall →</a></div>`;
+      return;
+    }
+
+    grid.innerHTML = '';
+    for (const stick of sticks) {
+      // Fetch their profile
+      let personData = null;
+      try {
+        const ps = await getDocs(query(collection(db,'people'),where('slug','==',stick.toSlug),limit(1)));
+        if (!ps.empty) personData = {id:ps.docs[0].id,...ps.docs[0].data()};
+      } catch(e) {}
+
+      const card = document.createElement('div');
+      card.className = 'person-card';
+      const name = stick.toName || stick.toSlug || 'Someone';
+      const role = personData?.role || '';
+      const bio  = personData?.bio  || '';
+      const acc  = personData?.accent || '#e8681a';
+      card.innerHTML = `
+        <div class="person-card-pin"></div>
+        <div class="person-card-body">
+          <div class="person-card-name">${name}</div>
+          ${role ? `<div class="person-card-role">${role.toUpperCase().slice(0,24)}</div>` : ''}
+          ${bio  ? `<p class="person-card-bio">${bio}</p>` : ''}
+          <button class="unstick-btn" data-id="${stick.id}">unstick</button>
+        </div>`;
+
+      card.addEventListener('click', e => {
+        if (e.target.closest('.unstick-btn')) return;
+        window.location.href = `profile.html?slug=${stick.toSlug}`;
+      });
+
+      card.querySelector('.unstick-btn').addEventListener('click', async e => {
+        e.stopPropagation();
+        const confirmed = await showConfirmDelete(`Unstick ${name}?`);
+        if (!confirmed) return;
+        try {
+          await deleteDoc(doc(db,'sticks',stick.id));
+          card.remove();
+          const cur = parseInt(document.getElementById('statSticking').textContent)||0;
+          document.getElementById('statSticking').textContent = Math.max(0,cur-1);
+        } catch(err) { console.error(err); }
+      });
+
+      grid.appendChild(card);
+    }
+  } catch(err) {
+    console.error('Sticking:', err);
+  }
+}
+
+// ── STUCK YOU (followers) ─────────────────────────────
+async function loadStuck(user) {
+  try {
+    const snap = await getDocs(query(
+      collection(db,'sticks'),
+      where('toUid','==',user.uid),
+      orderBy('createdAt','desc')
+    ));
+    const stucks = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    document.getElementById('statStuck').textContent = stucks.length;
+    document.getElementById('tabBadgeStuck').textContent = stucks.length||'';
+    document.getElementById('stuckCountLabel').textContent = `${stucks.length} PERSON${stucks.length!==1?'S':''}`;
+
+    const grid = document.getElementById('stuckGrid');
+    if (!stucks.length) {
+      grid.innerHTML = `<div class="empty-state">Nobody has stuck you yet.<br>Share your profile and let people find you.</div>`;
+      return;
+    }
+
+    grid.innerHTML = '';
+    for (const s of stucks) {
+      const card = document.createElement('div');
+      card.className = 'person-card';
+      const name = s.fromName || 'Someone';
+      card.innerHTML = `
+        <div class="person-card-pin" style="background:radial-gradient(circle at 35% 35%,#99bbff,#3355cc)"></div>
+        <div class="person-card-body">
+          <div class="person-card-name">${name}</div>
+          <div class="person-card-role" style="color:var(--ink4)">STUCK YOU</div>
+          ${s.fromSlug ? `<a href="profile.html?slug=${s.fromSlug}" style="font-family:var(--hand);font-size:0.85rem;color:var(--fire);display:block;margin-top:8px">View profile →</a>` : ''}
+        </div>`;
+      if (s.fromSlug) {
+        card.addEventListener('click', e => {
+          if (e.target.tagName==='A') return;
+          window.location.href = `profile.html?slug=${s.fromSlug}`;
+        });
+      }
+      grid.appendChild(card);
+    }
+  } catch(err) {
+    console.error('Stuck:', err);
+  }
+}
+
+// ── MY NOTES (comments) ───────────────────────────────
+async function loadNotes(user) {
+  try {
+    const snap = await getDocs(query(
+      collection(db,'comments'),
+      where('authorUid','==',user.uid),
+      orderBy('createdAt','desc')
+    ));
+    const notes = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    document.getElementById('tabBadgeNotes').textContent = notes.length||'';
+    document.getElementById('notesCountLabel').textContent = `${notes.length} NOTE${notes.length!==1?'S':''}`;
+
+    const grid = document.getElementById('notesGrid');
+    if (!notes.length) {
+      grid.innerHTML = `<div class="empty-state">No notes left yet.<br><a href="posts.html">Read some posts and leave a note →</a></div>`;
+      return;
+    }
+
+    grid.innerHTML = '';
+    notes.forEach((note, i) => {
+      const dateStr = note.createdAt?.toDate
+        ? note.createdAt.toDate().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+        : '';
+      const item = document.createElement('div');
+      item.className = 'comment-dash-item';
+      item.style.animationDelay = `${i*40}ms`;
+      item.innerHTML = `
+        <div class="comment-dash-on">
+          NOTE ON: <a href="post.html?slug=${note.postSlug||''}">
+            ${note.postTitle || note.postId || 'a post'}
+          </a>
+        </div>
+        <div class="comment-dash-text">${escHtml(note.text)}</div>
+        <div class="comment-dash-date">${dateStr}</div>`;
+      grid.appendChild(item);
+    });
+  } catch(err) {
+    // Comments may not have authorUid on old ones — silently fail
+    document.getElementById('notesGrid').innerHTML =
+      `<div class="empty-state">Notes from before you signed in won't appear here.<br>Future notes will show up automatically.</div>`;
+  }
+}
+
+// ── Lightbox ──────────────────────────────────────────
+document.getElementById('lbClose').addEventListener('click', () =>
+  document.getElementById('lightbox').classList.remove('open'));
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox'))
+    document.getElementById('lightbox').classList.remove('open');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+});
+
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

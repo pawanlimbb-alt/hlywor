@@ -569,6 +569,23 @@
     }
     .site-footer p { font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.2); }
     .footer-logo { font-family:var(--pixel);font-size:0.38rem;color:var(--gold);letter-spacing:2px; }
+
+    /* ── STICK BUTTON ── */
+    .stick-btn-wrap {
+      position: relative; z-index: 2;
+      padding: 0 32px 20px 88px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .stick-btn {
+      font-family: var(--hand); font-size: 1rem; font-weight: 700;
+      padding: 8px 24px; border: none; cursor: pointer;
+      transition: all .2s; display: flex; align-items: center; gap: 7px;
+    }
+    .stick-btn.unstuck { background: var(--acc); color: #fff; }
+    .stick-btn.unstuck:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .stick-btn.stuck-state { background: var(--paper3); color: var(--ink2); border: 1px solid rgba(26,18,8,0.15); }
+    .stick-btn.stuck-state:hover { background: rgba(192,57,43,0.08); color: #c0392b; border-color: rgba(192,57,43,0.3); }
+    .stick-count { font-family: var(--pixel); font-size: 0.3rem; color: var(--ink4); letter-spacing: 1px; }
   </style>
 </head>
 <body>
@@ -608,6 +625,12 @@
           <!-- Top: photos + info -->
           <div class="profile-top" id="profileTop"></div>
 
+
+    <!-- Stick button — shown when logged in and not own profile -->
+    <div class="stick-btn-wrap" id="stickBtnWrap" style="display:none">
+      <button class="stick-btn unstuck" id="stickBtn">📌 Stick them</button>
+      <span class="stick-count" id="stickCount"></span>
+    </div>
           <!-- About sections (rendered dynamically) -->
           <div id="profileSections"></div>
 
@@ -654,9 +677,9 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, limit, orderBy }
+import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, doc, limit, orderBy, getCountFromServer }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { injectAuthNav } from "./auth.js";
+import { injectAuthNav, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
 // 🔧 YOUR FIREBASE CONFIG
 const firebaseConfig = {
@@ -673,7 +696,15 @@ const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
 // ── Auth nav ──────────────────────────────────────────
-injectAuthNav(document.getElementById('authSlot'));
+injectAuthNav(document.getElementById('authSlot'), {
+  onSignIn(user)  { if (currentPersonData) setupStickButton(currentPersonData, user); },
+  onSignOut()     { hideStickButton(); }
+});
+
+// ── Auth state watcher ────────────────────────────────
+onAuthChange(user => {
+  if (currentPersonData) setupStickButton(currentPersonData, user);
+});
 
 /* Reading progress */
 window.addEventListener('scroll', () => {
@@ -696,6 +727,8 @@ for (let i = 0; i < 14; i++) {
 const params = new URLSearchParams(window.location.search);
 const slug   = params.get('slug') || params.get('name');
 
+let currentPersonData = null;
+
 if (!slug) { showNotFound(); }
 else { loadProfile(slug); }
 
@@ -717,6 +750,7 @@ async function loadProfile(slug) {
     }
     if (snap.empty) { showNotFound(); return; }
     const person = { id: snap.docs[0].id, ...snap.docs[0].data() };
+    currentPersonData = person;
     renderProfile(person);
     loadPosts(person.name);
   } catch(err) {
@@ -919,6 +953,110 @@ async function loadPosts(authorName) {
       grid.appendChild(card);
     });
   } catch(err) { console.error('Posts:', err); }
+}
+
+/* ── Stick count ── */
+async function loadStickCount(toUid) {
+  try {
+    const snap = await getDocs(query(collection(db,'sticks'), where('toUid','==',toUid)));
+    const count = snap.size;
+    const countEl = document.getElementById('stickCount');
+    if (countEl) countEl.textContent = count > 0 ? `${count} stuck` : '';
+  } catch(e) {}
+}
+
+/* ── Stick button setup ── */
+async function setupStickButton(person, user) {
+  const wrap = document.getElementById('stickBtnWrap');
+  const btn  = document.getElementById('stickBtn');
+  if (!wrap || !btn) return;
+
+  // Don't show on own profile
+  if (!user || !person.authorUid || user.uid === person.authorUid) {
+    hideStickButton(); return;
+  }
+
+  wrap.style.display = 'flex';
+  loadStickCount(person.authorUid);
+
+  // Check if already stuck
+  let stickDocId = null;
+  try {
+    const existing = await getDocs(query(
+      collection(db,'sticks'),
+      where('fromUid','==',user.uid),
+      where('toUid','==',person.authorUid),
+      limit(1)
+    ));
+    if (!existing.empty) {
+      stickDocId = existing.docs[0].id;
+      setStuckState(btn, true);
+    } else {
+      setStuckState(btn, false);
+    }
+  } catch(e) { console.error(e); }
+
+  // Remove old listener by cloning
+  const newBtn = btn.cloneNode(true);
+  btn.parentNode.replaceChild(newBtn, btn);
+
+  newBtn.addEventListener('click', async () => {
+    if (!currentUser) {
+      showLoginModal({ prompt: 'Sign in to stick someone to your board.' });
+      return;
+    }
+    newBtn.disabled = true;
+
+    if (stickDocId) {
+      // Unstick
+      try {
+        await deleteDoc(doc(db,'sticks',stickDocId));
+        stickDocId = null;
+        setStuckState(newBtn, false);
+        loadStickCount(person.authorUid);
+      } catch(e) { console.error(e); }
+    } else {
+      // Stick
+      try {
+        const fromName = getDisplayName(currentUser);
+        const fromSnap = await getDocs(query(
+          collection(db,'people'),
+          where('authorUid','==',currentUser.uid),
+          limit(1)
+        ));
+        const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
+        const ref = await addDoc(collection(db,'sticks'), {
+          fromUid:  currentUser.uid,
+          fromName, fromSlug,
+          toUid:    person.authorUid,
+          toSlug:   person.slug || '',
+          toName:   person.name,
+          createdAt: new Date()
+        });
+        stickDocId = ref.id;
+        setStuckState(newBtn, true);
+        loadStickCount(person.authorUid);
+      } catch(e) { console.error(e); }
+    }
+    newBtn.disabled = false;
+  });
+}
+
+function setStuckState(btn, isStuck) {
+  if (isStuck) {
+    btn.textContent = '📌 Stuck ✦';
+    btn.className = 'stick-btn stuck-state';
+    btn.title = 'Click to unstick';
+  } else {
+    btn.textContent = '📌 Stick them';
+    btn.className = 'stick-btn unstuck';
+    btn.title = 'Add to your board';
+  }
+}
+
+function hideStickButton() {
+  const wrap = document.getElementById('stickBtnWrap');
+  if (wrap) wrap.style.display = 'none';
 }
 
 function showNotFound() {

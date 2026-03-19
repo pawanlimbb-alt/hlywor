@@ -364,6 +364,9 @@ export function injectAuthNav(navEl, options = {}) {
             <span class="auth-dropdown-name">${name}</span>
             <span class="auth-dropdown-email">${user.email || ""}</span>
           </div>
+          <a class="auth-dropdown-item" href="dashboard.html">
+            <span>📌</span> My Board
+          </a>
           <button class="auth-dropdown-item danger" id="authSignOutBtn">
             <span>↪</span> Sign out
           </button>
