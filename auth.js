@@ -328,21 +328,19 @@ export function injectAuthNav(navEl, options = {}) {
   }
 
   // ── Create nav auth slot ─────────────────────────────
-  // Looks for an element with id="authSlot" in the nav,
-  // or appends to the nav directly
   let slot = navEl.querySelector("#authSlot") || navEl;
 
   // ── Signed-out state ─────────────────────────────────
   function renderSignedOut() {
     slot.innerHTML = `
-      <button class="auth-nav-btn" id="authSignInBtn">
+      <button class="auth-nav-btn auth-sign-in-btn">
         <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
           <circle cx="9" cy="9" r="8.5" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
           <path d="M9 9.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zm-4 4.5a4 4 0 018 0" stroke="rgba(255,255,255,0.7)" stroke-width="1" stroke-linecap="round"/>
         </svg>
         Sign in
       </button>`;
-    document.getElementById("authSignInBtn")?.addEventListener("click", () => showLoginModal());
+    slot.querySelector(".auth-sign-in-btn")?.addEventListener("click", () => showLoginModal());
   }
 
   // ── Signed-in state ──────────────────────────────────
@@ -350,8 +348,8 @@ export function injectAuthNav(navEl, options = {}) {
     const name = getDisplayName(user);
     const photo = user.photoURL || "";
     slot.innerHTML = `
-      <div class="auth-user-wrap" id="authUserWrap">
-        <button class="auth-user-btn" id="authUserBtn">
+      <div class="auth-user-wrap">
+        <button class="auth-user-btn auth-user-toggle">
           ${photo
             ? `<img src="${photo}" alt="${name}" referrerpolicy="no-referrer">`
             : `<div style="width:26px;height:26px;border-radius:50%;background:#e8681a;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-size:1rem;color:#fff;font-weight:700">${name[0].toUpperCase()}</div>`
@@ -359,7 +357,7 @@ export function injectAuthNav(navEl, options = {}) {
           <span class="auth-user-name">${name.split(" ")[0]}</span>
           <span class="auth-chevron">▾</span>
         </button>
-        <div class="auth-dropdown" id="authDropdown">
+        <div class="auth-dropdown">
           <div class="auth-dropdown-header">
             <span class="auth-dropdown-name">${name}</span>
             <span class="auth-dropdown-email">${user.email || ""}</span>
@@ -367,20 +365,24 @@ export function injectAuthNav(navEl, options = {}) {
           <a class="auth-dropdown-item" href="dashboard.html">
             <span>📌</span> My Board
           </a>
-          <button class="auth-dropdown-item danger" id="authSignOutBtn">
+          <button class="auth-dropdown-item danger auth-sign-out-btn">
             <span>↪</span> Sign out
           </button>
         </div>
       </div>`;
 
-    document.getElementById("authUserBtn")?.addEventListener("click", e => {
+    const toggleBtn = slot.querySelector(".auth-user-toggle");
+    const dropdown  = slot.querySelector(".auth-dropdown");
+
+    toggleBtn?.addEventListener("click", e => {
       e.stopPropagation();
-      document.getElementById("authDropdown")?.classList.toggle("open");
+      dropdown?.classList.toggle("open");
     });
-    document.addEventListener("click", () => {
-      document.getElementById("authDropdown")?.classList.remove("open");
-    }, { once: false });
-    document.getElementById("authSignOutBtn")?.addEventListener("click", async () => {
+    document.addEventListener("click", e => {
+      if (!slot.contains(e.target)) dropdown?.classList.remove("open");
+    });
+    slot.querySelector(".auth-sign-out-btn")?.addEventListener("click", async () => {
+      dropdown?.classList.remove("open");
       await signOut();
       if (onSignOut) onSignOut();
     });

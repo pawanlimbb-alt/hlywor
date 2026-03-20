@@ -1232,6 +1232,7 @@
       height: 48px;
       align-items: center;
       justify-content: space-between;
+      overflow: visible;
     }
     .mobile-topbar::after {
       content: '';
@@ -1281,6 +1282,8 @@
       #authSlotMobile .auth-chevron { display: none; }
       #authSlotMobile .auth-dropdown {
         right: 0; left: auto; top: 38px;
+        position: fixed;
+        z-index: 9999;
       }
     }
 
