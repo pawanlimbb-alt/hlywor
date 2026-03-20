@@ -675,6 +675,117 @@
     .sticker-btn.reacted { background: #fff3e0; border-color: var(--fire); color: var(--fire); }
     .sticker-count { font-size: 0.65rem; }
 
+    /* ── AUTHOR CHIP on post cards ── */
+    .post-author-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: var(--hand); font-size: 0.88rem;
+      color: var(--ink3); cursor: pointer;
+      padding: 2px 6px 2px 2px;
+      border-radius: 2px; transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .post-author-chip:hover { background: var(--paper3); color: var(--fire); }
+    .post-author-chip-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fire); opacity: 0.6; flex-shrink: 0;
+    }
+
+    /* ── AUTHOR POPUP ── */
+    .author-popup-overlay {
+      position: fixed; inset: 0; z-index: 800;
+      background: rgba(0,0,0,0);
+      pointer-events: none;
+      transition: background 0.25s;
+    }
+    .author-popup-overlay.open {
+      background: rgba(0,0,0,0.55);
+      pointer-events: all;
+    }
+    .author-popup {
+      position: fixed;
+      bottom: -100%; left: 0; right: 0;
+      z-index: 801;
+      background: var(--paper);
+      max-height: 72vh;
+      overflow-y: auto;
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
+      transition: bottom 0.35s cubic-bezier(0.34,1.1,0.64,1);
+      /* Diary ruled lines */
+      background-image: repeating-linear-gradient(
+        to bottom, transparent 0px, transparent 31px,
+        rgba(180,160,120,0.15) 31px, rgba(180,160,120,0.15) 32px
+      );
+    }
+    .author-popup-overlay.open .author-popup {
+      bottom: 0;
+    }
+    /* Desktop: center as a card instead */
+    @media (min-width: 641px) {
+      .author-popup {
+        left: 50%; right: auto;
+        transform: translateX(-50%) translateY(20px);
+        bottom: auto; top: 50%;
+        margin-top: -180px;
+        width: 380px;
+        border-radius: 4px;
+        max-height: 80vh;
+        transition: opacity 0.2s, transform 0.25s cubic-bezier(0.34,1.2,0.64,1);
+        opacity: 0;
+      }
+      .author-popup-overlay.open .author-popup {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        top: 50%;
+      }
+    }
+    .popup-handle {
+      width: 36px; height: 4px; border-radius: 2px;
+      background: rgba(26,18,8,0.15);
+      margin: 10px auto 0;
+    }
+    @media (min-width: 641px) { .popup-handle { display: none; } }
+    .popup-inner { padding: 18px 22px 28px; position: relative; z-index: 1; }
+    .popup-spine-accent {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 4px;
+    }
+    .popup-handle-wrap { padding: 8px 0 0; }
+    .popup-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+    .popup-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--fire); flex-shrink: 0;
+    }
+    .popup-avatar-placeholder {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--fire);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--hand); font-size: 1.4rem; color: #fff;
+      font-weight: 700; flex-shrink: 0;
+    }
+    .popup-name { font-family: var(--hand); font-size: 1.4rem; color: var(--ink); font-weight: 700; line-height: 1.1; }
+    .popup-role { font-family: var(--pixel); font-size: 0.3rem; color: var(--ink4); letter-spacing: 1px; margin-top: 3px; }
+    .popup-bio { font-family: var(--serif); font-size: 0.92rem; font-style: italic; color: var(--ink2); line-height: 1.65; margin-bottom: 14px; }
+    .popup-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .popup-stick-btn {
+      font-family: var(--hand); font-size: 1rem; font-weight: 700;
+      padding: 8px 20px; border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .popup-stick-btn.unstuck { background: var(--fire); color: #fff; }
+    .popup-stick-btn.unstuck:hover { background: #ff7a2a; transform: translateY(-1px); }
+    .popup-stick-btn.stuck-state { background: var(--paper3); color: var(--ink2); border: 1px solid rgba(26,18,8,0.15); }
+    .popup-stick-btn.stuck-state:hover { color: #c0392b; border-color: rgba(192,57,43,0.3); }
+    .popup-profile-link {
+      font-family: var(--hand); font-size: 0.9rem;
+      color: var(--fire); text-decoration: none;
+      border-bottom: 1px dashed rgba(232,104,26,0.4);
+      padding-bottom: 1px; transition: letter-spacing 0.2s;
+    }
+    .popup-profile-link:hover { letter-spacing: 1px; }
+    .popup-stick-count { font-family: var(--pixel); font-size: 0.26rem; color: var(--ink4); margin-left: 4px; }
+    .popup-loading { font-family: var(--hand); font-size: 1rem; color: var(--ink3); font-style: italic; padding: 12px 0; }
+    .popup-no-profile { font-family: var(--serif); font-size: 0.88rem; color: var(--ink3); font-style: italic; }
+
     /* Skeleton */
     .skel-post {
       background: var(--paper);
@@ -1367,6 +1478,16 @@
   </div>
 </nav>
 
+<!-- AUTHOR POPUP -->
+<div class="author-popup-overlay" id="authorPopupOverlay">
+  <div class="author-popup" id="authorPopup">
+    <div class="popup-handle-wrap"><div class="popup-handle"></div></div>
+    <div class="popup-inner" id="authorPopupInner">
+      <div class="popup-loading">Loading...</div>
+    </div>
+  </div>
+</div>
+
 <!-- BOTTOM DOCK — mobile nav -->
 <div class="bottom-dock">
   <div class="dock-inner">
@@ -1577,9 +1698,12 @@
 <!-- ══════════════ JS ══════════════ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, orderBy, onSnapshot, where }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { injectAuthNav, requireLogin, currentUser, onAuthChange } from "./auth.js";
+import {
+  getFirestore, collection, query, orderBy, onSnapshot, where,
+  getDocs, addDoc, deleteDoc, doc, getDoc, limit,
+  serverTimestamp, getCountFromServer
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav, requireLogin, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
 // ════════════════════════════════════
 // 🔧 PASTE YOUR FIREBASE CONFIG HERE
@@ -1716,8 +1840,200 @@ function startLiveFeed() {
 
 startLiveFeed();
 
-/* Tag filter */
+/* ── Reaction helpers (Firestore-synced) ── */
+const EMOJIS = ['🔥','❤️','😭'];
 
+async function loadReactions(postSlug) {
+  // Returns {emoji: {count, userReacted}} for current user
+  const result = {};
+  for (const e of EMOJIS) result[e] = { count: 0, userReacted: false };
+  try {
+    const snap = await getDocs(query(
+      collection(db,'reactions'),
+      where('postSlug','==', postSlug)
+    ));
+    snap.docs.forEach(d => {
+      const { emoji, uid } = d.data();
+      if (result[emoji]) {
+        result[emoji].count++;
+        if (currentUser && uid === currentUser.uid) result[emoji].userReacted = true;
+      }
+    });
+  } catch(e) { /* index may not exist yet — fail silently */ }
+  return result;
+}
+
+async function toggleReaction(postSlug, emoji, btn) {
+  if (!currentUser) {
+    showLoginModal({ prompt: 'Sign in to react to posts.' });
+    return;
+  }
+  const countEl = btn.querySelector('.sticker-count');
+  const isReacted = btn.classList.contains('reacted');
+
+  // Optimistic UI
+  btn.classList.toggle('reacted', !isReacted);
+  const cur = parseInt(countEl.textContent) || 0;
+  countEl.textContent = isReacted ? Math.max(0, cur - 1) : cur + 1;
+
+  try {
+    if (isReacted) {
+      // Remove reaction
+      const snap = await getDocs(query(
+        collection(db,'reactions'),
+        where('postSlug','==', postSlug),
+        where('emoji','==', emoji),
+        where('uid','==', currentUser.uid),
+        limit(1)
+      ));
+      if (!snap.empty) await deleteDoc(doc(db,'reactions', snap.docs[0].id));
+    } else {
+      await addDoc(collection(db,'reactions'), {
+        postSlug, emoji,
+        uid: currentUser.uid,
+        createdAt: serverTimestamp()
+      });
+    }
+  } catch(e) {
+    // Revert optimistic update on failure
+    console.error(e);
+    btn.classList.toggle('reacted', isReacted);
+    countEl.textContent = cur;
+  }
+}
+
+/* ── Author popup ── */
+let popupPersonCache = {};
+
+function openAuthorPopup(authorName, authorUid) {
+  const overlay = document.getElementById('authorPopupOverlay');
+  const inner   = document.getElementById('authorPopupInner');
+  if (!overlay || !inner) return;
+
+  inner.innerHTML = `<div class="popup-loading">Looking them up...</div>`;
+  overlay.classList.add('open');
+
+  // Close on overlay click
+  overlay.onclick = e => { if (e.target === overlay) closeAuthorPopup(); };
+
+  fetchAndRenderAuthor(authorName, authorUid, inner);
+}
+
+function closeAuthorPopup() {
+  document.getElementById('authorPopupOverlay')?.classList.remove('open');
+}
+
+async function fetchAndRenderAuthor(authorName, authorUid, inner) {
+  const cacheKey = authorUid || authorName;
+  let person = popupPersonCache[cacheKey];
+
+  if (!person) {
+    try {
+      let snap;
+      if (authorUid) {
+        snap = await getDocs(query(
+          collection(db,'people'),
+          where('authorUid','==', authorUid),
+          limit(1)
+        ));
+      }
+      if (!snap || snap.empty) {
+        snap = await getDocs(query(
+          collection(db,'people'),
+          where('nameLower','==', authorName.toLowerCase()),
+          limit(1)
+        ));
+      }
+      person = snap?.empty ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
+      popupPersonCache[cacheKey] = person || false;
+    } catch(e) { console.error(e); }
+  }
+
+  const acc = person?.accent || '#e8681a';
+
+  // Check stick state
+  let stickDocId = null;
+  let stickCount = 0;
+  const toUid = person?.authorUid;
+
+  if (toUid) {
+    try {
+      const sc = await getDocs(query(collection(db,'sticks'), where('toUid','==', toUid)));
+      stickCount = sc.size;
+      if (currentUser && currentUser.uid !== toUid) {
+        const existing = sc.docs.find(d => d.data().fromUid === currentUser.uid);
+        if (existing) stickDocId = existing.id;
+      }
+    } catch(e) {}
+  }
+
+  const isOwnProfile = currentUser && toUid && currentUser.uid === toUid;
+  const canStick = !!toUid && !isOwnProfile;
+  const isStuck  = !!stickDocId;
+
+  const avatarHtml = person?.photos?.[0]
+    ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${person?.name||authorName}">`
+    : `<div class="popup-avatar-placeholder">${(person?.name||authorName)[0].toUpperCase()}</div>`;
+
+  const stickBtn = canStick ? `
+    <button class="popup-stick-btn ${isStuck?'stuck-state':'unstuck'}" id="popupStickBtn">
+      ${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}
+    </button>
+    ${stickCount > 0 ? `<span class="popup-stick-count">${stickCount} stuck</span>` : ''}
+  ` : '';
+
+  const profileLink = person?.slug
+    ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>`
+    : '';
+
+  inner.innerHTML = `
+    <div class="popup-spine-accent" style="background:${acc}"></div>
+    <div class="popup-header">
+      ${avatarHtml}
+      <div>
+        <div class="popup-name">${person?.name || authorName}</div>
+        ${person?.role ? `<div class="popup-role">${person.role.toUpperCase()}</div>` : ''}
+      </div>
+    </div>
+    ${person?.bio ? `<p class="popup-bio">${person.bio}</p>` : person === null ? `<p class="popup-no-profile">No profile card yet.</p>` : ''}
+    <div class="popup-actions">
+      ${stickBtn}
+      ${profileLink}
+    </div>`;
+
+  // Wire stick button
+  const stickBtnEl = inner.querySelector('#popupStickBtn');
+  if (stickBtnEl) {
+    stickBtnEl.addEventListener('click', async () => {
+      if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+      stickBtnEl.disabled = true;
+      try {
+        if (stickDocId) {
+          await deleteDoc(doc(db,'sticks', stickDocId));
+          stickDocId = null;
+          stickBtnEl.textContent = '📌 Stick them';
+          stickBtnEl.className = 'popup-stick-btn unstuck';
+        } else {
+          const fromName = getDisplayName(currentUser);
+          const fromSnap = await getDocs(query(collection(db,'people'), where('authorUid','==',currentUser.uid), limit(1)));
+          const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
+          const ref = await addDoc(collection(db,'sticks'), {
+            fromUid: currentUser.uid, fromName, fromSlug,
+            toUid, toSlug: person?.slug||'', toName: person?.name||authorName,
+            createdAt: serverTimestamp()
+          });
+          stickDocId = ref.id;
+          stickBtnEl.textContent = '📌 Stuck ✦';
+          stickBtnEl.className = 'popup-stick-btn stuck-state';
+        }
+        popupPersonCache = {}; // bust cache
+      } catch(e) { console.error(e); }
+      stickBtnEl.disabled = false;
+    });
+  }
+}
+
+/* ── Render posts ── */
 function renderPosts() {
   const grid = document.getElementById('postsGrid');
   const rotations = [-1.2, 0.8, -0.4, 1.5, -0.9, 1.1, -1.6, 0.5, -0.7, 1.3, -0.3, 0.9];
@@ -1734,32 +2050,28 @@ function renderPosts() {
   grid.innerHTML = '';
   filtered.forEach((post, i) => {
     const rot = rotations[i % rotations.length];
-    const rKey = 'react-' + post.url;
-    const reactions = JSON.parse(localStorage.getItem(rKey) || '{"🔥":0,"❤️":0,"😭":0}');
     const cat = (post.category || post.type || 'post').toLowerCase();
+    const postSlug = post.slug || post.url?.split('/').pop()?.replace('.html','') || post.id;
 
     const card = document.createElement('div');
     card.className = 'pinned-post reveal';
     card.style.cssText = `--rot:${rot}deg;`;
     card.style.transitionDelay = `${i * 55}ms`;
 
-    /* Pin color varies */
     const pinColors = [
       'radial-gradient(circle at 35% 35%, #ff9999, #cc3333)',
       'radial-gradient(circle at 35% 35%, #99bbff, #3355cc)',
       'radial-gradient(circle at 35% 35%, #aaeeaa, #228844)',
       'radial-gradient(circle at 35% 35%, #ffcc99, #cc6622)',
     ];
-    const pinLeft = [28,55,42,65,35][i%5];
+    const pinLeft  = [28,55,42,65,35][i%5];
     const pinColor = pinColors[i%4];
 
     const thumb = post.thumbnail
       ? `<div class="post-photo">
            <img src="${post.thumbnail}" alt="${post.title}" loading="lazy">
-           <div class="photo-corner tl"></div>
-           <div class="photo-corner tr"></div>
-           <div class="photo-corner bl"></div>
-           <div class="photo-corner br"></div>
+           <div class="photo-corner tl"></div><div class="photo-corner tr"></div>
+           <div class="photo-corner bl"></div><div class="photo-corner br"></div>
          </div>`
       : `<div class="post-noimg">
            <div class="post-noimg-num">${String(i+1).padStart(2,'0')}</div>
@@ -1767,16 +2079,14 @@ function renderPosts() {
          </div>`;
 
     const dateStr = post.date
-      ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})
-      : '';
-
+      ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) : '';
     const authorName = post.author || 'HlyWor';
 
-    const reactionHtml = Object.entries(reactions).map(([emoji, count]) => {
-      const reacted = localStorage.getItem(`reacted-${post.url}-${emoji}`) === '1';
-      return `<button class="sticker-btn${reacted?' reacted':''}" data-url="${post.url}" data-emoji="${emoji}">
-        ${emoji}<span class="sticker-count">${count}</span></button>`;
-    }).join('');
+    // Reactions start at 0 — will be loaded async
+    const reactionHtml = EMOJIS.map(emoji =>
+      `<button class="sticker-btn" data-slug="${postSlug}" data-emoji="${emoji}">
+        ${emoji}<span class="sticker-count">…</span></button>`
+    ).join('');
 
     card.innerHTML = `
       <div class="post-pin" style="left:${pinLeft}%;background:${pinColor}"></div>
@@ -1786,38 +2096,47 @@ function renderPosts() {
         <div class="post-note-title">${post.title}</div>
         <p class="post-note-desc">${post.desc||''}</p>
         <div class="post-note-meta">
-          <span class="post-author-hand">${authorName}${dateStr?' · '+dateStr:''}</span>
+          <button class="post-author-chip" data-author="${authorName}" data-uid="${post.authorUid||''}">
+            <span class="post-author-chip-dot"></span>${authorName}${dateStr?' · '+dateStr:''}
+          </button>
           <span class="post-read-hand">read →</span>
         </div>
       </div>
       <div class="post-stickers">${reactionHtml}</div>`;
 
-    /* Click to navigate — always use post.html?slug= */
+    // Click card → navigate (not chip or reaction)
     card.addEventListener('click', e => {
-      if (e.target.closest('.sticker-btn')) return;
-      const slug = post.slug || post.url?.split('/').pop()?.replace('.html','');
-      window.location.href = `post.html?slug=${slug}`;
+      if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip')) return;
+      window.location.href = `post.html?slug=${postSlug}`;
+    });
+
+    // Author chip → popup
+    card.querySelector('.post-author-chip').addEventListener('click', e => {
+      e.stopPropagation();
+      const { author, uid } = e.currentTarget.dataset;
+      openAuthorPopup(author, uid);
+    });
+
+    // Reaction buttons
+    card.querySelectorAll('.sticker-btn').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        await toggleReaction(postSlug, btn.dataset.emoji, btn);
+      });
     });
 
     grid.appendChild(card);
-    requestAnimationFrame(() => {
-      ro.observe(card);
-    });
-  });
+    requestAnimationFrame(() => ro.observe(card));
 
-  /* Reaction clicks */
-  grid.querySelectorAll('.sticker-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const {url, emoji} = btn.dataset;
-      const key = `reacted-${url}-${emoji}`;
-      const store = JSON.parse(localStorage.getItem('react-'+url)||'{"🔥":0,"❤️":0,"😭":0}');
-      const already = localStorage.getItem(key)==='1';
-      store[emoji] = Math.max(0,(store[emoji]||0)+(already?-1:1));
-      already ? localStorage.removeItem(key) : localStorage.setItem(key,'1');
-      btn.classList.toggle('reacted',!already);
-      btn.querySelector('.sticker-count').textContent = store[emoji];
-      localStorage.setItem('react-'+url, JSON.stringify(store));
+    // Load reactions async — don't block render
+    loadReactions(postSlug).then(data => {
+      card.querySelectorAll('.sticker-btn').forEach(btn => {
+        const emoji = btn.dataset.emoji;
+        if (data[emoji]) {
+          btn.querySelector('.sticker-count').textContent = data[emoji].count;
+          btn.classList.toggle('reacted', data[emoji].userReacted);
+        }
+      });
     });
   });
 }
@@ -1831,6 +2150,13 @@ document.querySelectorAll('.tape-tab').forEach(btn => {
     renderPosts();
   });
 });
+
+// Close popup on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAuthorPopup();
+});
+
+
 
 
 /* ── Search ── */

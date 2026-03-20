@@ -418,7 +418,7 @@ import {
   addDoc, updateDoc, deleteDoc, doc,
   orderBy, limit, serverTimestamp, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { injectAuthNav, currentUser, onAuthChange, showConfirmDelete, getDisplayName } from "./auth.js";
+import { injectAuthNav, currentUser, onAuthChange, showConfirmDelete, getDisplayName, showLoginModal } from "./auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
@@ -520,27 +520,108 @@ function renderPost(post) {
 
   document.getElementById('postBody').innerHTML = post.content || '<p>No content.</p>';
 
-  // Reactions
-  const rKey = 'react-' + (post.slug || post.id);
-  const reactions = JSON.parse(localStorage.getItem(rKey)||'{"🔥":0,"❤️":0,"😭":0}');
+  // ── Reactions (Firestore-synced) ──────────────────────
+  const EMOJIS = ['🔥','❤️','😭'];
+  const postSlug = post.slug || post.id;
   const rEl = document.getElementById('postReactions');
-  rEl.innerHTML = Object.entries(reactions).map(([emoji,count]) => {
-    const reacted = localStorage.getItem(`reacted-${rKey}-${emoji}`) === '1';
-    return `<button class="react-btn${reacted?' reacted':''}" data-emoji="${emoji}">${emoji} <span>${count}</span></button>`;
-  }).join('');
+
+  // Render placeholder buttons immediately
+  rEl.innerHTML = EMOJIS.map(emoji =>
+    `<button class="react-btn" data-emoji="${emoji}">${emoji} <span>…</span></button>`
+  ).join('');
+
+  // Load real counts async
+  async function loadPostReactions() {
+    try {
+      const snap = await getDocs(query(
+        collection(db,'reactions'),
+        where('postSlug','==', postSlug)
+      ));
+      const counts = {};
+      const userReacted = {};
+      EMOJIS.forEach(e => { counts[e] = 0; userReacted[e] = false; });
+      snap.docs.forEach(d => {
+        const { emoji, uid } = d.data();
+        if (counts[emoji] !== undefined) {
+          counts[emoji]++;
+          if (currentUser && uid === currentUser.uid) userReacted[emoji] = true;
+        }
+      });
+      rEl.querySelectorAll('.react-btn').forEach(btn => {
+        const emoji = btn.dataset.emoji;
+        btn.querySelector('span').textContent = counts[emoji];
+        btn.classList.toggle('reacted', userReacted[emoji]);
+      });
+    } catch(e) { console.error('Reactions:', e); }
+  }
+  loadPostReactions();
+
   rEl.querySelectorAll('.react-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
+      if (!currentUser) {
+        showLoginModal({ prompt: 'Sign in to react to posts.' });
+        return;
+      }
       const emoji = btn.dataset.emoji;
-      const key = `reacted-${rKey}-${emoji}`;
-      const store = JSON.parse(localStorage.getItem(rKey)||'{"🔥":0,"❤️":0,"😭":0}');
-      const already = localStorage.getItem(key)==='1';
-      store[emoji] = Math.max(0,(store[emoji]||0)+(already?-1:1));
-      already ? localStorage.removeItem(key) : localStorage.setItem(key,'1');
-      btn.classList.toggle('reacted',!already);
-      btn.querySelector('span').textContent = store[emoji];
-      localStorage.setItem(rKey, JSON.stringify(store));
+      const isReacted = btn.classList.contains('reacted');
+      const countEl = btn.querySelector('span');
+      const cur = parseInt(countEl.textContent) || 0;
+
+      // Optimistic update
+      btn.classList.toggle('reacted', !isReacted);
+      countEl.textContent = isReacted ? Math.max(0, cur - 1) : cur + 1;
+
+      try {
+        if (isReacted) {
+          const snap = await getDocs(query(
+            collection(db,'reactions'),
+            where('postSlug','==', postSlug),
+            where('emoji','==', emoji),
+            where('uid','==', currentUser.uid),
+            limit(1)
+          ));
+          if (!snap.empty) await deleteDoc(doc(db,'reactions', snap.docs[0].id));
+        } else {
+          await addDoc(collection(db,'reactions'), {
+            postSlug, emoji,
+            uid: currentUser.uid,
+            createdAt: serverTimestamp()
+          });
+        }
+      } catch(e) {
+        // Revert on failure
+        btn.classList.toggle('reacted', isReacted);
+        countEl.textContent = cur;
+        console.error(e);
+      }
     });
   });
+
+  // ── Author popup on author name ───────────────────────
+  const authorEl = document.querySelector('.post-meta-val[data-author]') ||
+    (() => {
+      // Make author name clickable if it's rendered as plain text
+      const metas = document.querySelectorAll('.post-meta-val');
+      for (const m of metas) {
+        const prev = m.previousElementSibling;
+        if (prev && prev.textContent.trim() === 'BY') {
+          m.dataset.author = post.author || '';
+          m.dataset.uid = post.authorUid || '';
+          m.style.cursor = 'pointer';
+          m.style.textDecoration = 'underline dotted';
+          m.style.color = 'var(--fire)';
+          m.title = 'View profile';
+          return m;
+        }
+      }
+      return null;
+    })();
+
+  if (authorEl) {
+    authorEl.addEventListener('click', () => {
+      openAuthorPopup(post.author || '', post.authorUid || '');
+    });
+  }
 
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('postWrap').style.display = 'block';
@@ -549,6 +630,160 @@ function renderPost(post) {
 }
 
 // ── Show/hide author toolbar ─────────────────────────
+// ── Author popup ─────────────────────────────────────
+let _popupCache = {};
+
+function openAuthorPopup(authorName, authorUid) {
+  let overlay = document.getElementById('authorPopupOverlay');
+  if (!overlay) {
+    // Inject popup HTML if not present
+    overlay = document.createElement('div');
+    overlay.className = 'author-popup-overlay';
+    overlay.id = 'authorPopupOverlay';
+    overlay.innerHTML = `
+      <div class="author-popup" id="authorPopup">
+        <div class="popup-handle-wrap"><div class="popup-handle"></div></div>
+        <div class="popup-inner" id="authorPopupInner"><div class="popup-loading">Looking them up...</div></div>
+      </div>`;
+    document.body.appendChild(overlay);
+    // Inject CSS if needed
+    if (!document.getElementById('authorPopupStyle')) {
+      const s = document.createElement('style');
+      s.id = 'authorPopupStyle';
+      s.textContent = `
+        .author-popup-overlay{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,0);pointer-events:none;transition:background .25s}
+        .author-popup-overlay.open{background:rgba(0,0,0,0.55);pointer-events:all}
+        .author-popup{position:fixed;bottom:-100%;left:0;right:0;z-index:801;background:#faf6ee;max-height:72vh;overflow-y:auto;border-radius:16px 16px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.5);transition:bottom .35s cubic-bezier(0.34,1.1,0.64,1);background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(180,160,120,0.15) 31px,rgba(180,160,120,0.15) 32px)}
+        .author-popup-overlay.open .author-popup{bottom:0}
+        @media(min-width:641px){.author-popup{left:50%;right:auto;transform:translateX(-50%) translateY(20px);bottom:auto;top:50%;margin-top:-180px;width:380px;border-radius:4px;max-height:80vh;transition:opacity .2s,transform .25s cubic-bezier(0.34,1.2,0.64,1);opacity:0}.author-popup-overlay.open .author-popup{opacity:1;transform:translateX(-50%) translateY(0)}}
+        .popup-handle{width:36px;height:4px;border-radius:2px;background:rgba(26,18,8,0.15);margin:10px auto 0}
+        @media(min-width:641px){.popup-handle{display:none}}
+        .popup-handle-wrap{padding:8px 0 0}
+        .popup-inner{padding:18px 22px 28px;position:relative;z-index:1}
+        .popup-spine-accent{position:absolute;left:0;top:0;bottom:0;width:4px}
+        .popup-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+        .popup-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #e8681a;flex-shrink:0}
+        .popup-avatar-placeholder{width:48px;height:48px;border-radius:50%;background:#e8681a;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-size:1.4rem;color:#fff;font-weight:700;flex-shrink:0}
+        .popup-name{font-family:'Caveat',cursive;font-size:1.4rem;color:#1a1208;font-weight:700;line-height:1.1}
+        .popup-role{font-family:'Press Start 2P',monospace;font-size:0.3rem;color:#a09078;letter-spacing:1px;margin-top:3px}
+        .popup-bio{font-family:'Crimson Pro',Georgia,serif;font-size:0.92rem;font-style:italic;color:#3d3020;line-height:1.65;margin-bottom:14px}
+        .popup-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+        .popup-stick-btn{font-family:'Caveat',cursive;font-size:1rem;font-weight:700;padding:8px 20px;border:none;cursor:pointer;transition:all .2s}
+        .popup-stick-btn.unstuck{background:#e8681a;color:#fff}
+        .popup-stick-btn.unstuck:hover{background:#ff7a2a;transform:translateY(-1px)}
+        .popup-stick-btn.stuck-state{background:#ede3c8;color:#3d3020;border:1px solid rgba(26,18,8,0.15)}
+        .popup-stick-btn.stuck-state:hover{color:#c0392b;border-color:rgba(192,57,43,0.3)}
+        .popup-profile-link{font-family:'Caveat',cursive;font-size:0.9rem;color:#e8681a;text-decoration:none;border-bottom:1px dashed rgba(232,104,26,0.4);padding-bottom:1px;transition:letter-spacing .2s}
+        .popup-profile-link:hover{letter-spacing:1px}
+        .popup-stick-count{font-family:'Press Start 2P',monospace;font-size:0.26rem;color:#a09078;margin-left:4px}
+        .popup-loading{font-family:'Caveat',cursive;font-size:1rem;color:#6a5840;font-style:italic;padding:12px 0}
+        .popup-no-profile{font-family:'Crimson Pro',Georgia,serif;font-size:0.88rem;color:#6a5840;font-style:italic}
+      `;
+      document.head.appendChild(s);
+    }
+  }
+  const inner = document.getElementById('authorPopupInner');
+  inner.innerHTML = `<div class="popup-loading">Looking them up...</div>`;
+  overlay.classList.add('open');
+  overlay.onclick = e => { if (e.target === overlay) overlay.classList.remove('open'); };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); }, { once: true });
+  fetchAndRenderAuthorPopup(authorName, authorUid, inner);
+}
+
+async function fetchAndRenderAuthorPopup(authorName, authorUid, inner) {
+  const db = getFirestore();
+  const cacheKey = authorUid || authorName;
+  let person = _popupCache[cacheKey];
+
+  if (person === undefined) {
+    try {
+      let snap;
+      if (authorUid) {
+        snap = await getDocs(query(collection(db,'people'), where('authorUid','==',authorUid), limit(1)));
+      }
+      if (!snap || snap.empty) {
+        snap = await getDocs(query(collection(db,'people'), where('nameLower','==',authorName.toLowerCase()), limit(1)));
+      }
+      person = snap?.empty ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
+      _popupCache[cacheKey] = person;
+    } catch(e) { console.error(e); person = null; }
+  }
+
+  const acc = person?.accent || '#e8681a';
+  const toUid = person?.authorUid;
+  let stickDocId = null, stickCount = 0;
+
+  if (toUid) {
+    try {
+      const sc = await getDocs(query(collection(db,'sticks'), where('toUid','==',toUid)));
+      stickCount = sc.size;
+      if (currentUser && currentUser.uid !== toUid) {
+        const ex = sc.docs.find(d => d.data().fromUid === currentUser.uid);
+        if (ex) stickDocId = ex.id;
+      }
+    } catch(e) {}
+  }
+
+  const isOwnProfile = currentUser && toUid && currentUser.uid === toUid;
+  const canStick = !!toUid && !isOwnProfile;
+  const isStuck  = !!stickDocId;
+
+  const avatarHtml = person?.photos?.[0]
+    ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${person.name||authorName}">`
+    : `<div class="popup-avatar-placeholder">${(person?.name||authorName)[0].toUpperCase()}</div>`;
+
+  const stickBtn = canStick ? `
+    <button class="popup-stick-btn ${isStuck?'stuck-state':'unstuck'}" id="popupStickBtn">
+      ${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}
+    </button>
+    ${stickCount > 0 ? `<span class="popup-stick-count">${stickCount} stuck</span>` : ''}` : '';
+
+  const profileLink = person?.slug
+    ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>` : '';
+
+  inner.innerHTML = `
+    <div class="popup-spine-accent" style="background:${acc}"></div>
+    <div class="popup-header">
+      ${avatarHtml}
+      <div>
+        <div class="popup-name">${person?.name||authorName}</div>
+        ${person?.role?`<div class="popup-role">${person.role.toUpperCase()}</div>`:''}
+      </div>
+    </div>
+    ${person?.bio?`<p class="popup-bio">${person.bio}</p>`:person===null?`<p class="popup-no-profile">No profile card yet.</p>`:''}
+    <div class="popup-actions">${stickBtn}${profileLink}</div>`;
+
+  const stickBtnEl = inner.querySelector('#popupStickBtn');
+  if (stickBtnEl) {
+    stickBtnEl.addEventListener('click', async () => {
+      if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+      stickBtnEl.disabled = true;
+      try {
+        if (stickDocId) {
+          await deleteDoc(doc(db,'sticks',stickDocId));
+          stickDocId = null;
+          stickBtnEl.textContent = '📌 Stick them';
+          stickBtnEl.className = 'popup-stick-btn unstuck';
+        } else {
+          const fromName = getDisplayName(currentUser);
+          const fromSnap = await getDocs(query(collection(db,'people'),where('authorUid','==',currentUser.uid),limit(1)));
+          const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug||'';
+          const ref = await addDoc(collection(db,'sticks'), {
+            fromUid: currentUser.uid, fromName, fromSlug,
+            toUid, toSlug: person?.slug||'', toName: person?.name||authorName,
+            createdAt: serverTimestamp()
+          });
+          stickDocId = ref.id;
+          stickBtnEl.textContent = '📌 Stuck ✦';
+          stickBtnEl.className = 'popup-stick-btn stuck-state';
+        }
+        _popupCache = {};
+      } catch(e) { console.error(e); }
+      stickBtnEl.disabled = false;
+    });
+  }
+}
+
 function maybeShowToolbar(post) {
   if (currentUser && post.authorUid && currentUser.uid === post.authorUid) {
     document.getElementById('authorToolbar').classList.add('visible');
