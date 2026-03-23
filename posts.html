@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>All Posts — HlyWor</title>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
@@ -150,9 +152,15 @@
   .post-card.t-news .card-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:.8rem;color:#4a4030}
 
   .card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .card-author{font-family:var(--hand);font-size:.82rem;color:var(--fire)}
+  .card-author{font-family:var(--hand);font-size:.82rem;color:var(--fire);cursor:pointer}
+  .card-author:hover{text-decoration:underline dotted}
   .post-card.t-tech .card-author{color:#58a6ff;font-family:var(--sans);font-size:.72rem}
   .post-card.t-news .card-author{color:#0c0a08;font-family:'IM Fell English',serif}
+  .card-stick-btn{margin-left:auto;font-family:'Press Start 2P',monospace;font-size:0.2rem;letter-spacing:.5px;padding:3px 7px;background:transparent;border:1px solid rgba(26,18,8,0.15);color:rgba(26,18,8,0.35);cursor:pointer;transition:all .18s;white-space:nowrap}
+  .card-stick-btn:hover{border-color:var(--fire);color:var(--fire);background:rgba(232,104,26,0.06)}
+  .card-stick-btn.is-stuck{background:rgba(232,104,26,0.1);border-color:rgba(232,104,26,0.4);color:var(--fire)}
+  .card-stick-btn.is-stuck:hover{background:rgba(192,57,43,0.08);border-color:rgba(192,57,43,0.4);color:#c0392b}
+  .card-stick-btn:disabled{opacity:.4;cursor:wait}
   .card-date{font-family:var(--sans);font-size:.64rem;color:var(--ink4)}
   .post-card.t-tech .card-date{color:#484f58}
   .card-read{font-family:var(--pixel);font-size:.18rem;color:var(--ink4);margin-left:auto}
@@ -360,9 +368,11 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, orderBy, onSnapshot, where }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { injectAuthNav } from "./auth.js";
+import {
+  getFirestore, collection, query, orderBy, onSnapshot, where,
+  getDocs, addDoc, deleteDoc, doc, limit, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
 // FIREBASE CONFIG
 const firebaseConfig = {
@@ -498,14 +508,90 @@ function render() {
           '<div class="card-title">' + (post.title || 'Untitled') + '</div>' +
           (post.desc ? '<div class="card-desc">' + post.desc + '</div>' : '') +
           '<div class="card-meta">' +
-            '<span class="card-author">' + (post.author || 'HlyWor') + '</span>' +
+            '<span class="card-author" data-author="' + (post.author||'') + '" data-uid="' + (post.authorUid||'') + '">' + (post.author || 'HlyWor') + '</span>' +
             techTag +
             (dateStr ? '<span class="card-date">' + dateStr + '</span>' : '') +
             (post.readtime ? '<span class="card-read">' + post.readtime + '</span>' : '') +
+            (post.authorUid ? '<button class="card-stick-btn" data-touid="' + post.authorUid + '" data-toname="' + (post.author||'') + '">📌</button>' : '') +
           '</div>' +
         '</div>' +
       '</div>';
     cols.appendChild(a);
+
+    // Wire stick button
+    const stickBtn = a.querySelector('.card-stick-btn');
+    if (stickBtn) wireStickBtn(stickBtn, post.authorUid, post.author || '');
+
+    // Author chip → popup (if openAuthorPopup available)
+    const authorEl = a.querySelector('.card-author');
+    if (authorEl) {
+      authorEl.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        if (typeof openAuthorPopup === 'function') {
+          openAuthorPopup(post.author || '', post.authorUid || '');
+        } else if (post.authorUid) {
+          // fallback — navigate to profile
+          window.location.href = 'profile.html?slug=' + (post.author||'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
+        }
+      });
+    }
+  });
+}
+
+/* ── Stick button wiring ── */
+function wireStickBtn(btn, toUid, toName) {
+  if (!toUid) { btn.style.display='none'; return; }
+
+  onAuthChange(async user => {
+    if (!user || user.uid === toUid) { btn.style.display='none'; return; }
+    btn.style.display='';
+    try {
+      const snap = await getDocs(query(
+        collection(db,'sticks'),
+        where('fromUid','==',user.uid),
+        where('toUid','==',toUid),
+        limit(1)
+      ));
+      if (!snap.empty) {
+        btn.dataset.stickid = snap.docs[0].id;
+        btn.classList.add('is-stuck');
+        btn.textContent = '📌 Stuck';
+      } else {
+        btn.textContent = '📌 Stick';
+      }
+    } catch(e) {}
+  });
+
+  btn.addEventListener('click', async e => {
+    e.preventDefault(); e.stopPropagation();
+    if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+    if (currentUser.uid === toUid) return;
+    btn.disabled = true;
+    const isStuck = btn.classList.contains('is-stuck');
+    try {
+      if (isStuck) {
+        if (btn.dataset.stickid) await deleteDoc(doc(db,'sticks',btn.dataset.stickid));
+        btn.classList.remove('is-stuck');
+        btn.textContent = '📌 Stick';
+        btn.dataset.stickid = '';
+      } else {
+        const fromName = getDisplayName(currentUser);
+        let toSlug = '';
+        try {
+          const ps = await getDocs(query(collection(db,'people'),where('authorUid','==',toUid),limit(1)));
+          if (!ps.empty) toSlug = ps.docs[0].data().slug||'';
+        } catch(e) {}
+        const ref = await addDoc(collection(db,'sticks'), {
+          fromUid: currentUser.uid, fromName, fromSlug:'',
+          toUid, toName, toSlug,
+          createdAt: serverTimestamp()
+        });
+        btn.dataset.stickid = ref.id;
+        btn.classList.add('is-stuck');
+        btn.textContent = '📌 Stuck';
+      }
+    } catch(err) { console.error(err); }
+    btn.disabled = false;
   });
 }
 

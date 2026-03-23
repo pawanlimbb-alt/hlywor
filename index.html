@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HlyWor</title>
 
@@ -660,7 +662,37 @@
     .post-stickers {
       display: flex; gap: 4px;
       padding: 8px 16px 14px;
+      align-items: center;
     }
+    /* Stick button on post card */
+    .card-stick-btn {
+      margin-left: auto;
+      font-family: var(--pixel); font-size: 0.22rem;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      background: transparent;
+      border: 1px solid rgba(26,18,8,0.15);
+      color: var(--ink4);
+      cursor: pointer; transition: all 0.18s;
+      white-space: nowrap; border-radius: 1px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .card-stick-btn:hover {
+      border-color: var(--fire);
+      color: var(--fire);
+      background: rgba(232,104,26,0.06);
+    }
+    .card-stick-btn.is-stuck {
+      background: rgba(232,104,26,0.1);
+      border-color: rgba(232,104,26,0.4);
+      color: var(--fire);
+    }
+    .card-stick-btn.is-stuck:hover {
+      background: rgba(192,57,43,0.08);
+      border-color: rgba(192,57,43,0.4);
+      color: #c0392b;
+    }
+    .card-stick-btn:disabled { opacity: 0.4; cursor: wait; }
     .sticker-btn {
       font-size: 0.82rem; padding: 2px 8px;
       background: var(--paper2);
@@ -1927,9 +1959,11 @@ async function fetchAndRenderAuthor(authorName, authorUid, inner) {
   const cacheKey = authorUid || authorName;
   let person = popupPersonCache[cacheKey];
 
-  if (!person) {
+  if (person === undefined) {
     try {
       let snap;
+
+      // Strategy 1 — by authorUid (most reliable, only works on new posts)
       if (authorUid) {
         snap = await getDocs(query(
           collection(db,'people'),
@@ -1937,6 +1971,8 @@ async function fetchAndRenderAuthor(authorName, authorUid, inner) {
           limit(1)
         ));
       }
+
+      // Strategy 2 — exact nameLower match
       if (!snap || snap.empty) {
         snap = await getDocs(query(
           collection(db,'people'),
@@ -1944,9 +1980,24 @@ async function fetchAndRenderAuthor(authorName, authorUid, inner) {
           limit(1)
         ));
       }
-      person = snap?.empty ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
-      popupPersonCache[cacheKey] = person || false;
-    } catch(e) { console.error(e); }
+
+      // Strategy 3 — first name match (handles "Pawan L." → "Pawan Limbu")
+      if (snap.empty) {
+        const firstName = authorName.split(/[\s.]/)[0].toLowerCase();
+        if (firstName.length >= 3) {
+          // Fetch all people and find first name match client-side
+          const allPeople = await getDocs(collection(db,'people'));
+          const match = allPeople.docs.find(d => {
+            const nl = (d.data().nameLower || '').split(' ')[0];
+            return nl === firstName;
+          });
+          if (match) snap = { empty: false, docs: [match] };
+        }
+      }
+
+      person = (!snap || snap.empty) ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
+      popupPersonCache[cacheKey] = person;
+    } catch(e) { console.error('Author lookup:', e); person = null; }
   }
 
   const acc = person?.accent || '#e8681a';
@@ -2102,11 +2153,14 @@ function renderPosts() {
           <span class="post-read-hand">read →</span>
         </div>
       </div>
-      <div class="post-stickers">${reactionHtml}</div>`;
+      <div class="post-stickers">
+        ${reactionHtml}
+        ${post.authorUid ? `<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${authorName}" data-toslug="">📌</button>` : ''}
+      </div>`;
 
-    // Click card → navigate (not chip or reaction)
+    // Click card → navigate (not chip, reaction, or stick btn)
     card.addEventListener('click', e => {
-      if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip')) return;
+      if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip') || e.target.closest('.card-stick-btn')) return;
       window.location.href = `post.html?slug=${postSlug}`;
     });
 
@@ -2124,6 +2178,79 @@ function renderPosts() {
         await toggleReaction(postSlug, btn.dataset.emoji, btn);
       });
     });
+
+    // ── Stick button on card ──
+    const stickBtn = card.querySelector('.card-stick-btn');
+    if (stickBtn) {
+      const toUid  = stickBtn.dataset.touid;
+      const toName = stickBtn.dataset.toname;
+
+      // Check current stick state async
+      onAuthChange(async user => {
+        if (!user || user.uid === toUid) {
+          stickBtn.style.display = 'none'; // hide on own posts or logged out
+          return;
+        }
+        stickBtn.style.display = '';
+        try {
+          const snap = await getDocs(query(
+            collection(db,'sticks'),
+            where('fromUid','==', user.uid),
+            where('toUid','==', toUid),
+            limit(1)
+          ));
+          if (!snap.empty) {
+            stickBtn.dataset.stickid = snap.docs[0].id;
+            stickBtn.classList.add('is-stuck');
+            stickBtn.textContent = '📌 Stuck';
+            stickBtn.title = 'Click to unstick';
+          } else {
+            stickBtn.textContent = '📌 Stick';
+            stickBtn.title = `Stick ${toName}`;
+          }
+        } catch(e) {}
+      });
+
+      stickBtn.addEventListener('click', async e => {
+        e.stopPropagation();
+        if (!currentUser) {
+          showLoginModal({ prompt: 'Sign in to stick someone.' });
+          return;
+        }
+        if (currentUser.uid === toUid) return;
+        stickBtn.disabled = true;
+
+        const isStuck = stickBtn.classList.contains('is-stuck');
+        try {
+          if (isStuck) {
+            const stickId = stickBtn.dataset.stickid;
+            if (stickId) await deleteDoc(doc(db,'sticks', stickId));
+            stickBtn.classList.remove('is-stuck');
+            stickBtn.textContent = '📌 Stick';
+            stickBtn.dataset.stickid = '';
+          } else {
+            const fromName = getDisplayName(currentUser);
+            // Get author slug from people collection
+            let toSlug = '';
+            try {
+              const ps = await getDocs(query(collection(db,'people'), where('authorUid','==',toUid), limit(1)));
+              if (!ps.empty) toSlug = ps.docs[0].data().slug || '';
+            } catch(e) {}
+
+            const ref = await addDoc(collection(db,'sticks'), {
+              fromUid: currentUser.uid, fromName,
+              fromSlug: '',
+              toUid, toName, toSlug,
+              createdAt: serverTimestamp()
+            });
+            stickBtn.dataset.stickid = ref.id;
+            stickBtn.classList.add('is-stuck');
+            stickBtn.textContent = '📌 Stuck';
+          }
+        } catch(err) { console.error('Stick error:', err); }
+        stickBtn.disabled = false;
+      });
+    }
 
     grid.appendChild(card);
     requestAnimationFrame(() => ro.observe(card));

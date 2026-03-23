@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HlyWor</title>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
@@ -105,6 +107,11 @@
     .react-btn{font-size:0.85rem;padding:5px 14px;background:var(--paper2);border:1px solid rgba(26,18,8,0.12);color:var(--ink3);cursor:pointer;display:flex;align-items:center;gap:5px;font-family:var(--sans);border-radius:2px;transition:all 0.15s}
     .react-btn:hover{background:var(--paper3)}
     .react-btn.reacted{background:rgba(232,104,26,0.08);border-color:var(--fire);color:var(--fire)}
+    .card-stick-btn{font-family:var(--pixel);font-size:0.24rem;letter-spacing:.5px;padding:4px 10px;background:transparent;border:1px solid rgba(26,18,8,0.18);color:var(--ink4);cursor:pointer;transition:all .18s;white-space:nowrap}
+    .card-stick-btn:hover{border-color:var(--fire);color:var(--fire);background:rgba(232,104,26,0.06)}
+    .card-stick-btn.is-stuck{background:rgba(232,104,26,0.1);border-color:rgba(232,104,26,0.4);color:var(--fire)}
+    .card-stick-btn.is-stuck:hover{background:rgba(192,57,43,0.08);border-color:rgba(192,57,43,0.4);color:#c0392b}
+    .card-stick-btn:disabled{opacity:.4;cursor:wait}
 
     /* ── AUTHOR TOOLBAR ── */
     .author-toolbar{
@@ -506,9 +513,10 @@ function renderPost(post) {
     <h1 class="post-title">${post.title}</h1>
     ${post.desc ? `<p class="post-desc">${post.desc}</p>` : ''}
     <div class="post-meta">
-      ${post.author ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val">${post.author}</span></div>` : ''}
+      ${post.author ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val" style="cursor:pointer;text-decoration:underline dotted;color:var(--fire)" onclick="openAuthorPopup('${post.author}','${post.authorUid||''}')">${post.author}</span></div>` : ''}
       ${readtime   ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
       <span class="post-cat-tape ${catClass}">${(post.category||'post').toUpperCase()}</span>
+      ${post.authorUid ? `<button class="card-stick-btn" id="postPageStickBtn" data-touid="${post.authorUid}" data-toname="${post.author||''}">📌 Stick ${(post.author||'').split(' ')[0]}</button>` : ''}
     </div>
     ${tagsHtml}`;
 
@@ -627,6 +635,7 @@ function renderPost(post) {
   document.getElementById('postWrap').style.display = 'block';
   setupCommentForm(post.id);
   maybeShowToolbar(post);
+  wirePostStickBtn(post);
 }
 
 // ── Show/hide author toolbar ─────────────────────────
@@ -698,13 +707,31 @@ async function fetchAndRenderAuthorPopup(authorName, authorUid, inner) {
   if (person === undefined) {
     try {
       let snap;
+
+      // Strategy 1 — by authorUid
       if (authorUid) {
         snap = await getDocs(query(collection(db,'people'), where('authorUid','==',authorUid), limit(1)));
       }
+
+      // Strategy 2 — exact nameLower
       if (!snap || snap.empty) {
         snap = await getDocs(query(collection(db,'people'), where('nameLower','==',authorName.toLowerCase()), limit(1)));
       }
-      person = snap?.empty ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
+
+      // Strategy 3 — first name partial match (handles "Pawan L." → "Pawan Limbu")
+      if (!snap || snap.empty) {
+        const firstName = authorName.split(/[\s.]/)[0].toLowerCase();
+        if (firstName.length >= 3) {
+          const allPeople = await getDocs(collection(db,'people'));
+          const match = allPeople.docs.find(d => {
+            const nl = (d.data().nameLower || '').split(' ')[0];
+            return nl === firstName;
+          });
+          if (match) snap = { empty: false, docs: [match] };
+        }
+      }
+
+      person = (!snap || snap.empty) ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
       _popupCache[cacheKey] = person;
     } catch(e) { console.error(e); person = null; }
   }
@@ -782,6 +809,70 @@ async function fetchAndRenderAuthorPopup(authorName, authorUid, inner) {
       stickBtnEl.disabled = false;
     });
   }
+}
+
+// ── Wire post-page stick button ───────────────────────
+function wirePostStickBtn(post) {
+  const btn = document.getElementById('postPageStickBtn');
+  if (!btn || !post.authorUid) return;
+  const toUid  = post.authorUid;
+  const toName = post.author || '';
+
+  // Hide on own post
+  if (currentUser && currentUser.uid === toUid) { btn.style.display='none'; return; }
+  if (!currentUser) { btn.style.display='none'; }
+
+  onAuthChange(async user => {
+    if (!user || user.uid === toUid) { btn.style.display='none'; return; }
+    btn.style.display='';
+    try {
+      const snap = await getDocs(query(
+        collection(db,'sticks'),
+        where('fromUid','==',user.uid),
+        where('toUid','==',toUid),
+        limit(1)
+      ));
+      if (!snap.empty) {
+        btn.dataset.stickid = snap.docs[0].id;
+        btn.classList.add('is-stuck');
+        btn.textContent = '📌 Stuck ✦';
+      } else {
+        btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
+      }
+    } catch(e) {}
+  });
+
+  btn.addEventListener('click', async e => {
+    e.stopPropagation();
+    if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+    if (currentUser.uid === toUid) return;
+    btn.disabled = true;
+    const isStuck = btn.classList.contains('is-stuck');
+    try {
+      if (isStuck) {
+        if (btn.dataset.stickid) await deleteDoc(doc(db,'sticks',btn.dataset.stickid));
+        btn.classList.remove('is-stuck');
+        btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
+        btn.dataset.stickid = '';
+      } else {
+        const fromName = getDisplayName(currentUser);
+        let toSlug = '';
+        try {
+          const ps = await getDocs(query(collection(db,'people'),where('authorUid','==',toUid),limit(1)));
+          if (!ps.empty) toSlug = ps.docs[0].data().slug||'';
+        } catch(e) {}
+        const ref = await addDoc(collection(db,'sticks'),{
+          fromUid: currentUser.uid, fromName, fromSlug:'',
+          toUid, toName, toSlug,
+          createdAt: serverTimestamp()
+        });
+        btn.dataset.stickid = ref.id;
+        btn.classList.add('is-stuck');
+        btn.textContent = '📌 Stuck ✦';
+      }
+    } catch(err) { console.error(err); }
+    btn.disabled = false;
+  });
 }
 
 function maybeShowToolbar(post) {
