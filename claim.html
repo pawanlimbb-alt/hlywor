@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Assign Content</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --board:#2a1f14;--paper:#faf6ee;--paper2:#f5edd8;--paper3:#ede3c8;
+      --ink:#1a1208;--ink2:#3d3020;--ink3:#6a5840;--ink4:#a09078;
+      --fire:#e8681a;--gold:#d4a020;--green:#2ecc71;--red:#e74c3c;
+      --pixel:'Press Start 2P',monospace;--sans:'DM Sans',system-ui,sans-serif;--hand:'Caveat',cursive;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0e0c0a;font-family:var(--sans);min-height:100vh;color:rgba(255,255,255,0.85)}
+
+    /* ── TOP BAR ── */
+    .topbar{background:#1a1208;border-bottom:1px solid rgba(232,104,26,0.2);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .topbar-logo{font-family:var(--pixel);font-size:0.45rem;color:var(--gold);letter-spacing:2px}
+    .topbar-title{font-family:var(--pixel);font-size:0.35rem;color:var(--fire);letter-spacing:2px}
+    .topbar-user{font-family:var(--sans);font-size:0.75rem;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px}
+    .topbar-user img{width:28px;height:28px;border-radius:50%;border:1px solid rgba(232,104,26,0.4)}
+
+    /* ── LOGIN WALL ── */
+    .login-wall{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:16px;text-align:center;padding:40px}
+    .login-wall h2{font-family:var(--pixel);font-size:0.6rem;color:var(--fire);letter-spacing:2px}
+    .login-wall p{font-family:var(--sans);font-size:0.82rem;color:rgba(255,255,255,0.4);max-width:360px;line-height:1.7}
+    .login-btn{font-family:var(--hand);font-size:1.1rem;font-weight:700;padding:10px 28px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all .2s}
+    .login-btn:hover{background:#ff7a2a;transform:translateY(-1px)}
+    .not-admin{color:var(--red);font-family:var(--pixel);font-size:0.4rem;letter-spacing:1px}
+
+    /* ── MAIN LAYOUT ── */
+    .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+
+    /* ── USERS PANEL ── */
+    .users-strip{background:#1a1208;border:1px solid rgba(255,255,255,0.07);padding:16px 20px;margin-bottom:28px}
+    .users-strip-head{font-family:var(--pixel);font-size:0.3rem;color:var(--gold);letter-spacing:2px;margin-bottom:12px}
+    .users-list{display:flex;flex-wrap:wrap;gap:8px}
+    .user-pill{display:flex;align-items:center;gap:7px;padding:6px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:all .15s;font-family:var(--sans);font-size:0.76rem;color:rgba(255,255,255,0.6)}
+    .user-pill:hover{border-color:var(--fire);color:#fff;background:rgba(232,104,26,0.1)}
+    .user-pill.selected{border-color:var(--fire);color:#fff;background:rgba(232,104,26,0.15)}
+    .user-pill img{width:22px;height:22px;border-radius:50%}
+    .user-pill-avatar{width:22px;height:22px;border-radius:50%;background:var(--fire);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:0.85rem;color:#fff;font-weight:700}
+    .user-pill-uid{font-family:var(--pixel);font-size:0.2rem;color:rgba(255,255,255,0.25);margin-left:4px}
+    .no-users{font-family:var(--sans);font-size:0.78rem;color:rgba(255,255,255,0.3);font-style:italic}
+
+    /* ── TABS ── */
+    .tabs{display:flex;gap:2px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.07)}
+    .tab{font-family:var(--pixel);font-size:0.26rem;letter-spacing:1px;padding:10px 16px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+    .tab:hover{color:rgba(255,255,255,.7)}
+    .tab.active{color:var(--fire);border-bottom-color:var(--fire)}
+    .tab-badge{font-family:var(--hand);font-size:0.75rem;color:var(--fire);margin-left:5px}
+
+    /* ── CONTENT GRID ── */
+    .panel{display:none}.panel.active{display:block}
+    .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+
+    /* ── ITEM CARD ── */
+    .item-card{background:#1a1208;border:1px solid rgba(255,255,255,0.07);transition:border-color .15s;position:relative}
+    .item-card.claimed{border-color:rgba(46,204,113,0.3);opacity:0.6}
+    .item-card.assigned-now{border-color:rgba(46,204,113,0.6);animation:flashGreen .5s ease}
+    @keyframes flashGreen{0%,100%{border-color:rgba(46,204,113,0.6)}50%{border-color:#2ecc71;box-shadow:0 0 12px rgba(46,204,113,0.3)}}
+    .item-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:sepia(10%) brightness(0.85)}
+    .item-thumb-placeholder{width:100%;aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;font-family:var(--pixel);font-size:0.28rem;color:rgba(255,255,255,0.15);letter-spacing:2px}
+    .item-body{padding:12px 14px 14px}
+    .item-collection{font-family:var(--pixel);font-size:0.22rem;color:var(--fire);letter-spacing:2px;margin-bottom:6px}
+    .item-title{font-family:var(--hand);font-size:1.05rem;color:rgba(255,255,255,0.85);font-weight:600;margin-bottom:4px;line-height:1.3}
+    .item-author{font-family:var(--sans);font-size:0.7rem;color:rgba(255,255,255,0.35);margin-bottom:10px}
+    .item-status{font-family:var(--pixel);font-size:0.22rem;letter-spacing:1px;padding:2px 8px;display:inline-block;margin-bottom:10px}
+    .item-status.unclaimed{background:rgba(231,76,60,0.15);color:var(--red);border:1px solid rgba(231,76,60,0.3)}
+    .item-status.has-owner{background:rgba(46,204,113,0.1);color:var(--green);border:1px solid rgba(46,204,113,0.25)}
+    .item-owner{font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.35);margin-bottom:10px}
+    .assign-btn{width:100%;font-family:var(--hand);font-size:0.95rem;font-weight:700;padding:8px 14px;border:none;cursor:pointer;transition:all .2s}
+    .assign-btn.ready{background:var(--fire);color:#fff}
+    .assign-btn.ready:hover{background:#ff7a2a}
+    .assign-btn.disabled{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.25);cursor:not-allowed}
+    .assign-btn.success{background:rgba(46,204,113,0.2);color:var(--green);cursor:default;border:1px solid rgba(46,204,113,0.3)}
+    .assign-btn.loading{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.3);cursor:wait}
+
+    /* ── EMPTY / LOADING ── */
+    .empty{padding:48px;text-align:center;font-family:var(--hand);font-size:1rem;color:rgba(255,255,255,0.25);font-style:italic;grid-column:1/-1}
+    .skel{background:#1a1208;border:1px solid rgba(255,255,255,0.07)}
+    .skel-img{width:100%;aspect-ratio:16/9}
+    .skel-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+    .skel-line{height:8px;border-radius:1px}
+    @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+    .shimmer{background:linear-gradient(90deg,#1a1208 25%,#2a1f14 50%,#1a1208 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;bottom:24px;right:24px;background:#1a1208;border:1px solid rgba(46,204,113,0.4);color:var(--green);font-family:var(--pixel);font-size:0.28rem;letter-spacing:1px;padding:10px 18px;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+    .toast.show{opacity:1;transform:translateY(0)}
+    .toast.error{border-color:rgba(231,76,60,0.4);color:var(--red)}
+
+    /* ── FILTER ── */
+    .filter-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+    .filter-label{font-family:var(--pixel);font-size:0.26rem;color:rgba(255,255,255,0.3);letter-spacing:1px}
+    .filter-btn{font-family:var(--pixel);font-size:0.22rem;letter-spacing:1px;padding:4px 10px;background:none;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.35);cursor:pointer;transition:all .15s}
+    .filter-btn.active{border-color:var(--fire);color:var(--fire);background:rgba(232,104,26,0.08)}
+    .filter-btn:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,.7)}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-logo">HlYWoR</span>
+  <span class="topbar-title">// ADMIN — ASSIGN CONTENT</span>
+  <div class="topbar-user" id="topbarUser">—</div>
+</div>
+
+<div class="login-wall" id="loginWall" style="display:none">
+  <h2>ADMIN ONLY</h2>
+  <p>Sign in with your admin Google account to access this panel.</p>
+  <button class="login-btn" id="loginBtn">Sign in with Google</button>
+  <p class="not-admin" id="notAdminMsg" style="display:none">⚠ Not an admin account</p>
+</div>
+
+<div class="main" id="mainWrap" style="display:none">
+
+  <!-- Selected user strip -->
+  <div class="users-strip">
+    <div class="users-strip-head">// REGISTERED USERS — select one to assign content to them</div>
+    <div class="users-list" id="usersList">
+      <div class="no-users">Loading users...</div>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <div class="filter-row">
+    <span class="filter-label">SHOW:</span>
+    <button class="filter-btn active" data-filter="unclaimed">UNCLAIMED ONLY</button>
+    <button class="filter-btn" data-filter="all">ALL CONTENT</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="posts">POSTS <span class="tab-badge" id="badgePosts"></span></button>
+    <button class="tab" data-tab="people">PROFILE CARDS <span class="tab-badge" id="badgePeople"></span></button>
+    <button class="tab" data-tab="gallery">GALLERY <span class="tab-badge" id="badgeGallery"></span></button>
+  </div>
+
+  <!-- Posts panel -->
+  <div class="panel active" id="panel-posts">
+    <div class="items-grid" id="grid-posts">
+      <div class="skel"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:70%"></div></div></div>
+      <div class="skel"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
+      <div class="skel"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:75%"></div></div></div>
+    </div>
+  </div>
+
+  <!-- People panel -->
+  <div class="panel" id="panel-people">
+    <div class="items-grid" id="grid-people"></div>
+  </div>
+
+  <!-- Gallery panel -->
+  <div class="panel" id="panel-gallery">
+    <div class="items-grid" id="grid-gallery"></div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, collection, getDocs, updateDoc, doc,
+  query, orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+  authDomain: "hlywor.firebaseapp.com",
+  projectId: "hlywor",
+  storageBucket: "hlywor.firebasestorage.app",
+  messagingSenderId: "697637160825",
+  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+  measurementId: "G-MQDXDWHLX8"
+};
+
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// ── ADMIN UIDs — add yours here ─────────────────────────
+// Get your UID from Firebase Console → Authentication → Users
+const ADMIN_UIDS = [
+   '2aTrlq56lZd3UScCfk7g8g3lBP73'
+  // 'paste-pawan-uid-here',
+];
+
+// ── State ────────────────────────────────────────────────
+let selectedUser  = null; // { uid, displayName, email, photoURL }
+let allUsers      = [];
+let allData       = { posts: [], people: [], gallery: [] };
+let activeTab     = 'posts';
+let filterMode    = 'unclaimed'; // 'unclaimed' | 'all'
+
+// ── Auth ─────────────────────────────────────────────────
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  } catch(e) { console.error(e); }
+});
+
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    document.getElementById('loginWall').style.display = 'flex';
+    document.getElementById('mainWrap').style.display = 'none';
+    return;
+  }
+
+  // Check admin
+  const isAdmin = ADMIN_UIDS.length === 0 || ADMIN_UIDS.includes(user.uid);
+  if (!isAdmin) {
+    document.getElementById('loginWall').style.display = 'flex';
+    document.getElementById('notAdminMsg').style.display = 'block';
+    document.getElementById('mainWrap').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('loginWall').style.display = 'none';
+  document.getElementById('mainWrap').style.display = 'block';
+
+  // Show current user in topbar
+  const tu = document.getElementById('topbarUser');
+  tu.innerHTML = `
+    ${user.photoURL ? `<img src="${user.photoURL}" referrerpolicy="no-referrer">` : ''}
+    <span>${user.displayName || user.email}</span>
+    <span style="color:rgba(232,104,26,0.7);font-size:0.6rem">ADMIN</span>`;
+
+  await loadAll();
+});
+
+// ── Load all data ─────────────────────────────────────────
+async function loadAll() {
+  await Promise.all([
+    loadCollection('posts',   query(collection(db,'posts'),   orderBy('createdAt','desc'))),
+    loadCollection('people',  query(collection(db,'people'),  orderBy('createdAt','desc'))),
+    loadCollection('gallery', query(collection(db,'gallery'), orderBy('createdAt','desc'))),
+  ]);
+  await loadUsers();
+  renderAll();
+}
+
+async function loadCollection(name, q) {
+  try {
+    const snap = await getDocs(q);
+    allData[name] = snap.docs.map(d => ({ id: d.id, _col: name, ...d.data() }));
+  } catch(e) { console.error(name, e); }
+}
+
+// ── Load registered users (from people collection + auth info) ────
+async function loadUsers() {
+  const usersEl = document.getElementById('usersList');
+  // People who have authorUid set are "registered" effectively
+  const seen = new Set();
+  allUsers = [];
+
+  // Collect from all collections
+  [...allData.posts, ...allData.people, ...allData.gallery].forEach(item => {
+    if (item.authorUid && !seen.has(item.authorUid)) {
+      seen.add(item.authorUid);
+      allUsers.push({
+        uid:         item.authorUid,
+        displayName: item.author || item.name || item.authorEmail?.split('@')[0] || 'Unknown',
+        email:       item.authorEmail || '',
+        photoURL:    item.authorPhoto || ''
+      });
+    }
+  });
+
+  // Also include people docs with authorUid
+  allData.people.forEach(p => {
+    if (p.authorUid && !seen.has(p.authorUid)) {
+      seen.add(p.authorUid);
+      allUsers.push({
+        uid:         p.authorUid,
+        displayName: p.name || 'Unknown',
+        email:       p.email || '',
+        photoURL:    p.photos?.[0] || ''
+      });
+    }
+  });
+
+  if (!allUsers.length) {
+    usersEl.innerHTML = `<div class="no-users">No registered users found yet. Users appear here once they sign in and submit content.</div>`;
+    return;
+  }
+
+  usersEl.innerHTML = allUsers.map(u => `
+    <div class="user-pill" data-uid="${u.uid}">
+      ${u.photoURL
+        ? `<img src="${u.photoURL}" referrerpolicy="no-referrer">`
+        : `<div class="user-pill-avatar">${(u.displayName||'U')[0].toUpperCase()}</div>`}
+      <span>${u.displayName}</span>
+      ${u.email ? `<span style="color:rgba(255,255,255,0.2);font-size:0.65rem">${u.email}</span>` : ''}
+    </div>`).join('');
+
+  usersEl.querySelectorAll('.user-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      usersEl.querySelectorAll('.user-pill').forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      selectedUser = allUsers.find(u => u.uid === pill.dataset.uid);
+      renderAll();
+    });
+  });
+}
+
+// ── Render ────────────────────────────────────────────────
+function renderAll() {
+  renderGrid('posts');
+  renderGrid('people');
+  renderGrid('gallery');
+  updateBadges();
+}
+
+function getFiltered(col) {
+  const items = allData[col];
+  if (filterMode === 'unclaimed') return items.filter(i => !i.authorUid);
+  return items;
+}
+
+function updateBadges() {
+  ['posts','people','gallery'].forEach(col => {
+    const count = getFiltered(col).length;
+    document.getElementById(`badge${col.charAt(0).toUpperCase()+col.slice(1)}`).textContent = count || '';
+  });
+}
+
+function renderGrid(col) {
+  const grid = document.getElementById(`grid-${col}`);
+  const items = getFiltered(col);
+
+  if (!items.length) {
+    grid.innerHTML = `<div class="empty">${filterMode === 'unclaimed' ? 'All content is claimed ✓' : 'Nothing here yet.'}</div>`;
+    return;
+  }
+
+  grid.innerHTML = '';
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'item-card' + (item.authorUid ? ' claimed' : '');
+    card.dataset.id  = item.id;
+    card.dataset.col = col;
+
+    const thumb = col === 'gallery'
+      ? (item.url ? `<img class="item-thumb" src="${item.url}" loading="lazy">` : '')
+      : (item.thumbnail ? `<img class="item-thumb" src="${item.thumbnail}" loading="lazy">` : `<div class="item-thumb-placeholder">NO IMAGE</div>`);
+
+    const title = col === 'posts'   ? (item.title || 'Untitled post')
+                : col === 'people'  ? (item.name  || 'Unnamed card')
+                : (item.title || item.author || 'Photo');
+
+    const authorText = col === 'gallery'
+      ? `uploaded by: ${item.author || '—'}`
+      : col === 'posts' ? `written by: ${item.author || '—'}`
+      : `pin card of: ${item.name || '—'}`;
+
+    const statusHtml = item.authorUid
+      ? `<span class="item-status has-owner">CLAIMED</span>
+         <div class="item-owner">owner uid: ${item.authorUid.slice(0,16)}...</div>`
+      : `<span class="item-status unclaimed">UNCLAIMED</span>`;
+
+    const btnText = !selectedUser
+      ? 'Select a user above first'
+      : item.authorUid
+        ? `Reassign to ${selectedUser.displayName}`
+        : `Assign to ${selectedUser.displayName}`;
+
+    const btnClass = !selectedUser ? 'disabled' : 'ready';
+
+    card.innerHTML = `
+      ${thumb}
+      <div class="item-body">
+        <div class="item-collection">${col.toUpperCase()}</div>
+        <div class="item-title">${title}</div>
+        <div class="item-author">${authorText}</div>
+        ${statusHtml}
+        <button class="assign-btn ${btnClass}" data-id="${item.id}" data-col="${col}">
+          ${btnText}
+        </button>
+      </div>`;
+
+    const btn = card.querySelector('.assign-btn');
+    if (selectedUser) {
+      btn.addEventListener('click', () => assignItem(item, col, card, btn));
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+// ── Assign ────────────────────────────────────────────────
+async function assignItem(item, col, card, btn) {
+  if (!selectedUser) return;
+  const originalText = btn.textContent;
+  btn.textContent = 'Saving...';
+  btn.className = 'assign-btn loading';
+
+  try {
+    await updateDoc(doc(db, col, item.id), {
+      authorUid:   selectedUser.uid,
+      authorEmail: selectedUser.email || '',
+    });
+
+    // Update local state
+    const idx = allData[col].findIndex(i => i.id === item.id);
+    if (idx !== -1) {
+      allData[col][idx].authorUid   = selectedUser.uid;
+      allData[col][idx].authorEmail = selectedUser.email || '';
+    }
+
+    btn.textContent = `✓ Assigned to ${selectedUser.displayName}`;
+    btn.className = 'assign-btn success';
+    card.classList.add('assigned-now');
+    card.querySelector('.item-status').className = 'item-status has-owner';
+    card.querySelector('.item-status').textContent = 'CLAIMED';
+
+    showToast(`✓ Assigned to ${selectedUser.displayName}`);
+    updateBadges();
+
+  } catch(e) {
+    console.error(e);
+    btn.textContent = '✕ Failed — ' + e.message;
+    btn.className = 'assign-btn ready';
+    showToast('✕ Failed: ' + e.message, true);
+  }
+}
+
+// ── Tabs ─────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    activeTab = btn.dataset.tab;
+    document.getElementById(`panel-${activeTab}`).classList.add('active');
+  });
+});
+
+// ── Filter ───────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterMode = btn.dataset.filter;
+    renderAll();
+  });
+});
+
+// ── Toast ─────────────────────────────────────────────────
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 2800);
+}
+</script>
+</body>
+</html>
