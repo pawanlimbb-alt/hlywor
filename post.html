@@ -186,13 +186,55 @@
     .comment-status{font-family:var(--hand);font-size:0.85rem;color:var(--fire);margin-top:8px;font-style:italic;min-height:20px}
     .comment-status.ok{color:#3a8a3a}
     .comments-list{display:flex;flex-direction:column;gap:0}
-    .comment-item{padding:16px 0;border-bottom:1px dashed var(--rule);position:relative;animation:commentIn 0.4s ease both}
+
+    /* ── Threaded comment styles ── */
+    .comment-thread{border-bottom:1px dashed var(--rule);padding-bottom:4px;margin-bottom:4px}
+    .comment-thread:last-child{border-bottom:none}
+    .comment-item{padding:14px 0 8px;position:relative;animation:commentIn 0.4s ease both}
     @keyframes commentIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .comment-item:last-child{border-bottom:none}
-    .comment-header{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+    .comment-header{display:flex;align-items:baseline;gap:10px;margin-bottom:5px;flex-wrap:wrap}
     .comment-author{font-family:var(--hand);font-size:1.05rem;color:var(--ink);font-weight:600}
+    .comment-author.is-op{color:var(--fire)}
+    .comment-author.is-op::after{content:'OP';font-family:var(--pixel);font-size:0.2rem;color:#fff;background:var(--fire);padding:1px 5px;margin-left:5px;vertical-align:middle}
     .comment-date{font-family:var(--sans);font-size:0.68rem;color:var(--ink4)}
     .comment-text{font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.65}
+    .comment-actions{display:flex;align-items:center;gap:12px;margin-top:6px}
+    .comment-reply-btn{font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
+    .comment-reply-btn:hover{color:var(--fire)}
+    .comment-delete-btn{font-family:var(--pixel);font-size:0.2rem;color:rgba(192,57,43,0.5);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
+    .comment-delete-btn:hover{color:#c0392b}
+    .comment-vote{display:flex;align-items:center;gap:5px}
+    .vote-btn{font-size:0.78rem;background:none;border:none;cursor:pointer;color:var(--ink4);transition:all .15s;padding:1px 3px;border-radius:2px}
+    .vote-btn:hover{color:var(--fire);background:rgba(232,104,26,0.06)}
+    .vote-btn.voted{color:var(--fire)}
+    .vote-count{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);min-width:16px;text-align:center}
+
+    /* Replies — indented */
+    .replies-wrap{margin-left:20px;padding-left:14px;border-left:2px solid rgba(26,18,8,0.1);margin-top:4px}
+    .replies-wrap .comment-item{padding:10px 0 6px}
+    .replies-wrap .comment-author{font-size:0.95rem}
+    .replies-wrap .comment-text{font-size:0.92rem}
+
+    /* Inline reply form */
+    .reply-form{display:none;margin:8px 0 4px;padding:10px 14px;background:rgba(26,18,8,0.03);border-left:2px solid var(--fire)}
+    .reply-form.open{display:block}
+    .reply-input{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(26,18,8,0.2);font-family:var(--hand);font-size:0.95rem;color:var(--ink);padding:4px 0;outline:none;resize:none;min-height:48px;line-height:1.6;transition:border-color .2s;margin-bottom:8px}
+    .reply-input:focus{border-color:var(--fire)}
+    .reply-input::placeholder{color:var(--ink4);font-style:italic}
+    .reply-form-actions{display:flex;gap:8px;align-items:center}
+    .reply-submit-btn{font-family:var(--hand);font-size:0.9rem;padding:5px 16px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all .2s;font-weight:600}
+    .reply-submit-btn:hover{background:#ff7a2a}
+    .reply-submit-btn:disabled{opacity:.5;cursor:not-allowed}
+    .reply-cancel-btn{font-family:var(--hand);font-size:0.9rem;padding:5px 12px;background:transparent;border:1px solid rgba(26,18,8,0.15);color:var(--ink3);cursor:pointer;transition:all .2s}
+    .reply-cancel-btn:hover{background:var(--paper3)}
+    .reply-status{font-family:var(--hand);font-size:0.78rem;color:var(--fire);font-style:italic}
+
+    /* Show/hide replies toggle */
+    .toggle-replies-btn{font-family:var(--pixel);font-size:0.2rem;color:var(--fire);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:4px 0;display:flex;align-items:center;gap:5px;transition:opacity .15s}
+    .toggle-replies-btn:hover{opacity:.7}
+    .toggle-replies-btn::before{content:'▼';font-size:0.5rem;transition:transform .2s}
+    .toggle-replies-btn.collapsed::before{transform:rotate(-90deg)}
+
     .comment-empty{font-family:var(--hand);font-size:1rem;color:var(--ink4);font-style:italic;padding:16px 0}
     .post-back-strip{padding:20px 36px 32px 84px;border-top:1px solid var(--rule)}
     .back-link{font-family:var(--hand);font-size:1rem;color:var(--fire);text-decoration:none;transition:letter-spacing 0.2s}
@@ -486,7 +528,7 @@ async function loadPost(slug) {
     if (snap.empty) { showNotFound(); return; }
     currentPostData = { id: snap.docs[0].id, ...snap.docs[0].data() };
     renderPost(currentPostData);
-    loadComments(currentPostData.id);
+    loadComments(currentPostData.id, currentPostData.slug, currentPostData.title, currentPostData.authorUid);
     loadMoreByAuthor(currentPostData.author, currentPostData.slug);
   } catch(err) {
     console.error(err); showNotFound();
@@ -633,7 +675,7 @@ function renderPost(post) {
 
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('postWrap').style.display = 'block';
-  setupCommentForm(post.id);
+  setupCommentForm(post.id, post.slug, post.title, post.authorUid);
   maybeShowToolbar(post);
   wirePostStickBtn(post);
 }
@@ -1029,62 +1071,180 @@ document.getElementById('authorToolbar').addEventListener('click', e => {
   if (e.target.id === 'toolbarDeleteBtn') deletePost();
 });
 
-// ── Comments ─────────────────────────────────────────
-function loadComments(postId) {
+// ── Threaded Comments ─────────────────────────────────
+function loadComments(postId, postSlug, postTitle, postAuthorUid) {
   const q = query(
     collection(db,'comments'),
     where('postId','==',postId),
     orderBy('createdAt','asc')
   );
   onSnapshot(q, snap => {
+    const all = snap.docs.map(d => ({id:d.id,...d.data()}));
     const list    = document.getElementById('commentsList');
     const countEl = document.getElementById('commentsCount');
-    const comments = snap.docs.map(d => ({id:d.id,...d.data()}));
-    countEl.textContent = `${comments.length} note${comments.length!==1?'s':''}`;
-    if (!comments.length) {
+    const topLevel = all.filter(c => !c.parentId);
+    const replies  = all.filter(c => !!c.parentId);
+    const total    = all.length;
+    countEl.textContent = `${total} note${total!==1?'s':''}`;
+    if (!topLevel.length) {
       list.innerHTML = `<div class="comment-empty">No notes yet — be the first to leave one.</div>`;
       return;
     }
-    list.innerHTML = comments.map((c,i) => {
-      const ds = c.createdAt?.toDate
-        ? c.createdAt.toDate().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
-        : '';
-      return `<div class="comment-item" style="animation-delay:${i*50}ms">
-        <div class="comment-header">
-          <span class="comment-author">${c.mood||''} ${escHtml(c.name)}</span>
-          ${ds?`<span class="comment-date">${ds}</span>`:''}
-        </div>
-        <div class="comment-text">${escHtml(c.text)}</div>
-      </div>`;
-    }).join('');
+    list.innerHTML = '';
+    topLevel.forEach((c, i) => {
+      const threadReplies = replies.filter(r => r.parentId === c.id);
+      const threadEl = document.createElement('div');
+      threadEl.className = 'comment-thread';
+      threadEl.innerHTML = renderComment(c, i, postAuthorUid, false);
+
+      if (threadReplies.length) {
+        const toggle = document.createElement('button');
+        toggle.className = 'toggle-replies-btn';
+        toggle.textContent = `${threadReplies.length} repl${threadReplies.length!==1?'ies':'y'}`;
+        const repliesWrap = document.createElement('div');
+        repliesWrap.className = 'replies-wrap';
+        repliesWrap.id = `replies-${c.id}`;
+        threadReplies.forEach((r,j) => { repliesWrap.innerHTML += renderComment(r, j, postAuthorUid, true); });
+        toggle.addEventListener('click', () => {
+          const hidden = repliesWrap.style.display === 'none';
+          repliesWrap.style.display = hidden ? 'block' : 'none';
+          toggle.classList.toggle('collapsed', !hidden);
+        });
+        threadEl.appendChild(toggle);
+        threadEl.appendChild(repliesWrap);
+      }
+
+      const replyForm = document.createElement('div');
+      replyForm.className = 'reply-form';
+      replyForm.id = `reply-form-${c.id}`;
+      replyForm.innerHTML = `
+        <textarea class="reply-input" placeholder="Write a reply..." rows="2"></textarea>
+        <div class="reply-form-actions">
+          <button class="reply-submit-btn">Reply ✦</button>
+          <button class="reply-cancel-btn">Cancel</button>
+          <span class="reply-status"></span>
+        </div>`;
+      threadEl.appendChild(replyForm);
+      list.appendChild(threadEl);
+
+      const replyBtn = threadEl.querySelector('.comment-reply-btn');
+      if (replyBtn) {
+        replyBtn.addEventListener('click', () => {
+          if (!currentUser) { showLoginModal({ prompt: 'Sign in to reply.' }); return; }
+          replyForm.classList.toggle('open');
+          if (replyForm.classList.contains('open')) replyForm.querySelector('.reply-input').focus();
+        });
+      }
+      replyForm.querySelector('.reply-cancel-btn').addEventListener('click', () => {
+        replyForm.classList.remove('open');
+        replyForm.querySelector('.reply-input').value = '';
+      });
+      replyForm.querySelector('.reply-submit-btn').addEventListener('click', async () => {
+        if (!currentUser) { showLoginModal({ prompt: 'Sign in to reply.' }); return; }
+        const text = replyForm.querySelector('.reply-input').value.trim();
+        const status = replyForm.querySelector('.reply-status');
+        if (!text) { status.textContent = '⚠ Write something'; return; }
+        const submitBtn = replyForm.querySelector('.reply-submit-btn');
+        submitBtn.disabled = true; submitBtn.textContent = 'Replying...';
+        try {
+          await addDoc(collection(db,'comments'), {
+            postId, postSlug: postSlug||'', postTitle: postTitle||'',
+            parentId: c.id, text,
+            name: getDisplayName(currentUser),
+            authorUid: currentUser.uid,
+            authorEmail: currentUser.email||'',
+            createdAt: serverTimestamp()
+          });
+          if (c.authorUid && c.authorUid !== currentUser.uid) {
+            await addNotification({ toUid: c.authorUid, type: 'reply',
+              fromName: getDisplayName(currentUser), fromUid: currentUser.uid,
+              postSlug: postSlug||'', postTitle: postTitle||'', preview: text.slice(0,80) });
+          }
+          replyForm.querySelector('.reply-input').value = '';
+          replyForm.classList.remove('open');
+        } catch(e) { console.error(e); status.textContent = '✕ Failed'; }
+        submitBtn.disabled = false; submitBtn.textContent = 'Reply ✦';
+      });
+
+      threadEl.querySelectorAll('.comment-delete-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const confirmed = await showConfirmDelete('Delete this note?');
+          if (!confirmed) return;
+          try { await deleteDoc(doc(db,'comments', btn.dataset.id)); } catch(e) { console.error(e); }
+        });
+      });
+    });
   });
 }
 
-function setupCommentForm(postId) {
+function renderComment(c, i, postAuthorUid, isReply) {
+  const ds = c.createdAt?.toDate
+    ? c.createdAt.toDate().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
+  const isOP   = c.authorUid && c.authorUid === postAuthorUid;
+  const canDel = (currentUser && c.authorUid && currentUser.uid === c.authorUid)
+              || (currentUser && currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
+  return `<div class="comment-item" style="animation-delay:${i*40}ms">
+    <div class="comment-header">
+      <span class="comment-author${isOP?' is-op':''}">${c.mood||''} ${escHtml(c.name||'Anonymous')}</span>
+      ${ds?`<span class="comment-date">${ds}</span>`:''}
+    </div>
+    <div class="comment-text">${escHtml(c.text)}</div>
+    <div class="comment-actions">
+      ${!isReply?`<button class="comment-reply-btn">↩ Reply</button>`:''}
+      ${canDel?`<button class="comment-delete-btn" data-id="${c.id}">✕ delete</button>`:''}
+    </div>
+  </div>`;
+}
+
+function setupCommentForm(postId, postSlug, postTitle, postAuthorUid) {
   const btn    = document.getElementById('commentSubmit');
   const status = document.getElementById('commentStatus');
+  onAuthChange(user => {
+    const nameEl = document.getElementById('commentName');
+    if (user && nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+  });
   btn.addEventListener('click', async () => {
-    const name = document.getElementById('commentName').value.trim();
+    if (!currentUser) { showLoginModal({ prompt: 'Sign in to leave a note.' }); return; }
+    const name = document.getElementById('commentName').value.trim() || getDisplayName(currentUser);
     const mood = document.getElementById('commentMood').value.trim();
     const text = document.getElementById('commentText').value.trim();
-    if (!name) { status.textContent='⚠ What should we call you?';status.className='comment-status';return; }
-    if (!text) { status.textContent='⚠ Write something first!';status.className='comment-status';return; }
-    if (text.length<2) { status.textContent='⚠ A little more please :)';status.className='comment-status';return; }
+    if (!text) { status.textContent='⚠ Write something first!'; return; }
     btn.disabled=true; btn.textContent='Pinning...'; status.textContent='';
     try {
-      await addDoc(collection(db,'comments'),{postId,name,mood,text,createdAt:serverTimestamp()});
-      document.getElementById('commentName').value='';
+      await addDoc(collection(db,'comments'),{
+        postId, postSlug: postSlug||'', postTitle: postTitle||'',
+        parentId: null, name, mood, text,
+        authorUid: currentUser.uid, authorEmail: currentUser.email||'',
+        createdAt: serverTimestamp()
+      });
+      if (postAuthorUid && postAuthorUid !== currentUser.uid) {
+        await addNotification({ toUid: postAuthorUid, type: 'comment',
+          fromName: getDisplayName(currentUser), fromUid: currentUser.uid,
+          postSlug: postSlug||'', postTitle: postTitle||'', preview: text.slice(0,80) });
+      }
       document.getElementById('commentMood').value='';
       document.getElementById('commentText').value='';
       status.textContent='✓ Note pinned!'; status.className='comment-status ok';
-      setTimeout(()=>{status.textContent='';},3000);
+      setTimeout(()=>{ status.textContent=''; status.className='comment-status'; },3000);
     } catch(err) {
       console.error(err);
       status.textContent='✕ Failed — check Firebase config';
-      status.className='comment-status';
     }
     btn.disabled=false; btn.textContent='Pin this note ✦';
   });
+}
+
+// ── Notifications helper ──────────────────────────────
+async function addNotification({ toUid, type, fromName, fromUid, postSlug, postTitle, preview }) {
+  if (!toUid || toUid === fromUid) return;
+  try {
+    await addDoc(collection(db,'notifications'), {
+      toUid, type, fromName, fromUid,
+      postSlug: postSlug||'', postTitle: postTitle||'',
+      preview: preview||'', read: false,
+      createdAt: serverTimestamp()
+    });
+  } catch(e) { console.error('Notification write:', e); }
 }
 
 async function loadMoreByAuthor(author, currentSlug) {

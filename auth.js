@@ -13,6 +13,11 @@ import {
   setPersistence,
   browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore,
+  collection, query, where, orderBy,
+  onSnapshot, updateDoc, doc, limit
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ── Firebase config ──────────────────────────────────────
 const firebaseConfig = {
@@ -319,9 +324,96 @@ export function injectAuthNav(navEl, options = {}) {
       }
       .auth-confirm-delete:hover { background: #e74c3c; }
 
+      /* ── Notification bell ── */
+      .notif-bell-wrap {
+        position: relative; display: inline-flex; align-items: center;
+      }
+      .notif-bell-btn {
+        width: 34px; height: 34px; border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: none; color: rgba(255,255,255,0.45);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; font-size: 1rem;
+        transition: all 0.2s; position: relative;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .notif-bell-btn:hover { border-color: var(--gold,#d4a020); color: var(--gold,#d4a020); }
+      .notif-bell-btn.has-unread { color: var(--fire,#e8681a); border-color: rgba(232,104,26,0.4); }
+      .notif-badge {
+        position: absolute; top: -3px; right: -3px;
+        min-width: 16px; height: 16px; border-radius: 8px;
+        background: var(--fire,#e8681a); color: #fff;
+        font-family: 'Press Start 2P', monospace; font-size: 0.18rem;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 3px; line-height: 1;
+        animation: badgePop .3s cubic-bezier(0.34,1.56,0.64,1);
+      }
+      @keyframes badgePop { from{transform:scale(0)} to{transform:scale(1)} }
+      .notif-panel {
+        position: fixed; right: 16px; top: 58px;
+        width: 340px; max-height: 480px;
+        background: #1a1208; border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 6px; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+        z-index: 9999; display: none; flex-direction: column;
+        overflow: hidden;
+      }
+      .notif-panel.open { display: flex; }
+      .notif-panel-head {
+        padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.07);
+        display: flex; align-items: center; justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .notif-panel-title {
+        font-family: 'Press Start 2P', monospace; font-size: 0.28rem;
+        color: var(--gold,#d4a020); letter-spacing: 2px;
+      }
+      .notif-mark-all {
+        font-family: 'Press Start 2P', monospace; font-size: 0.2rem;
+        color: rgba(255,255,255,0.3); background: none; border: none;
+        cursor: pointer; letter-spacing: 1px; transition: color .15s;
+      }
+      .notif-mark-all:hover { color: var(--fire,#e8681a); }
+      .notif-list { overflow-y: auto; flex: 1; scrollbar-width: thin; }
+      .notif-list::-webkit-scrollbar { width: 3px; }
+      .notif-list::-webkit-scrollbar-thumb { background: var(--fire,#e8681a); }
+      .notif-item {
+        padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.05);
+        cursor: pointer; transition: background .15s; display: flex; gap: 10px;
+        align-items: flex-start; text-decoration: none;
+      }
+      .notif-item:hover { background: rgba(255,255,255,0.04); }
+      .notif-item.unread { background: rgba(232,104,26,0.06); }
+      .notif-item.unread:hover { background: rgba(232,104,26,0.1); }
+      .notif-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+      .notif-body { flex: 1; min-width: 0; }
+      .notif-text {
+        font-family: 'DM Sans', system-ui, sans-serif; font-size: 0.75rem;
+        color: rgba(255,255,255,0.75); line-height: 1.5; margin-bottom: 3px;
+      }
+      .notif-text strong { color: #fff; }
+      .notif-preview {
+        font-family: 'Crimson Pro', Georgia, serif; font-size: 0.72rem;
+        color: rgba(255,255,255,0.35); font-style: italic;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      .notif-time {
+        font-family: 'DM Sans', system-ui, sans-serif; font-size: 0.62rem;
+        color: rgba(255,255,255,0.25); flex-shrink: 0; margin-top: 2px;
+      }
+      .notif-dot {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: var(--fire,#e8681a); flex-shrink: 0; margin-top: 5px;
+      }
+      .notif-empty {
+        padding: 32px 16px; text-align: center;
+        font-family: 'Caveat', cursive; font-size: 1rem;
+        color: rgba(255,255,255,0.25); font-style: italic;
+      }
+
       @media(max-width:480px) {
         .auth-user-btn .auth-user-name { display: none; }
         .auth-login-modal { padding: 28px 20px 24px; }
+        .notif-panel { right: 8px; left: 8px; width: auto; }
       }
     `;
     document.head.appendChild(style);
@@ -347,46 +439,186 @@ export function injectAuthNav(navEl, options = {}) {
   function renderSignedIn(user) {
     const name = getDisplayName(user);
     const photo = user.photoURL || "";
+    const db = getFirestore();
+
     slot.innerHTML = `
-      <div class="auth-user-wrap">
-        <button class="auth-user-btn auth-user-toggle">
-          ${photo
-            ? `<img src="${photo}" alt="${name}" referrerpolicy="no-referrer">`
-            : `<div style="width:26px;height:26px;border-radius:50%;background:#e8681a;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-size:1rem;color:#fff;font-weight:700">${name[0].toUpperCase()}</div>`
-          }
-          <span class="auth-user-name">${name.split(" ")[0]}</span>
-          <span class="auth-chevron">▾</span>
-        </button>
-        <div class="auth-dropdown">
-          <div class="auth-dropdown-header">
-            <span class="auth-dropdown-name">${name}</span>
-            <span class="auth-dropdown-email">${user.email || ""}</span>
-          </div>
-          <a class="auth-dropdown-item" href="dashboard.html">
-            <span>📌</span> My Board
-          </a>
-          <button class="auth-dropdown-item danger auth-sign-out-btn">
-            <span>↪</span> Sign out
+      <div style="display:flex;align-items:center;gap:6px">
+        <!-- Notification bell -->
+        <div class="notif-bell-wrap">
+          <button class="notif-bell-btn" id="notifBellBtn-${slot.id||Math.random().toString(36).slice(2)}" title="Notifications">
+            🔔
           </button>
+          <div class="notif-panel" id="notifPanel-${slot.id||''}">
+            <div class="notif-panel-head">
+              <span class="notif-panel-title">NOTIFICATIONS</span>
+              <button class="notif-mark-all">mark all read</button>
+            </div>
+            <div class="notif-list" id="notifList-${slot.id||''}">
+              <div class="notif-empty">Loading...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User button + dropdown -->
+        <div class="auth-user-wrap">
+          <button class="auth-user-btn auth-user-toggle">
+            ${photo
+              ? `<img src="${photo}" alt="${name}" referrerpolicy="no-referrer">`
+              : `<div style="width:26px;height:26px;border-radius:50%;background:#e8681a;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-size:1rem;color:#fff;font-weight:700">${name[0].toUpperCase()}</div>`
+            }
+            <span class="auth-user-name">${name.split(" ")[0]}</span>
+            <span class="auth-chevron">▾</span>
+          </button>
+          <div class="auth-dropdown">
+            <div class="auth-dropdown-header">
+              <span class="auth-dropdown-name">${name}</span>
+              <span class="auth-dropdown-email">${user.email || ""}</span>
+            </div>
+            <a class="auth-dropdown-item" href="dashboard.html">
+              <span>📌</span> My Board
+            </a>
+            <button class="auth-dropdown-item danger auth-sign-out-btn">
+              <span>↪</span> Sign out
+            </button>
+          </div>
         </div>
       </div>`;
 
+    // ── User dropdown ────────────────────────────────────
     const toggleBtn = slot.querySelector(".auth-user-toggle");
     const dropdown  = slot.querySelector(".auth-dropdown");
-
     toggleBtn?.addEventListener("click", e => {
       e.stopPropagation();
       dropdown?.classList.toggle("open");
+      // Close notif panel if open
+      slot.querySelector(".notif-panel")?.classList.remove("open");
     });
     document.addEventListener("click", e => {
-      if (!slot.contains(e.target)) dropdown?.classList.remove("open");
+      if (!slot.contains(e.target)) {
+        dropdown?.classList.remove("open");
+        slot.querySelector(".notif-panel")?.classList.remove("open");
+      }
     });
     slot.querySelector(".auth-sign-out-btn")?.addEventListener("click", async () => {
       dropdown?.classList.remove("open");
       await signOut();
       if (onSignOut) onSignOut();
     });
+
+    // ── Notification bell ────────────────────────────────
+    const bellBtn   = slot.querySelector(".notif-bell-btn");
+    const notifPanel = slot.querySelector(".notif-panel");
+    const notifList  = slot.querySelector(".notif-list");
+    const markAllBtn = slot.querySelector(".notif-mark-all");
+
+    let notifDocs = [];
+
+    // Live notifications listener
+    const notifQ = query(
+      collection(db, "notifications"),
+      where("toUid", "==", user.uid),
+      orderBy("createdAt", "desc"),
+      limit(30)
+    );
+    onSnapshot(notifQ, snap => {
+      notifDocs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const unread = notifDocs.filter(n => !n.read).length;
+
+      // Badge
+      let badge = bellBtn.querySelector(".notif-badge");
+      if (unread > 0) {
+        if (!badge) {
+          badge = document.createElement("span");
+          badge.className = "notif-badge";
+          bellBtn.appendChild(badge);
+        }
+        badge.textContent = unread > 9 ? "9+" : unread;
+        bellBtn.classList.add("has-unread");
+      } else {
+        badge?.remove();
+        bellBtn.classList.remove("has-unread");
+      }
+
+      renderNotifList();
+    }, err => {
+      console.error("Notifications:", err);
+      notifList.innerHTML = `<div class="notif-empty">Could not load notifications.</div>`;
+    });
+
+    function renderNotifList() {
+      if (!notifDocs.length) {
+        notifList.innerHTML = `<div class="notif-empty">Nothing yet — go get active! 👀</div>`;
+        return;
+      }
+      const icons = { comment: "💬", reply: "↩️", stick: "📌", post: "📖" };
+      const labels = {
+        comment: n => `<strong>${n.fromName}</strong> left a note on <strong>${n.postTitle||"your post"}</strong>`,
+        reply:   n => `<strong>${n.fromName}</strong> replied to your comment on <strong>${n.postTitle||"a post"}</strong>`,
+        stick:   n => `<strong>${n.fromName}</strong> stuck you to their board`,
+        post:    n => `<strong>${n.fromName}</strong> posted <strong>${n.postTitle||"something new"}</strong>`,
+      };
+      notifList.innerHTML = notifDocs.map(n => {
+        const href = n.postSlug ? `post.html?slug=${n.postSlug}` : "dashboard.html";
+        const timeStr = n.createdAt?.toDate
+          ? timeAgo(n.createdAt.toDate()) : "";
+        return `<a class="notif-item${n.read?'':' unread'}" data-id="${n.id}" href="${href}">
+          <span class="notif-icon">${icons[n.type]||"🔔"}</span>
+          <div class="notif-body">
+            <div class="notif-text">${(labels[n.type]||(() => n.fromName + " did something"))(n)}</div>
+            ${n.preview ? `<div class="notif-preview">"${n.preview}"</div>` : ""}
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
+            <span class="notif-time">${timeStr}</span>
+            ${!n.read ? `<span class="notif-dot"></span>` : ""}
+          </div>
+        </a>`;
+      }).join("");
+
+      // Click to mark read + navigate
+      notifList.querySelectorAll(".notif-item").forEach(el => {
+        el.addEventListener("click", async e => {
+          const id = el.dataset.id;
+          const notif = notifDocs.find(n => n.id === id);
+          if (notif && !notif.read) {
+            try { await updateDoc(doc(db, "notifications", id), { read: true }); } catch(e) {}
+          }
+          notifPanel.classList.remove("open");
+        });
+      });
+    }
+
+    // Bell toggle
+    bellBtn?.addEventListener("click", e => {
+      e.stopPropagation();
+      notifPanel.classList.toggle("open");
+      dropdown?.classList.remove("open");
+
+      // Mark all read when panel opens
+      if (notifPanel.classList.contains("open")) {
+        notifDocs.filter(n => !n.read).forEach(n => {
+          updateDoc(doc(db, "notifications", n.id), { read: true }).catch(() => {});
+        });
+      }
+    });
+
+    // Mark all button
+    markAllBtn?.addEventListener("click", e => {
+      e.stopPropagation();
+      notifDocs.filter(n => !n.read).forEach(n => {
+        updateDoc(doc(db, "notifications", n.id), { read: true }).catch(() => {});
+      });
+    });
   }
+
+  function timeAgo(date) {
+    const s = Math.floor((Date.now() - date) / 1000);
+    if (s < 60) return "just now";
+    if (s < 3600) return `${Math.floor(s/60)}m ago`;
+    if (s < 86400) return `${Math.floor(s/3600)}h ago`;
+    return `${Math.floor(s/86400)}d ago`;
+  }
+
+
 
   // ── Auth state watcher ───────────────────────────────
   onAuthChange(user => {
@@ -507,6 +739,26 @@ export function requireLogin(prompt) {
     });
     observer.observe(document.body, { childList: true });
   });
+}
+
+// ── Exported notification helper ─────────────────────────
+// Call this from any page to create a notification document
+export async function sendNotification({ toUid, type, fromName, fromUid, postSlug, postTitle, preview }) {
+  if (!toUid || toUid === fromUid) return;
+  try {
+    const db = getFirestore();
+    const { addDoc, collection, serverTimestamp } = await import(
+      "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"
+    );
+    await addDoc(collection(db, "notifications"), {
+      toUid, type, fromName, fromUid,
+      postSlug: postSlug || "",
+      postTitle: postTitle || "",
+      preview: preview || "",
+      read: false,
+      createdAt: serverTimestamp()
+    });
+  } catch(e) { console.error("sendNotification:", e); }
 }
 
 export { auth };
