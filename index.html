@@ -577,6 +577,13 @@
       <button class="tape-tab" data-tag="news">NEWS</button>
     </div>
 
+    <!-- RECENTLY PINNED label -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-left:4px">
+      <span style="font-family:var(--pixel);font-size:0.28rem;color:rgba(245,237,216,0.25);letter-spacing:3px">// RECENTLY PINNED</span>
+      <span id="recentlyPinnedDot" style="width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire);display:inline-block;opacity:0;transition:opacity 0.4s"></span>
+      <span id="recentlyPinnedTime" style="font-family:var(--hand);font-size:0.85rem;color:rgba(245,237,216,0.3);font-style:italic"></span>
+    </div>
+
     <!-- PINBOARD -->
     <div class="pinboard" id="postsGrid">
       <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:60%"></div></div></div>
@@ -751,14 +758,38 @@
       try {
         const countEl = document.getElementById('storyCount');
         const quoteEl = document.getElementById('randomQuote');
-        if (!countEl || !quoteEl) return;
+        const dot = document.getElementById('recentlyPinnedDot');
+        const timeEl = document.getElementById('recentlyPinnedTime');
+
         const total = allPosts.length;
-        if (total > 0) countEl.textContent = `// ${total} ${total === 1 ? 'STORY' : 'STORIES'} PINNED`;
+
+        // Story count
+        if (countEl && total > 0) {
+          countEl.textContent = `// ${total} ${total === 1 ? 'story' : 'stories'} pinned so far`;
+        }
+
+        // Random quote from a recent post
         const withDesc = allPosts.filter(p => p.desc && p.desc.length > 20);
         if (withDesc.length && quoteEl) {
           const pick = withDesc[Math.floor(Math.random() * withDesc.length)];
           const short = pick.desc.length > 100 ? pick.desc.slice(0, 97) + '...' : pick.desc;
           quoteEl.innerHTML = `"${short}" <span style="font-style:normal;font-size:0.75rem;color:var(--fire)">— ${pick.author || 'anonymous'}</span>`;
+        }
+
+        // Recently pinned — show time of latest post
+        if (allPosts.length > 0 && dot && timeEl) {
+          const latest = allPosts[0];
+          const ts = latest.createdAt?.toDate ? latest.createdAt.toDate() : (latest.date ? new Date(latest.date) : null);
+          if (ts) {
+            const diff = Math.floor((Date.now() - ts) / 1000);
+            let label = '';
+            if (diff < 60) label = 'just now';
+            else if (diff < 3600) label = `${Math.floor(diff / 60)}m ago`;
+            else if (diff < 86400) label = `${Math.floor(diff / 3600)}h ago`;
+            else label = `${Math.floor(diff / 86400)}d ago`;
+            timeEl.textContent = `last pinned ${label}`;
+          }
+          dot.style.opacity = '1';
         }
       } catch(e) { console.error(e); }
     }
