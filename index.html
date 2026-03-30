@@ -1,49 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HlyWor</title>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-ZVLSVF6T3J');</script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600&display=swap"
+    rel="stylesheet">
 
 
 
 
   <style>
     :root {
-      --board:    #2a1f14;
-      --cork:     #3d2e1e;
-      --cork2:    #4a3828;
-      --paper:    #faf6ee;
-      --paper2:   #f5edd8;
-      --paper3:   #eee5c8;
-      --torn:     #e8dcc0;
-      --ink:      #1a1208;
-      --ink2:     #3d3020;
-      --ink3:     #6a5840;
-      --tape-r:   #e85c5c;
-      --tape-b:   #5c8ae8;
-      --tape-g:   #5cbc7a;
-      --tape-y:   #f0c030;
-      --tape-p:   #a06ae8;
-      --tape-o:   #e8901a;
-      --fire:     #e8681a;
-      --gold:     #d4a020;
-      --pixel:    'Press Start 2P', monospace;
-      --serif:    'Crimson Pro', Georgia, serif;
-      --sans:     'DM Sans', system-ui, sans-serif;
-      --hand:     'Caveat', cursive;
-      --pin-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.3);
+      --board: #2a1f14;
+      --cork: #3d2e1e;
+      --cork2: #4a3828;
+      --paper: #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #eee5c8;
+      --torn: #e8dcc0;
+      --ink: #1a1208;
+      --ink2: #3d3020;
+      --ink3: #6a5840;
+      --tape-r: #e85c5c;
+      --tape-b: #5c8ae8;
+      --tape-g: #5cbc7a;
+      --tape-y: #f0c030;
+      --tape-p: #a06ae8;
+      --tape-o: #e8901a;
+      --fire: #e8681a;
+      --gold: #d4a020;
+      --pixel: 'Press Start 2P', monospace;
+      --serif: 'Crimson Pro', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --hand: 'Caveat', cursive;
+      --pin-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { height: 100%; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      height: 100%;
+    }
 
     body {
       background: var(--board);
@@ -56,60 +68,112 @@
     /* Cork texture — richer, deeper */
     body::before {
       content: '';
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background-image:
-        radial-gradient(ellipse at 15% 20%, rgba(100,70,30,0.35) 0%, transparent 45%),
-        radial-gradient(ellipse at 85% 75%, rgba(70,45,15,0.3) 0%, transparent 45%),
-        radial-gradient(ellipse at 50% 50%, rgba(50,30,10,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse at 15% 20%, rgba(100, 70, 30, 0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(70, 45, 15, 0.3) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(50, 30, 10, 0.2) 0%, transparent 60%),
         url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
       background-size: auto, auto, auto, 200px 200px;
-      pointer-events: none; z-index: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* Floating warm light blobs — like light bulbs above the board */
     .light-blob {
-      position: fixed; border-radius: 50%;
-      pointer-events: none; z-index: 0;
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
       animation: blobFloat ease-in-out infinite;
     }
+
     .light-blob-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(232,104,26,0.07) 0%, transparent 70%);
-      top: -100px; left: 10%;
-      animation-duration: 12s; animation-delay: 0s;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(232, 104, 26, 0.07) 0%, transparent 70%);
+      top: -100px;
+      left: 10%;
+      animation-duration: 12s;
+      animation-delay: 0s;
     }
+
     .light-blob-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(212,160,32,0.06) 0%, transparent 70%);
-      top: 30%; right: 5%;
-      animation-duration: 15s; animation-delay: 3s;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(212, 160, 32, 0.06) 0%, transparent 70%);
+      top: 30%;
+      right: 5%;
+      animation-duration: 15s;
+      animation-delay: 3s;
     }
+
     .light-blob-3 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(232,104,26,0.05) 0%, transparent 70%);
-      bottom: 10%; left: 30%;
-      animation-duration: 18s; animation-delay: 6s;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(232, 104, 26, 0.05) 0%, transparent 70%);
+      bottom: 10%;
+      left: 30%;
+      animation-duration: 18s;
+      animation-delay: 6s;
     }
+
     @keyframes blobFloat {
-      0%,100%{transform:translate(0,0) scale(1);opacity:0.7}
-      33%{transform:translate(15px,-20px) scale(1.08);opacity:1}
-      66%{transform:translate(-10px,15px) scale(0.95);opacity:0.8}
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.7
+      }
+
+      33% {
+        transform: translate(15px, -20px) scale(1.08);
+        opacity: 1
+      }
+
+      66% {
+        transform: translate(-10px, 15px) scale(0.95);
+        opacity: 0.8
+      }
     }
 
     /* Floating embers */
-    .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .embers {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
     .ember {
-      position: absolute; border-radius: 50%;
+      position: absolute;
+      border-radius: 50%;
       background: var(--fire);
       box-shadow: 0 0 4px var(--fire);
       animation: emberRise linear infinite;
       opacity: 0;
     }
+
     @keyframes emberRise {
-      0%{transform:translateY(100vh) translateX(0) scale(1);opacity:0}
-      10%{opacity:0.9}
-      80%{opacity:0.3}
-      100%{transform:translateY(-5vh) translateX(var(--edrift)) scale(0.3);opacity:0}
+      0% {
+        transform: translateY(100vh) translateX(0) scale(1);
+        opacity: 0
+      }
+
+      10% {
+        opacity: 0.9
+      }
+
+      80% {
+        opacity: 0.3
+      }
+
+      100% {
+        transform: translateY(-5vh) translateX(var(--edrift)) scale(0.3);
+        opacity: 0
+      }
     }
 
     /* ══════════════════════════════════
@@ -117,21 +181,28 @@
     ══════════════════════════════════ */
     .nav-strip {
       position: fixed;
-      left: 0; top: 0; bottom: 0;
-      width: 72px; z-index: 1000;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 72px;
+      z-index: 1000;
       background: var(--ink);
-      display: flex; flex-direction: column;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       padding: 24px 0 20px;
-      border-right: 1px solid rgba(255,255,255,0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     /* Subtle warm glow on the strip */
     .nav-strip::after {
       content: '';
-      position: absolute; top: 0; right: 0; bottom: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
       width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(212,160,32,0.25), transparent);
+      background: linear-gradient(to bottom, transparent, rgba(212, 160, 32, 0.25), transparent);
       pointer-events: none;
     }
 
@@ -143,29 +214,58 @@
       text-orientation: mixed;
       transform: rotate(180deg);
       letter-spacing: 4px;
-      text-shadow: 0 0 16px rgba(212,160,32,0.5);
+      text-shadow: 0 0 16px rgba(212, 160, 32, 0.5);
       animation: logoFlicker 7s infinite;
       margin-bottom: 32px;
     }
+
     @keyframes logoFlicker {
-      0%,91%,100%{opacity:1} 92%{opacity:.3} 93%{opacity:1} 95%{opacity:.65} 96%{opacity:1}
+
+      0%,
+      91%,
+      100% {
+        opacity: 1
+      }
+
+      92% {
+        opacity: .3
+      }
+
+      93% {
+        opacity: 1
+      }
+
+      95% {
+        opacity: .65
+      }
+
+      96% {
+        opacity: 1
+      }
     }
 
     .nav-divider {
-      width: 32px; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      width: 32px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
       margin: 10px 0;
     }
 
     .nav-icon-links {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 2px;
-      flex: 1; width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+      width: 100%;
     }
+
     .nav-icon-link {
       width: 100%;
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.38);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.38);
       font-family: var(--sans);
       font-size: 0.68rem;
       font-weight: 500;
@@ -179,34 +279,60 @@
       letter-spacing: 1.5px;
       position: relative;
     }
+
     .nav-icon-link::before {
       content: '';
-      position: absolute; left: 0; top: 20%; bottom: 20%;
-      width: 2px; background: var(--fire);
-      transform: scaleY(0); transform-origin: bottom;
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 2px;
+      background: var(--fire);
+      transform: scaleY(0);
+      transform-origin: bottom;
       transition: transform 0.2s;
     }
-    .nav-icon-link:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
-    .nav-icon-link:hover::before { transform: scaleY(1); }
+
+    .nav-icon-link:hover {
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-icon-link:hover::before {
+      transform: scaleY(1);
+    }
 
     .nav-bottom {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 8px;
-      margin-top: auto; padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       width: 100%;
     }
+
     .nav-btn {
-      width: 38px; height: 38px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.45);
-      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 1rem;
-      transition: all 0.2s; cursor: pointer;
+      transition: all 0.2s;
+      cursor: pointer;
       background: none;
     }
-    .nav-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,160,32,0.06); }
+
+    .nav-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(212, 160, 32, 0.06);
+    }
 
     /* ══════════════════════════════════
        BOARD — the whole canvas
@@ -250,24 +376,37 @@
     /* Torn bottom edge */
     .title-sheet::after {
       content: '';
-      position: absolute; bottom: -8px; left: 0; right: 0;
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
       height: 12px;
       background: var(--paper);
       clip-path: polygon(0% 0%, 3% 100%, 6% 30%, 9% 100%, 12% 20%, 15% 100%, 18% 40%, 21% 100%, 24% 10%, 27% 100%, 30% 50%, 33% 100%, 36% 20%, 39% 100%, 42% 30%, 45% 100%, 48% 10%, 51% 100%, 54% 40%, 57% 100%, 60% 20%, 63% 100%, 66% 50%, 69% 100%, 72% 10%, 75% 100%, 78% 30%, 81% 100%, 84% 20%, 87% 100%, 90% 40%, 93% 100%, 96% 20%, 100% 100%, 100% 0%);
     }
+
     /* Pin */
     .title-sheet .pin {
-      position: absolute; top: -10px; left: 50%;
+      position: absolute;
+      top: -10px;
+      left: 50%;
       transform: translateX(-50%);
-      width: 14px; height: 14px; border-radius: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2222);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.3);
       z-index: 2;
     }
+
     .title-sheet .pin::after {
-      content: ''; position: absolute;
-      top: 100%; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 12px;
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 12px;
       background: linear-gradient(to bottom, #888, #444);
     }
 
@@ -294,53 +433,78 @@
       position: absolute;
       background: #fff;
       padding: 6px 6px 20px 6px;
-      box-shadow: 2px 3px 12px rgba(0,0,0,0.3), 1px 1px 3px rgba(0,0,0,0.2);
+      box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.3), 1px 1px 3px rgba(0, 0, 0, 0.2);
       cursor: pointer;
       transition: transform 0.25s, box-shadow 0.25s, z-index 0s;
       z-index: 1;
     }
+
     .pasted-photo:hover {
-      box-shadow: 4px 6px 20px rgba(0,0,0,0.45), 2px 2px 6px rgba(0,0,0,0.3);
+      box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.45), 2px 2px 6px rgba(0, 0, 0, 0.3);
       z-index: 5;
     }
 
     /* Photo 1 — top left of the collage, slightly right-tilt */
     .pasted-photo:nth-child(1) {
-      top: 0; left: -8px;
+      top: 0;
+      left: -8px;
       width: 130px;
       transform: rotate(3.5deg);
     }
-    .pasted-photo:nth-child(1):hover { transform: rotate(1deg) scale(1.05); }
+
+    .pasted-photo:nth-child(1):hover {
+      transform: rotate(1deg) scale(1.05);
+    }
 
     /* Photo 2 — overlaps bottom of photo 1, left-tilt */
     .pasted-photo:nth-child(2) {
-      top: 90px; left: 40px;
+      top: 90px;
+      left: 40px;
       width: 120px;
       transform: rotate(-4deg);
       z-index: 2;
     }
-    .pasted-photo:nth-child(2):hover { transform: rotate(-1.5deg) scale(1.05); z-index: 5; }
+
+    .pasted-photo:nth-child(2):hover {
+      transform: rotate(-1.5deg) scale(1.05);
+      z-index: 5;
+    }
 
     /* Photo 3 — bottom right, slight tilt */
     .pasted-photo:nth-child(3) {
-      top: 175px; left: -12px;
+      top: 175px;
+      left: -12px;
       width: 140px;
       transform: rotate(2deg);
     }
-    .pasted-photo:nth-child(3):hover { transform: rotate(0.5deg) scale(1.04); z-index: 5; }
+
+    .pasted-photo:nth-child(3):hover {
+      transform: rotate(0.5deg) scale(1.04);
+      z-index: 5;
+    }
 
     /* Photo tape strips across corners */
     .pasted-photo::before {
       content: '';
       position: absolute;
-      top: -6px; left: 50%;
+      top: -6px;
+      left: 50%;
       transform: translateX(-50%) rotate(-1deg);
-      width: 44px; height: 14px;
-      background: rgba(240,200,60,0.65);
+      width: 44px;
+      height: 14px;
+      background: rgba(240, 200, 60, 0.65);
       z-index: 3;
     }
-    .pasted-photo:nth-child(2)::before { background: rgba(100,160,240,0.6); transform: translateX(-50%) rotate(1.5deg); }
-    .pasted-photo:nth-child(3)::before { background: rgba(100,200,120,0.55); transform: translateX(-50%) rotate(-0.5deg); }
+
+    .pasted-photo:nth-child(2)::before {
+      background: rgba(100, 160, 240, 0.6);
+      transform: translateX(-50%) rotate(1.5deg);
+    }
+
+    .pasted-photo:nth-child(3)::before {
+      background: rgba(100, 200, 120, 0.55);
+      transform: translateX(-50%) rotate(-0.5deg);
+    }
 
     /* The actual image inside pasted-photo */
     .pasted-photo img {
@@ -367,28 +531,39 @@
       position: absolute;
       background: #fff;
       padding: 6px 6px 22px 6px;
-      box-shadow: 2px 3px 12px rgba(0,0,0,0.3);
+      box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.3);
     }
+
     .pasted-photo-placeholder::before {
       content: '';
       position: absolute;
-      top: -6px; left: 50%;
+      top: -6px;
+      left: 50%;
       transform: translateX(-50%);
-      width: 44px; height: 14px;
+      width: 44px;
+      height: 14px;
       z-index: 3;
     }
+
     .photo-inner {
-      width: 100%; aspect-ratio: 4/3;
+      width: 100%;
+      aspect-ratio: 4/3;
       background: var(--paper3);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
+
     .photo-inner::before {
       content: '';
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
       background-size: 80px 80px;
     }
+
     .photo-inner-label {
       font-family: var(--hand);
       font-size: 0.75rem;
@@ -397,41 +572,71 @@
     }
 
     .sheet-eyebrow {
-      font-family: var(--pixel); font-size: 0.32rem;
-      color: var(--fire); letter-spacing: 3px;
+      font-family: var(--pixel);
+      font-size: 0.32rem;
+      color: var(--fire);
+      letter-spacing: 3px;
       margin-bottom: 12px;
     }
+
     .sheet-title {
       font-family: var(--serif);
       font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300; font-style: italic;
-      color: var(--ink); line-height: 1.1;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.1;
       margin-bottom: 14px;
     }
-    .sheet-title em { font-weight: 600; color: var(--fire); }
-    .sheet-sub {
-      font-family: var(--sans); font-size: 0.82rem;
-      color: var(--ink3); line-height: 1.75;
+
+    .sheet-title em {
+      font-weight: 600;
+      color: var(--fire);
     }
+
+    .sheet-sub {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--ink3);
+      line-height: 1.75;
+    }
+
     .sheet-ctas {
-      display: flex; gap: 10px; flex-wrap: wrap;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 22px;
     }
 
     /* Sticky note style buttons */
     .btn-sticky {
-      font-family: var(--hand); font-size: 1rem;
+      font-family: var(--hand);
+      font-size: 1rem;
       padding: 8px 18px;
       background: var(--tape-y);
-      color: var(--ink); border: none;
+      color: var(--ink);
+      border: none;
       transform: rotate(-1deg);
-      box-shadow: 2px 3px 8px rgba(0,0,0,0.25);
+      box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.25);
       transition: transform 0.2s, box-shadow 0.2s;
-      display: inline-block; cursor: pointer;
+      display: inline-block;
+      cursor: pointer;
     }
-    .btn-sticky:hover { transform: rotate(0deg) translateY(-2px); box-shadow: 3px 5px 12px rgba(0,0,0,0.3); }
-    .btn-sticky.fire { background: var(--fire); color: #fff; transform: rotate(0.8deg); }
-    .btn-sticky.fire:hover { transform: rotate(0deg) translateY(-2px); }
+
+    .btn-sticky:hover {
+      transform: rotate(0deg) translateY(-2px);
+      box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-sticky.fire {
+      background: var(--fire);
+      color: #fff;
+      transform: rotate(0.8deg);
+    }
+
+    .btn-sticky.fire:hover {
+      transform: rotate(0deg) translateY(-2px);
+    }
 
     /* Handwritten sticky note beside title */
     .sticky-about {
@@ -444,21 +649,32 @@
       align-self: flex-start;
       margin-top: 24px;
     }
+
     .sticky-about .pin {
-      position: absolute; top: -9px; left: 50%;
+      position: absolute;
+      top: -9px;
+      left: 50%;
       transform: translateX(-50%);
-      width: 12px; height: 12px; border-radius: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #6b9fff, #2244cc);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
       z-index: 2;
     }
+
     .sticky-about p {
-      font-family: var(--hand); font-size: 1rem;
-      color: var(--ink2); line-height: 1.6;
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink2);
+      line-height: 1.6;
     }
+
     .sticky-about .sticky-sign {
-      font-family: var(--hand); font-size: 0.9rem;
-      color: var(--fire); margin-top: 10px;
+      font-family: var(--hand);
+      font-size: 0.9rem;
+      color: var(--fire);
+      margin-top: 10px;
       display: block;
     }
 
@@ -466,46 +682,98 @@
     .tape-label {
       display: inline-block;
       background: var(--tape-b);
-      color: #fff; opacity: 0.85;
-      font-family: var(--pixel); font-size: 0.28rem;
-      letter-spacing: 2px; padding: 4px 16px;
+      color: #fff;
+      opacity: 0.85;
+      font-family: var(--pixel);
+      font-size: 0.28rem;
+      letter-spacing: 2px;
+      padding: 4px 16px;
       transform: rotate(-2deg);
-      position: absolute; top: -12px; right: 20px;
+      position: absolute;
+      top: -12px;
+      right: 20px;
     }
 
     /* ══════════════════════════════════
        TAPE STRIP — category filter
     ══════════════════════════════════ */
     .tape-filter {
-      display: flex; gap: 8px; flex-wrap: wrap;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
       margin-bottom: 32px;
       padding-left: 4px;
     }
+
     .tape-tab {
-      font-family: var(--pixel); font-size: 0.3rem;
-      letter-spacing: 1px; padding: 6px 16px;
+      font-family: var(--pixel);
+      font-size: 0.3rem;
+      letter-spacing: 1px;
+      padding: 6px 16px;
       opacity: 0.7;
-      color: #fff; border: none; cursor: pointer;
+      color: #fff;
+      border: none;
+      cursor: pointer;
       transform: rotate(-0.5deg);
       transition: opacity 0.2s, transform 0.2s;
       position: relative;
     }
-    .tape-tab::before, .tape-tab::after {
+
+    .tape-tab::before,
+    .tape-tab::after {
       content: '';
-      position: absolute; top: 0; bottom: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
       width: 8px;
-      background: inherit; opacity: 0.6;
+      background: inherit;
+      opacity: 0.6;
     }
-    .tape-tab::before { left: -6px; transform: skewX(-5deg); }
-    .tape-tab::after  { right: -6px; transform: skewX(5deg); }
-    .tape-tab:hover, .tape-tab.active { opacity: 1; transform: rotate(0deg); }
-    .tape-tab[data-tag="all"]     { background: var(--ink2); }
-    .tape-tab[data-tag="story"]   { background: var(--tape-r); }
-    .tape-tab[data-tag="movies"]  { background: var(--tape-b); }
-    .tape-tab[data-tag="books"]   { background: var(--tape-g); }
-    .tape-tab[data-tag="thoughts"]{ background: var(--tape-p); }
-    .tape-tab[data-tag="college"] { background: var(--tape-o); }
-    .tape-tab[data-tag="news"]    { background: var(--tape-y); color: var(--ink); }
+
+    .tape-tab::before {
+      left: -6px;
+      transform: skewX(-5deg);
+    }
+
+    .tape-tab::after {
+      right: -6px;
+      transform: skewX(5deg);
+    }
+
+    .tape-tab:hover,
+    .tape-tab.active {
+      opacity: 1;
+      transform: rotate(0deg);
+    }
+
+    .tape-tab[data-tag="all"] {
+      background: var(--ink2);
+    }
+
+    .tape-tab[data-tag="story"] {
+      background: var(--tape-r);
+    }
+
+    .tape-tab[data-tag="movies"] {
+      background: var(--tape-b);
+    }
+
+    .tape-tab[data-tag="books"] {
+      background: var(--tape-g);
+    }
+
+    .tape-tab[data-tag="thoughts"] {
+      background: var(--tape-p);
+    }
+
+    .tape-tab[data-tag="college"] {
+      background: var(--tape-o);
+    }
+
+    .tape-tab[data-tag="news"] {
+      background: var(--tape-y);
+      color: var(--ink);
+    }
 
     /* ══════════════════════════════════
        PINBOARD — posts as pinned notes
@@ -525,320 +793,649 @@
       transition: transform 0.25s, box-shadow 0.25s;
       cursor: pointer;
     }
+
     /* Alternate slight rotations — real bulletin board feel */
-    .pinned-post:nth-child(3n+1) { transform: rotate(-1.2deg); }
-    .pinned-post:nth-child(3n+2) { transform: rotate(0.8deg); }
-    .pinned-post:nth-child(3n+3) { transform: rotate(-0.4deg); }
-    .pinned-post:nth-child(4n)   { transform: rotate(1.5deg); }
-    .pinned-post:nth-child(5n)   { transform: rotate(-0.9deg); }
+    .pinned-post:nth-child(3n+1) {
+      transform: rotate(-1.2deg);
+    }
+
+    .pinned-post:nth-child(3n+2) {
+      transform: rotate(0.8deg);
+    }
+
+    .pinned-post:nth-child(3n+3) {
+      transform: rotate(-0.4deg);
+    }
+
+    .pinned-post:nth-child(4n) {
+      transform: rotate(1.5deg);
+    }
+
+    .pinned-post:nth-child(5n) {
+      transform: rotate(-0.9deg);
+    }
 
     .pinned-post:hover {
       transform: rotate(0deg) translateY(-6px) scale(1.02) !important;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4);
       z-index: 10;
     }
 
     /* Pin on each card */
     .post-pin {
-      position: absolute; top: -11px;
-      width: 13px; height: 13px; border-radius: 50%;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3);
+      position: absolute;
+      top: -11px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.3);
       z-index: 2;
     }
+
     .post-pin::after {
-      content: ''; position: absolute;
-      top: 100%; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 10px;
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 10px;
       background: linear-gradient(to bottom, #777, #333);
     }
-    .pinned-post:nth-child(odd)  .post-pin { left: 30%; background: radial-gradient(circle at 35% 35%, #ff9999, #cc3333); }
-    .pinned-post:nth-child(even) .post-pin { left: 65%; background: radial-gradient(circle at 35% 35%, #99bbff, #3355cc); }
-    .pinned-post:nth-child(3n)   .post-pin { left: 50%; background: radial-gradient(circle at 35% 35%, #aaeeaa, #228844); }
+
+    .pinned-post:nth-child(odd) .post-pin {
+      left: 30%;
+      background: radial-gradient(circle at 35% 35%, #ff9999, #cc3333);
+    }
+
+    .pinned-post:nth-child(even) .post-pin {
+      left: 65%;
+      background: radial-gradient(circle at 35% 35%, #99bbff, #3355cc);
+    }
+
+    .pinned-post:nth-child(3n) .post-pin {
+      left: 50%;
+      background: radial-gradient(circle at 35% 35%, #aaeeaa, #228844);
+    }
 
     /* Tape strip at top of some cards */
     .post-tape {
-      position: absolute; top: -4px; left: 20px; right: 20px;
-      height: 20px; opacity: 0.65;
-      display: flex; align-items: center; justify-content: center;
+      position: absolute;
+      top: -4px;
+      left: 20px;
+      right: 20px;
+      height: 20px;
+      opacity: 0.65;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
     .tape-strip {
-      height: 100%; width: 60px;
+      height: 100%;
+      width: 60px;
       position: absolute;
     }
-    .tape-strip.left { left: 0; }
-    .tape-strip.right { right: 0; }
+
+    .tape-strip.left {
+      left: 0;
+    }
+
+    .tape-strip.right {
+      right: 0;
+    }
 
     /* Thumbnail — like a photo taped to the note */
     .post-photo {
-      position: relative; overflow: hidden;
+      position: relative;
+      overflow: hidden;
       margin: 14px 14px 0;
     }
+
     .post-photo img {
-      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
       display: block;
       filter: sepia(10%) brightness(0.95);
       transition: filter 0.3s;
     }
-    .pinned-post:hover .post-photo img { filter: sepia(0%) brightness(1); }
+
+    .pinned-post:hover .post-photo img {
+      filter: sepia(0%) brightness(1);
+    }
 
     /* Photo corner tape */
     .photo-corner {
       position: absolute;
-      width: 20px; height: 20px;
-      background: rgba(240,192,48,0.7);
+      width: 20px;
+      height: 20px;
+      background: rgba(240, 192, 48, 0.7);
       transform: rotate(45deg);
     }
-    .photo-corner.tl { top: -5px; left: -5px; }
-    .photo-corner.tr { top: -5px; right: -5px; }
-    .photo-corner.bl { bottom: -5px; left: -5px; }
-    .photo-corner.br { bottom: -5px; right: -5px; }
+
+    .photo-corner.tl {
+      top: -5px;
+      left: -5px;
+    }
+
+    .photo-corner.tr {
+      top: -5px;
+      right: -5px;
+    }
+
+    .photo-corner.bl {
+      bottom: -5px;
+      left: -5px;
+    }
+
+    .photo-corner.br {
+      bottom: -5px;
+      right: -5px;
+    }
 
     /* No image placeholder */
     .post-noimg {
       margin: 14px 14px 0;
       aspect-ratio: 4/3;
       background: var(--paper3);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      border: 1px dashed rgba(26,18,8,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba(26, 18, 8, 0.15);
     }
+
     .post-noimg-num {
       font-family: var(--pixel);
       font-size: clamp(1.5rem, 4vw, 2.8rem);
-      color: rgba(26,18,8,0.08);
+      color: rgba(26, 18, 8, 0.08);
       line-height: 1;
     }
+
     .post-noimg-label {
-      font-family: var(--hand); font-size: 0.85rem;
-      color: var(--ink3); margin-top: 8px;
+      font-family: var(--hand);
+      font-size: 0.85rem;
+      color: var(--ink3);
+      margin-top: 8px;
     }
 
     /* Post body text — the note itself */
-    .post-note-body { padding: 14px 16px 18px; }
+    .post-note-body {
+      padding: 14px 16px 18px;
+    }
 
     /* Tape category label */
     .post-cat-tape {
       display: inline-block;
-      font-family: var(--pixel); font-size: 0.26rem;
-      letter-spacing: 2px; padding: 3px 10px;
-      color: #fff; margin-bottom: 10px;
-      opacity: 0.85; transform: rotate(-0.5deg);
+      font-family: var(--pixel);
+      font-size: 0.26rem;
+      letter-spacing: 2px;
+      padding: 3px 10px;
+      color: #fff;
+      margin-bottom: 10px;
+      opacity: 0.85;
+      transform: rotate(-0.5deg);
     }
-    .cat-story    { background: var(--tape-r); }
-    .cat-movies   { background: var(--tape-b); }
-    .cat-books    { background: var(--tape-g); }
-    .cat-thoughts { background: var(--tape-p); }
-    .cat-college  { background: var(--tape-o); }
-    .cat-news     { background: var(--tape-y); color: var(--ink); }
-    .cat-default  { background: var(--ink2); }
+
+    .cat-story {
+      background: var(--tape-r);
+    }
+
+    .cat-movies {
+      background: var(--tape-b);
+    }
+
+    .cat-books {
+      background: var(--tape-g);
+    }
+
+    .cat-thoughts {
+      background: var(--tape-p);
+    }
+
+    .cat-college {
+      background: var(--tape-o);
+    }
+
+    .cat-news {
+      background: var(--tape-y);
+      color: var(--ink);
+    }
+
+    .cat-default {
+      background: var(--ink2);
+    }
 
     .post-note-title {
       font-family: var(--serif);
-      font-size: 1.1rem; font-weight: 400; font-style: italic;
-      color: var(--ink); line-height: 1.45; margin-bottom: 8px;
+      font-size: 1.1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.45;
+      margin-bottom: 8px;
     }
+
     .post-note-desc {
-      font-family: var(--sans); font-size: 0.75rem;
-      color: var(--ink3); line-height: 1.7; margin-bottom: 12px;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--ink3);
+      line-height: 1.7;
+      margin-bottom: 12px;
     }
 
     /* Handwritten meta */
     .post-note-meta {
-      display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px dashed rgba(26,18,8,0.15);
-      padding-top: 10px; margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px dashed rgba(26, 18, 8, 0.15);
+      padding-top: 10px;
+      margin-top: 4px;
     }
+
     .post-author-hand {
-      font-family: var(--hand); font-size: 0.88rem;
+      font-family: var(--hand);
+      font-size: 0.88rem;
       color: var(--ink3);
     }
+
     .post-read-hand {
-      font-family: var(--hand); font-size: 0.85rem;
-      color: var(--fire); transition: letter-spacing 0.2s;
+      font-family: var(--hand);
+      font-size: 0.85rem;
+      color: var(--fire);
+      transition: letter-spacing 0.2s;
     }
-    .pinned-post:hover .post-read-hand { letter-spacing: 1px; }
+
+    .pinned-post:hover .post-read-hand {
+      letter-spacing: 1px;
+    }
 
     /* Reactions — like stickers on the note */
     .post-stickers {
-      display: flex; gap: 4px;
+      display: flex;
+      gap: 4px;
       padding: 8px 16px 14px;
       align-items: center;
     }
+
     /* Stick button on post card */
     .card-stick-btn {
       margin-left: auto;
-      font-family: var(--pixel); font-size: 0.22rem;
+      font-family: var(--pixel);
+      font-size: 0.22rem;
       letter-spacing: 0.5px;
       padding: 3px 8px;
       background: transparent;
-      border: 1px solid rgba(26,18,8,0.15);
+      border: 1px solid rgba(26, 18, 8, 0.15);
       color: var(--ink4);
-      cursor: pointer; transition: all 0.18s;
-      white-space: nowrap; border-radius: 1px;
-      display: flex; align-items: center; gap: 4px;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+      border-radius: 1px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
+
     .card-stick-btn:hover {
       border-color: var(--fire);
       color: var(--fire);
-      background: rgba(232,104,26,0.06);
+      background: rgba(232, 104, 26, 0.06);
     }
+
     .card-stick-btn.is-stuck {
-      background: rgba(232,104,26,0.1);
-      border-color: rgba(232,104,26,0.4);
+      background: rgba(232, 104, 26, 0.1);
+      border-color: rgba(232, 104, 26, 0.4);
       color: var(--fire);
     }
+
     .card-stick-btn.is-stuck:hover {
-      background: rgba(192,57,43,0.08);
-      border-color: rgba(192,57,43,0.4);
+      background: rgba(192, 57, 43, 0.08);
+      border-color: rgba(192, 57, 43, 0.4);
       color: #c0392b;
     }
-    .card-stick-btn:disabled { opacity: 0.4; cursor: wait; }
+
+    .card-stick-btn:disabled {
+      opacity: 0.4;
+      cursor: wait;
+    }
+
     .sticker-btn {
-      font-size: 0.82rem; padding: 2px 8px;
+      font-size: 0.82rem;
+      padding: 2px 8px;
       background: var(--paper2);
-      border: 1px solid rgba(26,18,8,0.12);
+      border: 1px solid rgba(26, 18, 8, 0.12);
       color: var(--ink3);
-      display: flex; align-items: center; gap: 3px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
       transition: all 0.14s;
       font-family: var(--sans);
       border-radius: 1px;
     }
-    .sticker-btn:hover { background: var(--paper3); border-color: rgba(26,18,8,0.2); }
-    .sticker-btn.reacted { background: #fff3e0; border-color: var(--fire); color: var(--fire); }
-    .sticker-count { font-size: 0.65rem; }
+
+    .sticker-btn:hover {
+      background: var(--paper3);
+      border-color: rgba(26, 18, 8, 0.2);
+    }
+
+    .sticker-btn.reacted {
+      background: #fff3e0;
+      border-color: var(--fire);
+      color: var(--fire);
+    }
+
+    .sticker-count {
+      font-size: 0.65rem;
+    }
 
     /* ── AUTHOR CHIP on post cards ── */
     .post-author-chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-family: var(--hand); font-size: 0.88rem;
-      color: var(--ink3); cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--hand);
+      font-size: 0.88rem;
+      color: var(--ink3);
+      cursor: pointer;
       padding: 2px 6px 2px 2px;
-      border-radius: 2px; transition: all 0.15s;
+      border-radius: 2px;
+      transition: all 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .post-author-chip:hover { background: var(--paper3); color: var(--fire); }
+
+    .post-author-chip:hover {
+      background: var(--paper3);
+      color: var(--fire);
+    }
+
     .post-author-chip-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--fire); opacity: 0.6; flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--fire);
+      opacity: 0.6;
+      flex-shrink: 0;
     }
 
     /* ── AUTHOR POPUP ── */
     .author-popup-overlay {
-      position: fixed; inset: 0; z-index: 800;
-      background: rgba(0,0,0,0);
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      background: rgba(0, 0, 0, 0);
       pointer-events: none;
       transition: background 0.25s;
     }
+
     .author-popup-overlay.open {
-      background: rgba(0,0,0,0.55);
+      background: rgba(0, 0, 0, 0.55);
       pointer-events: all;
     }
+
     .author-popup {
       position: fixed;
-      bottom: -100%; left: 0; right: 0;
+      bottom: -100%;
+      left: 0;
+      right: 0;
       z-index: 801;
       background: var(--paper);
       max-height: 72vh;
       overflow-y: auto;
       border-radius: 16px 16px 0 0;
-      box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
-      transition: bottom 0.35s cubic-bezier(0.34,1.1,0.64,1);
+      box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5);
+      transition: bottom 0.35s cubic-bezier(0.34, 1.1, 0.64, 1);
       /* Diary ruled lines */
-      background-image: repeating-linear-gradient(
-        to bottom, transparent 0px, transparent 31px,
-        rgba(180,160,120,0.15) 31px, rgba(180,160,120,0.15) 32px
-      );
+      background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 31px,
+          rgba(180, 160, 120, 0.15) 31px, rgba(180, 160, 120, 0.15) 32px);
     }
+
     .author-popup-overlay.open .author-popup {
       bottom: 0;
     }
+
     /* Desktop: center as a card instead */
     @media (min-width: 641px) {
       .author-popup {
-        left: 50%; right: auto;
+        left: 50%;
+        right: auto;
         transform: translateX(-50%) translateY(20px);
-        bottom: auto; top: 50%;
+        bottom: auto;
+        top: 50%;
         margin-top: -180px;
         width: 380px;
         border-radius: 4px;
         max-height: 80vh;
-        transition: opacity 0.2s, transform 0.25s cubic-bezier(0.34,1.2,0.64,1);
+        transition: opacity 0.2s, transform 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
         opacity: 0;
       }
+
       .author-popup-overlay.open .author-popup {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
         top: 50%;
       }
     }
+
     .popup-handle {
-      width: 36px; height: 4px; border-radius: 2px;
-      background: rgba(26,18,8,0.15);
+      width: 36px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(26, 18, 8, 0.15);
       margin: 10px auto 0;
     }
-    @media (min-width: 641px) { .popup-handle { display: none; } }
-    .popup-inner { padding: 18px 22px 28px; position: relative; z-index: 1; }
+
+    @media (min-width: 641px) {
+      .popup-handle {
+        display: none;
+      }
+    }
+
+    .popup-inner {
+      padding: 18px 22px 28px;
+      position: relative;
+      z-index: 1;
+    }
+
     .popup-spine-accent {
-      position: absolute; left: 0; top: 0; bottom: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
       width: 4px;
     }
-    .popup-handle-wrap { padding: 8px 0 0; }
-    .popup-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+
+    .popup-handle-wrap {
+      padding: 8px 0 0;
+    }
+
+    .popup-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
     .popup-avatar {
-      width: 48px; height: 48px; border-radius: 50%;
-      object-fit: cover; border: 2px solid var(--fire); flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--fire);
+      flex-shrink: 0;
     }
+
     .popup-avatar-placeholder {
-      width: 48px; height: 48px; border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
       background: var(--fire);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--hand); font-size: 1.4rem; color: #fff;
-      font-weight: 700; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--hand);
+      font-size: 1.4rem;
+      color: #fff;
+      font-weight: 700;
+      flex-shrink: 0;
     }
-    .popup-name { font-family: var(--hand); font-size: 1.4rem; color: var(--ink); font-weight: 700; line-height: 1.1; }
-    .popup-role { font-family: var(--pixel); font-size: 0.3rem; color: var(--ink4); letter-spacing: 1px; margin-top: 3px; }
-    .popup-bio { font-family: var(--serif); font-size: 0.92rem; font-style: italic; color: var(--ink2); line-height: 1.65; margin-bottom: 14px; }
-    .popup-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .popup-name {
+      font-family: var(--hand);
+      font-size: 1.4rem;
+      color: var(--ink);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .popup-role {
+      font-family: var(--pixel);
+      font-size: 0.3rem;
+      color: var(--ink4);
+      letter-spacing: 1px;
+      margin-top: 3px;
+    }
+
+    .popup-bio {
+      font-family: var(--serif);
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--ink2);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .popup-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
     .popup-stick-btn {
-      font-family: var(--hand); font-size: 1rem; font-weight: 700;
-      padding: 8px 20px; border: none; cursor: pointer; transition: all 0.2s;
+      font-family: var(--hand);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 8px 20px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .popup-stick-btn.unstuck { background: var(--fire); color: #fff; }
-    .popup-stick-btn.unstuck:hover { background: #ff7a2a; transform: translateY(-1px); }
-    .popup-stick-btn.stuck-state { background: var(--paper3); color: var(--ink2); border: 1px solid rgba(26,18,8,0.15); }
-    .popup-stick-btn.stuck-state:hover { color: #c0392b; border-color: rgba(192,57,43,0.3); }
+
+    .popup-stick-btn.unstuck {
+      background: var(--fire);
+      color: #fff;
+    }
+
+    .popup-stick-btn.unstuck:hover {
+      background: #ff7a2a;
+      transform: translateY(-1px);
+    }
+
+    .popup-stick-btn.stuck-state {
+      background: var(--paper3);
+      color: var(--ink2);
+      border: 1px solid rgba(26, 18, 8, 0.15);
+    }
+
+    .popup-stick-btn.stuck-state:hover {
+      color: #c0392b;
+      border-color: rgba(192, 57, 43, 0.3);
+    }
+
     .popup-profile-link {
-      font-family: var(--hand); font-size: 0.9rem;
-      color: var(--fire); text-decoration: none;
-      border-bottom: 1px dashed rgba(232,104,26,0.4);
-      padding-bottom: 1px; transition: letter-spacing 0.2s;
+      font-family: var(--hand);
+      font-size: 0.9rem;
+      color: var(--fire);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(232, 104, 26, 0.4);
+      padding-bottom: 1px;
+      transition: letter-spacing 0.2s;
     }
-    .popup-profile-link:hover { letter-spacing: 1px; }
-    .popup-stick-count { font-family: var(--pixel); font-size: 0.26rem; color: var(--ink4); margin-left: 4px; }
-    .popup-loading { font-family: var(--hand); font-size: 1rem; color: var(--ink3); font-style: italic; padding: 12px 0; }
-    .popup-no-profile { font-family: var(--serif); font-size: 0.88rem; color: var(--ink3); font-style: italic; }
+
+    .popup-profile-link:hover {
+      letter-spacing: 1px;
+    }
+
+    .popup-stick-count {
+      font-family: var(--pixel);
+      font-size: 0.26rem;
+      color: var(--ink4);
+      margin-left: 4px;
+    }
+
+    .popup-loading {
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink3);
+      font-style: italic;
+      padding: 12px 0;
+    }
+
+    .popup-no-profile {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      color: var(--ink3);
+      font-style: italic;
+    }
 
     /* Skeleton */
     .skel-post {
       background: var(--paper);
       box-shadow: var(--pin-shadow);
     }
-    .skel-post:nth-child(odd) { transform: rotate(-1deg); }
-    .skel-post:nth-child(even) { transform: rotate(0.8deg); }
-    .skel-img-box { aspect-ratio:4/3; margin:14px 14px 0; }
-    .skel-body-box { padding:14px 16px 18px; display:flex; flex-direction:column; gap:10px; }
-    .skel-line { height:9px; border-radius:1px; }
-    @keyframes shimmer { from{background-position:200% 0} to{background-position:-200% 0} }
+
+    .skel-post:nth-child(odd) {
+      transform: rotate(-1deg);
+    }
+
+    .skel-post:nth-child(even) {
+      transform: rotate(0.8deg);
+    }
+
+    .skel-img-box {
+      aspect-ratio: 4/3;
+      margin: 14px 14px 0;
+    }
+
+    .skel-body-box {
+      padding: 14px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skel-line {
+      height: 9px;
+      border-radius: 1px;
+    }
+
+    @keyframes shimmer {
+      from {
+        background-position: 200% 0
+      }
+
+      to {
+        background-position: -200% 0
+      }
+    }
+
     .shimmer {
       background: linear-gradient(90deg, var(--paper3) 25%, var(--paper2) 50%, var(--paper3) 75%);
-      background-size: 200% 100%; animation: shimmer 1.5s infinite;
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
     }
 
     .no-posts {
-      grid-column:1/-1; padding:48px;
-      text-align:center; font-family:var(--hand);
-      font-size:1.4rem; color:rgba(245,237,216,0.4);
-      line-height:2;
+      grid-column: 1/-1;
+      padding: 48px;
+      text-align: center;
+      font-family: var(--hand);
+      font-size: 1.4rem;
+      color: rgba(245, 237, 216, 0.4);
+      line-height: 2;
     }
 
     /* ══════════════════════════════════
@@ -861,76 +1458,142 @@
       box-shadow: var(--pin-shadow);
       position: relative;
     }
+
     .about-note .pin {
-      position: absolute; top: -10px; left: 40%;
-      width: 12px; height: 12px; border-radius: 50%;
+      position: absolute;
+      top: -10px;
+      left: 40%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ffcc88, #cc8822);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.45);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
     }
+
     .about-note .pin::after {
-      content: ''; position: absolute;
-      top: 100%; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 10px;
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 10px;
       background: linear-gradient(to bottom, #777, #333);
     }
+
     .note-header {
-      font-family: var(--pixel); font-size: 0.3rem;
-      color: var(--fire); letter-spacing: 3px;
+      font-family: var(--pixel);
+      font-size: 0.3rem;
+      color: var(--fire);
+      letter-spacing: 3px;
       margin-bottom: 12px;
       padding-bottom: 8px;
-      border-bottom: 1px dashed rgba(26,18,8,0.2);
+      border-bottom: 1px dashed rgba(26, 18, 8, 0.2);
     }
+
     .note-text {
-      font-family: var(--serif); font-size: 0.95rem;
-      font-style: italic; color: var(--ink2);
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--ink2);
       line-height: 1.85;
     }
-    .note-text strong { font-style: normal; color: var(--ink); }
+
+    .note-text strong {
+      font-style: normal;
+      color: var(--ink);
+    }
 
     /* Team — two smaller sticky notes side by side */
     .team-stickies {
-      display: flex; flex-direction: column; gap: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
+
     .team-sticky {
       padding: 18px 16px 22px;
       box-shadow: var(--pin-shadow);
-      position: relative; cursor: pointer;
+      position: relative;
+      cursor: pointer;
       text-decoration: none;
       display: block;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-    .team-sticky:nth-child(1) { background: #fef9c3; transform: rotate(1.2deg); }
-    .team-sticky:nth-child(2) { background: #f0f8ff; transform: rotate(-1deg); }
-    .team-sticky:hover { transform: rotate(0deg) translateY(-4px) !important; box-shadow: 0 12px 32px rgba(0,0,0,0.45); }
-    .team-sticky .pin {
-      position: absolute; top: -9px; left: 50%;
-      transform: translateX(-50%);
-      width: 11px; height: 11px; border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+
+    .team-sticky:nth-child(1) {
+      background: #fef9c3;
+      transform: rotate(1.2deg);
     }
-    .team-sticky:nth-child(1) .pin { background: radial-gradient(circle at 35% 35%, #ff9999, #cc2222); }
-    .team-sticky:nth-child(2) .pin { background: radial-gradient(circle at 35% 35%, #aaddff, #2266cc); }
+
+    .team-sticky:nth-child(2) {
+      background: #f0f8ff;
+      transform: rotate(-1deg);
+    }
+
+    .team-sticky:hover {
+      transform: rotate(0deg) translateY(-4px) !important;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .team-sticky .pin {
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .team-sticky:nth-child(1) .pin {
+      background: radial-gradient(circle at 35% 35%, #ff9999, #cc2222);
+    }
+
+    .team-sticky:nth-child(2) .pin {
+      background: radial-gradient(circle at 35% 35%, #aaddff, #2266cc);
+    }
+
     .team-sticky .pin::after {
-      content: ''; position: absolute;
-      top: 100%; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 9px;
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 9px;
       background: linear-gradient(to bottom, #777, #333);
     }
+
     .sticky-name {
-      font-family: var(--hand); font-size: 1.4rem;
-      color: var(--ink); margin-bottom: 4px;
+      font-family: var(--hand);
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 4px;
     }
+
     .sticky-role {
-      font-family: var(--pixel); font-size: 0.26rem;
-      color: var(--ink3); letter-spacing: 2px; margin-bottom: 8px;
+      font-family: var(--pixel);
+      font-size: 0.26rem;
+      color: var(--ink3);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
     }
+
     .sticky-bio {
-      font-family: var(--sans); font-size: 0.72rem;
-      color: var(--ink3); line-height: 1.65;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--ink3);
+      line-height: 1.65;
     }
+
     .sticky-link {
-      font-family: var(--hand); font-size: 0.85rem;
-      color: var(--fire); display: block; margin-top: 10px;
+      font-family: var(--hand);
+      font-size: 0.85rem;
+      color: var(--fire);
+      display: block;
+      margin-top: 10px;
     }
 
     /* CTA — a big bold sticky with torn edge */
@@ -941,121 +1604,287 @@
       box-shadow: var(--pin-shadow);
       position: relative;
     }
+
     .cta-note::after {
       content: '';
-      position: absolute; bottom: -8px; left: 0; right: 0;
-      height: 12px; background: var(--fire);
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 12px;
+      background: var(--fire);
       clip-path: polygon(0% 0%, 4% 100%, 8% 20%, 12% 100%, 16% 40%, 20% 100%, 24% 10%, 28% 100%, 32% 50%, 36% 100%, 40% 20%, 44% 100%, 48% 30%, 52% 100%, 56% 10%, 60% 100%, 64% 40%, 68% 100%, 72% 20%, 76% 100%, 80% 50%, 84% 100%, 88% 10%, 92% 100%, 96% 30%, 100% 100%, 100% 0%);
     }
+
     .cta-note .pin {
-      position: absolute; top: -11px; right: 30%;
-      width: 13px; height: 13px; border-radius: 50%;
+      position: absolute;
+      top: -11px;
+      right: 30%;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ffffaa, #cccc00);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.45);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
     }
+
     .cta-note .pin::after {
-      content: ''; position: absolute;
-      top: 100%; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 12px;
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 12px;
       background: linear-gradient(to bottom, #777, #333);
     }
+
     .cta-title {
       font-family: var(--serif);
-      font-size: 2rem; font-style: italic; font-weight: 600;
-      color: #fff; line-height: 1.2; margin-bottom: 14px;
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 14px;
     }
+
     .cta-text {
-      font-family: var(--sans); font-size: 0.82rem;
-      color: rgba(255,255,255,0.85); line-height: 1.75; margin-bottom: 22px;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.75;
+      margin-bottom: 22px;
     }
 
     /* Footer tape across bottom */
     .board-footer {
       margin-left: 72px;
       background: var(--ink);
-      border-top: 2px solid rgba(255,255,255,0.06);
+      border-top: 2px solid rgba(255, 255, 255, 0.06);
       padding: 16px 32px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .footer-p { font-family: var(--sans); font-size: 0.7rem; color: rgba(255,255,255,0.3); }
-    .footer-logo { font-family: var(--pixel); font-size: 0.38rem; color: var(--gold); letter-spacing: 2px; }
+
+    .footer-p {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .footer-logo {
+      font-family: var(--pixel);
+      font-size: 0.38rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
 
     /* ══════════════════════════════════
        SEARCH OVERLAY
     ══════════════════════════════════ */
     .search-overlay {
-      position: fixed; inset: 0; z-index: 2000;
-      background: rgba(26,18,8,0.96);
-      display: none; align-items: flex-start; justify-content: center;
-      padding-top: 120px; backdrop-filter: blur(8px);
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(26, 18, 8, 0.96);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 120px;
+      backdrop-filter: blur(8px);
     }
-    .search-overlay.open { display: flex; }
-    .search-box { width:100%; max-width:560px; padding:0 24px; }
-    .search-eyebrow { font-family:var(--pixel); font-size:0.32rem; color:var(--fire); letter-spacing:4px; margin-bottom:12px; }
+
+    .search-overlay.open {
+      display: flex;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 560px;
+      padding: 0 24px;
+    }
+
+    .search-eyebrow {
+      font-family: var(--pixel);
+      font-size: 0.32rem;
+      color: var(--fire);
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+    }
+
     .search-row {
-      display:flex; align-items:center; gap:12px;
-      border-bottom:1px solid rgba(245,237,216,0.3);
-      padding-bottom:14px; margin-bottom:24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(245, 237, 216, 0.3);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
     }
+
     .search-row input {
-      flex:1; background:none; border:none; outline:none;
-      font-family:var(--serif); font-size:1.6rem;
-      font-style:italic; color:var(--paper);
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-style: italic;
+      color: var(--paper);
     }
-    .search-row input::placeholder { color:rgba(245,237,216,0.3); }
-    .search-close-btn { font-family:var(--pixel); font-size:0.3rem; color:rgba(245,237,216,0.4); letter-spacing:2px; }
-    .search-results { display:flex; flex-direction:column; }
+
+    .search-row input::placeholder {
+      color: rgba(245, 237, 216, 0.3);
+    }
+
+    .search-close-btn {
+      font-family: var(--pixel);
+      font-size: 0.3rem;
+      color: rgba(245, 237, 216, 0.4);
+      letter-spacing: 2px;
+    }
+
+    .search-results {
+      display: flex;
+      flex-direction: column;
+    }
+
     .sr-item {
-      padding:13px 0; border-bottom:1px solid rgba(245,237,216,0.08);
-      display:flex; justify-content:space-between; align-items:center;
-      transition:padding-left 0.2s; text-decoration:none;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(245, 237, 216, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: padding-left 0.2s;
+      text-decoration: none;
     }
-    .sr-item:hover { padding-left:8px; }
-    .sr-cat { font-family:var(--pixel); font-size:0.26rem; color:var(--fire); letter-spacing:2px; margin-bottom:3px; }
-    .sr-title { font-family:var(--serif); font-size:1rem; font-style:italic; color:var(--paper); }
-    .sr-arr { color:rgba(245,237,216,0.3); }
-    .search-msg { font-family:var(--sans); font-size:0.82rem; color:rgba(245,237,216,0.35); text-align:center; padding:40px 0; }
+
+    .sr-item:hover {
+      padding-left: 8px;
+    }
+
+    .sr-cat {
+      font-family: var(--pixel);
+      font-size: 0.26rem;
+      color: var(--fire);
+      letter-spacing: 2px;
+      margin-bottom: 3px;
+    }
+
+    .sr-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--paper);
+    }
+
+    .sr-arr {
+      color: rgba(245, 237, 216, 0.3);
+    }
+
+    .search-msg {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: rgba(245, 237, 216, 0.35);
+      text-align: center;
+      padding: 40px 0;
+    }
 
     /* Reading progress */
     #progress-bar {
-      position:fixed; top:0; left:56px; right:0;
-      height:2px; width:0%;
-      background:linear-gradient(90deg,var(--fire),var(--gold));
-      z-index:9999; transition:width 0.08s linear;
+      position: fixed;
+      top: 0;
+      left: 56px;
+      right: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      z-index: 9999;
+      transition: width 0.08s linear;
     }
 
     /* Mobile hamburger in top-right when nav is collapsed */
     .mobile-nav-toggle {
       display: none;
-      position: fixed; top:12px; right:16px; z-index:1001;
-      width:38px; height:38px; border-radius:50%;
-      background:var(--ink); border:1px solid rgba(255,255,255,0.12);
-      color:rgba(255,255,255,0.6);
-      align-items:center; justify-content:center;
-      font-size:1rem; cursor:pointer;
+      position: fixed;
+      top: 12px;
+      right: 16px;
+      z-index: 1001;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--ink);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.6);
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
     }
 
     /* ══════════════════════════════════
        REVEAL
     ══════════════════════════════════ */
-    .reveal { opacity:0; transform:translateY(16px) rotate(var(--rot,0deg)); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.in { opacity:1; transform:translateY(0) rotate(var(--rot,0deg)); }
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px) rotate(var(--rot, 0deg));
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0) rotate(var(--rot, 0deg));
+    }
+
     /* But pinned posts keep their rotation on reveal */
-    .pinned-post.reveal { transform: rotate(var(--rot,0deg)) translateY(16px); }
-    .pinned-post.reveal.in { transform: rotate(var(--rot,0deg)) translateY(0); }
+    .pinned-post.reveal {
+      transform: rotate(var(--rot, 0deg)) translateY(16px);
+    }
+
+    .pinned-post.reveal.in {
+      transform: rotate(var(--rot, 0deg)) translateY(0);
+    }
 
     /* ══════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════ */
     @media (max-width: 860px) {
-      .board-bottom { grid-template-columns: 1fr 1fr; }
-      .cta-note { grid-column: span 2; }
-      .title-sheet { grid-template-columns: 1fr; }
-      .sheet-photo-col { min-height: 200px; margin-top: 24px; }
-      .pasted-photo:nth-child(1) { top: 0; left: 0; width: 110px; }
-      .pasted-photo:nth-child(2) { top: 70px; left: 80px; width: 100px; }
-      .pasted-photo:nth-child(3) { top: 140px; left: 10px; width: 115px; }
+      .board-bottom {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cta-note {
+        grid-column: span 2;
+      }
+
+      .title-sheet {
+        grid-template-columns: 1fr;
+      }
+
+      .sheet-photo-col {
+        min-height: 200px;
+        margin-top: 24px;
+      }
+
+      .pasted-photo:nth-child(1) {
+        top: 0;
+        left: 0;
+        width: 110px;
+      }
+
+      .pasted-photo:nth-child(2) {
+        top: 70px;
+        left: 80px;
+        width: 100px;
+      }
+
+      .pasted-photo:nth-child(3) {
+        top: 140px;
+        left: 10px;
+        width: 115px;
+      }
     }
 
     /* ══════════════════════════════════
@@ -1063,10 +1892,23 @@
        ≤640px: phone-first, beautiful
     ══════════════════════════════════ */
     @media (max-width: 640px) {
-      .nav-strip { display: none; }
-      .board { margin-left: 0; padding: 0 0 90px; }
-      .board-footer { margin-left: 0; padding: 16px 20px; }
-      #progress-bar { left: 0; }
+      .nav-strip {
+        display: none;
+      }
+
+      .board {
+        margin-left: 0;
+        padding: 0 0 90px;
+      }
+
+      .board-footer {
+        margin-left: 0;
+        padding: 16px 20px;
+      }
+
+      #progress-bar {
+        left: 0;
+      }
 
       /* ── HEADER: full-bleed on mobile ── */
       .board-header {
@@ -1082,49 +1924,72 @@
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
         padding: 24px 20px 20px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
         min-width: 0;
       }
 
       /* Text col fills full width */
       .sheet-text-col {
-        grid-column: 1; grid-row: 1;
+        grid-column: 1;
+        grid-row: 1;
       }
 
-      .sheet-eyebrow { font-size: 0.28rem; margin-bottom: 8px; }
+      .sheet-eyebrow {
+        font-size: 0.28rem;
+        margin-bottom: 8px;
+      }
 
       .sheet-title {
         font-size: clamp(1.8rem, 8vw, 2.6rem);
         margin-bottom: 10px;
       }
 
-      .sheet-sub { font-size: 0.8rem; line-height: 1.7; }
+      .sheet-sub {
+        font-size: 0.8rem;
+        line-height: 1.7;
+      }
 
       .sheet-ctas {
-        margin-top: 16px; gap: 8px;
+        margin-top: 16px;
+        gap: 8px;
       }
-      .btn-sticky { font-size: 0.9rem; padding: 7px 14px; transform: none; }
-      .btn-sticky:hover { transform: translateY(-1px); }
-      .btn-sticky.fire { transform: none; }
+
+      .btn-sticky {
+        font-size: 0.9rem;
+        padding: 7px 14px;
+        transform: none;
+      }
+
+      .btn-sticky:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-sticky.fire {
+        transform: none;
+      }
 
       /* ── PHOTO STRIP — horizontal scroll under title ── */
       .sheet-photo-col {
-        grid-column: 1; grid-row: 2;
+        grid-column: 1;
+        grid-row: 2;
         position: relative;
         min-height: 0;
         padding: 0;
-        margin: 20px -20px 0; /* bleed to edges */
+        margin: 20px -20px 0;
+        /* bleed to edges */
         overflow: visible;
       }
 
       /* Hide old absolute positioning — use flex strip instead */
       .sheet-photo-col .pasted-photo {
         position: relative !important;
-        top: auto !important; left: auto !important;
+        top: auto !important;
+        left: auto !important;
         transform: none !important;
         width: 130px !important;
         flex-shrink: 0;
       }
+
       .sheet-photo-col .pasted-photo:hover {
         transform: translateY(-4px) scale(1.04) !important;
         z-index: 5;
@@ -1142,7 +2007,11 @@
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
       }
-      .sheet-photo-col::-webkit-scrollbar { display: none; }
+
+      .sheet-photo-col::-webkit-scrollbar {
+        display: none;
+      }
+
       .sheet-photo-col .pasted-photo {
         scroll-snap-align: start;
       }
@@ -1153,9 +2022,12 @@
         max-width: 100%;
         margin: 0;
         padding: 16px 20px 18px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
       }
-      .sticky-about .pin { display: none; }
+
+      .sticky-about .pin {
+        display: none;
+      }
 
       /* ── TAPE FILTER — horizontal scroll ── */
       .tape-filter {
@@ -1167,8 +2039,15 @@
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
       }
-      .tape-filter::-webkit-scrollbar { display: none; }
-      .tape-tab { font-size: 0.26rem; padding: 5px 12px; }
+
+      .tape-filter::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tape-tab {
+        font-size: 0.26rem;
+        padding: 5px 12px;
+      }
 
       /* ── PINBOARD — 2 columns, tighter ── */
       .pinboard {
@@ -1176,16 +2055,42 @@
         gap: 14px 10px;
         padding: 0 14px;
       }
-      .pinned-post { transform: rotate(0deg) !important; }
+
+      .pinned-post {
+        transform: rotate(0deg) !important;
+      }
 
       /* Post cards — tighter on mobile */
-      .post-note-body { padding: 10px 12px 14px; }
-      .post-note-title { font-size: 0.95rem; }
-      .post-note-desc { font-size: 0.7rem; line-height: 1.6; }
-      .post-author-hand { font-size: 0.78rem; }
-      .post-read-hand { font-size: 0.75rem; }
-      .post-stickers { padding: 6px 12px 10px; gap: 3px; }
-      .sticker-btn { font-size: 0.72rem; padding: 2px 6px; }
+      .post-note-body {
+        padding: 10px 12px 14px;
+      }
+
+      .post-note-title {
+        font-size: 0.95rem;
+      }
+
+      .post-note-desc {
+        font-size: 0.7rem;
+        line-height: 1.6;
+      }
+
+      .post-author-hand {
+        font-size: 0.78rem;
+      }
+
+      .post-read-hand {
+        font-size: 0.75rem;
+      }
+
+      .post-stickers {
+        padding: 6px 12px 10px;
+        gap: 3px;
+      }
+
+      .sticker-btn {
+        font-size: 0.72rem;
+        padding: 2px 6px;
+      }
 
       /* ── BOTTOM SECTIONS ── */
       .board-bottom {
@@ -1194,17 +2099,36 @@
         gap: 20px;
         margin-top: 32px;
       }
-      .cta-note { grid-column: span 1; }
-      .about-note, .cta-note, .team-sticky { transform: rotate(0deg) !important; }
-      .cta-title { font-size: 1.5rem; }
-      .cta-text { font-size: 0.78rem; }
-      .note-text { font-size: 0.88rem; }
+
+      .cta-note {
+        grid-column: span 1;
+      }
+
+      .about-note,
+      .cta-note,
+      .team-sticky {
+        transform: rotate(0deg) !important;
+      }
+
+      .cta-title {
+        font-size: 1.5rem;
+      }
+
+      .cta-text {
+        font-size: 0.78rem;
+      }
+
+      .note-text {
+        font-size: 0.88rem;
+      }
 
       /* Light blobs off — saves GPU */
-      .light-blob { display: none; }
+      .light-blob {
+        display: none;
+      }
 
       /* What we make section */
-      .board > div:last-of-type {
+      .board>div:last-of-type {
         padding: 24px 14px 0;
         margin-top: 32px;
       }
@@ -1212,8 +2136,14 @@
 
     /* ── 420px and below — single column posts ── */
     @media (max-width: 420px) {
-      .pinboard { grid-template-columns: 1fr; padding: 0 14px; }
-      .sheet-photo-col .pasted-photo { width: 110px !important; }
+      .pinboard {
+        grid-template-columns: 1fr;
+        padding: 0 14px;
+      }
+
+      .sheet-photo-col .pasted-photo {
+        width: 110px !important;
+      }
     }
 
     /* ══════════════════════════════════
@@ -1224,27 +2154,35 @@
     .bottom-dock {
       display: none;
       position: fixed;
-      bottom: 0; left: 0; right: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
       height: 62px;
       background: linear-gradient(180deg, #1a1008 0%, #0e0804 100%);
-      border-top: 1px solid rgba(212,160,32,0.15);
+      border-top: 1px solid rgba(212, 160, 32, 0.15);
       /* Wood grain feel */
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.6), 0 -1px 0 rgba(212,160,32,0.08);
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.6), 0 -1px 0 rgba(212, 160, 32, 0.08);
     }
+
     /* Subtle grain texture on the dock */
     .bottom-dock::before {
       content: '';
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 62' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
     }
+
     /* Top highlight line — like worn wood edge */
     .bottom-dock::after {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(212,160,32,0.3) 20%, rgba(232,104,26,0.4) 50%, rgba(212,160,32,0.3) 80%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, rgba(212, 160, 32, 0.3) 20%, rgba(232, 104, 26, 0.4) 50%, rgba(212, 160, 32, 0.3) 80%, transparent 100%);
     }
 
     .dock-inner {
@@ -1253,7 +2191,8 @@
       justify-content: space-around;
       height: 100%;
       padding: 0 8px;
-      position: relative; z-index: 1;
+      position: relative;
+      z-index: 1;
     }
 
     .dock-item {
@@ -1270,20 +2209,28 @@
       border: none;
       padding: 0;
       position: relative;
-      transition: transform 0.18s cubic-bezier(0.34,1.4,0.64,1);
+      transition: transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1);
       -webkit-tap-highlight-color: transparent;
     }
-    .dock-item:active { transform: scale(0.88); }
+
+    .dock-item:active {
+      transform: scale(0.88);
+    }
 
     /* The icon — SVG burned into wood */
     .dock-icon {
-      width: 22px; height: 22px;
-      display: flex; align-items: center; justify-content: center;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.22s ease;
     }
+
     .dock-icon svg {
-      width: 100%; height: 100%;
-      stroke: rgba(255,255,255,0.32);
+      width: 100%;
+      height: 100%;
+      stroke: rgba(255, 255, 255, 0.32);
       fill: none;
       stroke-width: 1.5;
       stroke-linecap: round;
@@ -1296,7 +2243,7 @@
       font-family: var(--pixel);
       font-size: 0.18rem;
       letter-spacing: 0.5px;
-      color: rgba(255,255,255,0.25);
+      color: rgba(255, 255, 255, 0.25);
       transition: color 0.22s ease;
       white-space: nowrap;
     }
@@ -1304,18 +2251,22 @@
     /* Active state — glows amber like an ember */
     .dock-item.active .dock-icon svg {
       stroke: var(--fire);
-      filter: drop-shadow(0 0 5px rgba(232,104,26,0.7));
+      filter: drop-shadow(0 0 5px rgba(232, 104, 26, 0.7));
     }
+
     .dock-item.active .dock-label {
       color: var(--fire);
     }
+
     /* Active dot below icon */
     .dock-item.active::after {
       content: '';
       position: absolute;
-      bottom: 6px; left: 50%;
+      bottom: 6px;
+      left: 50%;
       transform: translateX(-50%);
-      width: 3px; height: 3px;
+      width: 3px;
+      height: 3px;
       border-radius: 50%;
       background: var(--fire);
       box-shadow: 0 0 6px var(--fire);
@@ -1323,108 +2274,167 @@
 
     /* Write button — center, bigger, fire colored */
     .dock-item.dock-write .dock-icon svg {
-      stroke: rgba(232,104,26,0.6);
+      stroke: rgba(232, 104, 26, 0.6);
     }
+
     .dock-item.dock-write .dock-icon {
-      width: 26px; height: 26px;
+      width: 26px;
+      height: 26px;
     }
 
     /* Search button in dock */
     .dock-item.dock-search .dock-icon svg {
-      stroke: rgba(255,255,255,0.32);
+      stroke: rgba(255, 255, 255, 0.32);
     }
 
     /* Auth avatar in dock */
     .dock-avatar {
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1.5px solid rgba(255,255,255,0.25);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
       display: block;
       transition: border-color 0.2s;
     }
+
     .dock-item.active .dock-avatar {
       border-color: var(--fire);
-      box-shadow: 0 0 8px rgba(232,104,26,0.5);
+      box-shadow: 0 0 8px rgba(232, 104, 26, 0.5);
     }
+
     .dock-avatar-placeholder {
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: rgba(232,104,26,0.3);
-      border: 1.5px solid rgba(255,255,255,0.2);
-      display: flex; align-items: center; justify-content: center;
+      background: rgba(232, 104, 26, 0.3);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--hand);
-      font-size: 0.75rem; color: rgba(255,255,255,0.7);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
       font-weight: 700;
     }
 
     @media (max-width: 640px) {
-      .bottom-dock { display: block; }
-      body { padding-bottom: 0; }
+      .bottom-dock {
+        display: block;
+      }
+
+      body {
+        padding-bottom: 0;
+      }
     }
 
     /* ── MOBILE TOP BAR ── */
     .mobile-topbar {
       display: none;
-      position: sticky; top: 0; z-index: 500;
-      background: rgba(18,12,8,0.97);
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: rgba(18, 12, 8, 0.97);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       padding: 0 16px;
       height: 48px;
       align-items: center;
       justify-content: space-between;
       overflow: visible;
     }
+
     .mobile-topbar::after {
       content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(212,160,32,0.2), transparent);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 160, 32, 0.2), transparent);
     }
+
     .mtb-logo {
-      font-family: var(--pixel); font-size: 0.48rem;
-      color: var(--gold); letter-spacing: 2px;
+      font-family: var(--pixel);
+      font-size: 0.48rem;
+      color: var(--gold);
+      letter-spacing: 2px;
       text-decoration: none;
-      text-shadow: 0 0 10px rgba(212,160,32,0.4);
+      text-shadow: 0 0 10px rgba(212, 160, 32, 0.4);
       animation: logoFlicker 7s infinite;
     }
+
     .mtb-right {
-      display: flex; align-items: center; gap: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
+
     .mtb-search-btn {
-      width: 34px; height: 34px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: none; color: rgba(255,255,255,0.45);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 1rem;
-      transition: all 0.2s; -webkit-tap-highlight-color: transparent;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: none;
+      color: rgba(255, 255, 255, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .mtb-search-btn:active { border-color: var(--gold); color: var(--gold); }
+
+    .mtb-search-btn:active {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
     @media (max-width: 640px) {
-      .mobile-topbar { display: flex; }
+      .mobile-topbar {
+        display: flex;
+      }
+
       /* Auth slot in mobile topbar — show avatar only */
       #authSlotMobile .auth-nav-btn {
-        font-size: 0; padding: 3px;
+        font-size: 0;
+        padding: 3px;
         border-radius: 50%;
-        width: 34px; height: 34px;
+        width: 34px;
+        height: 34px;
         justify-content: center;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
       }
-      #authSlotMobile .auth-nav-btn svg { margin: 0; }
+
+      #authSlotMobile .auth-nav-btn svg {
+        margin: 0;
+      }
+
       #authSlotMobile .auth-user-btn {
-        padding: 2px; border-radius: 50%;
-        border: 1.5px solid rgba(232,104,26,0.5);
+        padding: 2px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(232, 104, 26, 0.5);
         background: none;
       }
+
       #authSlotMobile .auth-user-btn img {
-        width: 28px; height: 28px; border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
       }
+
       #authSlotMobile .auth-user-name,
-      #authSlotMobile .auth-chevron { display: none; }
+      #authSlotMobile .auth-chevron {
+        display: none;
+      }
+
       #authSlotMobile .auth-dropdown {
-        right: 0; left: auto; top: 38px;
+        right: 0;
+        left: auto;
+        top: 38px;
         position: fixed;
         z-index: 9999;
       }
@@ -1432,612 +2442,694 @@
 
     /* ── MOBILE HEADER POLISH ── */
     @media (max-width: 640px) {
+
       /* Board starts right after topbar — no top padding */
-      .board { padding-top: 0; }
+      .board {
+        padding-top: 0;
+      }
 
       /* Title sheet: paper-white card full bleed */
       .title-sheet {
         border-radius: 0;
-        border-left: none; border-right: none;
+        border-left: none;
+        border-right: none;
       }
 
       /* Eyebrow smaller */
-      .sheet-eyebrow { font-size: 0.26rem; letter-spacing: 2px; }
+      .sheet-eyebrow {
+        font-size: 0.26rem;
+        letter-spacing: 2px;
+      }
 
       /* Photo strip label */
       .photo-strip-label {
-        font-family: var(--pixel); font-size: 0.22rem;
-        color: rgba(255,255,255,0.25); letter-spacing: 2px;
+        font-family: var(--pixel);
+        font-size: 0.22rem;
+        color: rgba(255, 255, 255, 0.25);
+        letter-spacing: 2px;
         padding: 8px 20px 4px;
       }
 
       /* Pinboard section label */
       .pinboard-section-label {
-        font-family: var(--pixel); font-size: 0.26rem;
-        color: rgba(255,255,255,0.2); letter-spacing: 3px;
-        padding: 0 14px; margin-bottom: 12px;
+        font-family: var(--pixel);
+        font-size: 0.26rem;
+        color: rgba(255, 255, 255, 0.2);
+        letter-spacing: 3px;
+        padding: 0 14px;
+        margin-bottom: 12px;
         display: block;
       }
 
       /* tape filter: sticky below topbar */
       .tape-filter {
-        position: sticky; top: 48px; z-index: 400;
-        background: rgba(18,12,8,0.95);
+        position: sticky;
+        top: 48px;
+        z-index: 400;
+        background: rgba(18, 12, 8, 0.95);
         backdrop-filter: blur(10px);
         padding: 8px 14px 8px;
         margin-bottom: 16px;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       }
 
       /* Pinned post photo aspect ratio on mobile */
-      .post-photo img { aspect-ratio: 3/2; }
-      .post-noimg { aspect-ratio: 3/2; }
+      .post-photo img {
+        aspect-ratio: 3/2;
+      }
+
+      .post-noimg {
+        aspect-ratio: 3/2;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div id="progress-bar"></div>
+  <div id="progress-bar"></div>
 
-<!-- MOBILE TOP BAR — only shows on ≤640px -->
-<div class="mobile-topbar">
-  <a href="index.html" class="mtb-logo">HlYWoR</a>
-  <div class="mtb-right">
-    <div id="authSlotMobile"></div>
-    <button class="mtb-search-btn" id="mtbSearchBtn">⌕</button>
-  </div>
-</div>
-
-<!-- Immersive atmosphere layers -->
-<div class="light-blob light-blob-1"></div>
-<div class="light-blob light-blob-2"></div>
-<div class="light-blob light-blob-3"></div>
-<div class="embers" id="embers"></div>
-
-<!-- VERTICAL NAV STRIP -->
-<nav class="nav-strip">
-  <a href="index.html" class="nav-logo">HlYWoR</a>
-  <div class="nav-divider"></div>
-  <div class="nav-icon-links">
-    <a href="about.html" class="nav-icon-link">ABOUT</a>
-    <a href="suggestion.html" class="nav-icon-link">SUGGEST</a>
-    <a href="goal.html" class="nav-icon-link">GOALS</a>
-    <a href="blogs.html" class="nav-icon-link">ALL POSTS</a>
-  </div>
-  <div class="nav-bottom">
-    <button class="nav-btn" id="searchOpenBtn" aria-label="Search">⌕</button>
-    <div id="authSlot" style="display:flex;flex-direction:column;align-items:center;width:100%;margin-top:4px"></div>
-  </div>
-</nav>
-
-<!-- AUTHOR POPUP -->
-<div class="author-popup-overlay" id="authorPopupOverlay">
-  <div class="author-popup" id="authorPopup">
-    <div class="popup-handle-wrap"><div class="popup-handle"></div></div>
-    <div class="popup-inner" id="authorPopupInner">
-      <div class="popup-loading">Loading...</div>
+  <!-- MOBILE TOP BAR — only shows on ≤640px -->
+  <div class="mobile-topbar">
+    <a href="index.html" class="mtb-logo">HlYWoR</a>
+    <div class="mtb-right">
+      <div id="authSlotMobile"></div>
+      <button class="mtb-search-btn" id="mtbSearchBtn">⌕</button>
     </div>
   </div>
-</div>
 
-<!-- BOTTOM DOCK — mobile nav -->
-<div class="bottom-dock">
-  <div class="dock-inner">
+  <!-- Immersive atmosphere layers -->
+  <div class="light-blob light-blob-1"></div>
+  <div class="light-blob light-blob-2"></div>
+  <div class="light-blob light-blob-3"></div>
+  <div class="embers" id="embers"></div>
 
-    <!-- Home -->
-    <a href="index.html" class="dock-item active" data-dock="home">
-      <div class="dock-icon">
-        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
-      </div>
-      <span class="dock-label">HOME</span>
-    </a>
-
-    <!-- Posts -->
-    <a href="posts.html" class="dock-item" data-dock="posts">
-      <div class="dock-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-      </div>
-      <span class="dock-label">POSTS</span>
-    </a>
-
-    <!-- Write — center, prominent -->
-    <a href="submit.html" class="dock-item dock-write" data-dock="write" id="dockWriteBtn">
-      <div class="dock-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z"/></svg>
-      </div>
-      <span class="dock-label">WRITE</span>
-    </a>
-
-    <!-- Search -->
-    <button class="dock-item dock-search" data-dock="search" id="dockSearchBtn">
-      <div class="dock-icon">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-      </div>
-      <span class="dock-label">SEARCH</span>
-    </button>
-
-    <!-- Me / Auth -->
-    <button class="dock-item" data-dock="me" id="dockMeBtn">
-      <div class="dock-icon" id="dockMeIcon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      </div>
-      <span class="dock-label" id="dockMeLabel">ME</span>
-    </button>
-
-  </div>
-</div>
-
-
-<!-- SEARCH OVERLAY -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="search-box">
-    <div class="search-eyebrow">// SEARCH THE BOARD</div>
-    <div class="search-row">
-      <input type="text" id="searchInput" placeholder="what are you looking for..." autocomplete="off"/>
-      <button class="search-close-btn" id="searchCloseBtn">close</button>
+  <!-- VERTICAL NAV STRIP -->
+  <nav class="nav-strip">
+    <a href="index.html" class="nav-logo">HlYWoR</a>
+    <div class="nav-divider"></div>
+    <div class="nav-icon-links">
+      <a href="about.html" class="nav-icon-link">ABOUT</a>
+      <a href="suggestion.html" class="nav-icon-link">SUGGEST</a>
+      <a href="goal.html" class="nav-icon-link">GOALS</a>
+      <a href="blogs.html" class="nav-icon-link">ALL POSTS</a>
     </div>
-    <div class="search-results" id="searchResults">
-      <div class="search-msg">Start typing...</div>
+    <div class="nav-bottom">
+      <button class="nav-btn" id="searchOpenBtn" aria-label="Search">⌕</button>
+      <div id="authSlot" style="display:flex;flex-direction:column;align-items:center;width:100%;margin-top:4px"></div>
+    </div>
+  </nav>
+
+  <!-- AUTHOR POPUP -->
+  <div class="author-popup-overlay" id="authorPopupOverlay">
+    <div class="author-popup" id="authorPopup">
+      <div class="popup-handle-wrap">
+        <div class="popup-handle"></div>
+      </div>
+      <div class="popup-inner" id="authorPopupInner">
+        <div class="popup-loading">Loading...</div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- THE BOARD -->
-<div class="board">
+  <!-- BOTTOM DOCK — mobile nav -->
+  <div class="bottom-dock">
+    <div class="dock-inner">
 
-  <!-- HEADER — title sheet + sticky note -->
-  <div class="board-header">
-    <div class="title-sheet reveal">
-      <div class="pin"></div>
-      <span class="tape-label">EST. 2025</span>
-
-      <!-- LEFT: text -->
-      <div class="sheet-text-col">
-        <div>
-          <div class="sheet-eyebrow">// GUWAHATI, ASSAM</div>
-          <h1 class="sheet-title">A place to<br><em>open up.</em></h1>
-          <p class="sheet-sub">College life, random thoughts, movie reviews, stories we had to write down. This is our open notebook. You're welcome here.</p>
+      <!-- Home -->
+      <a href="index.html" class="dock-item active" data-dock="home">
+        <div class="dock-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z" />
+            <path d="M9 21V12h6v9" />
+          </svg>
         </div>
-        <div class="sheet-ctas">
-          <a href="submit.html" class="btn-sticky fire">Share your story →</a>
-          <a href="#posts" class="btn-sticky">Start reading</a>
-          <a href="character.html" class="btn-sticky fire">Us →</a>
-        </div>
-      </div>
+        <span class="dock-label">HOME</span>
+      </a>
 
-      <!-- RIGHT: pasted photos -->
-      <div class="sheet-photo-col">
-        <!-- Photo 1 -->
-        <div class="pasted-photo">
-          <div class="photo-inner">
-            <span class="photo-inner-label">
-              <a href="gallery.html"><img src="img/suvm1.jpg" alt=""></a>
+      <!-- Posts -->
+      <a href="posts.html" class="dock-item" data-dock="posts">
+        <div class="dock-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <path d="M3 9h18M9 21V9" />
+          </svg>
+        </div>
+        <span class="dock-label">POSTS</span>
+      </a>
+
+      <!-- Write — center, prominent -->
+      <a href="submit.html" class="dock-item dock-write" data-dock="write" id="dockWriteBtn">
+        <div class="dock-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7" />
+            <path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z" />
+          </svg>
+        </div>
+        <span class="dock-label">WRITE</span>
+      </a>
+
+      <!-- Search -->
+      <button class="dock-item dock-search" data-dock="search" id="dockSearchBtn">
+        <div class="dock-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+        </div>
+        <span class="dock-label">SEARCH</span>
+      </button>
+
+      <!-- Me / Auth -->
+      <button class="dock-item" data-dock="me" id="dockMeBtn">
+        <div class="dock-icon" id="dockMeIcon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+          </svg>
+        </div>
+        <span class="dock-label" id="dockMeLabel">ME</span>
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <div class="search-eyebrow">// SEARCH THE BOARD</div>
+      <div class="search-row">
+        <input type="text" id="searchInput" placeholder="what are you looking for..." autocomplete="off" />
+        <button class="search-close-btn" id="searchCloseBtn">close</button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-msg">Start typing...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE BOARD -->
+  <div class="board">
+
+    <!-- HEADER — title sheet + sticky note -->
+    <div class="board-header">
+      <div class="title-sheet reveal">
+        <div class="pin"></div>
+        <span class="tape-label">EST. 2025</span>
+
+        <!-- LEFT: text -->
+        <div class="sheet-text-col">
+          <div>
+            <div class="sheet-eyebrow">// GUWAHATI, ASSAM</div>
+            <h1 class="sheet-title">A place to<br><em>open up.</em></h1>
+            <p class="sheet-sub">Some things don't fit in a conversation. <br>
+              College days, 2am thoughts, things that happened, things that hurt — this is where they go. <br>
+              Read ours. Write yours. Even if you have no one to tell it to.</p>
+          </div>
+          <div class="sheet-ctas">
+            <a href="submit.html" class="btn-sticky fire">Share your story →</a>
+            <a href="#posts" class="btn-sticky">Start reading</a>
+            <a href="character.html" class="btn-sticky fire">Us →</a>
+          </div>
+        </div>
+
+        <!-- RIGHT: pasted photos -->
+        <div class="sheet-photo-col">
+          <!-- Photo 1 -->
+          <div class="pasted-photo">
+            <div class="photo-inner">
+              <span class="photo-inner-label">
+                <a href="gallery.html"><img src="img/suvm1.jpg" alt=""></a>
               </span>
+            </div>
+            <span class="photo-caption">campus days ☀️</span>
           </div>
-          <span class="photo-caption">campus days ☀️</span>
+          <!-- Photo 2 -->
+          <div class="pasted-photo">
+            <div class="photo-inner" style="background:#e8e0cc;">
+              <span class="photo-inner-label">
+                <a href="gallery.html"><img src="img/pawn1.jpg" alt=""></a>
+              </span>
+            </div>
+            <span class="photo-caption">late nights 🌙</span>
+          </div>
+          <!-- Photo 3 -->
+          <div class="pasted-photo">
+            <div class="photo-inner" style="background:#dde8d8;">
+              <span class="photo-inner-label">
+                <a href="gallery.html"> <img src="img/pawn2.jpg" alt=""> </a>
+              </span>
+            </div>
+            <span class="photo-caption">good times 📸</span>
+          </div>
         </div>
-        <!-- Photo 2 -->
-        <div class="pasted-photo">
-          <div class="photo-inner" style="background:#e8e0cc;">
-            <span class="photo-inner-label">
-              <a href="gallery.html"><img src="img/pawn1.jpg" alt=""></a>
-             </span>
-          </div>
-          <span class="photo-caption">late nights 🌙</span>
+      </div>
+
+      <div class="sticky-about reveal">
+        <div class="pin"></div>
+        <p>This started as our notebook. Things we lived through, felt too hard to just forget, or needed to write down
+          at midnight. <br>
+          hlywor exists because we had things we didn't know what to do with — so we wrote them down.</p>
+
+        <p style="margin-top:8px">If you're carrying something like that too — a story, a thought, anything — you can
+          leave it here.</p>
+        <span class="sticky-sign">— Pawan & Suvam</span>
+      </div>
+    </div>
+
+    <!-- TAPE FILTER -->
+    <div class="tape-filter reveal" id="tagBar">
+      <button class="tape-tab active" data-tag="all">ALL</button>
+      <button class="tape-tab" data-tag="story">STORY</button>
+      <button class="tape-tab" data-tag="movies">MOVIES</button>
+      <button class="tape-tab" data-tag="books">BOOKS</button>
+      <button class="tape-tab" data-tag="thoughts">THOUGHTS</button>
+      <button class="tape-tab" data-tag="college">COLLEGE</button>
+      <button class="tape-tab" data-tag="news">NEWS</button>
+    </div>
+
+    <!-- PINBOARD — posts -->
+    <div class="pinboard" id="postsGrid">
+      <!-- Skeletons -->
+      <div class="skel-post">
+        <div class="skel-img-box shimmer"></div>
+        <div class="skel-body-box">
+          <div class="skel-line shimmer" style="width:45%"></div>
+          <div class="skel-line shimmer" style="width:80%"></div>
+          <div class="skel-line shimmer" style="width:60%"></div>
         </div>
-        <!-- Photo 3 -->
-        <div class="pasted-photo">
-          <div class="photo-inner" style="background:#dde8d8;">
-            <span class="photo-inner-label">
-             <a href="gallery.html"> <img src="img/pawn2.jpg" alt=""> </a>
-            </span>
-          </div>
-          <span class="photo-caption">good times 📸</span>
+      </div>
+      <div class="skel-post">
+        <div class="skel-img-box shimmer"></div>
+        <div class="skel-body-box">
+          <div class="skel-line shimmer" style="width:40%"></div>
+          <div class="skel-line shimmer" style="width:75%"></div>
+          <div class="skel-line shimmer" style="width:55%"></div>
+        </div>
+      </div>
+      <div class="skel-post">
+        <div class="skel-img-box shimmer"></div>
+        <div class="skel-body-box">
+          <div class="skel-line shimmer" style="width:35%"></div>
+          <div class="skel-line shimmer" style="width:70%"></div>
+          <div class="skel-line shimmer" style="width:65%"></div>
+        </div>
+      </div>
+      <div class="skel-post">
+        <div class="skel-img-box shimmer"></div>
+        <div class="skel-body-box">
+          <div class="skel-line shimmer" style="width:50%"></div>
+          <div class="skel-line shimmer" style="width:65%"></div>
+          <div class="skel-line shimmer" style="width:45%"></div>
         </div>
       </div>
     </div>
 
-    <div class="sticky-about reveal">
-      <div class="pin"></div>
-      <p>hlywor.fun is kind of like our open notebook. We write about our days, college life, and things that felt real to us.</p>
-      <p style="margin-top:8px">Not perfect, not planned — just honest.</p>
-      <span class="sticky-sign">— Pawan & Suvam</span>
-    </div>
-  </div>
+    <!-- BOTTOM — About, Team, CTA -->
+    <div class="board-bottom" style="margin-top:56px">
 
-  <!-- TAPE FILTER -->
-  <div class="tape-filter reveal" id="tagBar">
-    <button class="tape-tab active" data-tag="all">ALL</button>
-    <button class="tape-tab" data-tag="story">STORY</button>
-    <button class="tape-tab" data-tag="movies">MOVIES</button>
-    <button class="tape-tab" data-tag="books">BOOKS</button>
-    <button class="tape-tab" data-tag="thoughts">THOUGHTS</button>
-    <button class="tape-tab" data-tag="college">COLLEGE</button>
-    <button class="tape-tab" data-tag="news">NEWS</button>
-  </div>
-
-  <!-- PINBOARD — posts -->
-  <div class="pinboard" id="postsGrid">
-    <!-- Skeletons -->
-    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:60%"></div></div></div>
-    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:75%"></div><div class="skel-line shimmer" style="width:55%"></div></div></div>
-    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:70%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
-    <div class="skel-post"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:50%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:45%"></div></div></div>
-  </div>
-
-  <!-- BOTTOM — About, Team, CTA -->
-  <div class="board-bottom" style="margin-top:56px">
-
-    <!-- About note -->
-    <div class="about-note reveal">
-      <div class="pin"></div>
-      <div class="note-header">// WHO WE ARE</div>
-      <p class="note-text">
-        <strong>hlywor.fun</strong> is kind of like our open notebook. We write about our days, college life, random thoughts, movies we watch, and things we've learned along the way.<br><br>
-        Sometimes it's deep, sometimes it's just something that made us laugh. We also share stories from others and moments that feel real.<br><br>
-        It's not about being perfect — it's just us, writing what feels right.
-      </p>
-    </div>
-
-    <!-- Team stickies -->
-    <div class="team-stickies reveal">
-      <a href="pawan.html" class="team-sticky">
+      <!-- About note -->
+      <div class="about-note reveal">
         <div class="pin"></div>
-        <div class="sticky-name">Pawan Limbu</div>
-        <div class="sticky-role">DEVELOPER · WRITER</div>
-        <p class="sticky-bio">Writing what feels right, building what needs to exist.</p>
-        <span class="sticky-link">See posts →</span>
-      </a>
-      <a href="suv.html" class="team-sticky">
+        <div class="note-header">// WHO WE ARE</div>
+        <p class="note-text">
+          <strong>hlywor.fun</strong> is kind of like our open notebook. We write about our days, college life, random
+          thoughts, movies we watch, and things we've learned along the way.<br><br>
+          Sometimes it's deep, sometimes it's just something that made us laugh. We also share stories from others and
+          moments that feel real.<br><br>
+          It's not about being perfect — it's just us, writing what feels right.
+        </p>
+      </div>
+
+      <!-- Team stickies -->
+      <div class="team-stickies reveal">
+        <a href="pawan.html" class="team-sticky">
+          <div class="pin"></div>
+          <div class="sticky-name">Pawan Limbu</div>
+          <div class="sticky-role">DEVELOPER · WRITER</div>
+          <p class="sticky-bio">Writing what feels right, building what needs to exist.</p>
+          <span class="sticky-link">See posts →</span>
+        </a>
+        <a href="suv.html" class="team-sticky">
+          <div class="pin"></div>
+          <div class="sticky-name">Suvam Limbu</div>
+          <div class="sticky-role">DEVELOPER · WRITER</div>
+          <p class="sticky-bio">Turning late night thoughts into something worth reading.</p>
+          <span class="sticky-link">See posts →</span>
+        </a>
+      </div>
+
+      <!-- CTA note -->
+      <div class="cta-note reveal">
         <div class="pin"></div>
-        <div class="sticky-name">Suvam Limbu</div>
-        <div class="sticky-role">DEVELOPER · WRITER</div>
-        <p class="sticky-bio">Turning late night thoughts into something worth reading.</p>
-        <span class="sticky-link">See posts →</span>
-      </a>
+        <div class="cta-title">Got a story?</div>
+        <p class="cta-text">Something you've been meaning to say. Something that happened at 3am. Something you felt so
+          hard you had to write it down. This is the place.</p>
+        <a href="submit.html" class="btn-sticky" style="background:#fff;color:var(--fire);display:inline-block">Pin your
+          story →</a>
+      </div>
+
     </div>
 
-    <!-- CTA note -->
-    <div class="cta-note reveal">
-      <div class="pin"></div>
-      <div class="cta-title">Got a story?</div>
-      <p class="cta-text">Something you've been meaning to say. Something that happened at 3am. Something you felt so hard you had to write it down. This is the place.</p>
-      <a href="submit.html" class="btn-sticky" style="background:#fff;color:var(--fire);display:inline-block">Pin your story →</a>
+    <!-- Our Work channels — compact row at the very bottom -->
+    <div style="margin-top:40px;border-top:1px dashed rgba(245,237,216,0.1);padding-top:32px">
+      <div
+        style="font-family:var(--pixel);font-size:0.3rem;color:rgba(245,237,216,0.3);letter-spacing:4px;margin-bottom:20px">
+        // WHAT WE MAKE</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <a href="story.html" class="btn-sticky" style="font-size:0.85rem;transform:rotate(-0.8deg)">📖 Story</a>
+        <a href="movies.html" class="btn-sticky"
+          style="background:var(--tape-b);color:#fff;font-size:0.85rem;transform:rotate(0.5deg)">🎬 Movies</a>
+        <a href="gallery.html" class="btn-sticky"
+          style="background:var(--tape-g);color:#fff;font-size:0.85rem;transform:rotate(-1deg)">📷 Gallery</a>
+        <a href="book.html" class="btn-sticky"
+          style="background:var(--tape-p);color:#fff;font-size:0.85rem;transform:rotate(0.8deg)">📚 Books</a>
+        <a href="news.html" class="btn-sticky"
+          style="background:var(--tape-r);color:#fff;font-size:0.85rem;transform:rotate(-0.5deg)">📰 News</a>
+        <a href="utility.html" class="btn-sticky"
+          style="background:var(--ink2);color:var(--paper);font-size:0.85rem;transform:rotate(1deg)">🛠 Utility</a>
+      </div>
     </div>
 
-  </div>
+  </div><!-- /board -->
 
-  <!-- Our Work channels — compact row at the very bottom -->
-  <div style="margin-top:40px;border-top:1px dashed rgba(245,237,216,0.1);padding-top:32px">
-    <div style="font-family:var(--pixel);font-size:0.3rem;color:rgba(245,237,216,0.3);letter-spacing:4px;margin-bottom:20px">// WHAT WE MAKE</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px">
-      <a href="story.html" class="btn-sticky" style="font-size:0.85rem;transform:rotate(-0.8deg)">📖 Story</a>
-      <a href="movies.html" class="btn-sticky" style="background:var(--tape-b);color:#fff;font-size:0.85rem;transform:rotate(0.5deg)">🎬 Movies</a>
-      <a href="gallery.html" class="btn-sticky" style="background:var(--tape-g);color:#fff;font-size:0.85rem;transform:rotate(-1deg)">📷 Gallery</a>
-      <a href="book.html" class="btn-sticky" style="background:var(--tape-p);color:#fff;font-size:0.85rem;transform:rotate(0.8deg)">📚 Books</a>
-      <a href="news.html" class="btn-sticky" style="background:var(--tape-r);color:#fff;font-size:0.85rem;transform:rotate(-0.5deg)">📰 News</a>
-      <a href="utility.html" class="btn-sticky" style="background:var(--ink2);color:var(--paper);font-size:0.85rem;transform:rotate(1deg)">🛠 Utility</a>
-    </div>
-  </div>
+  <footer class="board-footer">
+    <p class="footer-p">© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+    <span class="footer-logo">HlYWoR</span>
+  </footer>
 
-</div><!-- /board -->
+  <!-- ══════════════ JS ══════════════ -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getFirestore, collection, query, orderBy, onSnapshot, where,
+      getDocs, addDoc, deleteDoc, doc, getDoc, limit,
+      serverTimestamp, getCountFromServer
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { injectAuthNav, requireLogin, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
-<footer class="board-footer">
-  <p class="footer-p">© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
-  <span class="footer-logo">HlYWoR</span>
-</footer>
-
-<!-- ══════════════ JS ══════════════ -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore, collection, query, orderBy, onSnapshot, where,
-  getDocs, addDoc, deleteDoc, doc, getDoc, limit,
-  serverTimestamp, getCountFromServer
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { injectAuthNav, requireLogin, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
-
-// ════════════════════════════════════
-// 🔧 PASTE YOUR FIREBASE CONFIG HERE
-// ════════════════════════════════════
-const firebaseConfig = {
-  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
-  authDomain: "hlywor.firebaseapp.com",
-  projectId: "hlywor",
-  storageBucket: "hlywor.firebasestorage.app",
-  messagingSenderId: "697637160825",
-  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
-  measurementId: "G-MQDXDWHLX8"
-};
+    // ════════════════════════════════════
+    // 🔧 PASTE YOUR FIREBASE CONFIG HERE
+    // ════════════════════════════════════
+    const firebaseConfig = {
+      apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+      authDomain: "hlywor.firebaseapp.com",
+      projectId: "hlywor",
+      storageBucket: "hlywor.firebasestorage.app",
+      messagingSenderId: "697637160825",
+      appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+      measurementId: "G-MQDXDWHLX8"
+    };
 
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-/* ── Auth nav ── */
-injectAuthNav(document.getElementById('authSlot'));
-// Mirror into mobile topbar — compact mode (avatar only, no name)
-injectAuthNav(document.getElementById('authSlotMobile'), { compact: true });
+    /* ── Auth nav ── */
+    injectAuthNav(document.getElementById('authSlot'));
+    // Mirror into mobile topbar — compact mode (avatar only, no name)
+    injectAuthNav(document.getElementById('authSlotMobile'), { compact: true });
 
-/* ── Mobile topbar search ── */
-document.getElementById('mtbSearchBtn')?.addEventListener('click', () => openSearch());
-/* ── Floating embers ── */
-const emberContainer = document.getElementById('embers');
-if (emberContainer) {
-  for (let i = 0; i < 22; i++) {
-    const e = document.createElement('div');
-    e.className = 'ember';
-    const size = 1 + Math.random() * 2.5;
-    e.style.cssText = `left:${10+Math.random()*80}%;bottom:0;width:${size}px;height:${size}px;animation-duration:${7+Math.random()*12}s;animation-delay:${Math.random()*10}s;--edrift:${(Math.random()-0.5)*100}px;opacity:0;`;
-    emberContainer.appendChild(e);
-  }
-}
-
-/* ── Mouse parallax on light blobs ── */
-document.addEventListener('mousemove', ev => {
-  const px = (ev.clientX / window.innerWidth - 0.5) * 28;
-  const py = (ev.clientY / window.innerHeight - 0.5) * 28;
-  document.querySelectorAll('.light-blob').forEach((b, i) => {
-    const f = (i + 1) * 0.4;
-    b.style.transform = `translate(${px*f}px, ${py*f}px)`;
-  });
-}, { passive: true });
-
-/* Reading progress */
-window.addEventListener('scroll', () => {
-  const d = document.documentElement;
-  document.getElementById('progress-bar').style.width =
-    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
-}, { passive: true });
-
-/* ── Bottom dock ── */
-// Write button — require login
-document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
-  e.preventDefault();
-  const user = await requireLogin('Sign in to share your story on HlyWor.');
-  if (user) window.location.href = 'submit.html';
-});
-
-// Search button
-document.getElementById('dockSearchBtn')?.addEventListener('click', () => openSearch());
-
-// Me button — go to dashboard if signed in, show login if not
-document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
-  if (currentUser) {
-    window.location.href = 'dashboard.html';
-  } else {
-    const user = await requireLogin('Sign in to access your board.');
-    if (user) window.location.href = 'dashboard.html';
-  }
-});
-
-// Update dock Me icon when auth state changes
-onAuthChange(user => {
-  const icon = document.getElementById('dockMeIcon');
-  const label = document.getElementById('dockMeLabel');
-  if (!icon) return;
-  if (user) {
-    if (user.photoURL) {
-      icon.innerHTML = `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer">`;
-    } else {
-      const initial = (user.displayName || user.email || 'U')[0].toUpperCase();
-      icon.innerHTML = `<div class="dock-avatar-placeholder">${initial}</div>`;
+    /* ── Mobile topbar search ── */
+    document.getElementById('mtbSearchBtn')?.addEventListener('click', () => openSearch());
+    /* ── Floating embers ── */
+    const emberContainer = document.getElementById('embers');
+    if (emberContainer) {
+      for (let i = 0; i < 22; i++) {
+        const e = document.createElement('div');
+        e.className = 'ember';
+        const size = 1 + Math.random() * 2.5;
+        e.style.cssText = `left:${10 + Math.random() * 80}%;bottom:0;width:${size}px;height:${size}px;animation-duration:${7 + Math.random() * 12}s;animation-delay:${Math.random() * 10}s;--edrift:${(Math.random() - 0.5) * 100}px;opacity:0;`;
+        emberContainer.appendChild(e);
+      }
     }
-    if (label) label.textContent = (user.displayName||'').split(' ')[0].slice(0,5) || 'ME';
-  } else {
-    icon.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
-    if (label) label.textContent = 'ME';
-  }
-});
 
-/* Scroll reveal */
-const ro = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
-    const idx = siblings.indexOf(e.target);
-    setTimeout(() => e.target.classList.add('in'), idx * 70);
-    ro.unobserve(e.target);
-  });
-}, { threshold: 0.06 });
-document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+    /* ── Mouse parallax on light blobs ── */
+    document.addEventListener('mousemove', ev => {
+      const px = (ev.clientX / window.innerWidth - 0.5) * 28;
+      const py = (ev.clientY / window.innerHeight - 0.5) * 28;
+      document.querySelectorAll('.light-blob').forEach((b, i) => {
+        const f = (i + 1) * 0.4;
+        b.style.transform = `translate(${px * f}px, ${py * f}px)`;
+      });
+    }, { passive: true });
 
-/* ── Posts — live from Firestore ── */
-let allPosts = [];
-let activeTag = 'all';
+    /* Reading progress */
+    window.addEventListener('scroll', () => {
+      const d = document.documentElement;
+      document.getElementById('progress-bar').style.width =
+        (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+    }, { passive: true });
 
-/* Cat → tape color class */
-function catClass(cat) {
-  const map = { story:'cat-story', movies:'cat-movies', books:'cat-books', thoughts:'cat-thoughts', college:'cat-college', news:'cat-news' };
-  return map[cat] || 'cat-default';
-}
+    /* ── Bottom dock ── */
+    // Write button — require login
+    document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
+      e.preventDefault();
+      const user = await requireLogin('Sign in to share your story on HlyWor.');
+      if (user) window.location.href = 'submit.html';
+    });
 
-/* Live Firestore listener */
-function startLiveFeed() {
-  const q = query(
-    collection(db, 'posts'),
-    where('status', '==', 'published'),
-    orderBy('createdAt', 'desc')
-  );
+    // Search button
+    document.getElementById('dockSearchBtn')?.addEventListener('click', () => openSearch());
 
-  onSnapshot(q, snap => {
-    allPosts = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    renderPosts();
-  }, err => {
-    console.error('Firestore error:', err);
-    document.getElementById('postsGrid').innerHTML =
-      `<div class="no-posts">Couldn't load posts.\nCheck Firebase config.</div>`;
-  });
-}
-
-startLiveFeed();
-
-/* ── Reaction helpers (Firestore-synced) ── */
-const EMOJIS = ['🔥','❤️','😭'];
-
-async function loadReactions(postSlug) {
-  // Returns {emoji: {count, userReacted}} for current user
-  const result = {};
-  for (const e of EMOJIS) result[e] = { count: 0, userReacted: false };
-  try {
-    const snap = await getDocs(query(
-      collection(db,'reactions'),
-      where('postSlug','==', postSlug)
-    ));
-    snap.docs.forEach(d => {
-      const { emoji, uid } = d.data();
-      if (result[emoji]) {
-        result[emoji].count++;
-        if (currentUser && uid === currentUser.uid) result[emoji].userReacted = true;
+    // Me button — go to dashboard if signed in, show login if not
+    document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
+      if (currentUser) {
+        window.location.href = 'dashboard.html';
+      } else {
+        const user = await requireLogin('Sign in to access your board.');
+        if (user) window.location.href = 'dashboard.html';
       }
     });
-  } catch(e) { /* index may not exist yet — fail silently */ }
-  return result;
-}
 
-async function toggleReaction(postSlug, emoji, btn) {
-  if (!currentUser) {
-    showLoginModal({ prompt: 'Sign in to react to posts.' });
-    return;
-  }
-  const countEl = btn.querySelector('.sticker-count');
-  const isReacted = btn.classList.contains('reacted');
+    // Update dock Me icon when auth state changes
+    onAuthChange(user => {
+      const icon = document.getElementById('dockMeIcon');
+      const label = document.getElementById('dockMeLabel');
+      if (!icon) return;
+      if (user) {
+        if (user.photoURL) {
+          icon.innerHTML = `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer">`;
+        } else {
+          const initial = (user.displayName || user.email || 'U')[0].toUpperCase();
+          icon.innerHTML = `<div class="dock-avatar-placeholder">${initial}</div>`;
+        }
+        if (label) label.textContent = (user.displayName || '').split(' ')[0].slice(0, 5) || 'ME';
+      } else {
+        icon.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
+        if (label) label.textContent = 'ME';
+      }
+    });
 
-  // Optimistic UI
-  btn.classList.toggle('reacted', !isReacted);
-  const cur = parseInt(countEl.textContent) || 0;
-  countEl.textContent = isReacted ? Math.max(0, cur - 1) : cur + 1;
+    /* Scroll reveal */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = siblings.indexOf(e.target);
+        setTimeout(() => e.target.classList.add('in'), idx * 70);
+        ro.unobserve(e.target);
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-  try {
-    if (isReacted) {
-      // Remove reaction
-      const snap = await getDocs(query(
-        collection(db,'reactions'),
-        where('postSlug','==', postSlug),
-        where('emoji','==', emoji),
-        where('uid','==', currentUser.uid),
-        limit(1)
-      ));
-      if (!snap.empty) await deleteDoc(doc(db,'reactions', snap.docs[0].id));
-    } else {
-      await addDoc(collection(db,'reactions'), {
-        postSlug, emoji,
-        uid: currentUser.uid,
-        createdAt: serverTimestamp()
+    /* ── Posts — live from Firestore ── */
+    let allPosts = [];
+    let activeTag = 'all';
+
+    /* Cat → tape color class */
+    function catClass(cat) {
+      const map = { story: 'cat-story', movies: 'cat-movies', books: 'cat-books', thoughts: 'cat-thoughts', college: 'cat-college', news: 'cat-news' };
+      return map[cat] || 'cat-default';
+    }
+
+    /* Live Firestore listener */
+    function startLiveFeed() {
+      const q = query(
+        collection(db, 'posts'),
+        where('status', '==', 'published'),
+        orderBy('createdAt', 'desc')
+      );
+
+      onSnapshot(q, snap => {
+        allPosts = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderPosts();
+      }, err => {
+        console.error('Firestore error:', err);
+        document.getElementById('postsGrid').innerHTML =
+          `<div class="no-posts">Couldn't load posts.\nCheck Firebase config.</div>`;
       });
     }
-  } catch(e) {
-    // Revert optimistic update on failure
-    console.error(e);
-    btn.classList.toggle('reacted', isReacted);
-    countEl.textContent = cur;
-  }
-}
 
-/* ── Author popup ── */
-let popupPersonCache = {};
+    startLiveFeed();
 
-function openAuthorPopup(authorName, authorUid) {
-  const overlay = document.getElementById('authorPopupOverlay');
-  const inner   = document.getElementById('authorPopupInner');
-  if (!overlay || !inner) return;
+    /* ── Reaction helpers (Firestore-synced) ── */
+    const EMOJIS = ['🔥', '❤️', '😭'];
 
-  inner.innerHTML = `<div class="popup-loading">Looking them up...</div>`;
-  overlay.classList.add('open');
-
-  // Close on overlay click
-  overlay.onclick = e => { if (e.target === overlay) closeAuthorPopup(); };
-
-  fetchAndRenderAuthor(authorName, authorUid, inner);
-}
-
-function closeAuthorPopup() {
-  document.getElementById('authorPopupOverlay')?.classList.remove('open');
-}
-
-async function fetchAndRenderAuthor(authorName, authorUid, inner) {
-  const cacheKey = authorUid || authorName;
-  let person = popupPersonCache[cacheKey];
-
-  if (person === undefined) {
-    try {
-      let snap;
-
-      // Strategy 1 — by authorUid (most reliable, only works on new posts)
-      if (authorUid) {
-        snap = await getDocs(query(
-          collection(db,'people'),
-          where('authorUid','==', authorUid),
-          limit(1)
+    async function loadReactions(postSlug) {
+      // Returns {emoji: {count, userReacted}} for current user
+      const result = {};
+      for (const e of EMOJIS) result[e] = { count: 0, userReacted: false };
+      try {
+        const snap = await getDocs(query(
+          collection(db, 'reactions'),
+          where('postSlug', '==', postSlug)
         ));
-      }
+        snap.docs.forEach(d => {
+          const { emoji, uid } = d.data();
+          if (result[emoji]) {
+            result[emoji].count++;
+            if (currentUser && uid === currentUser.uid) result[emoji].userReacted = true;
+          }
+        });
+      } catch (e) { /* index may not exist yet — fail silently */ }
+      return result;
+    }
 
-      // Strategy 2 — exact nameLower match
-      if (!snap || snap.empty) {
-        snap = await getDocs(query(
-          collection(db,'people'),
-          where('nameLower','==', authorName.toLowerCase()),
-          limit(1)
-        ));
+    async function toggleReaction(postSlug, emoji, btn) {
+      if (!currentUser) {
+        showLoginModal({ prompt: 'Sign in to react to posts.' });
+        return;
       }
+      const countEl = btn.querySelector('.sticker-count');
+      const isReacted = btn.classList.contains('reacted');
 
-      // Strategy 3 — first name match (handles "Pawan L." → "Pawan Limbu")
-      if (snap.empty) {
-        const firstName = authorName.split(/[\s.]/)[0].toLowerCase();
-        if (firstName.length >= 3) {
-          // Fetch all people and find first name match client-side
-          const allPeople = await getDocs(collection(db,'people'));
-          const match = allPeople.docs.find(d => {
-            const nl = (d.data().nameLower || '').split(' ')[0];
-            return nl === firstName;
+      // Optimistic UI
+      btn.classList.toggle('reacted', !isReacted);
+      const cur = parseInt(countEl.textContent) || 0;
+      countEl.textContent = isReacted ? Math.max(0, cur - 1) : cur + 1;
+
+      try {
+        if (isReacted) {
+          // Remove reaction
+          const snap = await getDocs(query(
+            collection(db, 'reactions'),
+            where('postSlug', '==', postSlug),
+            where('emoji', '==', emoji),
+            where('uid', '==', currentUser.uid),
+            limit(1)
+          ));
+          if (!snap.empty) await deleteDoc(doc(db, 'reactions', snap.docs[0].id));
+        } else {
+          await addDoc(collection(db, 'reactions'), {
+            postSlug, emoji,
+            uid: currentUser.uid,
+            createdAt: serverTimestamp()
           });
-          if (match) snap = { empty: false, docs: [match] };
         }
+      } catch (e) {
+        // Revert optimistic update on failure
+        console.error(e);
+        btn.classList.toggle('reacted', isReacted);
+        countEl.textContent = cur;
+      }
+    }
+
+    /* ── Author popup ── */
+    let popupPersonCache = {};
+
+    function openAuthorPopup(authorName, authorUid) {
+      const overlay = document.getElementById('authorPopupOverlay');
+      const inner = document.getElementById('authorPopupInner');
+      if (!overlay || !inner) return;
+
+      inner.innerHTML = `<div class="popup-loading">Looking them up...</div>`;
+      overlay.classList.add('open');
+
+      // Close on overlay click
+      overlay.onclick = e => { if (e.target === overlay) closeAuthorPopup(); };
+
+      fetchAndRenderAuthor(authorName, authorUid, inner);
+    }
+
+    function closeAuthorPopup() {
+      document.getElementById('authorPopupOverlay')?.classList.remove('open');
+    }
+
+    async function fetchAndRenderAuthor(authorName, authorUid, inner) {
+      const cacheKey = authorUid || authorName;
+      let person = popupPersonCache[cacheKey];
+
+      if (person === undefined) {
+        try {
+          let snap;
+
+          // Strategy 1 — by authorUid (most reliable, only works on new posts)
+          if (authorUid) {
+            snap = await getDocs(query(
+              collection(db, 'people'),
+              where('authorUid', '==', authorUid),
+              limit(1)
+            ));
+          }
+
+          // Strategy 2 — exact nameLower match
+          if (!snap || snap.empty) {
+            snap = await getDocs(query(
+              collection(db, 'people'),
+              where('nameLower', '==', authorName.toLowerCase()),
+              limit(1)
+            ));
+          }
+
+          // Strategy 3 — first name match (handles "Pawan L." → "Pawan Limbu")
+          if (snap.empty) {
+            const firstName = authorName.split(/[\s.]/)[0].toLowerCase();
+            if (firstName.length >= 3) {
+              // Fetch all people and find first name match client-side
+              const allPeople = await getDocs(collection(db, 'people'));
+              const match = allPeople.docs.find(d => {
+                const nl = (d.data().nameLower || '').split(' ')[0];
+                return nl === firstName;
+              });
+              if (match) snap = { empty: false, docs: [match] };
+            }
+          }
+
+          person = (!snap || snap.empty) ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
+          popupPersonCache[cacheKey] = person;
+        } catch (e) { console.error('Author lookup:', e); person = null; }
       }
 
-      person = (!snap || snap.empty) ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
-      popupPersonCache[cacheKey] = person;
-    } catch(e) { console.error('Author lookup:', e); person = null; }
-  }
+      const acc = person?.accent || '#e8681a';
 
-  const acc = person?.accent || '#e8681a';
+      // Check stick state
+      let stickDocId = null;
+      let stickCount = 0;
+      const toUid = person?.authorUid;
 
-  // Check stick state
-  let stickDocId = null;
-  let stickCount = 0;
-  const toUid = person?.authorUid;
-
-  if (toUid) {
-    try {
-      const sc = await getDocs(query(collection(db,'sticks'), where('toUid','==', toUid)));
-      stickCount = sc.size;
-      if (currentUser && currentUser.uid !== toUid) {
-        const existing = sc.docs.find(d => d.data().fromUid === currentUser.uid);
-        if (existing) stickDocId = existing.id;
+      if (toUid) {
+        try {
+          const sc = await getDocs(query(collection(db, 'sticks'), where('toUid', '==', toUid)));
+          stickCount = sc.size;
+          if (currentUser && currentUser.uid !== toUid) {
+            const existing = sc.docs.find(d => d.data().fromUid === currentUser.uid);
+            if (existing) stickDocId = existing.id;
+          }
+        } catch (e) { }
       }
-    } catch(e) {}
-  }
 
-  const isOwnProfile = currentUser && toUid && currentUser.uid === toUid;
-  const canStick = !!toUid && !isOwnProfile;
-  const isStuck  = !!stickDocId;
+      const isOwnProfile = currentUser && toUid && currentUser.uid === toUid;
+      const canStick = !!toUid && !isOwnProfile;
+      const isStuck = !!stickDocId;
 
-  const avatarHtml = person?.photos?.[0]
-    ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${person?.name||authorName}">`
-    : `<div class="popup-avatar-placeholder">${(person?.name||authorName)[0].toUpperCase()}</div>`;
+      const avatarHtml = person?.photos?.[0]
+        ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${person?.name || authorName}">`
+        : `<div class="popup-avatar-placeholder">${(person?.name || authorName)[0].toUpperCase()}</div>`;
 
-  const stickBtn = canStick ? `
-    <button class="popup-stick-btn ${isStuck?'stuck-state':'unstuck'}" id="popupStickBtn">
+      const stickBtn = canStick ? `
+    <button class="popup-stick-btn ${isStuck ? 'stuck-state' : 'unstuck'}" id="popupStickBtn">
       ${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}
     </button>
     ${stickCount > 0 ? `<span class="popup-stick-count">${stickCount} stuck</span>` : ''}
   ` : '';
 
-  const profileLink = person?.slug
-    ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>`
-    : '';
+      const profileLink = person?.slug
+        ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>`
+        : '';
 
-  inner.innerHTML = `
+      inner.innerHTML = `
     <div class="popup-spine-accent" style="background:${acc}"></div>
     <div class="popup-header">
       ${avatarHtml}
@@ -2052,103 +3144,103 @@ async function fetchAndRenderAuthor(authorName, authorUid, inner) {
       ${profileLink}
     </div>`;
 
-  // Wire stick button
-  const stickBtnEl = inner.querySelector('#popupStickBtn');
-  if (stickBtnEl) {
-    stickBtnEl.addEventListener('click', async () => {
-      if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
-      stickBtnEl.disabled = true;
-      try {
-        if (stickDocId) {
-          await deleteDoc(doc(db,'sticks', stickDocId));
-          stickDocId = null;
-          stickBtnEl.textContent = '📌 Stick them';
-          stickBtnEl.className = 'popup-stick-btn unstuck';
-        } else {
-          const fromName = getDisplayName(currentUser);
-          const fromSnap = await getDocs(query(collection(db,'people'), where('authorUid','==',currentUser.uid), limit(1)));
-          const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
-          const ref = await addDoc(collection(db,'sticks'), {
-            fromUid: currentUser.uid, fromName, fromSlug,
-            toUid, toSlug: person?.slug||'', toName: person?.name||authorName,
-            createdAt: serverTimestamp()
-          });
-          stickDocId = ref.id;
-          stickBtnEl.textContent = '📌 Stuck ✦';
-          stickBtnEl.className = 'popup-stick-btn stuck-state';
-        }
-        popupPersonCache = {}; // bust cache
-      } catch(e) { console.error(e); }
-      stickBtnEl.disabled = false;
-    });
-  }
-}
+      // Wire stick button
+      const stickBtnEl = inner.querySelector('#popupStickBtn');
+      if (stickBtnEl) {
+        stickBtnEl.addEventListener('click', async () => {
+          if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+          stickBtnEl.disabled = true;
+          try {
+            if (stickDocId) {
+              await deleteDoc(doc(db, 'sticks', stickDocId));
+              stickDocId = null;
+              stickBtnEl.textContent = '📌 Stick them';
+              stickBtnEl.className = 'popup-stick-btn unstuck';
+            } else {
+              const fromName = getDisplayName(currentUser);
+              const fromSnap = await getDocs(query(collection(db, 'people'), where('authorUid', '==', currentUser.uid), limit(1)));
+              const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
+              const ref = await addDoc(collection(db, 'sticks'), {
+                fromUid: currentUser.uid, fromName, fromSlug,
+                toUid, toSlug: person?.slug || '', toName: person?.name || authorName,
+                createdAt: serverTimestamp()
+              });
+              stickDocId = ref.id;
+              stickBtnEl.textContent = '📌 Stuck ✦';
+              stickBtnEl.className = 'popup-stick-btn stuck-state';
+            }
+            popupPersonCache = {}; // bust cache
+          } catch (e) { console.error(e); }
+          stickBtnEl.disabled = false;
+        });
+      }
+    }
 
-/* ── Render posts ── */
-function renderPosts() {
-  const grid = document.getElementById('postsGrid');
-  const rotations = [-1.2, 0.8, -0.4, 1.5, -0.9, 1.1, -1.6, 0.5, -0.7, 1.3, -0.3, 0.9];
-  const filtered = (activeTag === 'all'
-    ? allPosts
-    : allPosts.filter(p => (p.category||p.type||'').toLowerCase() === activeTag)
-  ).slice(0, 9);
+    /* ── Render posts ── */
+    function renderPosts() {
+      const grid = document.getElementById('postsGrid');
+      const rotations = [-1.2, 0.8, -0.4, 1.5, -0.9, 1.1, -1.6, 0.5, -0.7, 1.3, -0.3, 0.9];
+      const filtered = (activeTag === 'all'
+        ? allPosts
+        : allPosts.filter(p => (p.category || p.type || '').toLowerCase() === activeTag)
+      ).slice(0, 9);
 
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="no-posts">Nothing pinned yet.\nBe the first — share your story!</div>`;
-    return;
-  }
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="no-posts">Nothing pinned yet.\nBe the first — share your story!</div>`;
+        return;
+      }
 
-  grid.innerHTML = '';
-  filtered.forEach((post, i) => {
-    const rot = rotations[i % rotations.length];
-    const cat = (post.category || post.type || 'post').toLowerCase();
-    const postSlug = post.slug || post.url?.split('/').pop()?.replace('.html','') || post.id;
+      grid.innerHTML = '';
+      filtered.forEach((post, i) => {
+        const rot = rotations[i % rotations.length];
+        const cat = (post.category || post.type || 'post').toLowerCase();
+        const postSlug = post.slug || post.url?.split('/').pop()?.replace('.html', '') || post.id;
 
-    const card = document.createElement('div');
-    card.className = 'pinned-post reveal';
-    card.style.cssText = `--rot:${rot}deg;`;
-    card.style.transitionDelay = `${i * 55}ms`;
+        const card = document.createElement('div');
+        card.className = 'pinned-post reveal';
+        card.style.cssText = `--rot:${rot}deg;`;
+        card.style.transitionDelay = `${i * 55}ms`;
 
-    const pinColors = [
-      'radial-gradient(circle at 35% 35%, #ff9999, #cc3333)',
-      'radial-gradient(circle at 35% 35%, #99bbff, #3355cc)',
-      'radial-gradient(circle at 35% 35%, #aaeeaa, #228844)',
-      'radial-gradient(circle at 35% 35%, #ffcc99, #cc6622)',
-    ];
-    const pinLeft  = [28,55,42,65,35][i%5];
-    const pinColor = pinColors[i%4];
+        const pinColors = [
+          'radial-gradient(circle at 35% 35%, #ff9999, #cc3333)',
+          'radial-gradient(circle at 35% 35%, #99bbff, #3355cc)',
+          'radial-gradient(circle at 35% 35%, #aaeeaa, #228844)',
+          'radial-gradient(circle at 35% 35%, #ffcc99, #cc6622)',
+        ];
+        const pinLeft = [28, 55, 42, 65, 35][i % 5];
+        const pinColor = pinColors[i % 4];
 
-    const thumb = post.thumbnail
-      ? `<div class="post-photo">
+        const thumb = post.thumbnail
+          ? `<div class="post-photo">
            <img src="${post.thumbnail}" alt="${post.title}" loading="lazy">
            <div class="photo-corner tl"></div><div class="photo-corner tr"></div>
            <div class="photo-corner bl"></div><div class="photo-corner br"></div>
          </div>`
-      : `<div class="post-noimg">
-           <div class="post-noimg-num">${String(i+1).padStart(2,'0')}</div>
+          : `<div class="post-noimg">
+           <div class="post-noimg-num">${String(i + 1).padStart(2, '0')}</div>
            <div class="post-noimg-label">no photo</div>
          </div>`;
 
-    const dateStr = post.date
-      ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) : '';
-    const authorName = post.author || 'HlyWor';
+        const dateStr = post.date
+          ? new Date(post.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : '';
+        const authorName = post.author || 'HlyWor';
 
-    // Reactions start at 0 — will be loaded async
-    const reactionHtml = EMOJIS.map(emoji =>
-      `<button class="sticker-btn" data-slug="${postSlug}" data-emoji="${emoji}">
+        // Reactions start at 0 — will be loaded async
+        const reactionHtml = EMOJIS.map(emoji =>
+          `<button class="sticker-btn" data-slug="${postSlug}" data-emoji="${emoji}">
         ${emoji}<span class="sticker-count">…</span></button>`
-    ).join('');
+        ).join('');
 
-    card.innerHTML = `
+        card.innerHTML = `
       <div class="post-pin" style="left:${pinLeft}%;background:${pinColor}"></div>
       ${thumb}
       <div class="post-note-body">
         <span class="post-cat-tape ${catClass(cat)}">${cat.toUpperCase()}</span>
         <div class="post-note-title">${post.title}</div>
-        <p class="post-note-desc">${post.desc||''}</p>
+        <p class="post-note-desc">${post.desc || ''}</p>
         <div class="post-note-meta">
-          <button class="post-author-chip" data-author="${authorName}" data-uid="${post.authorUid||''}">
-            <span class="post-author-chip-dot"></span>${authorName}${dateStr?' · '+dateStr:''}
+          <button class="post-author-chip" data-author="${authorName}" data-uid="${post.authorUid || ''}">
+            <span class="post-author-chip-dot"></span>${authorName}${dateStr ? ' · ' + dateStr : ''}
           </button>
           <span class="post-read-hand">read →</span>
         </div>
@@ -2158,172 +3250,173 @@ function renderPosts() {
         ${post.authorUid ? `<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${authorName}" data-toslug="">📌</button>` : ''}
       </div>`;
 
-    // Click card → navigate (not chip, reaction, or stick btn)
-    card.addEventListener('click', e => {
-      if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip') || e.target.closest('.card-stick-btn')) return;
-      window.location.href = `post.html?slug=${postSlug}`;
-    });
+        // Click card → navigate (not chip, reaction, or stick btn)
+        card.addEventListener('click', e => {
+          if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip') || e.target.closest('.card-stick-btn')) return;
+          window.location.href = `post.html?slug=${postSlug}`;
+        });
 
-    // Author chip → popup
-    card.querySelector('.post-author-chip').addEventListener('click', e => {
-      e.stopPropagation();
-      const { author, uid } = e.currentTarget.dataset;
-      openAuthorPopup(author, uid);
-    });
+        // Author chip → popup
+        card.querySelector('.post-author-chip').addEventListener('click', e => {
+          e.stopPropagation();
+          const { author, uid } = e.currentTarget.dataset;
+          openAuthorPopup(author, uid);
+        });
 
-    // Reaction buttons
-    card.querySelectorAll('.sticker-btn').forEach(btn => {
-      btn.addEventListener('click', async e => {
-        e.stopPropagation();
-        await toggleReaction(postSlug, btn.dataset.emoji, btn);
-      });
-    });
+        // Reaction buttons
+        card.querySelectorAll('.sticker-btn').forEach(btn => {
+          btn.addEventListener('click', async e => {
+            e.stopPropagation();
+            await toggleReaction(postSlug, btn.dataset.emoji, btn);
+          });
+        });
 
-    // ── Stick button on card ──
-    const stickBtn = card.querySelector('.card-stick-btn');
-    if (stickBtn) {
-      const toUid  = stickBtn.dataset.touid;
-      const toName = stickBtn.dataset.toname;
+        // ── Stick button on card ──
+        const stickBtn = card.querySelector('.card-stick-btn');
+        if (stickBtn) {
+          const toUid = stickBtn.dataset.touid;
+          const toName = stickBtn.dataset.toname;
 
-      // Check current stick state async
-      onAuthChange(async user => {
-        if (!user || user.uid === toUid) {
-          stickBtn.style.display = 'none'; // hide on own posts or logged out
-          return;
-        }
-        stickBtn.style.display = '';
-        try {
-          const snap = await getDocs(query(
-            collection(db,'sticks'),
-            where('fromUid','==', user.uid),
-            where('toUid','==', toUid),
-            limit(1)
-          ));
-          if (!snap.empty) {
-            stickBtn.dataset.stickid = snap.docs[0].id;
-            stickBtn.classList.add('is-stuck');
-            stickBtn.textContent = '📌 Stuck';
-            stickBtn.title = 'Click to unstick';
-          } else {
-            stickBtn.textContent = '📌 Stick';
-            stickBtn.title = `Stick ${toName}`;
-          }
-        } catch(e) {}
-      });
-
-      stickBtn.addEventListener('click', async e => {
-        e.stopPropagation();
-        if (!currentUser) {
-          showLoginModal({ prompt: 'Sign in to stick someone.' });
-          return;
-        }
-        if (currentUser.uid === toUid) return;
-        stickBtn.disabled = true;
-
-        const isStuck = stickBtn.classList.contains('is-stuck');
-        try {
-          if (isStuck) {
-            const stickId = stickBtn.dataset.stickid;
-            if (stickId) await deleteDoc(doc(db,'sticks', stickId));
-            stickBtn.classList.remove('is-stuck');
-            stickBtn.textContent = '📌 Stick';
-            stickBtn.dataset.stickid = '';
-          } else {
-            const fromName = getDisplayName(currentUser);
-            // Get author slug from people collection
-            let toSlug = '';
+          // Check current stick state async
+          onAuthChange(async user => {
+            if (!user || user.uid === toUid) {
+              stickBtn.style.display = 'none'; // hide on own posts or logged out
+              return;
+            }
+            stickBtn.style.display = '';
             try {
-              const ps = await getDocs(query(collection(db,'people'), where('authorUid','==',toUid), limit(1)));
-              if (!ps.empty) toSlug = ps.docs[0].data().slug || '';
-            } catch(e) {}
+              const snap = await getDocs(query(
+                collection(db, 'sticks'),
+                where('fromUid', '==', user.uid),
+                where('toUid', '==', toUid),
+                limit(1)
+              ));
+              if (!snap.empty) {
+                stickBtn.dataset.stickid = snap.docs[0].id;
+                stickBtn.classList.add('is-stuck');
+                stickBtn.textContent = '📌 Stuck';
+                stickBtn.title = 'Click to unstick';
+              } else {
+                stickBtn.textContent = '📌 Stick';
+                stickBtn.title = `Stick ${toName}`;
+              }
+            } catch (e) { }
+          });
 
-            const ref = await addDoc(collection(db,'sticks'), {
-              fromUid: currentUser.uid, fromName,
-              fromSlug: '',
-              toUid, toName, toSlug,
-              createdAt: serverTimestamp()
-            });
-            stickBtn.dataset.stickid = ref.id;
-            stickBtn.classList.add('is-stuck');
-            stickBtn.textContent = '📌 Stuck';
-          }
-        } catch(err) { console.error('Stick error:', err); }
-        stickBtn.disabled = false;
+          stickBtn.addEventListener('click', async e => {
+            e.stopPropagation();
+            if (!currentUser) {
+              showLoginModal({ prompt: 'Sign in to stick someone.' });
+              return;
+            }
+            if (currentUser.uid === toUid) return;
+            stickBtn.disabled = true;
+
+            const isStuck = stickBtn.classList.contains('is-stuck');
+            try {
+              if (isStuck) {
+                const stickId = stickBtn.dataset.stickid;
+                if (stickId) await deleteDoc(doc(db, 'sticks', stickId));
+                stickBtn.classList.remove('is-stuck');
+                stickBtn.textContent = '📌 Stick';
+                stickBtn.dataset.stickid = '';
+              } else {
+                const fromName = getDisplayName(currentUser);
+                // Get author slug from people collection
+                let toSlug = '';
+                try {
+                  const ps = await getDocs(query(collection(db, 'people'), where('authorUid', '==', toUid), limit(1)));
+                  if (!ps.empty) toSlug = ps.docs[0].data().slug || '';
+                } catch (e) { }
+
+                const ref = await addDoc(collection(db, 'sticks'), {
+                  fromUid: currentUser.uid, fromName,
+                  fromSlug: '',
+                  toUid, toName, toSlug,
+                  createdAt: serverTimestamp()
+                });
+                stickBtn.dataset.stickid = ref.id;
+                stickBtn.classList.add('is-stuck');
+                stickBtn.textContent = '📌 Stuck';
+              }
+            } catch (err) { console.error('Stick error:', err); }
+            stickBtn.disabled = false;
+          });
+        }
+
+        grid.appendChild(card);
+        requestAnimationFrame(() => ro.observe(card));
+
+        // Load reactions async — don't block render
+        loadReactions(postSlug).then(data => {
+          card.querySelectorAll('.sticker-btn').forEach(btn => {
+            const emoji = btn.dataset.emoji;
+            if (data[emoji]) {
+              btn.querySelector('.sticker-count').textContent = data[emoji].count;
+              btn.classList.toggle('reacted', data[emoji].userReacted);
+            }
+          });
+        });
       });
     }
 
-    grid.appendChild(card);
-    requestAnimationFrame(() => ro.observe(card));
-
-    // Load reactions async — don't block render
-    loadReactions(postSlug).then(data => {
-      card.querySelectorAll('.sticker-btn').forEach(btn => {
-        const emoji = btn.dataset.emoji;
-        if (data[emoji]) {
-          btn.querySelector('.sticker-count').textContent = data[emoji].count;
-          btn.classList.toggle('reacted', data[emoji].userReacted);
-        }
+    /* Tag filter */
+    document.querySelectorAll('.tape-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tape-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTag = btn.dataset.tag;
+        renderPosts();
       });
     });
-  });
-}
 
-/* Tag filter */
-document.querySelectorAll('.tape-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tape-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeTag = btn.dataset.tag;
-    renderPosts();
-  });
-});
-
-// Close popup on Escape
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeAuthorPopup();
-});
+    // Close popup on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAuthorPopup();
+    });
 
 
 
 
-/* ── Search ── */
-const searchOverlay = document.getElementById('searchOverlay');
-const searchInput   = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
+    /* ── Search ── */
+    const searchOverlay = document.getElementById('searchOverlay');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
 
-function openSearch() { searchOverlay.classList.add('open'); setTimeout(()=>searchInput.focus(),80); }
-function closeSearch() {
-  searchOverlay.classList.remove('open');
-  searchInput.value = '';
-  searchResults.innerHTML = '<div class="search-msg">Start typing...</div>';
-}
+    function openSearch() { searchOverlay.classList.add('open'); setTimeout(() => searchInput.focus(), 80); }
+    function closeSearch() {
+      searchOverlay.classList.remove('open');
+      searchInput.value = '';
+      searchResults.innerHTML = '<div class="search-msg">Start typing...</div>';
+    }
 
-document.getElementById('searchOpenBtn').addEventListener('click', openSearch);
-document.getElementById('searchCloseBtn').addEventListener('click', closeSearch);
-searchOverlay.addEventListener('click', e => { if(e.target===searchOverlay) closeSearch(); });
-document.addEventListener('keydown', e => {
-  if(e.key==='Escape') closeSearch();
-  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}
-});
+    document.getElementById('searchOpenBtn').addEventListener('click', openSearch);
+    document.getElementById('searchCloseBtn').addEventListener('click', closeSearch);
+    searchOverlay.addEventListener('click', e => { if (e.target === searchOverlay) closeSearch(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeSearch();
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+    });
 
-searchInput.addEventListener('input', () => {
-  const q = searchInput.value.trim().toLowerCase();
-  if (!q) { searchResults.innerHTML='<div class="search-msg">Start typing...</div>'; return; }
-  const hits = allPosts.filter(p =>
-    p.title.toLowerCase().includes(q) ||
-    (p.desc||'').toLowerCase().includes(q) ||
-    (p.category||p.type||'').toLowerCase().includes(q) ||
-    (p.author||'').toLowerCase().includes(q)
-  );
-  searchResults.innerHTML = hits.length
-    ? hits.slice(0,8).map(p=>`
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) { searchResults.innerHTML = '<div class="search-msg">Start typing...</div>'; return; }
+      const hits = allPosts.filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        (p.desc || '').toLowerCase().includes(q) ||
+        (p.category || p.type || '').toLowerCase().includes(q) ||
+        (p.author || '').toLowerCase().includes(q)
+      );
+      searchResults.innerHTML = hits.length
+        ? hits.slice(0, 8).map(p => `
         <a href="${p.url}" class="sr-item" onclick="closeSearch()">
-          <div><div class="sr-cat">${(p.category||p.type||'POST').toUpperCase()}</div>
+          <div><div class="sr-cat">${(p.category || p.type || 'POST').toUpperCase()}</div>
           <div class="sr-title">${p.title}</div></div>
           <span class="sr-arr">→</span>
         </a>`).join('')
-    : '<div class="search-msg">Nothing found.</div>';
-});
-</script>
+        : '<div class="search-msg">Nothing found.</div>';
+    });
+  </script>
 </body>
+
 </html>
