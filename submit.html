@@ -67,17 +67,15 @@
     .tape-swatch:hover{transform:scale(1.05)}
     .diary-area{flex:1;padding:36px 28px 80px;display:flex;justify-content:center;align-items:flex-start}
     .diary-book{width:100%;max-width:800px;display:flex;box-shadow:var(--shadow);transition:box-shadow 0.4s}
-    .diary-spine{width:var(--t-spine-w);background:var(--t-spine);border-right:2px solid rgba(0,0,0,0.4);flex-shrink:0;position:relative;transition:width 0.4s,background 0.4s}
-    .diary-spine::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:5px;bottom:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 28px,rgba(0,0,0,0.3) 28px,rgba(0,0,0,0.3) 33px)}
-    body[data-t="tech"] .diary-spine::before{display:none}
+    .diary-spine{display:none}
     .diary-page{flex:1;background:var(--t-paper);position:relative;min-height:900px;overflow:hidden;transition:background 0.4s}
     .diary-page::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--t-rule) 31px,var(--t-rule) 32px);background-position:0 56px;pointer-events:none;z-index:0;opacity:1;transition:opacity 0.4s}
     body[data-t="magazine"] .diary-page::before,body[data-t="tech"] .diary-page::before{opacity:0}
     body[data-t="news"] .diary-page::before{opacity:0.5}
-    .diary-page::after{content:'';position:absolute;top:0;bottom:0;left:72px;width:1px;background:var(--t-margin);pointer-events:none;z-index:0;transition:background 0.4s}
+    .diary-page::after{display:none}
     .page-curl{position:absolute;bottom:0;right:0;width:40px;height:40px;background:linear-gradient(225deg,var(--t-paper3) 45%,rgba(0,0,0,0.1) 50%,var(--t-paper2) 50%);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;z-index:10}
-    .page-header-area{padding:28px 32px 16px 88px;position:relative;z-index:2;transition:all 0.3s}
-    body[data-t="tech"] .page-header-area{padding-left:32px}
+    .page-header-area{padding:28px 40px 16px 40px;position:relative;z-index:2;transition:all 0.3s}
+    body[data-t="tech"] .page-header-area{padding-left:40px}
     .template-badge{display:none;font-family:var(--pixel);font-size:0.28rem;letter-spacing:2px;padding:3px 10px;color:#fff;margin-bottom:12px;width:fit-content}
     body[data-t="magazine"] .badge-review{display:block;background:#c0392b}
     body[data-t="news"] .badge-news{display:block;background:#0c0a08}
@@ -119,8 +117,8 @@
     body[data-t="tech"] .cat-pill{border-color:rgba(255,255,255,0.12);color:var(--t-ink3)}
     .cat-pill:hover{background:var(--t-paper2)}
     .cat-pill.active{background:var(--t-acc);color:#fff;border-color:var(--t-acc)}
-    .cover-zone{padding:0 32px 20px 88px;position:relative;z-index:2}
-    body[data-t="tech"] .cover-zone{padding-left:32px}
+    .cover-zone{padding:0 40px 20px 40px;position:relative;z-index:2}
+    body[data-t="tech"] .cover-zone{padding-left:40px}
     .cover-drop{border:2px dashed rgba(0,0,0,0.12);background:rgba(0,0,0,0.02);padding:20px;text-align:center;cursor:pointer;transition:all 0.2s}
     body[data-t="tech"] .cover-drop{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02)}
     .cover-drop:hover{border-color:var(--t-acc)}
@@ -133,8 +131,8 @@
     body[data-t="magazine"] .cover-preview img{max-height:420px}
     body[data-t="tech"] .cover-preview img{max-height:240px;border:1px solid rgba(255,255,255,0.08)}
     .cover-clear{position:absolute;top:8px;right:8px;font-family:var(--pixel);font-size:0.28rem;color:#fff;background:rgba(0,0,0,0.55);padding:4px 8px;border:none;cursor:pointer}
-    .writing-canvas{padding:20px 32px 40px 88px;position:relative;min-height:600px;z-index:2}
-    body[data-t="tech"] .writing-canvas{padding-left:32px}
+    .writing-canvas{padding:20px 40px 40px 40px;position:relative;min-height:600px;z-index:2}
+    body[data-t="tech"] .writing-canvas{padding-left:40px}
     .diary-editor{min-height:500px;outline:none;font-family:var(--t-font);font-size:1.05rem;color:var(--t-ink);line-height:32px;position:relative;z-index:2;word-break:break-word;caret-color:var(--t-acc);transition:all 0.3s}
     .diary-editor:empty::before{content:attr(data-placeholder);color:var(--t-ink4);pointer-events:none;font-style:italic;white-space:pre-line}
     body[data-t="magazine"] .diary-editor{font-size:1.05rem;line-height:1.8}
@@ -203,7 +201,8 @@
     .tags-wrap{border:1px solid rgba(0,0,0,0.12);background:var(--t-paper2);min-height:38px;padding:4px 6px;display:flex;flex-wrap:wrap;gap:4px;cursor:text}
     .tags-wrap:focus-within{border-color:var(--t-acc)}
     .tag-chip{background:var(--t-acc);color:#fff;font-family:var(--sans);font-size:0.75rem;padding:2px 10px;display:flex;align-items:center;gap:5px;border-radius:2px}
-    .tag-chip .rm{cursor:pointer;opacity:.7}.tag-chip .rm:hover{opacity:1}
+    .tag-chip .rm{cursor:pointer;opacity:.7}
+    .tag-chip .rm:hover{opacity:1}
     .tags-wrap input{border:none;outline:none;background:transparent;font-family:var(--sans);font-size:0.85rem;color:var(--t-ink);flex:1;min-width:80px}
     .modal-submit{width:100%;font-family:'Caveat',cursive;font-size:1.2rem;padding:12px;background:var(--t-acc);color:#fff;border:none;cursor:pointer;transition:all 0.2s;font-weight:600;margin-top:6px}
     .modal-submit:hover{filter:brightness(1.1)}
@@ -211,107 +210,102 @@
     .modal-status{font-family:var(--sans);font-size:0.78rem;margin-top:8px;text-align:center;font-style:italic;min-height:18px}
     .modal-status.ok{color:#2a8a2a}.modal-status.err{color:#c0392b}
     .modal-close{position:absolute;top:12px;right:12px;font-family:var(--pixel);font-size:0.26rem;color:var(--t-ink3);cursor:pointer;background:none;border:none}
-    /* Auth user badge in nav */
-    .nav-user-badge{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:0.74rem;color:rgba(255,255,255,0.6)}
-    .nav-user-badge img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,0.25)}
-    .nav-user-badge .nav-user-name{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+    /* ── FONT PICKER ── */
+    .font-picker-wrap{display:flex;flex-wrap:wrap;gap:4px;padding:4px;justify-content:center}
+    .font-btn{
+      width:42px;height:38px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);
+      background:transparent;cursor:pointer;color:rgba(255,255,255,0.6);
+      font-size:0.85rem;transition:all .18s;padding:0 2px;
+      display:flex;align-items:center;justify-content:center;
+      line-height:1;
+    }
+    .font-btn:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.25);color:#fff}
+    .font-btn.active{background:rgba(232,104,26,0.15);border-color:var(--t-acc);color:var(--t-acc)}
+
+    /* ── COLOR PICKER ── */
+    .color-picker-wrap{display:flex;flex-direction:column;gap:5px;padding:4px;align-items:center}
+    .text-color-swatch{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
+    .text-color-swatch:hover{transform:scale(1.2)}
+    .text-color-swatch.active{border-color:#fff;box-shadow:0 0 5px rgba(255,255,255,0.3)}
+    .color-input-btn{
+      width:28px;height:28px;border-radius:50%;border:1px dashed rgba(255,255,255,0.3);
+      background:none;cursor:pointer;color:rgba(255,255,255,0.5);
+      font-size:0.7rem;display:flex;align-items:center;justify-content:center;
+      transition:all .15s;padding:0;
+    }
+    .color-input-btn:hover{border-color:#fff;color:#fff}
+    #customColorInput{position:absolute;opacity:0;width:0;height:0}
+
+    /* ── IMAGE ALIGNMENT controls inside img-popup ── */
+    .img-align-row{display:flex;gap:5px;margin-bottom:8px}
+    .img-align-btn{
+      flex:1;padding:5px 0;border:1px solid rgba(255,255,255,0.1);
+      background:transparent;color:rgba(255,255,255,0.5);
+      cursor:pointer;font-size:0.8rem;border-radius:4px;transition:all .15s;
+    }
+    .img-align-btn:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+    .img-align-btn.active{background:rgba(232,104,26,0.2);border-color:var(--fire);color:var(--fire)}
+
+    /* ── IMAGE ROW (multiple images side by side) ── */
+    .img-row-popup{position:fixed;z-index:600;background:#0e0a06;border:1px solid rgba(255,255,255,0.1);
+      border-radius:12px;padding:16px;width:280px;box-shadow:0 8px 32px rgba(0,0,0,0.6);display:none}
+    .img-row-popup.open{display:block}
+    .img-row-popup-title{font-family:var(--pixel);font-size:0.28rem;color:var(--gold);letter-spacing:2px;margin-bottom:10px}
+    .img-row-slots{display:flex;gap:6px;margin-bottom:10px}
+    .img-row-slot{
+      flex:1;aspect-ratio:1;border:1px dashed rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.03);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.2rem;border-radius:4px;transition:all .15s;position:relative;overflow:hidden;
+    }
+    .img-row-slot:hover{border-color:var(--fire);background:rgba(232,104,26,0.05)}
+    .img-row-slot.filled{border-style:solid;border-color:rgba(255,255,255,0.15)}
+    .img-row-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .img-row-slot input{display:none}
+    .img-row-gap{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+    .img-row-gap label{font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.4)}
+    .img-row-gap select{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+      color:#fff;font-family:var(--sans);font-size:0.72rem;padding:4px 8px;border-radius:4px;outline:none}
+    .img-row-gap select option{background:#0e0a06}
+    .img-row-insert{width:100%;padding:8px;background:var(--fire);color:#fff;border:none;
+      cursor:pointer;font-family:var(--sans);font-size:0.82rem;border-radius:6px;transition:all .15s}
+    .img-row-insert:hover{filter:brightness(1.1)}
+
+    /* ── Editor image alignment classes ── */
+    .diary-editor figure.img-left{float:left;margin:8px 20px 8px 0;max-width:45%}
+    .diary-editor figure.img-right{float:right;margin:8px 0 8px 20px;max-width:45%}
+    .diary-editor figure.img-center{clear:both;margin:12px auto;text-align:center;max-width:80%}
+    .diary-editor figure.img-full{clear:both;margin:12px 0}
+    .diary-editor figure img{width:100%;display:block}
+    .diary-editor figure figcaption{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--t-ink3);text-align:center;padding-top:4px}
+    .diary-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
+    .diary-editor .img-row-block figure{flex:1;margin:0}
+    .diary-editor .img-row-block figure img{width:100%;display:block}
+
+    /* ── Fix sticky note glitch — prevent contenteditable focus fighting ── */
+    .sticky-callout{user-select:text;-webkit-user-select:text}
+    .sticky-callout:focus{outline:1px dashed rgba(0,0,0,0.2)}
+
+    /* ── Highlight selected text (line highlight) ── */
+    .hl-line{display:block;padding:2px 4px;margin:1px 0}
+    .hl-line-y{background:rgba(255,230,0,0.25);display:block;padding:2px 4px}
+    .hl-line-r{background:rgba(255,100,100,0.2);display:block;padding:2px 4px}
+    .hl-line-b{background:rgba(100,160,255,0.2);display:block;padding:2px 4px}
+    .hl-line-g{background:rgba(80,220,120,0.2);display:block;padding:2px 4px}
+
+    /* ── Sidebar section labels ── */
+    .t-sep.full{width:52px}
+
+    @media(max-width:768px){
+      .writing-canvas,.page-header-area,.cover-zone{padding-left:18px;padding-right:18px}
+      .diary-editor figure.img-left,.diary-editor figure.img-right{float:none;max-width:100%;margin:10px 0}
+      .diary-editor .img-row-block{flex-direction:column}
+    }
+
     @media(max-width:768px){.diary-area{padding:16px 10px 60px}.writing-canvas,.page-header-area,.cover-zone{padding-left:20px}.diary-page::after{left:14px}.count-strip{padding:6px 14px}body[data-t="news"] .diary-editor{columns:1}}
     @media(max-width:480px){.tools-panel{width:52px}.diary-spine{width:14px!important}.template-bar{padding:6px 14px}}
-  
-    /* ══════════════════════════════════
-       BOTTOM DOCK — mobile nav
-    ══════════════════════════════════ */
-    .bottom-dock {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 1000;
-      height: 62px;
-      background: linear-gradient(180deg, #1a1008 0%, #0e0804 100%);
-      border-top: 1px solid rgba(212,160,32,0.15);
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.6), 0 -1px 0 rgba(212,160,32,0.08);
-    }
-    .bottom-dock::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 62' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-    .bottom-dock::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(212,160,32,0.3) 20%, rgba(232,104,26,0.4) 50%, rgba(212,160,32,0.3) 80%, transparent 100%);
-    }
-    .dock-inner {
-      display: flex; align-items: center;
-      justify-content: space-around;
-      height: 100%; padding: 0 8px;
-      position: relative; z-index: 1;
-    }
-    .dock-item {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 3px; flex: 1; height: 100%;
-      text-decoration: none; cursor: pointer;
-      background: none; border: none; padding: 0;
-      position: relative;
-      transition: transform 0.18s cubic-bezier(0.34,1.4,0.64,1);
-      -webkit-tap-highlight-color: transparent;
-    }
-    .dock-item:active { transform: scale(0.88); }
-    .dock-icon {
-      width: 22px; height: 22px;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.22s ease;
-    }
-    .dock-icon svg {
-      width: 100%; height: 100%;
-      stroke: rgba(255,255,255,0.32); fill: none;
-      stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
-      transition: stroke 0.22s ease, filter 0.22s ease;
-    }
-    .dock-label {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.18rem; letter-spacing: 0.5px;
-      color: rgba(255,255,255,0.25);
-      transition: color 0.22s ease; white-space: nowrap;
-    }
-    .dock-item.active .dock-icon svg {
-      stroke: #e8681a;
-      filter: drop-shadow(0 0 5px rgba(232,104,26,0.7));
-    }
-    .dock-item.active .dock-label { color: #e8681a; }
-    .dock-item.active::after {
-      content: '';
-      position: absolute; bottom: 6px; left: 50%;
-      transform: translateX(-50%);
-      width: 3px; height: 3px; border-radius: 50%;
-      background: #e8681a; box-shadow: 0 0 6px #e8681a;
-    }
-    .dock-item.dock-write .dock-icon svg { stroke: rgba(232,104,26,0.6); }
-    .dock-item.dock-write .dock-icon { width: 26px; height: 26px; }
-    .dock-avatar {
-      width: 24px; height: 24px; border-radius: 50%;
-      object-fit: cover; border: 1.5px solid rgba(255,255,255,0.25);
-      display: block; transition: border-color 0.2s;
-    }
-    .dock-item.active .dock-avatar {
-      border-color: #e8681a; box-shadow: 0 0 8px rgba(232,104,26,0.5);
-    }
-    .dock-avatar-placeholder {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: rgba(232,104,26,0.3);
-      border: 1.5px solid rgba(255,255,255,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Caveat', cursive;
-      font-size: 0.75rem; color: rgba(255,255,255,0.7); font-weight: 700;
-    }
-    @media (max-width: 640px) {
-      .bottom-dock { display: block; }
-      body { padding-bottom: 62px; }
-    }
-</style>
+  </style>
 </head>
 <body data-t="diary">
 
@@ -323,8 +317,6 @@
   </div>
   <div class="nav-right">
     <span class="nav-save-status" id="saveStatus">unsaved</span>
-    <!-- Auth slot — filled by auth.js -->
-    <div id="authSlot"></div>
     <button class="publish-btn" id="publishOpenBtn">Publish &rarr;</button>
   </div>
 </nav>
@@ -354,50 +346,96 @@
   <input type="file" id="inlineImgFile" accept="image/*">
   <button class="img-popup-upload" id="inlineImgUploadBtn">Choose Photo</button>
   <div class="img-popup-sep"></div>
+  <label>Alignment</label>
+  <div class="img-align-row">
+    <button class="img-align-btn active" data-align="center">⬜ Center</button>
+    <button class="img-align-btn" data-align="left">◧ Left</button>
+    <button class="img-align-btn" data-align="right">◨ Right</button>
+    <button class="img-align-btn" data-align="full">↔ Full</button>
+  </div>
   <label>Frame style</label>
   <select id="inlineImgStyle">
-    <option value="tilt-l">Polaroid &mdash; tilt left</option>
-    <option value="tilt-r">Polaroid &mdash; tilt right</option>
-    <option value="">Polaroid &mdash; straight</option>
-    <option value="inline-full">Full width</option>
+    <option value="">Photo — no frame</option>
+    <option value="tilt-l">Polaroid — tilt left</option>
+    <option value="tilt-r">Polaroid — tilt right</option>
+    <option value="straight">Polaroid — straight</option>
   </select>
   <label>Caption</label>
   <input type="text" id="inlineImgCaption" placeholder="write something...">
 </div>
 
+<div class="img-row-popup" id="imgRowPopup">
+  <div class="img-row-popup-title">PHOTO ROW</div>
+  <div class="img-row-slots" id="imgRowSlots">
+    <div class="img-row-slot" data-slot="0"><input type="file" accept="image/*"><span>📷</span></div>
+    <div class="img-row-slot" data-slot="1"><input type="file" accept="image/*"><span>📷</span></div>
+    <div class="img-row-slot" data-slot="2"><input type="file" accept="image/*"><span>📷</span></div>
+  </div>
+  <div class="img-row-gap">
+    <label>Style</label>
+    <select id="imgRowStyle">
+      <option value="normal">Side by side</option>
+      <option value="polaroid">Polaroids</option>
+    </select>
+  </div>
+  <button class="img-row-insert" id="imgRowInsert">Insert row →</button>
+</div>
+
 <div class="diary-layout">
   <div class="tools-panel" id="toolsPanel">
     <div class="tg-label">TEXT</div>
-    <button class="tool-btn" data-cmd="bold"><strong>B</strong></button>
-    <button class="tool-btn" data-cmd="italic"><em style="font-family:Georgia">I</em></button>
-    <button class="tool-btn" data-cmd="h2"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
-    <button class="tool-btn" data-cmd="h3"><span style="font-family:'Caveat',cursive;font-size:.9rem">H2</span></button>
-    <button class="tool-btn" data-cmd="blockquote">&#10077;</button>
-    <button class="tool-btn" data-cmd="insertUnorderedList">&bull;&#8801;</button>
-    <div class="t-sep"></div>
-    <div class="tg-label">PEN</div>
-    <div class="pen-swatches">
-      <div class="pen-swatch active" data-color="#1a1208" style="background:#1a1208"></div>
-      <div class="pen-swatch" data-color="#1a3a8a" style="background:#1a3a8a"></div>
-      <div class="pen-swatch" data-color="#b82020" style="background:#b82020"></div>
-      <div class="pen-swatch" data-color="#1a6a2a" style="background:#1a6a2a"></div>
-      <div class="pen-swatch" data-color="#5a1a8a" style="background:#5a1a8a"></div>
+    <button class="tool-btn" data-cmd="bold" title="Bold"><strong>B</strong></button>
+    <button class="tool-btn" data-cmd="italic" title="Italic"><em style="font-family:Georgia">I</em></button>
+    <button class="tool-btn" data-cmd="h2" title="Heading 1"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
+    <button class="tool-btn" data-cmd="h3" title="Heading 2"><span style="font-family:'Caveat',cursive;font-size:.9rem">H2</span></button>
+    <button class="tool-btn" data-cmd="blockquote" title="Quote">&#10077;</button>
+    <button class="tool-btn" data-cmd="insertUnorderedList" title="List">&bull;&#8801;</button>
+
+    <div class="t-sep full"></div>
+    <div class="tg-label">FONT</div>
+    <div class="font-picker-wrap">
+      <button class="font-btn active" data-font="" title="Default" style="font-family:inherit">Aa</button>
+      <button class="font-btn" data-font="'Lora',serif" title="Lora — warm serif" style="font-family:'Lora',serif">Aa</button>
+      <button class="font-btn" data-font="'Libre Baskerville',serif" title="Baskerville — classic" style="font-family:'Libre Baskerville',serif">Aa</button>
+      <button class="font-btn" data-font="'Cormorant Garamond',serif" title="Cormorant — elegant" style="font-family:'Cormorant Garamond',serif;font-style:italic">Aa</button>
+      <button class="font-btn" data-font="'Spectral',serif" title="Spectral — literary" style="font-family:'Spectral',serif">Aa</button>
+      <button class="font-btn" data-font="'Kalam',cursive" title="Kalam — handwritten" style="font-family:'Kalam',cursive">Aa</button>
+      <button class="font-btn" data-font="'Satisfy',cursive" title="Satisfy — script" style="font-family:'Satisfy',cursive">Aa</button>
+      <button class="font-btn" data-font="'Caveat',cursive" title="Caveat — casual" style="font-family:'Caveat',cursive">Aa</button>
+      <button class="font-btn" data-font="'IM Fell English',serif" title="IM Fell — old print" style="font-family:'IM Fell English',serif">Aa</button>
     </div>
-    <div class="t-sep"></div>
+
+    <div class="t-sep full"></div>
+    <div class="tg-label">COLOR</div>
+    <div class="color-picker-wrap">
+      <div class="text-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink black"></div>
+      <div class="text-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue"></div>
+      <div class="text-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson"></div>
+      <div class="text-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Forest green"></div>
+      <div class="text-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Violet"></div>
+      <div class="text-color-swatch" data-color="#c0670a" style="background:#c0670a" title="Amber"></div>
+      <button class="color-input-btn" id="customColorBtn" title="Custom color">+</button>
+      <input type="color" id="customColorInput" value="#1a1208">
+    </div>
+
+    <div class="t-sep full"></div>
     <div class="tg-label">MARK</div>
-    <button class="tool-btn" data-highlight="highlight-y"><span style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <button class="tool-btn" data-highlight="highlight-r"><span style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <button class="tool-btn" data-highlight="highlight-b"><span style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <button class="tool-btn" data-highlight="highlight-g"><span style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <div class="t-sep"></div>
+    <button class="tool-btn" data-highlight="highlight-y" title="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+    <button class="tool-btn" data-highlight="highlight-r" title="Red highlight"><span style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+    <button class="tool-btn" data-highlight="highlight-b" title="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+    <button class="tool-btn" data-highlight="highlight-g" title="Green highlight"><span style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+    <button class="tool-btn" data-highlight="hl-line-y" title="Line highlight yellow"><span style="background:rgba(255,230,0,.25);padding:0 5px;font-size:.75rem;color:#1a1208">≡</span></button>
+
+    <div class="t-sep full"></div>
     <div class="tg-label">INSERT</div>
-    <button class="tool-btn" id="insertStickerBtn">&#10024;</button>
-    <button class="tool-btn" id="insertImgBtn">&#128247;</button>
-    <button class="tool-btn diary-tools" id="insertStickyBtn">&#128221;</button>
-    <button class="tool-btn diary-tools" id="insertDoodleBtn"><span style="font-size:.75rem">&#12316;</span></button>
-    <button class="tool-btn mag-tools" id="insertPullBtn">&#10078;</button>
-    <button class="tool-btn tech-tools" id="insertCodeBtn"><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem">&lt;/&gt;</span></button>
-    <div class="t-sep diary-tools"></div>
+    <button class="tool-btn" id="insertStickerBtn" title="Sticker">&#10024;</button>
+    <button class="tool-btn" id="insertImgBtn" title="Photo">&#128247;</button>
+    <button class="tool-btn" id="insertImgRowBtn" title="Photo row">&#128248;</button>
+    <button class="tool-btn diary-tools" id="insertStickyBtn" title="Sticky note">&#128221;</button>
+    <button class="tool-btn diary-tools" id="insertDoodleBtn" title="Doodle divider"><span style="font-size:.75rem">&#12316;</span></button>
+    <button class="tool-btn mag-tools" id="insertPullBtn" title="Pull quote">&#10078;</button>
+    <button class="tool-btn tech-tools" id="insertCodeBtn" title="Code block"><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem">&lt;/&gt;</span></button>
+    <div class="t-sep diary-tools full"></div>
     <div class="tg-label diary-tools">TAPE</div>
     <div class="diary-tools" style="display:flex;flex-direction:column;gap:5px;padding:4px">
       <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)"></div>
@@ -405,9 +443,9 @@
       <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)"></div>
       <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)"></div>
     </div>
-    <div class="t-sep"></div>
-    <button class="tool-btn" data-cmd="undo">&#8617;</button>
-    <button class="tool-btn" data-cmd="redo">&#8618;</button>
+    <div class="t-sep full"></div>
+    <button class="tool-btn" data-cmd="undo" title="Undo">&#8617;</button>
+    <button class="tool-btn" data-cmd="redo" title="Redo">&#8618;</button>
   </div>
 
   <div class="diary-area">
@@ -517,7 +555,6 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { injectAuthNav, showLoginModal, currentUser, onAuthChange, getDisplayName } from "./auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
@@ -531,45 +568,6 @@
   const CLD_NAME = "dgatfolot";
   const CLD_PRESET = "hlywor";
   const app = initializeApp(firebaseConfig), db = getFirestore(app);
-
-  // ── Auth nav ─────────────────────────────────────────
-  injectAuthNav(document.getElementById("authSlot"), {
-    onSignIn(user) {
-      // Auto-fill author fields from Google account
-      const nameEl = document.getElementById("authorInput");
-      const emailEl = document.getElementById("emailInput");
-      if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
-      if (emailEl && !emailEl.value) emailEl.value = user.email || "";
-    },
-    onSignOut() {
-      // Clear author fields on sign out
-      document.getElementById("authorInput").value = "";
-      document.getElementById("emailInput").value = "";
-    }
-  });
-
-  // ── Gate: require login to use this page ─────────────
-  onAuthChange(user => {
-    if (!user) {
-      showLoginModal({
-        closeable: true,
-        prompt: "Sign in to write and publish your story on HlyWor.",
-        onSuccess(u) {
-          // Auto-fill after signing in from the modal
-          const nameEl = document.getElementById("authorInput");
-          const emailEl = document.getElementById("emailInput");
-          if (nameEl && !nameEl.value) nameEl.value = getDisplayName(u);
-          if (emailEl && !emailEl.value) emailEl.value = u.email || "";
-        }
-      });
-    } else {
-      // Auto-fill on page load if already signed in
-      const nameEl = document.getElementById("authorInput");
-      const emailEl = document.getElementById("emailInput");
-      if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
-      if (emailEl && !emailEl.value) emailEl.value = user.email || "";
-    }
-  });
 
   const TEMPLATES = {
     diary:   { label:"diary entry",   ph:"Start writing...\n\nJust write. Use the tools on the left to format, add stickers, tape, photos, sticky notes.\n\nThis is your space." },
@@ -627,12 +625,88 @@
     btn.addEventListener("mousedown",e=>{e.preventDefault();editor.focus();const cmd=btn.dataset.cmd;if(cmd==="h2")document.execCommand("formatBlock",false,"h2");else if(cmd==="h3")document.execCommand("formatBlock",false,"h3");else if(cmd==="blockquote")document.execCommand("formatBlock",false,"blockquote");else document.execCommand(cmd);});
   });
 
-  document.querySelectorAll(".pen-swatch").forEach(sw=>{
-    sw.addEventListener("click",()=>{document.querySelectorAll(".pen-swatch").forEach(s=>s.classList.remove("active"));sw.classList.add("active");currentColor=sw.dataset.color;editor.style.color=currentColor;editor.focus();});
+  // Old pen swatches are replaced — color picker below handles text color
+  // (kept for backward compat in case something references .pen-swatch)
+
+  // ── Font picker ─────────────────────────────────────
+  document.querySelectorAll(".font-btn").forEach(btn => {
+    btn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      document.querySelectorAll(".font-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const font = btn.dataset.font;
+      // Apply to selected text, or set editor font
+      const sel = window.getSelection();
+      if (sel && !sel.isCollapsed && sel.rangeCount) {
+        const range = sel.getRangeAt(0);
+        const span = document.createElement("span");
+        span.style.fontFamily = font || "inherit";
+        try { range.surroundContents(span); } catch(e) {
+          // If range spans multiple nodes, use execCommand
+          document.execCommand("insertHTML", false,
+            `<span style="font-family:${font||'inherit'}">${sel.toString()}</span>`);
+        }
+        sel.removeAllRanges();
+      } else {
+        // Set default font for new typing
+        editor.style.fontFamily = font || "";
+      }
+      editor.focus();
+    });
   });
 
-  document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn=>{
-    btn.addEventListener("mousedown",e=>{e.preventDefault();const sel=window.getSelection();if(!sel.rangeCount||sel.isCollapsed)return;const range=sel.getRangeAt(0);const span=document.createElement("span");span.className=btn.dataset.highlight;range.surroundContents(span);sel.removeAllRanges();editor.focus();});
+  // ── Text color picker ────────────────────────────────
+  document.querySelectorAll(".text-color-swatch").forEach(sw => {
+    sw.addEventListener("click", () => {
+      document.querySelectorAll(".text-color-swatch").forEach(s => s.classList.remove("active"));
+      sw.classList.add("active");
+      currentColor = sw.dataset.color;
+      editor.focus();
+      // Apply to selected text
+      const sel = window.getSelection();
+      if (sel && !sel.isCollapsed) {
+        document.execCommand("foreColor", false, currentColor);
+      }
+      editor.style.color = currentColor;
+    });
+  });
+
+  // Custom color picker
+  const customColorInput = document.getElementById("customColorInput");
+  document.getElementById("customColorBtn").addEventListener("click", () => {
+    customColorInput.click();
+  });
+  customColorInput.addEventListener("input", () => {
+    currentColor = customColorInput.value;
+    document.querySelectorAll(".text-color-swatch").forEach(s => s.classList.remove("active"));
+    editor.focus();
+    const sel = window.getSelection();
+    if (sel && !sel.isCollapsed) {
+      document.execCommand("foreColor", false, currentColor);
+    }
+    editor.style.color = currentColor;
+  });
+
+  document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn => {
+    btn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      const sel = window.getSelection();
+      if (!sel.rangeCount || sel.isCollapsed) return;
+      const cls = btn.dataset.highlight;
+      const range = sel.getRangeAt(0);
+      // Line highlights use <span class="hl-line-x">, inline use <span class="highlight-x">
+      const isLine = cls.startsWith("hl-line");
+      const el = isLine ? document.createElement("span") : document.createElement("span");
+      el.className = cls;
+      try {
+        range.surroundContents(el);
+      } catch(err) {
+        // Multi-node selection — use execCommand fallback
+        document.execCommand("insertHTML", false, `<span class="${cls}">${sel.toString()}</span>`);
+      }
+      sel.removeAllRanges();
+      editor.focus();
+    });
   });
 
   function insertAtCursor(html){editor.focus();if(savedRange){const sel=window.getSelection();sel.removeAllRanges();sel.addRange(savedRange);}document.execCommand("insertHTML",false,html);updateSaveStatus("unsaved");}
@@ -644,7 +718,18 @@
   document.addEventListener("click",e=>{if(!e.target.closest("#stickerPicker")&&!e.target.closest("#insertStickerBtn"))sp.classList.remove("open");});
 
   const stickyBtn=document.getElementById("insertStickyBtn");
-  if(stickyBtn)stickyBtn.addEventListener("mousedown",e=>{e.preventDefault();const c=["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"][Math.floor(Math.random()*4)];insertAtCursor("<div class='sticky-callout"+(c?" "+c:"")+"' contenteditable='true'>Write your note...</div><p><br></p>");});
+  if(stickyBtn) stickyBtn.addEventListener("mousedown", e => {
+    e.preventDefault();
+    const variants = ["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"];
+    const v = variants[Math.floor(Math.random()*variants.length)];
+    const id = "sticky-" + Date.now();
+    insertAtCursor(`<div id="${id}" class="sticky-callout${v?" "+v:""}" contenteditable="true" data-sticky="1">Write your note here...</div><p><br></p>`);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) { el.focus(); const r=document.createRange();r.selectNodeContents(el);const s=window.getSelection();s.removeAllRanges();s.addRange(r); }
+    }, 50);
+  });
+  editor.addEventListener("click", e => { if(e.target.closest("[data-sticky]")) e.stopPropagation(); });
 
   const doodleBtn=document.getElementById("insertDoodleBtn");
   if(doodleBtn)doodleBtn.addEventListener("mousedown",e=>{e.preventDefault();const w=["<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='"+currentColor+"' stroke-width='1.5' opacity='0.4'/></svg>","<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><line x1='0' y1='10' x2='400' y2='10' stroke='"+currentColor+"' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg>"];insertAtCursor(w[Math.floor(Math.random()*2)]+"<p><br></p>");});
@@ -660,20 +745,125 @@
   const imgPopup=document.getElementById("imgPopup");
   document.getElementById("insertImgBtn").addEventListener("click",e=>{const r=e.currentTarget.getBoundingClientRect();imgPopup.style.left=(r.right+8)+"px";imgPopup.style.top=Math.min(r.top,window.innerHeight-320)+"px";imgPopup.classList.toggle("open");const sel=window.getSelection();if(sel.rangeCount)savedRange=sel.getRangeAt(0).cloneRange();});
   document.getElementById("inlineImgUploadBtn").addEventListener("click",()=>document.getElementById("inlineImgFile").click());
-  document.getElementById("inlineImgFile").addEventListener("change",async()=>{
-    const file=document.getElementById("inlineImgFile").files[0];if(!file)return;
-    const style=document.getElementById("inlineImgStyle").value,caption=document.getElementById("inlineImgCaption").value.trim();
-    const localUrl=URL.createObjectURL(file),imgId="img-"+Date.now();
-    const html=style==="inline-full"
-      ?"<figure id='"+imgId+"'><img src='"+localUrl+"' style='width:100%;display:block;margin:12px 0;min-height:120px' alt='"+caption+"'>"+(caption?"<figcaption>"+caption+"</figcaption>":"")+"</figure><p><br></p>"
-      :"<div id='"+imgId+"' class='polaroid "+style+"' style='display:inline-block'><img src='"+localUrl+"' alt='"+caption+"' style='width:100%;display:block;height:160px;object-fit:cover'>"+(caption?"<span class='polaroid-caption'>"+caption+"</span>":"")+"</div><p><br></p>";
-    insertAtCursor(html);imgPopup.classList.remove("open");document.getElementById("inlineImgCaption").value="";document.getElementById("inlineImgFile").value="";
-    uploadingCount++;
-    const url=await uploadToCloudinary(file);
-    uploadingCount--;
-    if(url){const el=document.getElementById(imgId);if(el){const img=el.querySelector("img");if(img)img.src=url;}URL.revokeObjectURL(localUrl);}
+
+  // Image alignment selection
+  let selectedImgAlign = "center";
+  document.querySelectorAll(".img-align-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".img-align-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedImgAlign = btn.dataset.align;
+    });
   });
-  document.addEventListener("click",e=>{if(!e.target.closest("#imgPopup")&&!e.target.closest("#insertImgBtn"))imgPopup.classList.remove("open");});
+
+  document.getElementById("inlineImgFile").addEventListener("change", async () => {
+    const file = document.getElementById("inlineImgFile").files[0];
+    if (!file) return;
+    const frameStyle = document.getElementById("inlineImgStyle").value;
+    const caption = document.getElementById("inlineImgCaption").value.trim();
+    const localUrl = URL.createObjectURL(file);
+    const imgId = "img-" + Date.now();
+    const alignClass = "img-" + selectedImgAlign;
+
+    let html;
+    if (frameStyle === "tilt-l" || frameStyle === "tilt-r" || frameStyle === "straight") {
+      // Polaroid frame
+      const tiltClass = frameStyle === "tilt-l" ? "tilt-l" : frameStyle === "tilt-r" ? "tilt-r" : "";
+      html = `<figure id="${imgId}" class="${alignClass}" style="display:inline-block;max-width:${selectedImgAlign==='full'?'100%':'220px'}"><div class="polaroid ${tiltClass}"><img src="${localUrl}" alt="${caption}" style="width:100%;display:block;height:160px;object-fit:cover">${caption?`<span class='polaroid-caption'>${caption}</span>`:""}</div></figure><p><br></p>`;
+    } else {
+      // Plain photo
+      html = `<figure id="${imgId}" class="${alignClass}"><img src="${localUrl}" alt="${caption}" style="display:block">${caption?`<figcaption>${caption}</figcaption>`:""}</figure><p><br></p>`;
+    }
+
+    insertAtCursor(html);
+    imgPopup.classList.remove("open");
+    document.getElementById("inlineImgCaption").value = "";
+    document.getElementById("inlineImgFile").value = "";
+
+    uploadingCount++;
+    const url = await uploadToCloudinary(file);
+    uploadingCount--;
+    if (url) {
+      const el = document.getElementById(imgId);
+      if (el) { const img = el.querySelector("img"); if (img) img.src = url; }
+      URL.revokeObjectURL(localUrl);
+    }
+  });
+  document.addEventListener("click", e => {
+    if (!e.target.closest("#imgPopup") && !e.target.closest("#insertImgBtn")) imgPopup.classList.remove("open");
+    if (!e.target.closest("#imgRowPopup") && !e.target.closest("#insertImgRowBtn")) document.getElementById("imgRowPopup").classList.remove("open");
+  });
+
+  // ── Image row button ──────────────────────────────────
+  const imgRowPopup = document.getElementById("imgRowPopup");
+  document.getElementById("insertImgRowBtn").addEventListener("click", e => {
+    const r = e.currentTarget.getBoundingClientRect();
+    imgRowPopup.style.left = (r.right + 8) + "px";
+    imgRowPopup.style.top = Math.min(r.top, window.innerHeight - 300) + "px";
+    imgRowPopup.classList.toggle("open");
+    const sel = window.getSelection();
+    if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
+  });
+
+  // Image row slots — click to upload
+  const rowUrls = [null, null, null];
+  document.querySelectorAll(".img-row-slot").forEach(slot => {
+    const idx = parseInt(slot.dataset.slot);
+    const input = slot.querySelector("input");
+    slot.addEventListener("click", () => input.click());
+    input.addEventListener("change", async () => {
+      const file = input.files[0]; if (!file) return;
+      const localUrl = URL.createObjectURL(file);
+      slot.classList.add("filled");
+      slot.innerHTML = `<img src="${localUrl}"><input type="file" accept="image/*" style="display:none">`;
+      // re-attach click
+      const newInput = slot.querySelector("input");
+      slot.addEventListener("click", () => newInput.click());
+      rowUrls[idx] = localUrl;
+      uploadingCount++;
+      const url = await uploadToCloudinary(file);
+      uploadingCount--;
+      if (url) {
+        rowUrls[idx] = url;
+        const img = slot.querySelector("img"); if (img) img.src = url;
+        URL.revokeObjectURL(localUrl);
+      }
+    });
+  });
+
+  document.getElementById("imgRowInsert").addEventListener("click", () => {
+    const validUrls = rowUrls.filter(Boolean);
+    if (!validUrls.length) return;
+    const style = document.getElementById("imgRowStyle").value;
+    let html;
+    if (style === "polaroid") {
+      const tilts = ["tilt-l","","tilt-r"];
+      html = `<div class="img-row-block">${validUrls.map((u,i) => `<figure><div class="polaroid ${tilts[i%3]}"><img src="${u}" style="width:100%;display:block;height:120px;object-fit:cover"></div></figure>`).join("")}</div><p><br></p>`;
+    } else {
+      html = `<div class="img-row-block">${validUrls.map(u => `<figure><img src="${u}"></figure>`).join("")}</div><p><br></p>`;
+    }
+    insertAtCursor(html);
+    imgRowPopup.classList.remove("open");
+    // reset
+    rowUrls.fill(null);
+    document.querySelectorAll(".img-row-slot").forEach((slot, i) => {
+      slot.classList.remove("filled");
+      slot.innerHTML = `<input type="file" accept="image/*" style="display:none"><span>📷</span>`;
+      const input = slot.querySelector("input");
+      slot.addEventListener("click", () => input.click());
+      input.addEventListener("change", async () => {
+        const file = input.files[0]; if (!file) return;
+        const localUrl = URL.createObjectURL(file);
+        slot.classList.add("filled");
+        slot.innerHTML = `<img src="${localUrl}"><input type="file" accept="image/*" style="display:none">`;
+        rowUrls[i] = localUrl;
+        uploadingCount++;
+        const url = await uploadToCloudinary(file);
+        uploadingCount--;
+        if (url) { rowUrls[i] = url; const img = slot.querySelector("img"); if(img) img.src = url; URL.revokeObjectURL(localUrl); }
+      });
+    });
+  });
 
   const coverDrop=document.getElementById("coverDrop"),coverFile=document.getElementById("coverFile"),coverPreview=document.getElementById("coverPreview"),coverUrlEl=document.getElementById("coverUrl");
   coverDrop.addEventListener("click",()=>coverFile.click());
@@ -710,13 +900,7 @@
     }catch(e){console.error(e);return null;}
   }
 
-  document.getElementById("publishOpenBtn").addEventListener("click",()=>{
-    if(!currentUser){
-      showLoginModal({prompt:"Sign in to publish your post."});
-      return;
-    }
-    document.getElementById("publishModalBg").classList.add("open");
-  });
+  document.getElementById("publishOpenBtn").addEventListener("click",()=>document.getElementById("publishModalBg").classList.add("open"));
   document.getElementById("modalClose").addEventListener("click",()=>document.getElementById("publishModalBg").classList.remove("open"));
   document.getElementById("publishModalBg").addEventListener("click",e=>{if(e.target===document.getElementById("publishModalBg"))document.getElementById("publishModalBg").classList.remove("open");});
 
@@ -727,128 +911,22 @@
   function serializeContent(){const clone=editor.cloneNode(true);clone.querySelectorAll("[contenteditable]").forEach(el=>el.removeAttribute("contenteditable"));return clone.innerHTML;}
 
   document.getElementById("submitBtn").addEventListener("click",async()=>{
-    // Double-check auth at submit time
-    if(!currentUser){
-      showLoginModal({prompt:"Sign in to publish your post."});
-      return;
-    }
-    const name=document.getElementById("authorInput").value.trim()||getDisplayName(currentUser),
-          email=document.getElementById("emailInput").value.trim()||currentUser.email||"",
-          title=document.getElementById("titleInput").value.trim(),
-          desc=document.getElementById("descInput").value.trim(),
-          readtime=document.getElementById("readtimeInput").value.trim()||document.getElementById("readTimeCalc").textContent,
-          coverUrl=document.getElementById("coverUrl").value,
-          content=serializeContent(),
-          plainText=editor.innerText.trim(),
-          type=document.getElementById("typeSelect").value,
-          agree=document.getElementById("agreeCheck").checked,
-          agreeImg=document.getElementById("agreeImgCheck").checked,
-          techTag=(document.getElementById("techTagInput")||{}).value?.trim()||"",
-          statusEl=document.getElementById("modalStatus");
-
+    const name=document.getElementById("authorInput").value.trim(),email=document.getElementById("emailInput").value.trim(),title=document.getElementById("titleInput").value.trim(),desc=document.getElementById("descInput").value.trim(),readtime=document.getElementById("readtimeInput").value.trim()||document.getElementById("readTimeCalc").textContent,coverUrl=document.getElementById("coverUrl").value,content=serializeContent(),plainText=editor.innerText.trim(),type=document.getElementById("typeSelect").value,agree=document.getElementById("agreeCheck").checked,agreeImg=document.getElementById("agreeImgCheck").checked,techTag=(document.getElementById("techTagInput")||{}).value?.trim()||"",statusEl=document.getElementById("modalStatus");
     if(uploadingCount>0){statusEl.textContent="⚠ Images still uploading, wait a moment...";statusEl.className="modal-status err";return;}
     if(!title){statusEl.textContent="⚠ Title is required";statusEl.className="modal-status err";return;}
     if(!desc){statusEl.textContent="⚠ Homepage desc is required";statusEl.className="modal-status err";return;}
     if(plainText.length<30){statusEl.textContent="⚠ Write a little more first";statusEl.className="modal-status err";return;}
     if(!agree){statusEl.textContent="⚠ Confirm your content";statusEl.className="modal-status err";return;}
     if(!agreeImg){statusEl.textContent="⚠ Confirm image rights";statusEl.className="modal-status err";return;}
-
-    const btn=document.getElementById("submitBtn");
-    btn.disabled=true;btn.textContent="Sending...";statusEl.textContent="";
-
+    const btn=document.getElementById("submitBtn");btn.disabled=true;btn.textContent="Sending...";statusEl.textContent="";
     try{
       const slug=title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-      await addDoc(collection(db,"posts"),{
-        // content
-        name, email, type, readtime, title, desc,
-        thumbnail: coverUrl||"",
-        category: selectedCat,
-        template: activeTemplate,
-        mood: selectedMood,
-        rating: starRating||null,
-        techTag: techTag||null,
-        tags, content,
-        url: "post.html?slug="+slug,
-        slug,
-        status: "published",
-        author: name,
-        date: new Date().toISOString(),
-        // ── NEW: auth fields ──
-        authorUid: currentUser.uid,
-        authorEmail: currentUser.email||"",
-        authorPhoto: currentUser.photoURL||"",
-        publishedAt: serverTimestamp(),
-        createdAt: serverTimestamp()
-      });
-      btn.textContent="Live ✦";
-      statusEl.textContent="✓ Your post is live on the homepage! 🎉";
-      statusEl.className="modal-status ok";
-      updateSaveStatus("saved");
-    }catch(err){
-      console.error(err);
-      btn.disabled=false;
-      btn.textContent="Go live now ✦";
-      statusEl.textContent="✕ Failed — "+err.message;
-      statusEl.className="modal-status err";
-    }
+      await addDoc(collection(db,"posts"),{name,email,type,readtime,title,desc,thumbnail:coverUrl||"",category:selectedCat,template:activeTemplate,mood:selectedMood,rating:starRating||null,techTag:techTag||null,tags,content,url:"post.html?slug="+slug,slug,status:"published",author:name,date:new Date().toISOString(),publishedAt:serverTimestamp(),createdAt:serverTimestamp()});
+      btn.textContent="Live ✦";statusEl.textContent="✓ Your post is live on the homepage! 🎉";statusEl.className="modal-status ok";updateSaveStatus("saved");
+    }catch(err){console.error(err);btn.disabled=false;btn.textContent="Go live now ✦";statusEl.textContent="✕ Failed — check Firebase config";statusEl.className="modal-status err";}
   });
 
   document.addEventListener("keydown",e=>{if(e.metaKey||e.ctrlKey){if(e.key==="b"){e.preventDefault();document.execCommand("bold");}if(e.key==="i"){e.preventDefault();document.execCommand("italic");}}});
-
-/* ── Bottom dock ── */
-document.getElementById('dockSearchBtn')?.addEventListener('click', () => {
-  if(typeof openSearch==='function')openSearch(); else document.getElementById('searchOverlay')?.classList.add('open');
-});
-document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
-  e.preventDefault();
-  if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to write.');if(u)window.location.href='submit.html';}else window.location.href='submit.html';
-});
-document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
-  if(typeof currentUser!=='undefined'&&currentUser){window.location.href='dashboard.html';}else if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to access your board.');if(u)window.location.href='dashboard.html';}else window.location.href='dashboard.html';
-});
-/* Update dock Me icon on auth change */
-if (typeof onAuthChange === 'function') {
-  onAuthChange(user => {
-    const icon = document.getElementById('dockMeIcon');
-    const lbl  = document.getElementById('dockMeLabel');
-    if (!icon) return;
-    if (user) {
-      icon.innerHTML = user.photoURL
-        ? `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer">`
-        : `<div class="dock-avatar-placeholder">${(user.displayName||'U')[0].toUpperCase()}</div>`;
-      if (lbl) lbl.textContent = (user.displayName||'').split(' ')[0].slice(0,5)||'ME';
-    } else {
-      icon.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
-      if (lbl) lbl.textContent = 'ME';
-    }
-  });
-}
 </script>
-
-<!-- BOTTOM DOCK -->
-<div class="bottom-dock">
-  <div class="dock-inner">
-    <a href="index.html" class="dock-item">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
-      <span class="dock-label">HOME</span>
-    </a>
-    <a href="posts.html" class="dock-item">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <span class="dock-label">POSTS</span>
-    </a>
-    <a href="submit.html" class="dock-item dock-write active" id="dockWriteBtn">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z"/></svg></div>
-      <span class="dock-label">WRITE</span>
-    </a>
-    <button class="dock-item dock-search" id="dockSearchBtn">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
-      <span class="dock-label">SEARCH</span>
-    </button>
-    <button class="dock-item dock-me" id="dockMeBtn">
-      <div class="dock-icon" id="dockMeIcon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-      <span class="dock-label" id="dockMeLabel">ME</span>
-    </button>
-  </div>
-</div>
 </body>
 </html>
