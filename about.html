@@ -1,34 +1,770 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>About This Page</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/theme.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — HlyWor</title>
+  <meta name="description" content="Two college students from Guwahati who built a place for stories the algorithm ignores. This is who we are and why we built HlyWor.">
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board: #2a1f14;
+      --cork: #3d2e1e;
+      --paper: #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #eee5c8;
+      --ink: #1a1208;
+      --ink2: #3d3020;
+      --ink3: #6a5840;
+      --fire: #e8681a;
+      --gold: #d4a020;
+      --pixel: 'Press Start 2P', monospace;
+      --serif: 'Crimson Pro', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --hand: 'Caveat', cursive;
+      --pin-shadow: 0 4px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--board);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: var(--serif);
+      cursor: default;
+    }
+
+    /* BOARD TEXTURE */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(100,70,30,0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(70,45,15,0.3) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(50,30,10,0.2) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      background-size: auto, auto, auto, 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* EMBERS */
+    .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .ember { position: absolute; border-radius: 50%; background: var(--fire); box-shadow: 0 0 4px var(--fire); animation: emberRise linear infinite; opacity: 0; }
+    @keyframes emberRise {
+      0% { transform: translateY(100vh) translateX(0) scale(1); opacity: 0; }
+      10% { opacity: 0.9; }
+      80% { opacity: 0.2; }
+      100% { transform: translateY(-5vh) translateX(var(--edrift)) scale(0.3); opacity: 0; }
+    }
+
+    /* LIGHT BLOBS */
+    .light-blob { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; animation: blobFloat ease-in-out infinite; }
+    .blob-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(232,104,26,0.08) 0%, transparent 70%); top: -150px; left: 5%; animation-duration: 14s; }
+    .blob-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,160,32,0.06) 0%, transparent 70%); top: 40%; right: -50px; animation-duration: 18s; animation-delay: 4s; }
+    .blob-3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(232,104,26,0.05) 0%, transparent 70%); bottom: 5%; left: 25%; animation-duration: 22s; animation-delay: 8s; }
+    @keyframes blobFloat {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(20px,-25px) scale(1.06); }
+      66% { transform: translate(-15px,18px) scale(0.96); }
+    }
+
+    /* NAV */
+    .nav-strip {
+      position: fixed; left: 0; top: 0; bottom: 0; width: 72px; z-index: 1000;
+      background: var(--ink); display: flex; flex-direction: column; align-items: center;
+      padding: 24px 0 20px; border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-strip::after {
+      content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(212,160,32,0.2), transparent);
+      pointer-events: none;
+    }
+    .nav-logo {
+      font-family: var(--pixel); font-size: 0.55rem; color: var(--gold);
+      writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+      letter-spacing: 4px; text-shadow: 0 0 16px rgba(212,160,32,0.5);
+      animation: logoFlicker 7s infinite; margin-bottom: 32px; text-decoration: none;
+    }
+    @keyframes logoFlicker { 0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1} }
+    .nav-divider { width: 32px; height: 1px; background: linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent); margin: 10px 0; }
+    .nav-icon-links { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; width: 100%; }
+    .nav-icon-link {
+      width: 100%; display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.38); font-family: var(--sans); font-size: 0.68rem;
+      font-weight: 500; writing-mode: vertical-rl; text-orientation: mixed;
+      transform: rotate(180deg); transition: color 0.2s, background 0.2s;
+      text-decoration: none; white-space: nowrap; padding: 12px 0; letter-spacing: 1.5px; position: relative;
+    }
+    .nav-icon-link.active { color: var(--gold); }
+    .nav-icon-link::before {
+      content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 2px; background: var(--fire); transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s;
+    }
+    .nav-icon-link:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
+    .nav-icon-link:hover::before, .nav-icon-link.active::before { transform: scaleY(1); }
+
+    /* MOBILE NAV */
+    .mobile-topbar {
+      display: none; position: sticky; top: 0; z-index: 500;
+      background: rgba(18,12,8,0.97); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 0 16px; height: 48px; align-items: center; justify-content: space-between;
+    }
+    .mtb-logo { font-family: var(--pixel); font-size: 0.48rem; color: var(--gold); letter-spacing: 2px; text-decoration: none; }
+    .mtb-back { font-family: var(--sans); font-size: 0.75rem; color: rgba(255,255,255,0.4); text-decoration: none; letter-spacing: 1px; }
+
+    /* BOARD / PAGE */
+    .board { margin-left: 72px; min-height: 100vh; position: relative; z-index: 2; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 80px 40px;
+      position: relative; text-align: center;
+      overflow: hidden;
+    }
+
+    /* big decorative line in background */
+    .hero-line {
+      position: absolute;
+      font-family: var(--pixel); font-size: clamp(5rem, 16vw, 12rem);
+      color: rgba(255,255,255,0.025); letter-spacing: -4px;
+      pointer-events: none; user-select: none; top: 50%; left: 50%;
+      transform: translate(-50%,-50%); white-space: nowrap; line-height: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--pixel); font-size: 0.3rem; color: var(--fire);
+      letter-spacing: 4px; margin-bottom: 20px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 300; font-style: italic; color: var(--paper);
+      line-height: 1.1; margin-bottom: 28px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-title em { font-weight: 600; color: var(--fire); font-style: italic; }
+    .hero-sub {
+      font-family: var(--sans); font-size: 0.9rem; color: rgba(245,237,216,0.5);
+      line-height: 1.9; max-width: 460px; margin: 0 auto 40px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    /* scroll cue */
+    .scroll-cue {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+    .scroll-cue span { font-family: var(--pixel); font-size: 0.22rem; color: rgba(245,237,216,0.2); letter-spacing: 3px; }
+    .scroll-arrow { width: 20px; height: 20px; border-right: 1px solid rgba(232,104,26,0.4); border-bottom: 1px solid rgba(232,104,26,0.4); transform: rotate(45deg); animation: scrollBounce 1.8s ease-in-out infinite; }
+    @keyframes scrollBounce { 0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)} }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* red string across hero */
+    .red-string {
+      position: absolute; width: 100%; height: 2px; top: 60%;
+      background: linear-gradient(90deg, transparent 0%, rgba(232,104,26,0.25) 20%, rgba(232,104,26,0.35) 50%, rgba(232,104,26,0.2) 80%, transparent 100%);
+      pointer-events: none;
+    }
+    .string-dot {
+      position: absolute; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fire); top: -2px; box-shadow: 0 0 8px var(--fire);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 40px; position: relative; z-index: 2; }
+
+    .section-eyebrow {
+      font-family: var(--pixel); font-size: 0.28rem; color: rgba(245,237,216,0.25);
+      letter-spacing: 3px; margin-bottom: 48px; display: flex; align-items: center; gap: 14px;
+    }
+    .section-eyebrow::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, rgba(232,104,26,0.3), transparent);
+    }
+
+    /* ── ORIGIN SECTION ── */
+    .origin-section { max-width: 960px; margin: 0 auto; }
+
+    .origin-grid {
+      display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start;
+    }
+
+    .origin-paper {
+      background: var(--paper); padding: 40px 40px 52px;
+      position: relative; transform: rotate(-0.6deg);
+      box-shadow: var(--pin-shadow);
+      animation: revealPaper 0.7s ease both;
+    }
+    @keyframes revealPaper {
+      from { opacity: 0; transform: rotate(-0.6deg) translateY(30px); }
+      to { opacity: 1; transform: rotate(-0.6deg) translateY(0); }
+    }
+    .origin-paper::after {
+      content: ''; position: absolute; bottom: -10px; left: 0; right: 0; height: 14px;
+      background: var(--paper);
+      clip-path: polygon(0% 0%, 3% 100%, 6% 30%, 9% 100%, 12% 20%, 15% 100%, 18% 40%, 21% 100%, 24% 10%, 27% 100%, 30% 50%, 33% 100%, 36% 20%, 39% 100%, 42% 30%, 45% 100%, 48% 10%, 51% 100%, 54% 40%, 57% 100%, 60% 20%, 63% 100%, 66% 50%, 69% 100%, 72% 10%, 75% 100%, 78% 30%, 81% 100%, 84% 20%, 87% 100%, 90% 40%, 93% 100%, 96% 20%, 100% 100%, 100% 0%);
+    }
+    .origin-pin {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      width: 15px; height: 15px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2222);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.3); z-index: 2;
+    }
+    .origin-pin::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 14px; background: linear-gradient(to bottom, #888, #444);
+    }
+    .origin-tape {
+      position: absolute; top: -11px; right: 24px;
+      background: rgba(92,138,232,0.7); color: #fff;
+      font-family: var(--pixel); font-size: 0.26rem; letter-spacing: 2px;
+      padding: 4px 18px; transform: rotate(1.8deg);
+    }
+    .origin-label {
+      font-family: var(--pixel); font-size: 0.28rem; color: var(--fire);
+      letter-spacing: 3px; margin-bottom: 18px;
+      padding-bottom: 14px; border-bottom: 1px dashed rgba(26,18,8,0.2);
+    }
+    .origin-text {
+      font-family: var(--serif); font-size: 1.05rem; font-style: italic;
+      color: var(--ink2); line-height: 1.95;
+    }
+    .origin-text p { margin-bottom: 16px; }
+    .origin-text p:last-child { margin-bottom: 0; }
+    .origin-text strong { font-style: normal; font-weight: 600; color: var(--fire); }
+    .origin-sig {
+      font-family: var(--hand); font-size: 1.1rem; color: var(--fire);
+      margin-top: 20px; display: block; text-align: right;
+    }
+
+    /* side stats column */
+    .origin-side { display: flex; flex-direction: column; gap: 20px; }
+
+    .stat-card {
+      background: var(--paper2); padding: 22px 20px 26px;
+      position: relative; box-shadow: var(--pin-shadow);
+    }
+    .stat-card:nth-child(1) { transform: rotate(1.5deg); }
+    .stat-card:nth-child(2) { transform: rotate(-1.2deg); margin-top: 8px; }
+    .stat-card:nth-child(3) { transform: rotate(0.8deg); }
+    .stat-pin {
+      position: absolute; top: -9px; right: 28%;
+      width: 11px; height: 11px; border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.45);
+    }
+    .stat-pin::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 9px; background: linear-gradient(to bottom, #777, #444);
+    }
+    .stat-card:nth-child(1) .stat-pin { background: radial-gradient(circle at 35% 35%, #ffcc88, #cc8822); }
+    .stat-card:nth-child(2) .stat-pin { background: radial-gradient(circle at 35% 35%, #aaddff, #2266cc); }
+    .stat-card:nth-child(3) .stat-pin { background: radial-gradient(circle at 35% 35%, #aaeeaa, #228844); }
+    .stat-num {
+      font-family: var(--pixel); font-size: 1.2rem; color: var(--fire);
+      display: block; margin-bottom: 6px; letter-spacing: -1px;
+    }
+    .stat-label { font-family: var(--hand); font-size: 1rem; color: var(--ink2); }
+    .stat-sub { font-family: var(--sans); font-size: 0.7rem; color: var(--ink3); line-height: 1.6; margin-top: 6px; }
+
+    /* ── BELIEFS SECTION ── */
+    .beliefs-section { max-width: 960px; margin: 0 auto; }
+    .beliefs-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; align-items: start;
+    }
+    .belief-note {
+      padding: 26px 22px 30px; box-shadow: var(--pin-shadow);
+      position: relative; transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .belief-note:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.55); }
+    .belief-note:nth-child(1) { background: #fef9c3; transform: rotate(-1.5deg); }
+    .belief-note:nth-child(1):hover { transform: rotate(-0.2deg) translateY(-6px); }
+    .belief-note:nth-child(2) { background: #f0f8ff; transform: rotate(0.8deg); margin-top: 28px; }
+    .belief-note:nth-child(2):hover { transform: rotate(0.1deg) translateY(-6px); }
+    .belief-note:nth-child(3) { background: #f0fff4; transform: rotate(-0.6deg); }
+    .belief-note:nth-child(3):hover { transform: rotate(0deg) translateY(-6px); }
+    .belief-pin {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      width: 12px; height: 12px; border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.45);
+    }
+    .belief-pin::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 10px; background: linear-gradient(to bottom, #777, #333);
+    }
+    .belief-note:nth-child(1) .belief-pin { background: radial-gradient(circle at 35% 35%, #ff9999, #cc2222); }
+    .belief-note:nth-child(2) .belief-pin { background: radial-gradient(circle at 35% 35%, #aaddff, #2266cc); }
+    .belief-note:nth-child(3) .belief-pin { background: radial-gradient(circle at 35% 35%, #aaeeaa, #228844); }
+    .belief-num {
+      font-family: var(--pixel); font-size: 0.55rem; color: rgba(26,18,8,0.2);
+      display: block; margin-bottom: 10px;
+    }
+    .belief-title {
+      font-family: var(--hand); font-size: 1.3rem; color: var(--ink);
+      font-weight: 600; margin-bottom: 10px; line-height: 1.3;
+    }
+    .belief-body {
+      font-family: var(--sans); font-size: 0.74rem; color: var(--ink2); line-height: 1.8;
+    }
+
+    /* ── TEAM SECTION ── */
+    .team-section { max-width: 960px; margin: 0 auto; }
+
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+
+    .member-card {
+      position: relative; background: var(--paper);
+      box-shadow: var(--pin-shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .member-card:nth-child(1) { transform: rotate(-1.2deg); }
+    .member-card:nth-child(1):hover { transform: rotate(-0.2deg) translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.55); }
+    .member-card:nth-child(2) { transform: rotate(1deg); margin-top: 32px; }
+    .member-card:nth-child(2):hover { transform: rotate(0.1deg) translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.55); }
+    .member-pin {
+      position: absolute; top: -11px; left: 40%; width: 13px; height: 13px; border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3); z-index: 2;
+    }
+    .member-pin::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 12px; background: linear-gradient(to bottom, #888, #444);
+    }
+    .member-card:nth-child(1) .member-pin { background: radial-gradient(circle at 35% 35%, #ffcc88, #cc8822); }
+    .member-card:nth-child(2) .member-pin { background: radial-gradient(circle at 35% 35%, #aaddff, #2266cc); }
+
+    /* colored top accent bar */
+    .member-accent { height: 4px; width: 100%; }
+    .member-card:nth-child(1) .member-accent { background: linear-gradient(90deg, var(--fire), var(--gold)); }
+    .member-card:nth-child(2) .member-accent { background: linear-gradient(90deg, #5c8ae8, #7ab8f5); }
+
+    .member-body { padding: 28px 28px 32px; }
+    .member-role {
+      font-family: var(--pixel); font-size: 0.26rem; letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+    .member-card:nth-child(1) .member-role { color: var(--fire); }
+    .member-card:nth-child(2) .member-role { color: #5c8ae8; }
+
+    .member-name {
+      font-family: var(--hand); font-size: 2.2rem; color: var(--ink);
+      font-weight: 600; line-height: 1; margin-bottom: 6px;
+    }
+    .member-tag {
+      display: inline-block; font-family: var(--pixel); font-size: 0.22rem;
+      letter-spacing: 1.5px; padding: 3px 12px; margin-bottom: 18px;
+    }
+    .member-card:nth-child(1) .member-tag { background: rgba(232,104,26,0.1); color: var(--fire); }
+    .member-card:nth-child(2) .member-tag { background: rgba(92,138,232,0.1); color: #4a7ad4; }
+
+    .member-desc {
+      font-family: var(--serif); font-size: 1rem; font-style: italic;
+      color: var(--ink2); line-height: 1.85; margin-bottom: 18px;
+    }
+
+    .member-divider {
+      width: 100%; height: 1px;
+      background: repeating-linear-gradient(90deg, rgba(26,18,8,0.15) 0, rgba(26,18,8,0.15) 4px, transparent 4px, transparent 8px);
+      margin-bottom: 16px;
+    }
+
+    .member-traits { display: flex; flex-wrap: wrap; gap: 8px; }
+    .trait {
+      font-family: var(--hand); font-size: 0.88rem; color: var(--ink3);
+      background: var(--paper3); border: 1px dashed rgba(26,18,8,0.18);
+      padding: 3px 12px; transition: all 0.15s;
+    }
+    .trait:hover { background: var(--paper2); color: var(--fire); border-color: rgba(232,104,26,0.3); }
+
+    /* personality contrast callout */
+    .contrast-strip {
+      max-width: 960px; margin: 0 auto 0;
+      background: var(--fire); padding: 32px 40px;
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center;
+      transform: rotate(-0.3deg);
+      box-shadow: var(--pin-shadow);
+      position: relative;
+    }
+    .contrast-strip::after {
+      content: ''; position: absolute; bottom: -9px; left: 0; right: 0; height: 12px;
+      background: var(--fire);
+      clip-path: polygon(0% 0%, 4% 100%, 8% 20%, 12% 100%, 16% 40%, 20% 100%, 24% 10%, 28% 100%, 32% 50%, 36% 100%, 40% 20%, 44% 100%, 48% 30%, 52% 100%, 56% 10%, 60% 100%, 64% 40%, 68% 100%, 72% 20%, 76% 100%, 80% 50%, 84% 100%, 88% 10%, 92% 100%, 96% 30%, 100% 100%, 100% 0%);
+    }
+    .contrast-side { text-align: center; }
+    .contrast-name { font-family: var(--hand); font-size: 1.5rem; color: #fff; font-weight: 600; margin-bottom: 6px; }
+    .contrast-trait { font-family: var(--serif); font-size: 0.92rem; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.6; }
+    .contrast-vs {
+      font-family: var(--pixel); font-size: 0.6rem; color: rgba(255,255,255,0.4);
+      border: 1px solid rgba(255,255,255,0.2); padding: 8px 12px;
+    }
+    .contrast-strip .cs-pin {
+      position: absolute; top: -11px; right: 28%;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffaa, #cccc00);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.45);
+    }
+    .contrast-strip .cs-pin::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 12px; background: linear-gradient(to bottom, #777, #333);
+    }
+
+    /* ── CLOSING SECTION ── */
+    .closing-section {
+      max-width: 700px; margin: 0 auto;
+      padding: 100px 40px 80px; text-align: center; position: relative; z-index: 2;
+    }
+    .closing-divider {
+      width: 80px; height: 1px; margin: 0 auto 40px;
+      background: linear-gradient(90deg, transparent, var(--fire), transparent);
+    }
+    .closing-quote {
+      font-family: var(--serif); font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+      font-style: italic; font-weight: 300; color: rgba(245,237,216,0.65);
+      line-height: 1.85; margin-bottom: 36px; position: relative;
+    }
+    .closing-quote::before {
+      content: '\201C'; font-size: 5rem; color: rgba(232,104,26,0.12);
+      font-family: var(--serif); position: absolute; top: -20px; left: -20px; line-height: 1;
+    }
+    .closing-sig {
+      font-family: var(--hand); font-size: 2rem; color: var(--fire); font-weight: 600; margin-bottom: 6px;
+    }
+    .closing-from {
+      font-family: var(--pixel); font-size: 0.24rem; color: rgba(245,237,216,0.2);
+      letter-spacing: 3px; margin-bottom: 40px;
+    }
+
+    .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-fire {
+      font-family: var(--hand); font-size: 1.05rem; padding: 10px 24px;
+      background: var(--fire); color: #fff; text-decoration: none; display: inline-block;
+      box-shadow: 3px 4px 0 rgba(0,0,0,0.35); transform: rotate(-0.5deg);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-fire:hover { transform: rotate(0deg) translateY(-2px); box-shadow: 5px 6px 0 rgba(0,0,0,0.4); }
+    .btn-paper {
+      font-family: var(--hand); font-size: 1.05rem; padding: 10px 24px;
+      background: var(--paper); color: var(--ink); text-decoration: none; display: inline-block;
+      box-shadow: 3px 4px 0 rgba(0,0,0,0.35); transform: rotate(0.5deg);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-paper:hover { transform: rotate(0deg) translateY(-2px); box-shadow: 5px 6px 0 rgba(0,0,0,0.4); }
+
+    /* FOOTER */
+    .board-footer {
+      margin-left: 72px; background: var(--ink);
+      border-top: 2px solid rgba(255,255,255,0.06);
+      padding: 16px 32px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-p { font-family: var(--sans); font-size: 0.7rem; color: rgba(255,255,255,0.3); }
+    .footer-logo { font-family: var(--pixel); font-size: 0.38rem; color: var(--gold); letter-spacing: 2px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-family: var(--sans); font-size: 0.68rem; color: rgba(255,255,255,0.25); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.6); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* PROGRESS */
+    #progress-bar { position: fixed; top: 0; left: 72px; right: 0; height: 2px; width: 0%; background: linear-gradient(90deg, var(--fire), var(--gold)); z-index: 9999; transition: width 0.08s linear; }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      .origin-grid { grid-template-columns: 1fr; }
+      .origin-side { flex-direction: row; flex-wrap: wrap; }
+      .stat-card { flex: 1; min-width: 160px; }
+      .beliefs-grid { grid-template-columns: 1fr 1fr; }
+      .belief-note:nth-child(3) { grid-column: span 2; max-width: 320px; margin: 0 auto; }
+      .contrast-strip { grid-template-columns: 1fr; text-align: center; }
+      .contrast-vs { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-strip { display: none; }
+      .board { margin-left: 0; }
+      .board-footer { margin-left: 0; }
+      .mobile-topbar { display: flex; }
+      #progress-bar { left: 0; }
+      section { padding: 56px 20px; }
+      .hero { padding: 60px 20px; }
+      .origin-paper { padding: 28px 20px 36px; transform: none; }
+      .beliefs-grid { grid-template-columns: 1fr; }
+      .belief-note:nth-child(1), .belief-note:nth-child(2), .belief-note:nth-child(3) { transform: none; grid-column: auto; max-width: none; }
+      .team-grid { grid-template-columns: 1fr; }
+      .member-card:nth-child(1), .member-card:nth-child(2) { transform: none; margin-top: 0; }
+      .contrast-strip { transform: none; padding: 24px 20px; }
+      .closing-section { padding: 60px 20px 60px; }
+    }
+  </style>
 </head>
 <body>
-    <video id="bg-video" src="videos/background.mp4" autoplay loop muted playsinline style="position:fixed; left:0; top:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
-    <div class="container left-menu-layout">
-        <h1>About This Page</h1>
 
-        <div class="menu-box">
-            <p style="font-size:1.6em; text-align:center; max-width:700px;">
-                This little retro realm exists to share my love for anime, games,
-                and quizzes in a cozy, pixel-flavored space. I\'m building it bit by bit—
-                curating libraries, adding fun challenges, and sprinkling in personal tastes—
-                while keeping my identity private. Have fun exploring!
-            </p>
+<div id="progress-bar"></div>
+<div class="embers" id="embers"></div>
+<div class="light-blob blob-1"></div>
+<div class="light-blob blob-2"></div>
+<div class="light-blob blob-3"></div>
+
+<!-- MOBILE TOP BAR -->
+<div class="mobile-topbar">
+  <a href="index.html" class="mtb-logo">HlYWoR</a>
+  <a href="index.html" class="mtb-back">← home</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-divider"></div>
+  <div class="nav-icon-links">
+    <a href="about.html" class="nav-icon-link active">ABOUT</a>
+    <a href="suggestion.html" class="nav-icon-link">SUGGEST</a>
+    <a href="goal.html" class="nav-icon-link">GOALS</a>
+    <a href="blogs.html" class="nav-icon-link">ALL POSTS</a>
+  </div>
+</nav>
+
+<!-- BOARD -->
+<div class="board">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-line">HLYWOR</div>
+    <div class="red-string">
+      <div class="string-dot" style="left:12%"></div>
+      <div class="string-dot" style="left:38%"></div>
+      <div class="string-dot" style="left:65%"></div>
+      <div class="string-dot" style="left:88%"></div>
+    </div>
+    <div class="hero-eyebrow">// GUWAHATI, ASSAM · EST. 2025</div>
+    <h1 class="hero-title">
+      We built this because<br>the algorithm <em>doesn't care.</em>
+    </h1>
+    <p class="hero-sub">Your story doesn't need a following to matter. It doesn't need to go viral. It just needs a place to exist — and be heard by someone who gets it.</p>
+    <div class="scroll-cue">
+      <span>scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
+
+  <!-- ── ORIGIN ── -->
+  <section>
+    <div class="origin-section">
+      <div class="section-eyebrow reveal">// how it started</div>
+      <div class="origin-grid">
+        <div class="origin-paper reveal">
+          <div class="origin-pin"></div>
+          <div class="origin-tape">our story</div>
+          <div class="origin-label">// the notebook that became a platform</div>
+          <div class="origin-text">
+            <p>HlyWor started as something small — <strong>just our own blog.</strong> A corner of the internet where two friends from Guwahati could put things down. Stories, thoughts, midnight feelings, stuff we couldn't stop thinking about.</p>
+            <p>But then we started asking: how many people out there have something real to say and nowhere to say it? Not everyone can buy a domain and write HTML. And if you try on mainstream platforms, <strong>the algorithm buries you</strong> unless you're already popular. That felt wrong.</p>
+            <p>So we built this — a place where anyone can pin their story. No followers required. No algorithm deciding if you're worth reading. Just <strong>real people, real words, real moments.</strong></p>
+            <p>There's still a lot we want to build. But this is where it starts.</p>
+          </div>
+          <span class="origin-sig">— Pawan & Suvam</span>
         </div>
 
-        <button class="close-button">Close</button>
+        <div class="origin-side reveal">
+          <div class="stat-card">
+            <div class="stat-pin"></div>
+            <span class="stat-num">2025</span>
+            <div class="stat-label">When it began</div>
+            <p class="stat-sub">Started as a private blog between two friends. Became something much bigger.</p>
+          </div>
+          <div class="stat-card">
+            <div class="stat-pin"></div>
+            <span class="stat-num">19–21</span>
+            <div class="stat-label">First-year college students</div>
+            <p class="stat-sub">Built by two people who decided to create something instead of waiting for it to exist.</p>
+          </div>
+          <div class="stat-card">
+            <div class="stat-pin"></div>
+            <span class="stat-num">∞</span>
+            <div class="stat-label">Stories that deserve a place</div>
+            <p class="stat-sub">If it's real and it's yours, it belongs here. No following required.</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <script src="js/main.js"></script>
-    <script src="js/music.js"></script>
-    <script src="js/navigation.js"></script>
+  <!-- ── BELIEFS ── -->
+  <section>
+    <div class="beliefs-section">
+      <div class="section-eyebrow reveal">// what we believe</div>
+      <div class="beliefs-grid">
+        <div class="belief-note reveal">
+          <div class="belief-pin"></div>
+          <span class="belief-num">01</span>
+          <div class="belief-title">Every story deserves a place</div>
+          <p class="belief-body">Big or small, polished or rough — if it's real and it's yours, it belongs here. We don't pick favorites. We don't boost the popular ones.</p>
+        </div>
+        <div class="belief-note reveal">
+          <div class="belief-pin"></div>
+          <span class="belief-num">02</span>
+          <div class="belief-title">Tech shouldn't be a barrier</div>
+          <p class="belief-body">You shouldn't need to know how to code to share your voice. We handle the hard stuff so you don't have to think about it.</p>
+        </div>
+        <div class="belief-note reveal">
+          <div class="belief-pin"></div>
+          <span class="belief-num">03</span>
+          <div class="belief-title">Algorithms don't know your worth</div>
+          <p class="belief-body">Popularity is not the same as value. Here, a story from someone with zero followers gets the same space as anyone else. Always.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEAM ── -->
+  <section>
+    <div class="team-section">
+      <div class="section-eyebrow reveal">// the people behind it</div>
+      <div class="team-grid">
+
+        <div class="member-card reveal">
+          <div class="member-pin"></div>
+          <div class="member-accent"></div>
+          <div class="member-body">
+            <div class="member-role">Co-founder · Developer · Writer</div>
+            <div class="member-name">Pawan Limbu</div>
+            <span class="member-tag">GUWAHATI, ASSAM</span>
+            <p class="member-desc">Pawan is the one who asked "what if this wasn't just ours?" — the impulse to build something for other people, not just himself, is what turned a private blog into HlyWor. He puts others before himself, almost to a fault. The kind of person who will fix your problem before he fixes his own.</p>
+            <div class="member-divider"></div>
+            <div class="member-traits">
+              <span class="trait">builder</span>
+              <span class="trait">puts others first</span>
+              <span class="trait">thinks in systems</span>
+              <span class="trait">1st year college</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="member-card reveal">
+          <div class="member-pin"></div>
+          <div class="member-accent"></div>
+          <div class="member-body">
+            <div class="member-role">Co-founder · Developer · Writer</div>
+            <div class="member-name">Suvam Limbu</div>
+            <span class="member-tag">GUWAHATI, ASSAM</span>
+            <p class="member-desc">Suvam joined because he had things to say — about movies, about geopolitics, about things most people scroll past. He still sees the world as mostly good, which is something worth protecting. His optimism is the counterweight that keeps this place from getting too heavy.</p>
+            <div class="member-divider"></div>
+            <div class="member-traits">
+              <span class="trait">curious</span>
+              <span class="trait">sees the good</span>
+              <span class="trait">movie buff</span>
+              <span class="trait">1st year college</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTRAST CALLOUT -->
+      <div style="margin-top:40px" class="reveal">
+        <div class="contrast-strip">
+          <div class="cs-pin"></div>
+          <div class="contrast-side">
+            <div class="contrast-name">Pawan</div>
+            <div class="contrast-trait">"Puts the world before himself. Builds because he wants to help, not because he wants credit."</div>
+          </div>
+          <div class="contrast-vs">VS</div>
+          <div class="contrast-side">
+            <div class="contrast-name">Suvam</div>
+            <div class="contrast-trait">"Still sees the world as a place where things work out. We need people like that around."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLOSING ── -->
+  <div class="closing-section reveal">
+    <div class="closing-divider"></div>
+    <p class="closing-quote">We're two first-year college students from Guwahati who decided to build something instead of waiting for someone else to build it. HlyWor is still growing. So are we. You're welcome here — whoever you are, whatever you're carrying.</p>
+    <div class="closing-sig">— Pawan & Suvam</div>
+    <div class="closing-from">crafted with ❤️ in Guwahati, Assam · EST. 2025</div>
+    <div class="cta-row">
+      <a href="submit.html" class="btn-fire">Pin your story →</a>
+      <a href="index.html" class="btn-paper">Read others →</a>
+    </div>
+  </div>
+
+</div><!-- /board -->
+
+<footer class="board-footer">
+  <p class="footer-p">© <span id="yr"></span> HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms</a>
+  </div>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* embers */
+  const ec = document.getElementById('embers');
+  for (let i = 0; i < 24; i++) {
+    const e = document.createElement('div');
+    e.className = 'ember';
+    const sz = 1 + Math.random() * 2.5;
+    e.style.cssText = `left:${8+Math.random()*84}%;bottom:0;width:${sz}px;height:${sz}px;animation-duration:${7+Math.random()*13}s;animation-delay:${Math.random()*10}s;--edrift:${(Math.random()-0.5)*100}px;opacity:0;`;
+    ec.appendChild(e);
+  }
+
+  /* parallax blobs */
+  document.addEventListener('mousemove', ev => {
+    const px = (ev.clientX / window.innerWidth - 0.5) * 30;
+    const py = (ev.clientY / window.innerHeight - 0.5) * 30;
+    document.querySelectorAll('.light-blob').forEach((b, i) => {
+      const f = (i + 1) * 0.35;
+      b.style.transform = `translate(${px * f}px, ${py * f}px)`;
+    });
+  }, { passive: true });
+
+  /* progress bar */
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    document.getElementById('progress-bar').style.width =
+      (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+  }, { passive: true });
+
+  /* scroll reveal */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach((e, _) => {
+      if (!e.isIntersecting) return;
+      const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
+      const idx = siblings.indexOf(e.target);
+      setTimeout(() => e.target.classList.add('in'), idx * 90);
+      ro.unobserve(e.target);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  /* string dots parallax on scroll */
+  const dots = document.querySelectorAll('.string-dot');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    dots.forEach((d, i) => {
+      d.style.transform = `translateY(${Math.sin(y * 0.01 + i) * 4}px)`;
+    });
+  }, { passive: true });
+</script>
 </body>
 </html>
-
-
-
