@@ -6,6 +6,11 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HlyWor</title>
+  <meta name="description" content="A place to open up. Some things don't fit in a conversation. This is where they go. Read ours. Write yours. HlyWor — Guwahati, Assam.">
+  <meta property="og:title" content="HlyWor — A place to open up">
+  <meta property="og:description" content="Some things don't fit in a conversation. This is where they go. Read ours. Write yours.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hlywor.fun">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-ZVLSVF6T3J');</script>
@@ -39,6 +44,7 @@
       --sans: 'DM Sans', system-ui, sans-serif;
       --hand: 'Caveat', cursive;
       --pin-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
+      --topbar-h: 48px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -73,7 +79,7 @@
     /* NAV STRIP */
     .nav-strip { position: fixed; left: 0; top: 0; bottom: 0; width: 72px; z-index: 1000; background: var(--ink); display: flex; flex-direction: column; align-items: center; padding: 24px 0 20px; border-right: 1px solid rgba(255, 255, 255, 0.08); }
     .nav-strip::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, rgba(212, 160, 32, 0.25), transparent); pointer-events: none; }
-    .nav-logo { font-family: var(--pixel); font-size: 0.55rem; color: var(--gold); writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); letter-spacing: 4px; text-shadow: 0 0 16px rgba(212, 160, 32, 0.5); animation: logoFlicker 7s infinite; margin-bottom: 32px; }
+    .nav-logo { font-family: var(--pixel); font-size: 0.55rem; color: var(--gold); writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); letter-spacing: 4px; text-shadow: 0 0 16px rgba(212, 160, 32, 0.5); animation: logoFlicker 7s infinite; margin-bottom: 32px; text-decoration: none; }
     @keyframes logoFlicker { 0%, 91%, 100% { opacity: 1 } 92% { opacity: .3 } 93% { opacity: 1 } 95% { opacity: .65 } 96% { opacity: 1 } }
     .nav-divider { width: 32px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent); margin: 10px 0; }
     .nav-icon-links { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; width: 100%; }
@@ -129,9 +135,10 @@
 
     .tape-label { display: inline-block; background: var(--tape-b); color: #fff; opacity: 0.85; font-family: var(--pixel); font-size: 0.28rem; letter-spacing: 2px; padding: 4px 16px; transform: rotate(-2deg); position: absolute; top: -12px; right: 20px; }
 
-    /* WHAT WE MAKE — above filter */
+    /* WHAT WE MAKE */
     .what-we-make { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; padding-left: 4px; }
     .what-we-make-label { font-family: var(--pixel); font-size: 0.26rem; color: rgba(245, 237, 216, 0.3); letter-spacing: 3px; margin-right: 4px; }
+    .what-we-make .btn-sticky { font-size: 0.78rem; }
 
     /* TAPE FILTER */
     .tape-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; padding-left: 4px; }
@@ -282,9 +289,24 @@
     .cta-text { font-family: var(--sans); font-size: 0.82rem; color: rgba(255, 255, 255, 0.85); line-height: 1.75; margin-bottom: 22px; }
 
     /* FOOTER */
-    .board-footer { margin-left: 72px; background: var(--ink); border-top: 2px solid rgba(255, 255, 255, 0.06); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-    .footer-p { font-family: var(--sans); font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); }
+    .board-footer {
+      margin-left: 72px; background: var(--ink);
+      border-top: 2px solid rgba(255, 255, 255, 0.06);
+      padding: 20px 32px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer-left { display: flex; flex-direction: column; gap: 6px; }
+    .footer-copy { font-family: var(--sans); font-size: 0.68rem; color: rgba(255, 255, 255, 0.28); }
+    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-links a { font-family: var(--sans); font-size: 0.65rem; color: rgba(255, 255, 255, 0.22); text-decoration: none; transition: color 0.2s; letter-spacing: 0.5px; }
+    .footer-links a:hover { color: rgba(255, 255, 255, 0.55); }
+    .footer-center { text-align: center; }
     .footer-logo { font-family: var(--pixel); font-size: 0.38rem; color: var(--gold); letter-spacing: 2px; }
+    .footer-right { display: flex; justify-content: flex-end; }
+    .footer-location { font-family: var(--pixel); font-size: 0.22rem; color: rgba(255, 255, 255, 0.15); letter-spacing: 2px; text-align: right; line-height: 1.8; }
 
     /* SEARCH */
     .search-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(26, 18, 8, 0.96); display: none; align-items: flex-start; justify-content: center; padding-top: 120px; backdrop-filter: blur(8px); }
@@ -325,7 +347,9 @@
     @media (max-width: 640px) {
       .nav-strip { display: none; }
       .board { margin-left: 0; padding: 0 0 90px; }
-      .board-footer { margin-left: 0; padding: 16px 20px; }
+      .board-footer { margin-left: 0; padding: 16px 20px; grid-template-columns: 1fr; gap: 12px; }
+      .footer-right { justify-content: flex-start; }
+      .footer-location { text-align: left; }
       #progress-bar { left: 0; }
       .board-header { flex-direction: column; gap: 0; margin-bottom: 24px; }
       .title-sheet { transform: rotate(0); max-width: 100%; grid-template-columns: 1fr; grid-template-rows: auto auto auto; padding: 24px 20px 20px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5); min-width: 0; }
@@ -346,7 +370,8 @@
       .tape-filter { padding: 0 16px 0; margin-bottom: 20px; gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
       .tape-filter::-webkit-scrollbar { display: none; }
       .tape-tab { font-size: 0.26rem; padding: 5px 12px; }
-      .pinboard { grid-template-columns: 1fr 1fr; gap: 14px 10px; padding: 0 14px; }
+      /* FIX: single column on small phones, not cramped 2-col */
+      .pinboard { grid-template-columns: 1fr; gap: 20px; padding: 0 14px; }
       .pinned-post { transform: rotate(0deg) !important; }
       .post-note-body { padding: 10px 12px 14px; }
       .post-note-title { font-size: 0.95rem; }
@@ -362,7 +387,13 @@
       .cta-text { font-size: 0.78rem; }
       .note-text { font-size: 0.88rem; }
       .light-blob { display: none; }
-      .what-we-make { padding: 0 14px; margin-bottom: 16px; }
+      .what-we-make { padding: 0 14px; margin-bottom: 16px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+      .what-we-make::-webkit-scrollbar { display: none; }
+    }
+
+    /* FIX: between 420-640 use single column not 2-col cramped */
+    @media (min-width: 421px) and (max-width: 640px) {
+      .pinboard { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 420px) {
@@ -395,7 +426,7 @@
     }
 
     /* MOBILE TOPBAR */
-    .mobile-topbar { display: none; position: sticky; top: 0; z-index: 500; background: rgba(18, 12, 8, 0.97); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255, 255, 255, 0.07); padding: 0 16px; height: 48px; align-items: center; justify-content: space-between; overflow: visible; }
+    .mobile-topbar { display: none; position: sticky; top: 0; z-index: 500; background: rgba(18, 12, 8, 0.97); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255, 255, 255, 0.07); padding: 0 16px; height: var(--topbar-h); align-items: center; justify-content: space-between; overflow: visible; }
     .mobile-topbar::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 160, 32, 0.2), transparent); }
     .mtb-logo { font-family: var(--pixel); font-size: 0.48rem; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-shadow: 0 0 10px rgba(212, 160, 32, 0.4); animation: logoFlicker 7s infinite; }
     .mtb-right { display: flex; align-items: center; gap: 6px; }
@@ -413,7 +444,8 @@
       .board { padding-top: 0; }
       .title-sheet { border-radius: 0; border-left: none; border-right: none; }
       .sheet-eyebrow { font-size: 0.26rem; letter-spacing: 2px; }
-      .tape-filter { position: sticky; top: 48px; z-index: 400; background: rgba(18, 12, 8, 0.95); backdrop-filter: blur(10px); padding: 8px 14px 8px; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+      /* FIX: tape-filter sticky uses --topbar-h variable */
+      .tape-filter { position: sticky; top: var(--topbar-h); z-index: 400; background: rgba(18, 12, 8, 0.95); backdrop-filter: blur(10px); padding: 8px 14px 8px; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
       .post-photo img { aspect-ratio: 3/2; }
       .post-noimg { aspect-ratio: 3/2; }
     }
@@ -459,7 +491,7 @@
     <div class="author-popup" id="authorPopup">
       <div class="popup-handle-wrap"><div class="popup-handle"></div></div>
       <div class="popup-inner" id="authorPopupInner">
-        <div class="popup-loading">Loading...</div>
+        <div class="popup-loading">Looking them up...</div>
       </div>
     </div>
   </div>
@@ -519,7 +551,6 @@
             <div class="sheet-eyebrow">// GUWAHATI, ASSAM</div>
             <h1 class="sheet-title">A place to<br><em>open up.</em></h1>
             <p class="sheet-sub">Some things don't fit in a conversation. This is where they go.<br>Read ours. Write yours.</p>
-            <!-- Live story count + random quote -->
             <div id="heroLiveBar" style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
               <div style="font-family:var(--pixel);font-size:0.26rem;color:var(--fire);letter-spacing:2px" id="storyCount"></div>
               <div style="font-family:var(--serif);font-size:0.88rem;font-style:italic;color:var(--ink3);line-height:1.6;max-width:320px" id="randomQuote"></div>
@@ -535,19 +566,19 @@
         <div class="sheet-photo-col">
           <div class="pasted-photo">
             <div class="photo-inner">
-              <span class="photo-inner-label"><a href="gallery.html"><img src="img/suvm1.jpg" alt=""></a></span>
+              <span class="photo-inner-label"><a href="gallery.html"><img src="img/suvm1.jpg" alt="Campus days at college"></a></span>
             </div>
             <span class="photo-caption">campus days ☀️</span>
           </div>
           <div class="pasted-photo">
             <div class="photo-inner" style="background:#e8e0cc;">
-              <span class="photo-inner-label"><a href="gallery.html"><img src="img/pawn1.jpg" alt=""></a></span>
+              <span class="photo-inner-label"><a href="gallery.html"><img src="img/pawn1.jpg" alt="Late nights studying"></a></span>
             </div>
             <span class="photo-caption">late nights 🌙</span>
           </div>
           <div class="pasted-photo">
             <div class="photo-inner" style="background:#dde8d8;">
-              <span class="photo-inner-label"><a href="gallery.html"><img src="img/pawn2.jpg" alt=""></a></span>
+              <span class="photo-inner-label"><a href="gallery.html"><img src="img/pawn2.jpg" alt="Good times with friends"></a></span>
             </div>
             <span class="photo-caption">good times 📸</span>
           </div>
@@ -555,15 +586,15 @@
       </div>
     </div>
 
-    <!-- WHAT WE MAKE — above filter -->
+    <!-- WHAT WE MAKE -->
     <div class="what-we-make reveal">
       <span class="what-we-make-label">// MAKE</span>
-      <a href="story.html" class="btn-sticky" style="font-size:0.78rem;transform:rotate(-0.8deg)">📖 Story</a>
-      <a href="movies.html" class="btn-sticky" style="background:var(--tape-b);color:#fff;font-size:0.78rem;transform:rotate(0.5deg)">🎬 Movies</a>
-      <a href="gallery.html" class="btn-sticky" style="background:var(--tape-g);color:#fff;font-size:0.78rem;transform:rotate(-1deg)">📷 Gallery</a>
-      <a href="book.html" class="btn-sticky" style="background:var(--tape-p);color:#fff;font-size:0.78rem;transform:rotate(0.8deg)">📚 Books</a>
-      <a href="news.html" class="btn-sticky" style="background:var(--tape-r);color:#fff;font-size:0.78rem;transform:rotate(-0.5deg)">📰 News</a>
-      <a href="utility.html" class="btn-sticky" style="background:var(--ink2);color:var(--paper);font-size:0.78rem;transform:rotate(1deg)">🛠 Utility</a>
+      <a href="story.html" class="btn-sticky" style="transform:rotate(-0.8deg)">📖 Story</a>
+      <a href="movies.html" class="btn-sticky" style="background:var(--tape-b);color:#fff;transform:rotate(0.5deg)">🎬 Movies</a>
+      <a href="gallery.html" class="btn-sticky" style="background:var(--tape-g);color:#fff;transform:rotate(-1deg)">📷 Gallery</a>
+      <a href="book.html" class="btn-sticky" style="background:var(--tape-p);color:#fff;transform:rotate(0.8deg)">📚 Books</a>
+      <a href="news.html" class="btn-sticky" style="background:var(--tape-r);color:#fff;transform:rotate(-0.5deg)">📰 News</a>
+      <a href="utility.html" class="btn-sticky" style="background:var(--ink2);color:var(--paper);transform:rotate(1deg)">🛠 Utility</a>
     </div>
 
     <!-- TAPE FILTER -->
@@ -578,7 +609,7 @@
     </div>
 
     <!-- RECENTLY PINNED label -->
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-left:4px">
+    <div id="posts" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-left:4px">
       <span style="font-family:var(--pixel);font-size:0.28rem;color:rgba(245,237,216,0.25);letter-spacing:3px">// RECENTLY PINNED</span>
       <span id="recentlyPinnedDot" style="width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire);display:inline-block;opacity:0;transition:opacity 0.4s"></span>
       <span id="recentlyPinnedTime" style="font-family:var(--hand);font-size:0.85rem;color:rgba(245,237,216,0.3);font-style:italic"></span>
@@ -595,33 +626,31 @@
     <!-- BOTTOM — About, Team, CTA -->
     <div class="board-bottom" style="margin-top:56px">
 
-      <!-- About note — moved from header -->
       <div class="about-note reveal">
         <div class="pin"></div>
         <div class="note-header">// WHO WE ARE</div>
         <p class="note-text">This started as our notebook. Things we lived through, couldn't forget, needed to write down at midnight.<br><br>If you're carrying something like that — <strong>this place is yours too.</strong><br><br>Even if you have no one to tell it to.</p>
         <span style="font-family:var(--hand);font-size:0.95rem;color:var(--fire);display:block;margin-top:12px">— Pawan & Suvam</span>
+        <a href="about.html" style="font-family:var(--pixel);font-size:0.22rem;color:var(--fire);letter-spacing:2px;text-decoration:none;display:inline-block;margin-top:10px;opacity:0.7;transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">our full story →</a>
       </div>
 
-      <!-- Team stickies -->
       <div class="team-stickies reveal">
         <a href="pawan.html" class="team-sticky">
           <div class="pin"></div>
           <div class="sticky-name">Pawan Limbu</div>
           <div class="sticky-role">DEVELOPER · WRITER</div>
-          <p class="sticky-bio">Writing what feels right, building what needs to exist.</p>
+          <p class="sticky-bio">Building what needs to exist. Puts others first, always.</p>
           <span class="sticky-link">See posts →</span>
         </a>
         <a href="suv.html" class="team-sticky">
           <div class="pin"></div>
           <div class="sticky-name">Suvam Limbu</div>
           <div class="sticky-role">DEVELOPER · WRITER</div>
-          <p class="sticky-bio">Turning late night thoughts into something worth reading.</p>
+          <p class="sticky-bio">Still sees the world as mostly good. Turning that into words.</p>
           <span class="sticky-link">See posts →</span>
         </a>
       </div>
 
-      <!-- CTA note -->
       <div class="cta-note reveal">
         <div class="pin"></div>
         <div class="cta-title">Got a story?</div>
@@ -633,9 +662,23 @@
 
   </div><!-- /board -->
 
+  <!-- FOOTER -->
   <footer class="board-footer">
-    <p class="footer-p">© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
-    <span class="footer-logo">HlYWoR</span>
+    <div class="footer-left">
+      <span class="footer-copy">© <span id="footerYear"></span> HlyWor — Guwahati, Assam</span>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="suggestion.html">Suggest</a>
+      </div>
+    </div>
+    <div class="footer-center">
+      <span class="footer-logo">HlYWoR</span>
+    </div>
+    <div class="footer-right">
+      <span class="footer-location">GUWAHATI · ASSAM · INDIA<br>EST. 2025</span>
+    </div>
   </footer>
 
   <script type="module">
@@ -664,6 +707,9 @@
     injectAuthNav(document.getElementById('authSlotMobile'), { compact: true });
 
     document.getElementById('mtbSearchBtn')?.addEventListener('click', () => openSearch());
+
+    /* Dynamic footer year */
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
 
     /* Embers */
     const emberContainer = document.getElementById('embers');
@@ -748,7 +794,7 @@
         loadHeroLive();
       }, err => {
         console.error('Firestore error:', err);
-        document.getElementById('postsGrid').innerHTML = `<div class="no-posts">Couldn't load posts.\nCheck Firebase config.</div>`;
+        document.getElementById('postsGrid').innerHTML = `<div class="no-posts">Couldn't load posts right now.\nTry refreshing the page.</div>`;
       });
     }
     startLiveFeed();
@@ -760,23 +806,16 @@
         const quoteEl = document.getElementById('randomQuote');
         const dot = document.getElementById('recentlyPinnedDot');
         const timeEl = document.getElementById('recentlyPinnedTime');
-
         const total = allPosts.length;
-
-        // Story count
         if (countEl && total > 0) {
           countEl.textContent = `// ${total} ${total === 1 ? 'story' : 'stories'} pinned so far`;
         }
-
-        // Random quote from a recent post
         const withDesc = allPosts.filter(p => p.desc && p.desc.length > 20);
         if (withDesc.length && quoteEl) {
           const pick = withDesc[Math.floor(Math.random() * withDesc.length)];
           const short = pick.desc.length > 100 ? pick.desc.slice(0, 97) + '...' : pick.desc;
           quoteEl.innerHTML = `"${short}" <span style="font-style:normal;font-size:0.75rem;color:var(--fire)">— ${pick.author || 'anonymous'}</span>`;
         }
-
-        // Recently pinned — show time of latest post
         if (allPosts.length > 0 && dot && timeEl) {
           const latest = allPosts[0];
           const ts = latest.createdAt?.toDate ? latest.createdAt.toDate() : (latest.date ? new Date(latest.date) : null);
@@ -911,6 +950,10 @@
     }
 
     /* Render posts */
+    /* FIX: capture auth state once outside the loop to avoid stacking listeners */
+    let cachedUser = currentUser;
+    onAuthChange(u => { cachedUser = u; });
+
     function renderPosts() {
       const grid = document.getElementById('postsGrid');
       const rotations = [-1.2, 0.8, -0.4, 1.5, -0.9, 1.1, -1.6, 0.5, -0.7, 1.3, -0.3, 0.9];
@@ -922,7 +965,8 @@
       filtered.forEach((post, i) => {
         const rot = rotations[i % rotations.length];
         const cat = (post.category || post.type || 'post').toLowerCase();
-        const postSlug = post.slug || post.url?.split('/').pop()?.replace('.html', '') || post.id;
+        /* FIX: safe slug fallback so links don't break */
+        const postSlug = post.slug || post.id;
         const card = document.createElement('div');
         card.className = 'pinned-post reveal';
         card.style.cssText = `--rot:${rot}deg;`;
@@ -972,24 +1016,27 @@
           btn.addEventListener('click', async e => { e.stopPropagation(); await toggleReaction(postSlug, btn.dataset.emoji, btn); });
         });
 
+        /* FIX: use cachedUser instead of registering new onAuthChange per card */
         const stickBtn = card.querySelector('.card-stick-btn');
         if (stickBtn) {
           const toUid = stickBtn.dataset.touid;
           const toName = stickBtn.dataset.toname;
-          onAuthChange(async user => {
-            if (!user || user.uid === toUid) { stickBtn.style.display = 'none'; return; }
+
+          async function refreshStickBtn() {
+            if (!cachedUser || cachedUser.uid === toUid) { stickBtn.style.display = 'none'; return; }
             stickBtn.style.display = '';
             try {
-              const snap = await getDocs(query(collection(db, 'sticks'), where('fromUid', '==', user.uid), where('toUid', '==', toUid), limit(1)));
+              const snap = await getDocs(query(collection(db, 'sticks'), where('fromUid', '==', cachedUser.uid), where('toUid', '==', toUid), limit(1)));
               if (!snap.empty) { stickBtn.dataset.stickid = snap.docs[0].id; stickBtn.classList.add('is-stuck'); stickBtn.textContent = '📌 Stuck'; stickBtn.title = 'Click to unstick'; }
               else { stickBtn.textContent = '📌 Stick'; stickBtn.title = `Stick ${toName}`; }
             } catch (e) { }
-          });
+          }
+          refreshStickBtn();
 
           stickBtn.addEventListener('click', async e => {
             e.stopPropagation();
-            if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
-            if (currentUser.uid === toUid) return;
+            if (!cachedUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+            if (cachedUser.uid === toUid) return;
             stickBtn.disabled = true;
             const isStuck = stickBtn.classList.contains('is-stuck');
             try {
@@ -998,10 +1045,10 @@
                 if (stickId) await deleteDoc(doc(db, 'sticks', stickId));
                 stickBtn.classList.remove('is-stuck'); stickBtn.textContent = '📌 Stick'; stickBtn.dataset.stickid = '';
               } else {
-                const fromName = getDisplayName(currentUser);
+                const fromName = getDisplayName(cachedUser);
                 let toSlug = '';
                 try { const ps = await getDocs(query(collection(db, 'people'), where('authorUid', '==', toUid), limit(1))); if (!ps.empty) toSlug = ps.docs[0].data().slug || ''; } catch (e) { }
-                const ref = await addDoc(collection(db, 'sticks'), { fromUid: currentUser.uid, fromName, fromSlug: '', toUid, toName, toSlug, createdAt: serverTimestamp() });
+                const ref = await addDoc(collection(db, 'sticks'), { fromUid: cachedUser.uid, fromName, fromSlug: '', toUid, toName, toSlug, createdAt: serverTimestamp() });
                 stickBtn.dataset.stickid = ref.id; stickBtn.classList.add('is-stuck'); stickBtn.textContent = '📌 Stuck';
               }
             } catch (err) { console.error('Stick error:', err); }
@@ -1031,21 +1078,22 @@
       });
     });
 
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuthorPopup(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeAuthorPopup(); closeSearch(); } });
 
     /* Search */
     const searchOverlay = document.getElementById('searchOverlay');
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
 
+    /* FIX: expose closeSearch to window so inline onclick in search results works */
     function openSearch() { searchOverlay.classList.add('open'); setTimeout(() => searchInput.focus(), 80); }
     function closeSearch() { searchOverlay.classList.remove('open'); searchInput.value = ''; searchResults.innerHTML = '<div class="search-msg">Start typing...</div>'; }
+    window.closeSearch = closeSearch;
 
     document.getElementById('searchOpenBtn').addEventListener('click', openSearch);
     document.getElementById('searchCloseBtn').addEventListener('click', closeSearch);
     searchOverlay.addEventListener('click', e => { if (e.target === searchOverlay) closeSearch(); });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeSearch();
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
     });
 
@@ -1053,8 +1101,9 @@
       const q = searchInput.value.trim().toLowerCase();
       if (!q) { searchResults.innerHTML = '<div class="search-msg">Start typing...</div>'; return; }
       const hits = allPosts.filter(p => p.title.toLowerCase().includes(q) || (p.desc || '').toLowerCase().includes(q) || (p.category || p.type || '').toLowerCase().includes(q) || (p.author || '').toLowerCase().includes(q));
+      /* FIX: use safe slug for search result links */
       searchResults.innerHTML = hits.length
-        ? hits.slice(0, 8).map(p => `<a href="${p.url}" class="sr-item" onclick="closeSearch()"><div><div class="sr-cat">${(p.category || p.type || 'POST').toUpperCase()}</div><div class="sr-title">${p.title}</div></div><span class="sr-arr">→</span></a>`).join('')
+        ? hits.slice(0, 8).map(p => `<a href="post.html?slug=${p.slug || p.id}" class="sr-item" onclick="closeSearch()"><div><div class="sr-cat">${(p.category || p.type || 'POST').toUpperCase()}</div><div class="sr-title">${p.title}</div></div><span class="sr-arr">→</span></a>`).join('')
         : '<div class="search-msg">Nothing found.</div>';
     });
   </script>
