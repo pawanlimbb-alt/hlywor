@@ -8,7 +8,7 @@
   <title>HlyWor</title>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Kalam:wght@300;400;700&family=Satisfy&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --board:#2a1f14;--paper:#faf6ee;--paper2:#f5edd8;--paper3:#ede3c8;
@@ -99,6 +99,46 @@
     .post-body .washi-tape::before{content:'';position:absolute;inset:0;background:var(--tape-color,rgba(240,190,40,0.65))}
     .post-body .doodle-divider{display:block;margin:16px 0;width:100%}
     .post-body .floating-sticker{display:inline-block;font-size:1.8rem;margin:0 4px;vertical-align:middle}
+
+    /* ── NEW: image alignment ── */
+    .post-body figure{margin:12px 0}
+    .post-body figure img{display:block}
+    .post-body figure figcaption{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);text-align:center;padding-top:4px;font-style:italic}
+    .post-body figure.img-center{text-align:center;clear:both}
+    .post-body figure.img-center img{max-width:80%;margin:0 auto}
+    .post-body figure.img-left{float:left;margin:6px 20px 10px 0;max-width:45%}
+    .post-body figure.img-right{float:right;margin:6px 0 10px 20px;max-width:45%}
+    .post-body figure.img-full{clear:both;margin:14px 0}
+    .post-body figure.img-full img{width:100%}
+    .post-body::after{content:'';display:table;clear:both}
+
+    /* ── NEW: photo row ── */
+    .post-body .img-row-block{display:flex;gap:12px;margin:16px 0;clear:both;align-items:flex-start;flex-wrap:wrap}
+    .post-body .img-row-block figure{flex:1;min-width:0;margin:0}
+    .post-body .img-row-block figure img{width:100%;display:block;object-fit:cover}
+
+    /* ── NEW: line highlights ── */
+    .post-body .hl-line-y{background:rgba(255,230,0,0.28);display:block;padding:1px 4px;margin:1px 0}
+    .post-body .hl-line-r{background:rgba(255,100,100,0.2);display:block;padding:1px 4px;margin:1px 0}
+    .post-body .hl-line-b{background:rgba(100,160,255,0.2);display:block;padding:1px 4px;margin:1px 0}
+    .post-body .hl-line-g{background:rgba(80,220,120,0.2);display:block;padding:1px 4px;margin:1px 0}
+
+    /* ── NEW: inline highlights ── */
+    .post-body .highlight-y{background:rgba(255,220,50,0.4);padding:0 2px}
+    .post-body .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
+    .post-body .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
+    .post-body .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
+
+    /* ── NEW: pull quote (magazine template) ── */
+    .post-body .pull-quote{display:block;font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;font-weight:700;color:var(--fire);border-top:2px solid var(--fire);border-bottom:2px solid var(--fire);padding:14px 0;margin:20px 0;line-height:1.4}
+
+    /* ── NEW: code blocks (tech template) ── */
+    .post-body pre{font-family:'JetBrains Mono',monospace;background:rgba(22,27,34,0.95);color:#e6edf3;padding:16px 20px;margin:14px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.65;border-radius:6px;font-size:0.88rem}
+    .post-body code{font-family:'JetBrains Mono',monospace;background:rgba(22,27,34,0.8);color:#79c0ff;padding:2px 6px;border-radius:4px;font-size:0.88rem}
+
+    /* ── Strip contenteditable from rendered posts ── */
+    .post-body [contenteditable]{-webkit-user-modify:read-only!important;user-modify:read-only!important}
+    .post-body .sticky-callout{transform:rotate(-1.2deg)}
     .post-body .highlight-y{background:rgba(255,220,50,0.4);padding:0 2px}
     .post-body .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
     .post-body .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
@@ -199,9 +239,9 @@
     .comment-date{font-family:var(--sans);font-size:0.68rem;color:var(--ink4)}
     .comment-text{font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.65}
     .comment-actions{display:flex;align-items:center;gap:12px;margin-top:6px}
-    .comment-reply-btn{font-family:var(--pixel);font-size:0.4rem;color:var(--ink4);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
+    .comment-reply-btn{font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
     .comment-reply-btn:hover{color:var(--fire)}
-    .comment-delete-btn{font-family:var(--pixel);font-size:0.4rem;color:rgba(192,57,43,0.5);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
+    .comment-delete-btn{font-family:var(--pixel);font-size:0.2rem;color:rgba(192,57,43,0.5);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
     .comment-delete-btn:hover{color:#c0392b}
     .comment-vote{display:flex;align-items:center;gap:5px}
     .vote-btn{font-size:0.78rem;background:none;border:none;cursor:pointer;color:var(--ink4);transition:all .15s;padding:1px 3px;border-radius:2px}
@@ -547,6 +587,34 @@ function renderPost(post) {
     : '';
   const readtime = post.readtime || calcReadTime(post.content||'');
 
+  // Apply template styling to the page
+  if (post.template && post.template !== 'diary') {
+    document.body.setAttribute('data-template', post.template);
+    // Inject template-specific post-body styles
+    const tStyles = {
+      magazine: `
+        .post-body{font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;line-height:1.85}
+        .post-body h2,.post-body h3{font-family:'Playfair Display',serif}
+        .post-title{font-family:'Playfair Display',serif;font-style:italic}`,
+      news: `
+        .post-body{font-family:'IM Fell English',Georgia,serif;font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
+        .post-body h2{column-span:all;border-top:1px solid var(--ink);padding-top:8px}
+        .post-title{font-family:'IM Fell English',serif;letter-spacing:-0.5px}
+        @media(max-width:640px){.post-body{columns:1}}`,
+      tech: `
+        .post-body{font-family:'DM Sans',system-ui,sans-serif;font-size:0.95rem;line-height:1.8}
+        .post-body h2,.post-body h3{font-family:'DM Sans',sans-serif;font-weight:600}`,
+      college: `
+        .post-body{font-family:'Caveat',cursive;font-size:1.15rem;line-height:1.85}
+        .post-body h2,.post-body h3{font-family:'Caveat',cursive}`
+    };
+    if (tStyles[post.template]) {
+      const s = document.createElement('style');
+      s.textContent = tStyles[post.template];
+      document.head.appendChild(s);
+    }
+  }
+
   document.getElementById('postHeader').innerHTML = `
     <div class="post-date-mood">
       ${dateStr ? `<span class="post-date">${dateStr}</span>` : ''}
@@ -568,7 +636,21 @@ function renderPost(post) {
     c.style.display = 'block';
   }
 
-  document.getElementById('postBody').innerHTML = post.content || '<p>No content.</p>';
+  // Render content — strip contenteditable attrs so sticky notes etc aren't editable
+  const postBodyEl = document.getElementById('postBody');
+  const rawContent = post.content || '<p>No content.</p>';
+  // Parse and sanitize
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = rawContent;
+  // Remove contenteditable from all elements
+  tempDiv.querySelectorAll('[contenteditable]').forEach(el => {
+    el.removeAttribute('contenteditable');
+  });
+  // Remove data-sticky attribute (not needed in read mode)
+  tempDiv.querySelectorAll('[data-sticky]').forEach(el => {
+    el.removeAttribute('data-sticky');
+  });
+  postBodyEl.innerHTML = tempDiv.innerHTML;
 
   // ── Reactions (Firestore-synced) ──────────────────────
   const EMOJIS = ['🔥','❤️','😭'];
