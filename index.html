@@ -917,7 +917,7 @@
       const canStick = !!toUid && !isOwnProfile;
       const isStuck = !!stickDocId;
       const avatarHtml = person?.photos?.[0] ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${person?.name || authorName}">` : `<div class="popup-avatar-placeholder">${(person?.name || authorName)[0].toUpperCase()}</div>`;
-      const stickBtn = canStick ? `<button class="popup-stick-btn ${isStuck ? 'stuck-state' : 'unstuck'}" id="popupStickBtn">${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}</button>${stickCount > 0 ? `<span class="popup-stick-count">${stickCount} stuck</span>` : ''}` : '';
+      const stickBtn = canStick ? `<button class="popup-stick-btn ${isStuck ? 'stuck-state' : 'unstuck'}" id="popupStickBtn">${isStuck ? '📌 following ✦' : '📌 follow'}</button>${stickCount > 0 ? `<span class="popup-stick-count">${stickCount} following</span>` : ''}` : '';
       const profileLink = person?.slug ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>` : '';
 
       inner.innerHTML = `
@@ -934,13 +934,13 @@
           try {
             if (stickDocId) {
               await deleteDoc(doc(db, 'sticks', stickDocId)); stickDocId = null;
-              stickBtnEl.textContent = '📌 Stick them'; stickBtnEl.className = 'popup-stick-btn unstuck';
+              stickBtnEl.textContent = '📌 follow'; stickBtnEl.className = 'popup-stick-btn unstuck';
             } else {
               const fromName = getDisplayName(currentUser);
               const fromSnap = await getDocs(query(collection(db, 'people'), where('authorUid', '==', currentUser.uid), limit(1)));
               const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
               const ref = await addDoc(collection(db, 'sticks'), { fromUid: currentUser.uid, fromName, fromSlug, toUid, toSlug: person?.slug || '', toName: person?.name || authorName, createdAt: serverTimestamp() });
-              stickDocId = ref.id; stickBtnEl.textContent = '📌 Stuck ✦'; stickBtnEl.className = 'popup-stick-btn stuck-state';
+              stickDocId = ref.id; stickBtnEl.textContent = '📌 following ✦'; stickBtnEl.className = 'popup-stick-btn stuck-state';
             }
             popupPersonCache = {};
           } catch (e) { console.error(e); }
@@ -1027,7 +1027,7 @@
             stickBtn.style.display = '';
             try {
               const snap = await getDocs(query(collection(db, 'sticks'), where('fromUid', '==', cachedUser.uid), where('toUid', '==', toUid), limit(1)));
-              if (!snap.empty) { stickBtn.dataset.stickid = snap.docs[0].id; stickBtn.classList.add('is-stuck'); stickBtn.textContent = '📌 Stuck'; stickBtn.title = 'Click to unstick'; }
+              if (!snap.empty) { stickBtn.dataset.stickid = snap.docs[0].id; stickBtn.classList.add('is-stuck'); stickBtn.textContent = '📌 following'; stickBtn.title = 'Click to unstick'; }
               else { stickBtn.textContent = '📌 Stick'; stickBtn.title = `Stick ${toName}`; }
             } catch (e) { }
           }
@@ -1049,7 +1049,7 @@
                 let toSlug = '';
                 try { const ps = await getDocs(query(collection(db, 'people'), where('authorUid', '==', toUid), limit(1))); if (!ps.empty) toSlug = ps.docs[0].data().slug || ''; } catch (e) { }
                 const ref = await addDoc(collection(db, 'sticks'), { fromUid: cachedUser.uid, fromName, fromSlug: '', toUid, toName, toSlug, createdAt: serverTimestamp() });
-                stickBtn.dataset.stickid = ref.id; stickBtn.classList.add('is-stuck'); stickBtn.textContent = '📌 Stuck';
+                stickBtn.dataset.stickid = ref.id; stickBtn.classList.add('is-stuck'); stickBtn.textContent = '📌 following';
               }
             } catch (err) { console.error('Stick error:', err); }
             stickBtn.disabled = false;
