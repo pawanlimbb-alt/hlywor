@@ -1043,7 +1043,7 @@
             try {
               const snap = await getDocs(query(collection(db, 'sticks'), where('fromUid', '==', cachedUser.uid), where('toUid', '==', toUid), limit(1)));
               if (!snap.empty) { stickBtn.dataset.stickid = snap.docs[0].id; stickBtn.classList.add('is-stuck'); stickBtn.textContent = '📌 following'; stickBtn.title = 'Click to unstick'; }
-              else { stickBtn.textContent = '📌 Stick'; stickBtn.title = `Stick ${toName}`; }
+              else { stickBtn.textContent = '📌 follow'; stickBtn.title = `Stick ${toName}`; }
             } catch (e) { }
           }
           refreshStickBtn();
