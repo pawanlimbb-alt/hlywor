@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Write — HlyWor</title>
+  
+  <!-- ✅ SEO Meta -->
+  <meta name="description" content="Write and publish your story on HlyWor — a place to open up.">
+  <meta name="theme-color" content="#2a1f14">
+  
+  <!-- ✅ Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-ZVLSVF6T3J');</script>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
-  
-    <!-- Google tag (gtag.js) -->
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQDXDWHLX8"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-MQDXDWHLX8');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MQDXDWHLX8');</script>
   
+  <!-- ✅ Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -32,17 +32,52 @@
       --t-spine: linear-gradient(180deg,#3d2210 0%,#2a1608 20%,#4a2a12 40%,#2a1608 60%,#3d2210 80%,#2a1608 100%);
       --t-font: 'Crimson Pro',Georgia,serif; --t-title: 'Caveat',cursive;
       --t-margin: rgba(220,80,80,0.22); --t-spine-w: 28px;
+      --focus-ring: rgba(212, 160, 32, 0.6);
     }
+    
+    /* Template themes */
     body[data-t="magazine"]{--t-bg:#f0ece4;--t-paper:#fff;--t-paper2:#f8f4ee;--t-paper3:#ede8e0;--t-ink:#0a0a0a;--t-ink2:#1a1a1a;--t-ink3:#444;--t-ink4:#888;--t-rule:rgba(0,0,0,0.06);--t-acc:#c0392b;--t-acc2:#e67e22;--t-spine:linear-gradient(180deg,#1a1a1a,#0a0a0a 40%,#1a1a1a 70%,#0a0a0a);--t-font:'Playfair Display',Georgia,serif;--t-title:'Playfair Display',Georgia,serif;--t-margin:transparent;--t-spine-w:20px;}
     body[data-t="news"]{--t-bg:#1a1612;--t-paper:#f4f0e8;--t-paper2:#ede8de;--t-paper3:#e4ddd0;--t-ink:#0c0a08;--t-ink2:#1a1612;--t-ink3:#4a4030;--t-ink4:#8a7a66;--t-rule:rgba(0,0,0,0.12);--t-acc:#1a1612;--t-acc2:#c0392b;--t-spine:linear-gradient(180deg,#0c0a08,#1a1612 30%,#0c0a08 70%,#1a1612);--t-font:'IM Fell English',Georgia,serif;--t-title:'IM Fell English',Georgia,serif;--t-margin:transparent;--t-spine-w:16px;}
     body[data-t="tech"]{--t-bg:#0d1117;--t-paper:#161b22;--t-paper2:#1c2128;--t-paper3:#21262d;--t-ink:#e6edf3;--t-ink2:#c9d1d9;--t-ink3:#8b949e;--t-ink4:#484f58;--t-rule:rgba(255,255,255,0.05);--t-acc:#58a6ff;--t-acc2:#3fb950;--t-spine:linear-gradient(180deg,#21262d,#161b22 30%,#21262d 70%,#161b22);--t-font:'DM Sans',system-ui,sans-serif;--t-title:'DM Sans',system-ui,sans-serif;--t-margin:rgba(88,166,255,0.15);--t-spine-w:18px;}
     body[data-t="college"]{--t-bg:#3a2a4a;--t-paper:#fef6ff;--t-paper2:#f8eeff;--t-paper3:#f0e4f8;--t-ink:#1a1020;--t-ink2:#2a1a38;--t-ink3:#6a5078;--t-ink4:#aa90b8;--t-rule:rgba(160,100,200,0.18);--t-acc:#9b59b6;--t-acc2:#e91e8c;--t-spine:linear-gradient(180deg,#4a1a6a,#2a1040 40%,#4a1a6a 70%,#2a1040);--t-font:'Caveat',cursive;--t-title:'Caveat',cursive;--t-margin:rgba(155,89,182,0.25);--t-spine-w:24px;}
+    
+    /* ✅ Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .page-curl, .sticker-option, .tool-btn { transition: none !important; }
+    }
+    
+    /* ✅ Base reset */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{background:var(--t-bg);min-height:100vh;font-family:var(--t-font);overflow-x:hidden;transition:background 0.4s}
-    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 20% 30%,rgba(80,50,20,0.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(60,35,10,0.25) 0%,transparent 50%),url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");background-size:auto,auto,200px 200px;pointer-events:none;z-index:0;opacity:1;transition:opacity 0.4s}
+    body{background:var(--t-bg);min-height:100vh;font-family:var(--t-font);overflow-x:hidden;transition:background 0.4s;color:var(--t-ink)}
+    
+    /* ✅ Skip link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--fire);
+      color: #fff;
+      padding: 8px 16px;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      text-decoration: none;
+      z-index: 10000;
+      border-radius: 0 0 4px 4px;
+      transition: top 0.2s;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    
+    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 20% 30%,rgba(80,50,20,0.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(60,35,10,0.25) 0%,transparent 50%),url("image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");background-size:auto,auto,200px 200px;pointer-events:none;z-index:0;opacity:1;transition:opacity 0.4s}
     body:not([data-t="diary"])::before{opacity:0}
     ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--t-bg)}::-webkit-scrollbar-thumb{background:var(--t-acc);border-radius:2px}
+    
+    /* ✅ Top nav */
     .top-nav{position:sticky;top:0;z-index:200;background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px}
     .nav-left{display:flex;align-items:center;gap:14px}
     .nav-logo{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:2px;text-shadow:0 0 12px rgba(212,160,32,0.4);text-decoration:none}
@@ -51,25 +86,64 @@
     .nav-right{display:flex;align-items:center;gap:10px}
     .nav-save-status{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.3);transition:color 0.2s}
     .nav-save-status.saved{color:#6abf6a}
+    .nav-save-status.draft{color:var(--gold)}
     .publish-btn{font-family:var(--pixel);font-size:0.34rem;letter-spacing:2px;padding:9px 18px;background:var(--t-acc);color:#fff;border:none;cursor:pointer;transition:all 0.2s}
     .publish-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
     .publish-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
     .nav-user-badge{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:0.74rem;color:rgba(255,255,255,0.6)}
     .nav-user-badge img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,0.25)}
     .nav-user-badge .nav-user-name{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    
+    /* ✅ Template bar */
     .template-bar{position:sticky;top:52px;z-index:190;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:4px;padding:8px 24px;overflow-x:auto;scrollbar-width:none}
     .template-bar::-webkit-scrollbar{display:none}
     .t-pill{font-family:var(--sans);font-size:0.72rem;padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);background:transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:5px}
     .t-pill:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8)}
     .t-pill.active{color:#fff;background:var(--t-acc);border-color:var(--t-acc)}
+    .t-pill .t-icon{font-size:1rem}
+    
+    /* ✅ Preview mode toggle */
+    .preview-toggle{
+      font-family: var(--pixel);
+      font-size: 0.3rem;
+      letter-spacing: 1px;
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .preview-toggle:hover,
+    .preview-toggle:focus {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      outline: none;
+    }
+    .preview-toggle:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+    .preview-toggle.active {
+      background: var(--t-acc2);
+      border-color: var(--t-acc2);
+      color: #fff;
+    }
+    
+    /* ✅ Layout */
     .diary-layout{display:flex;min-height:calc(100vh - 96px);position:relative;z-index:1}
+    
+    /* ✅ Tools panel */
     .tools-panel{width:68px;background:rgba(0,0,0,0.75);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:3px;position:sticky;top:96px;height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:none;flex-shrink:0}
     .tools-panel::-webkit-scrollbar{display:none}
     .tg-label{font-family:var(--pixel);font-size:0.2rem;color:rgba(255,255,255,0.18);letter-spacing:2px;margin:6px 0 3px;text-align:center;width:100%}
     .t-sep{width:36px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);margin:5px 0}
     .t-sep.full{width:52px}
     .tool-btn{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:1px solid transparent;transition:all 0.18s;color:rgba(255,255,255,0.4);font-size:1.2rem}
-    .tool-btn:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9)}
+    .tool-btn:hover,
+    .tool-btn:focus{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);outline:none}
+    .tool-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .tool-btn.active{background:rgba(255,255,255,0.08);border-color:var(--t-acc);color:var(--t-acc)}
     body:not([data-t="diary"]):not([data-t="college"]) .diary-tools{display:none}
     .tech-tools{display:none}
@@ -78,6 +152,8 @@
     body[data-t="magazine"] .mag-tools{display:flex}
     .tape-swatch{width:44px;height:14px;cursor:pointer;border:1px solid transparent;transition:all 0.15s;border-radius:2px}
     .tape-swatch:hover{transform:scale(1.05)}
+    
+    /* ✅ Diary area */
     .diary-area{flex:1;padding:36px 28px 80px;display:flex;justify-content:center;align-items:flex-start}
     .diary-book{width:100%;max-width:800px;display:flex;box-shadow:var(--shadow);transition:box-shadow 0.4s}
     .diary-spine{display:none}
@@ -87,6 +163,8 @@
     body[data-t="news"] .diary-page::before{opacity:0.5}
     .diary-page::after{display:none}
     .page-curl{position:absolute;bottom:0;right:0;width:40px;height:40px;background:linear-gradient(225deg,var(--t-paper3) 45%,rgba(0,0,0,0.1) 50%,var(--t-paper2) 50%);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;z-index:10}
+    
+    /* ✅ Page header */
     .page-header-area{padding:28px 40px 16px 40px;position:relative;z-index:2;transition:all 0.3s}
     .template-badge{display:none;font-family:var(--pixel);font-size:0.28rem;letter-spacing:2px;padding:3px 10px;color:#fff;margin-bottom:12px;width:fit-content}
     body[data-t="magazine"] .badge-review{display:block;background:#c0392b}
@@ -106,6 +184,8 @@
     .mood-opt{font-size:1.05rem;cursor:pointer;padding:2px;border-radius:4px;transition:all 0.15s;opacity:0.4;border:2px solid transparent}
     .mood-opt:hover{opacity:.8;transform:scale(1.2)}
     .mood-opt.selected{opacity:1;border-color:var(--t-acc)}
+    
+    /* ✅ Inputs */
     .diary-title-input{width:100%;background:none;border:none;outline:none;font-family:var(--t-title);font-size:clamp(1.6rem,4vw,2.8rem);color:var(--t-ink);font-weight:700;line-height:1.2;resize:none;overflow:hidden;transition:font-family 0.3s,color 0.3s}
     .diary-title-input::placeholder{color:var(--t-ink4);font-weight:400}
     body[data-t="magazine"] .diary-title-input{font-size:clamp(2rem,5vw,3.5rem);font-style:italic}
@@ -129,6 +209,8 @@
     body[data-t="tech"] .cat-pill{border-color:rgba(255,255,255,0.12);color:var(--t-ink3)}
     .cat-pill:hover{background:var(--t-paper2)}
     .cat-pill.active{background:var(--t-acc);color:#fff;border-color:var(--t-acc)}
+    
+    /* ✅ Cover zone */
     .cover-zone{padding:0 40px 20px 40px;position:relative;z-index:2}
     .cover-drop{border:2px dashed rgba(0,0,0,0.12);background:rgba(0,0,0,0.02);padding:20px;text-align:center;cursor:pointer;transition:all 0.2s}
     body[data-t="tech"] .cover-drop{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02)}
@@ -142,6 +224,8 @@
     body[data-t="magazine"] .cover-preview img{max-height:420px}
     body[data-t="tech"] .cover-preview img{max-height:240px;border:1px solid rgba(255,255,255,0.08)}
     .cover-clear{position:absolute;top:8px;right:8px;font-family:var(--pixel);font-size:0.28rem;color:#fff;background:rgba(0,0,0,0.55);padding:4px 8px;border:none;cursor:pointer}
+    
+    /* ✅ Writing canvas */
     .writing-canvas{padding:20px 40px 40px 40px;position:relative;min-height:600px;z-index:2}
     .diary-editor{min-height:500px;outline:none;font-family:var(--t-font);font-size:1.05rem;color:var(--t-ink);line-height:32px;position:relative;z-index:2;word-break:break-word;caret-color:var(--t-acc);transition:all 0.3s}
     .diary-editor:empty::before{content:attr(data-placeholder);color:var(--t-ink4);pointer-events:none;font-style:italic;white-space:pre-line}
@@ -158,6 +242,8 @@
     .diary-editor li{line-height:32px}
     .diary-editor pre{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:16px;margin:12px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.6;color:var(--t-ink);border-radius:6px;display:block}
     .diary-editor code{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88rem;color:#79c0ff}
+    
+    /* ✅ Content elements */
     .sticky-callout{display:block;background:#fef9c3;padding:12px 16px;margin:14px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.2);max-width:360px;font-family:'Caveat',cursive;font-size:1rem;color:#1a1208;line-height:1.6;position:relative;user-select:text;-webkit-user-select:text}
     .sticky-callout::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:48px;height:14px;background:rgba(240,190,40,0.65)}
     .sticky-callout:focus{outline:1px dashed rgba(0,0,0,0.2)}
@@ -191,9 +277,13 @@
     .diary-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
     .diary-editor .img-row-block figure{flex:1;margin:0}
     .diary-editor .img-row-block figure img{width:100%;display:block}
+    
+    /* ✅ Count strip */
     .count-strip{position:sticky;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(4px);border-top:1px solid rgba(255,255,255,0.06);padding:6px 24px;display:flex;gap:20px;align-items:center;z-index:10}
     .count-item{font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.3)}
     .count-item span{color:rgba(255,255,255,0.7)}
+    
+    /* ✅ Pickers */
     .sticker-picker{position:fixed;background:#0e0a06;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;z-index:600;display:none;flex-wrap:wrap;gap:6px;width:220px;box-shadow:0 8px 32px rgba(0,0,0,0.6)}
     .sticker-picker.open{display:flex}
     .sticker-option{font-size:1.5rem;cursor:pointer;padding:4px;border-radius:6px;transition:background 0.15s;line-height:1}
@@ -237,6 +327,8 @@
     .color-input-btn{width:28px;height:28px;border-radius:50%;border:1px dashed rgba(255,255,255,0.3);background:none;cursor:pointer;color:rgba(255,255,255,0.5);font-size:0.7rem;display:flex;align-items:center;justify-content:center;transition:all .15s;padding:0}
     .color-input-btn:hover{border-color:#fff;color:#fff}
     #customColorInput{position:absolute;opacity:0;width:0;height:0}
+    
+    /* ✅ Publish modal */
     .publish-modal-bg{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center}
     .publish-modal-bg.open{display:flex}
     .publish-modal{background:var(--t-paper);width:100%;max-width:500px;margin:20px;box-shadow:var(--shadow);position:relative;transition:background 0.4s}
@@ -263,655 +355,1571 @@
     .modal-status{font-family:var(--sans);font-size:0.78rem;margin-top:8px;text-align:center;font-style:italic;min-height:18px}
     .modal-status.ok{color:#2a8a2a}.modal-status.err{color:#c0392b}
     .modal-close{position:absolute;top:12px;right:12px;font-family:var(--pixel);font-size:0.26rem;color:var(--t-ink3);cursor:pointer;background:none;border:none}
-    @media(max-width:768px){.diary-area{padding:16px 10px 60px}.writing-canvas,.page-header-area,.cover-zone{padding-left:18px;padding-right:18px}.diary-editor figure.img-left,.diary-editor figure.img-right{float:none;max-width:100%;margin:10px 0}.diary-editor .img-row-block{flex-direction:column}body[data-t="news"] .diary-editor{columns:1}}
-    @media(max-width:480px){.tools-panel{width:52px}.template-bar{padding:6px 14px}}
+    
+    /* ✅ Preview mode */
+    .preview-overlay{
+      position: fixed;
+      inset: 0;
+      background: var(--t-bg);
+      z-index: 300;
+      display: none;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    .preview-overlay.open { display: block; }
+    .preview-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--t-paper);
+      padding: 40px;
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+      min-height: 80vh;
+    }
+    .preview-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--t-acc);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+    }
+    
+    /* ✅ Responsive */
+    @media(max-width:768px){
+      .diary-area{padding:16px 10px 60px}
+      .writing-canvas,.page-header-area,.cover-zone{padding-left:18px;padding-right:18px}
+      .diary-editor figure.img-left,.diary-editor figure.img-right{float:none;max-width:100%;margin:10px 0}
+      .diary-editor .img-row-block{flex-direction:column}
+      body[data-t="news"] .diary-editor{columns:1}
+      .tools-panel{width:52px}
+      .template-bar{padding:6px 14px}
+      .preview-content{padding:24px}
+    }
+    @media(max-width:480px){
+      .tools-panel{width:52px}
+      .template-bar{padding:6px 14px}
+      .nav-right{gap:6px}
+      .publish-btn{padding:9px 12px;font-size:0.3rem}
+    }
   </style>
 </head>
 <body data-t="diary">
 
-<nav class="top-nav">
-  <div class="nav-left">
-    <a href="index.html" class="nav-logo">HlYWoR</a>
-    <div class="nav-sep"></div>
-    <span class="nav-template-label" id="navTemplateLabel">diary entry</span>
-  </div>
-  <div class="nav-right">
-    <span class="nav-save-status" id="saveStatus">unsaved</span>
-    <!-- Auth slot filled by auth.js -->
-    <div id="authSlot"></div>
-    <button class="publish-btn" id="publishOpenBtn">Publish &rarr;</button>
-  </div>
-</nav>
+  <!-- ✅ Skip Link -->
+  <a href="#editor" class="skip-link">Skip to editor</a>
 
-<div class="template-bar">
-  <button class="t-pill active" data-t="diary" data-cat="story"><span>&#128211;</span> Story / Thoughts</button>
-  <button class="t-pill" data-t="magazine" data-cat="movies"><span>&#127916;</span> Movie / Book Review</button>
-  <button class="t-pill" data-t="news" data-cat="news"><span>&#128240;</span> News</button>
-  <button class="t-pill" data-t="tech" data-cat="thoughts"><span>&#128187;</span> Tech / Ideas</button>
-  <button class="t-pill" data-t="college" data-cat="college"><span>&#127968;</span> College / Life</button>
-</div>
+  <nav class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">HlYWoR</a>
+      <div class="nav-sep"></div>
+      <span class="nav-template-label" id="navTemplateLabel">diary entry</span>
+    </div>
+    <div class="nav-right">
+      <span class="nav-save-status" id="saveStatus">unsaved</span>
+      <!-- Auth slot -->
+      <div id="authSlot"></div>
+      <!-- ✅ Preview toggle -->
+      <button class="preview-toggle" id="previewToggle" aria-pressed="false">👁 Preview</button>
+      <button class="publish-btn" id="publishOpenBtn">Publish →</button>
+    </div>
+  </nav>
 
-<div class="sticker-picker" id="stickerPicker">
-  <span class="sticker-option">&#11088;</span><span class="sticker-option">&#128171;</span><span class="sticker-option">&#128293;</span>
-  <span class="sticker-option">&#128150;</span><span class="sticker-option">&#10024;</span><span class="sticker-option">&#127769;</span>
-  <span class="sticker-option">&#9728;&#65039;</span><span class="sticker-option">&#127800;</span><span class="sticker-option">&#127811;</span>
-  <span class="sticker-option">&#129419;</span><span class="sticker-option">&#127925;</span><span class="sticker-option">&#128218;</span>
-  <span class="sticker-option">&#9749;</span><span class="sticker-option">&#127807;</span><span class="sticker-option">&#128173;</span>
-  <span class="sticker-option">&#127912;</span><span class="sticker-option">&#128507;</span><span class="sticker-option">&#127754;</span>
-  <span class="sticker-option">&#128357;</span><span class="sticker-option">&#128247;</span><span class="sticker-option">&#9999;&#65039;</span>
-  <span class="sticker-option">&#128140;</span><span class="sticker-option">&#128557;</span><span class="sticker-option">&#128514;</span>
-  <span class="sticker-option">&#129402;</span><span class="sticker-option">&#128128;</span><span class="sticker-option">&#127917;</span>
-</div>
-
-<div class="img-popup" id="imgPopup">
-  <div class="img-popup-title">INSERT PHOTO</div>
-  <input type="file" id="inlineImgFile" accept="image/*">
-  <button class="img-popup-upload" id="inlineImgUploadBtn">Choose Photo</button>
-  <div class="img-popup-sep"></div>
-  <label>Alignment</label>
-  <div class="img-align-row">
-    <button class="img-align-btn active" data-align="center">⬜ Center</button>
-    <button class="img-align-btn" data-align="left">◧ Left</button>
-    <button class="img-align-btn" data-align="right">◨ Right</button>
-    <button class="img-align-btn" data-align="full">↔ Full</button>
+  <div class="template-bar">
+    <button class="t-pill active" data-t="diary" data-cat="story" aria-pressed="true">
+      <span class="t-icon" aria-hidden="true">📒</span> Story / Thoughts
+    </button>
+    <button class="t-pill" data-t="magazine" data-cat="movies" aria-pressed="false">
+      <span class="t-icon" aria-hidden="true">🎬</span> Movie / Book Review
+    </button>
+    <button class="t-pill" data-t="news" data-cat="news" aria-pressed="false">
+      <span class="t-icon" aria-hidden="true">📰</span> News
+    </button>
+    <button class="t-pill" data-t="tech" data-cat="thoughts" aria-pressed="false">
+      <span class="t-icon" aria-hidden="true">💻</span> Tech / Ideas
+    </button>
+    <button class="t-pill" data-t="college" data-cat="college" aria-pressed="false">
+      <span class="t-icon" aria-hidden="true">🎓</span> College / Life
+    </button>
   </div>
-  <label>Frame style</label>
-  <select id="inlineImgStyle">
-    <option value="">Photo — no frame</option>
-    <option value="tilt-l">Polaroid — tilt left</option>
-    <option value="tilt-r">Polaroid — tilt right</option>
-    <option value="straight">Polaroid — straight</option>
-  </select>
-  <label>Caption</label>
-  <input type="text" id="inlineImgCaption" placeholder="write something...">
-</div>
 
-<div class="img-row-popup" id="imgRowPopup">
-  <div class="img-row-popup-title">PHOTO ROW</div>
-  <div class="img-row-slots" id="imgRowSlots">
-    <div class="img-row-slot" data-slot="0"><input type="file" accept="image/*"><span>📷</span></div>
-    <div class="img-row-slot" data-slot="1"><input type="file" accept="image/*"><span>📷</span></div>
-    <div class="img-row-slot" data-slot="2"><input type="file" accept="image/*"><span>📷</span></div>
+  <!-- ✅ Sticker picker -->
+  <div class="sticker-picker" id="stickerPicker" role="dialog" aria-label="Insert sticker">
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Star">⭐</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Sparkles">✨</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Fire">🔥</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Heart">❤️</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Lightning">⚡</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Flower">🌸</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Sun">☀️</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Rose">🌹</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Apple">🍎</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Bear">🐻</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Game">🎮</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Book">📚</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Coffee">☕</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Cherry">🍒</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Lips">💋</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Ticket">🎟️</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Laugh">😂</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Moon">🌙</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Camera">📷</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Pencil">✏️</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Gem">💎</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Crying">😭</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Smile">😊</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Dog">🐕</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Ghost">👻</span>
+    <span class="sticker-option" role="button" tabindex="0" aria-label="Controller">🎮</span>
   </div>
-  <div class="img-row-gap">
-    <label>Style</label>
-    <select id="imgRowStyle">
-      <option value="normal">Side by side</option>
-      <option value="polaroid">Polaroids</option>
+
+  <!-- ✅ Image popup -->
+  <div class="img-popup" id="imgPopup" role="dialog" aria-label="Insert photo">
+    <div class="img-popup-title">INSERT PHOTO</div>
+    <input type="file" id="inlineImgFile" accept="image/*" aria-label="Choose image file">
+    <button class="img-popup-upload" id="inlineImgUploadBtn">Choose Photo</button>
+    <div class="img-popup-sep"></div>
+    <label for="inlineImgAlign">Alignment</label>
+    <div class="img-align-row" role="radiogroup" aria-label="Image alignment">
+      <button class="img-align-btn active" data-align="center" role="radio" aria-checked="true">⬜ Center</button>
+      <button class="img-align-btn" data-align="left" role="radio" aria-checked="false">◧ Left</button>
+      <button class="img-align-btn" data-align="right" role="radio" aria-checked="false">◨ Right</button>
+      <button class="img-align-btn" data-align="full" role="radio" aria-checked="false">↔ Full</button>
+    </div>
+    <label for="inlineImgStyle">Frame style</label>
+    <select id="inlineImgStyle" aria-label="Image frame style">
+      <option value="">Photo — no frame</option>
+      <option value="tilt-l">Polaroid — tilt left</option>
+      <option value="tilt-r">Polaroid — tilt right</option>
+      <option value="straight">Polaroid — straight</option>
     </select>
-  </div>
-  <button class="img-row-insert" id="imgRowInsert">Insert row →</button>
-</div>
-
-<div class="diary-layout">
-  <div class="tools-panel" id="toolsPanel">
-    <div class="tg-label">TEXT</div>
-    <button class="tool-btn" data-cmd="bold" title="Bold"><strong>B</strong></button>
-    <button class="tool-btn" data-cmd="italic" title="Italic"><em style="font-family:Georgia">I</em></button>
-    <button class="tool-btn" data-cmd="h2" title="Heading 1"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
-    <button class="tool-btn" data-cmd="h3" title="Heading 2"><span style="font-family:'Caveat',cursive;font-size:.9rem">H2</span></button>
-    <button class="tool-btn" data-cmd="blockquote" title="Quote">&#10077;</button>
-    <button class="tool-btn" data-cmd="insertUnorderedList" title="List">&bull;&#8801;</button>
-    <div class="t-sep full"></div>
-    <div class="tg-label">FONT</div>
-    <div class="font-picker-wrap">
-      <button class="font-btn active" data-font="" title="Default" style="font-family:inherit">Aa</button>
-      <button class="font-btn" data-font="'Lora',serif" title="Lora" style="font-family:'Lora',serif">Aa</button>
-      <button class="font-btn" data-font="'Libre Baskerville',serif" title="Baskerville" style="font-family:'Libre Baskerville',serif">Aa</button>
-      <button class="font-btn" data-font="'Cormorant Garamond',serif" title="Cormorant" style="font-family:'Cormorant Garamond',serif;font-style:italic">Aa</button>
-      <button class="font-btn" data-font="'Spectral',serif" title="Spectral" style="font-family:'Spectral',serif">Aa</button>
-      <button class="font-btn" data-font="'Kalam',cursive" title="Kalam" style="font-family:'Kalam',cursive">Aa</button>
-      <button class="font-btn" data-font="'Satisfy',cursive" title="Satisfy" style="font-family:'Satisfy',cursive">Aa</button>
-      <button class="font-btn" data-font="'Caveat',cursive" title="Caveat" style="font-family:'Caveat',cursive">Aa</button>
-      <button class="font-btn" data-font="'IM Fell English',serif" title="IM Fell" style="font-family:'IM Fell English',serif">Aa</button>
-    </div>
-    <div class="t-sep full"></div>
-    <div class="tg-label">COLOR</div>
-    <div class="color-picker-wrap">
-      <div class="text-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink black"></div>
-      <div class="text-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue"></div>
-      <div class="text-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson"></div>
-      <div class="text-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Forest green"></div>
-      <div class="text-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Violet"></div>
-      <div class="text-color-swatch" data-color="#c0670a" style="background:#c0670a" title="Amber"></div>
-      <button class="color-input-btn" id="customColorBtn" title="Custom color">+</button>
-      <input type="color" id="customColorInput" value="#1a1208">
-    </div>
-    <div class="t-sep full"></div>
-    <div class="tg-label">MARK</div>
-    <button class="tool-btn" data-highlight="highlight-y" title="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <button class="tool-btn" data-highlight="highlight-r" title="Red highlight"><span style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <button class="tool-btn" data-highlight="highlight-b" title="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <button class="tool-btn" data-highlight="highlight-g" title="Green highlight"><span style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-    <button class="tool-btn" data-highlight="hl-line-y" title="Line highlight"><span style="background:rgba(255,230,0,.25);padding:0 5px;font-size:.75rem;color:#1a1208">≡</span></button>
-    <div class="t-sep full"></div>
-    <div class="tg-label">INSERT</div>
-    <button class="tool-btn" id="insertStickerBtn" title="Sticker">&#10024;</button>
-    <button class="tool-btn" id="insertImgBtn" title="Photo">&#128247;</button>
-    <button class="tool-btn" id="insertImgRowBtn" title="Photo row">&#128248;</button>
-    <button class="tool-btn diary-tools" id="insertStickyBtn" title="Sticky note">&#128221;</button>
-    <button class="tool-btn diary-tools" id="insertDoodleBtn" title="Doodle divider"><span style="font-size:.75rem">&#12316;</span></button>
-    <button class="tool-btn mag-tools" id="insertPullBtn" title="Pull quote">&#10078;</button>
-    <button class="tool-btn tech-tools" id="insertCodeBtn" title="Code block"><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem">&lt;/&gt;</span></button>
-    <div class="t-sep diary-tools full"></div>
-    <div class="tg-label diary-tools">TAPE</div>
-    <div class="diary-tools" style="display:flex;flex-direction:column;gap:5px;padding:4px">
-      <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)"></div>
-      <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)" style="background:rgba(220,80,80,.55)"></div>
-      <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)"></div>
-      <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)"></div>
-    </div>
-    <div class="t-sep full"></div>
-    <button class="tool-btn" data-cmd="undo" title="Undo">&#8617;</button>
-    <button class="tool-btn" data-cmd="redo" title="Redo">&#8618;</button>
+    <label for="inlineImgCaption">Caption</label>
+    <input type="text" id="inlineImgCaption" placeholder="write something..." aria-label="Image caption">
   </div>
 
-  <div class="diary-area">
-    <div class="diary-book">
-      <div class="diary-spine"></div>
-      <div class="diary-page">
-        <div class="page-header-area">
-          <div class="template-badge badge-review">REVIEW</div>
-          <div class="template-badge badge-news">BREAKING</div>
-          <div class="template-badge badge-tech">TECH POST</div>
-          <div class="template-badge badge-college">CAMPUS LIFE</div>
-          <div class="news-dateline" id="newsDateline"></div>
-          <div class="mag-rating" id="magRating">
-            <span class="star" data-v="1">&#9733;</span>
-            <span class="star" data-v="2">&#9733;</span>
-            <span class="star" data-v="3">&#9733;</span>
-            <span class="star" data-v="4">&#9733;</span>
-            <span class="star" data-v="5">&#9733;</span>
-            <span style="font-family:var(--sans);font-size:.72rem;color:var(--t-ink4);margin-left:6px" id="ratingText">no rating</span>
-          </div>
-          <div class="page-date-line">
-            <span class="page-date" id="todayDate"></span>
-            <div class="mood-selector">
-              <span class="mood-opt" data-mood="&#128522;">&#128522;</span>
-              <span class="mood-opt" data-mood="&#128532;">&#128532;</span>
-              <span class="mood-opt" data-mood="&#128548;">&#128548;</span>
-              <span class="mood-opt" data-mood="&#129402;">&#129402;</span>
-              <span class="mood-opt" data-mood="&#128524;">&#128524;</span>
-              <span class="mood-opt" data-mood="&#129321;">&#129321;</span>
-              <span class="mood-opt" data-mood="&#128514;">&#128514;</span>
+  <!-- ✅ Image row popup -->
+  <div class="img-row-popup" id="imgRowPopup" role="dialog" aria-label="Insert photo row">
+    <div class="img-row-popup-title">PHOTO ROW</div>
+    <div class="img-row-slots" id="imgRowSlots" role="list">
+      <div class="img-row-slot" data-slot="0" role="listitem" tabindex="0" aria-label="Select image 1">
+        <input type="file" accept="image/*" aria-label="Upload image 1">
+        <span>📷</span>
+      </div>
+      <div class="img-row-slot" data-slot="1" role="listitem" tabindex="0" aria-label="Select image 2">
+        <input type="file" accept="image/*" aria-label="Upload image 2">
+        <span>📷</span>
+      </div>
+      <div class="img-row-slot" data-slot="2" role="listitem" tabindex="0" aria-label="Select image 3">
+        <input type="file" accept="image/*" aria-label="Upload image 3">
+        <span>📷</span>
+      </div>
+    </div>
+    <div class="img-row-gap">
+      <label for="imgRowStyle">Style</label>
+      <select id="imgRowStyle" aria-label="Photo row style">
+        <option value="normal">Side by side</option>
+        <option value="polaroid">Polaroids</option>
+      </select>
+    </div>
+    <button class="img-row-insert" id="imgRowInsert">Insert row →</button>
+  </div>
+
+  <div class="diary-layout">
+    <div class="tools-panel" id="toolsPanel" role="toolbar" aria-label="Formatting tools">
+      <div class="tg-label">TEXT</div>
+      <button class="tool-btn" data-cmd="bold" title="Bold (Ctrl+B)" aria-label="Bold"><strong>B</strong></button>
+      <button class="tool-btn" data-cmd="italic" title="Italic (Ctrl+I)" aria-label="Italic"><em style="font-family:Georgia">I</em></button>
+      <button class="tool-btn" data-cmd="h2" title="Heading 1" aria-label="Heading 1"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
+      <button class="tool-btn" data-cmd="h3" title="Heading 2" aria-label="Heading 2"><span style="font-family:'Caveat',cursive;font-size:.9rem">H2</span></button>
+      <button class="tool-btn" data-cmd="blockquote" title="Quote" aria-label="Quote">&#10077;</button>
+      <button class="tool-btn" data-cmd="insertUnorderedList" title="List" aria-label="Bullet list">&bull;&#8801;</button>
+      <div class="t-sep full"></div>
+      <div class="tg-label">FONT</div>
+      <div class="font-picker-wrap" role="radiogroup" aria-label="Font family">
+        <button class="font-btn active" data-font="" title="Default" style="font-family:inherit" role="radio" aria-checked="true">Aa</button>
+        <button class="font-btn" data-font="'Lora',serif" title="Lora" style="font-family:'Lora',serif" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Libre Baskerville',serif" title="Baskerville" style="font-family:'Libre Baskerville',serif" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Cormorant Garamond',serif" title="Cormorant" style="font-family:'Cormorant Garamond',serif;font-style:italic" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Spectral',serif" title="Spectral" style="font-family:'Spectral',serif" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Kalam',cursive" title="Kalam" style="font-family:'Kalam',cursive" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Satisfy',cursive" title="Satisfy" style="font-family:'Satisfy',cursive" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Caveat',cursive" title="Caveat" style="font-family:'Caveat',cursive" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'IM Fell English',serif" title="IM Fell" style="font-family:'IM Fell English',serif" role="radio" aria-checked="false">Aa</button>
+      </div>
+      <div class="t-sep full"></div>
+      <div class="tg-label">COLOR</div>
+      <div class="color-picker-wrap" role="radiogroup" aria-label="Text color">
+        <div class="text-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink black" role="radio" aria-checked="true" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Forest green" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Violet" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#c0670a" style="background:#c0670a" title="Amber" role="radio" aria-checked="false" tabindex="0"></div>
+        <button class="color-input-btn" id="customColorBtn" title="Custom color" aria-label="Choose custom color">+</button>
+        <input type="color" id="customColorInput" value="#1a1208" aria-label="Custom color picker">
+      </div>
+      <div class="t-sep full"></div>
+      <div class="tg-label">MARK</div>
+      <button class="tool-btn" data-highlight="highlight-y" title="Yellow highlight" aria-label="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-r" title="Red highlight" aria-label="Red highlight"><span style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-b" title="Blue highlight" aria-label="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-g" title="Green highlight" aria-label="Green highlight"><span style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="hl-line-y" title="Line highlight" aria-label="Line highlight"><span style="background:rgba(255,230,0,.25);padding:0 5px;font-size:.75rem;color:#1a1208">≡</span></button>
+      <div class="t-sep full"></div>
+      <div class="tg-label">INSERT</div>
+      <button class="tool-btn" id="insertStickerBtn" title="Sticker" aria-label="Insert sticker">&#10024;</button>
+      <button class="tool-btn" id="insertImgBtn" title="Photo" aria-label="Insert photo">&#128247;</button>
+      <button class="tool-btn" id="insertImgRowBtn" title="Photo row" aria-label="Insert photo row">&#128248;</button>
+      <button class="tool-btn diary-tools" id="insertStickyBtn" title="Sticky note" aria-label="Insert sticky note">&#128221;</button>
+      <button class="tool-btn diary-tools" id="insertDoodleBtn" title="Doodle divider" aria-label="Insert doodle divider"><span style="font-size:.75rem">&#12316;</span></button>
+      <button class="tool-btn mag-tools" id="insertPullBtn" title="Pull quote" aria-label="Insert pull quote">&#10078;</button>
+      <button class="tool-btn tech-tools" id="insertCodeBtn" title="Code block" aria-label="Insert code block"><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem">&lt;/&gt;</span></button>
+      <div class="t-sep diary-tools full"></div>
+      <div class="tg-label diary-tools">TAPE</div>
+      <div class="diary-tools" style="display:flex;flex-direction:column;gap:5px;padding:4px" role="radiogroup" aria-label="Washi tape color">
+        <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)" role="radio" aria-checked="true" tabindex="0"></div>
+        <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)" style="background:rgba(220,80,80,.55)" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)" role="radio" aria-checked="false" tabindex="0"></div>
+      </div>
+      <div class="t-sep full"></div>
+      <button class="tool-btn" data-cmd="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8617;</button>
+      <button class="tool-btn" data-cmd="redo" title="Redo (Ctrl+Y)" aria-label="Redo">&#8618;</button>
+    </div>
+
+    <div class="diary-area">
+      <div class="diary-book">
+        <div class="diary-spine"></div>
+        <div class="diary-page">
+          <div class="page-header-area">
+            <div class="template-badge badge-review" aria-label="Review template">REVIEW</div>
+            <div class="template-badge badge-news" aria-label="News template">BREAKING</div>
+            <div class="template-badge badge-tech" aria-label="Tech template">TECH POST</div>
+            <div class="template-badge badge-college" aria-label="College template">CAMPUS LIFE</div>
+            <div class="news-dateline" id="newsDateline" aria-hidden="true"></div>
+            <div class="mag-rating" id="magRating" aria-label="Rating">
+              <span class="star" data-v="1" role="radio" aria-checked="false" tabindex="0" aria-label="1 star">&#9733;</span>
+              <span class="star" data-v="2" role="radio" aria-checked="false" tabindex="0" aria-label="2 stars">&#9733;</span>
+              <span class="star" data-v="3" role="radio" aria-checked="false" tabindex="0" aria-label="3 stars">&#9733;</span>
+              <span class="star" data-v="4" role="radio" aria-checked="false" tabindex="0" aria-label="4 stars">&#9733;</span>
+              <span class="star" data-v="5" role="radio" aria-checked="false" tabindex="0" aria-label="5 stars">&#9733;</span>
+              <span style="font-family:var(--sans);font-size:.72rem;color:var(--t-ink4);margin-left:6px" id="ratingText">no rating</span>
+            </div>
+            <div class="page-date-line">
+              <span class="page-date" id="todayDate"></span>
+              <div class="mood-selector" role="radiogroup" aria-label="Mood">
+                <span class="mood-opt" data-mood="&#128522;" role="radio" aria-checked="false" tabindex="0" aria-label="Happy">&#128522;</span>
+                <span class="mood-opt" data-mood="&#128532;" role="radio" aria-checked="false" tabindex="0" aria-label="Sad">&#128532;</span>
+                <span class="mood-opt" data-mood="&#128548;" role="radio" aria-checked="false" tabindex="0" aria-label="Thoughtful">&#128548;</span>
+                <span class="mood-opt" data-mood="&#129402;" role="radio" aria-checked="false" tabindex="0" aria-label="Excited">&#129402;</span>
+                <span class="mood-opt" data-mood="&#128524;" role="radio" aria-checked="false" tabindex="0" aria-label="Calm">&#128524;</span>
+                <span class="mood-opt" data-mood="&#129321;" role="radio" aria-checked="false" tabindex="0" aria-label="Funny">&#129321;</span>
+                <span class="mood-opt" data-mood="&#128514;" role="radio" aria-checked="false" tabindex="0" aria-label="Laughing">&#128514;</span>
+              </div>
+            </div>
+            <textarea class="diary-title-input" id="titleInput" placeholder="Title..." rows="1" maxlength="160" aria-label="Post title"></textarea>
+            <textarea class="diary-desc-input" id="descInput" placeholder="One line for the homepage card..." rows="1" maxlength="220" aria-label="Short description for homepage"></textarea>
+            <div class="meta-row">
+              <div class="meta-group"><div class="meta-label">AUTHOR</div><input class="meta-input" id="authorInput" placeholder="your name" style="width:120px" aria-label="Author name"></div>
+              <div class="meta-group"><div class="meta-label">EMAIL</div><input class="meta-input" id="emailInput" type="email" placeholder="optional" style="width:140px" aria-label="Author email"></div>
+              <div class="meta-group"><div class="meta-label">READ TIME</div><input class="meta-input" id="readtimeInput" placeholder="5 min" style="width:70px" aria-label="Estimated read time"></div>
+              <div class="meta-group tech-tools"><div class="meta-label">TOPIC / LANG</div><input class="meta-input" id="techTagInput" placeholder="e.g. Python, AI" style="width:120px" aria-label="Tech topic or language"></div>
+            </div>
+            <div class="cat-pills" id="catPills" role="radiogroup" aria-label="Category">
+              <button class="cat-pill" data-cat="story" role="radio" aria-checked="false" tabindex="0">Story</button>
+              <button class="cat-pill" data-cat="movies" role="radio" aria-checked="false" tabindex="0">Movies</button>
+              <button class="cat-pill" data-cat="books" role="radio" aria-checked="false" tabindex="0">Books</button>
+              <button class="cat-pill" data-cat="thoughts" role="radio" aria-checked="false" tabindex="0">Thoughts</button>
+              <button class="cat-pill" data-cat="college" role="radio" aria-checked="false" tabindex="0">College</button>
+              <button class="cat-pill" data-cat="news" role="radio" aria-checked="false" tabindex="0">News</button>
+              <button class="cat-pill" data-cat="other" role="radio" aria-checked="false" tabindex="0">Other</button>
             </div>
           </div>
-          <textarea class="diary-title-input" id="titleInput" placeholder="Title..." rows="1" maxlength="160"></textarea>
-          <textarea class="diary-desc-input" id="descInput" placeholder="One line for the homepage card..." rows="1" maxlength="220"></textarea>
-          <div class="meta-row">
-            <div class="meta-group"><div class="meta-label">AUTHOR</div><input class="meta-input" id="authorInput" placeholder="your name" style="width:120px"></div>
-            <div class="meta-group"><div class="meta-label">EMAIL</div><input class="meta-input" id="emailInput" type="email" placeholder="optional" style="width:140px"></div>
-            <div class="meta-group"><div class="meta-label">READ TIME</div><input class="meta-input" id="readtimeInput" placeholder="5 min" style="width:70px"></div>
-            <div class="meta-group tech-tools"><div class="meta-label">TOPIC / LANG</div><input class="meta-input" id="techTagInput" placeholder="e.g. Python, AI" style="width:120px"></div>
+          <div class="cover-zone">
+            <div class="cover-drop" id="coverDrop" role="button" tabindex="0" aria-label="Upload cover image">
+              <input type="file" id="coverFile" accept="image/*" aria-label="Cover image file">
+              <p class="cover-drop-hint">&#128247; Drag a cover image here or click to choose</p>
+            </div>
+            <div class="cover-uploading" id="coverUploading" role="status" aria-live="polite">uploading...</div>
+            <div class="cover-preview" id="coverPreview">
+              <img id="coverPreviewImg" src="" alt="Cover image preview">
+              <button class="cover-clear" id="coverClear" aria-label="Remove cover image">&#10005; remove</button>
+            </div>
+            <input type="hidden" id="coverUrl">
+            <input type="text" id="coverAlt" placeholder="Alt text for cover image" style="margin-top:8px;font-family:var(--sans);font-size:0.75rem;padding:4px 8px;border:1px dashed rgba(0,0,0,0.1);border-radius:4px;background:var(--t-paper2)" aria-label="Alt text for cover image">
           </div>
-          <div class="cat-pills" id="catPills">
-            <button class="cat-pill" data-cat="story">Story</button>
-            <button class="cat-pill" data-cat="movies">Movies</button>
-            <button class="cat-pill" data-cat="books">Books</button>
-            <button class="cat-pill" data-cat="thoughts">Thoughts</button>
-            <button class="cat-pill" data-cat="college">College</button>
-            <button class="cat-pill" data-cat="news">News</button>
-            <button class="cat-pill" data-cat="other">Other</button>
+          <div class="writing-canvas">
+            <div class="diary-editor" id="editor" contenteditable="true" data-placeholder="Start writing..." role="textbox" aria-label="Post content" aria-multiline="true"></div>
           </div>
-        </div>
-        <div class="cover-zone">
-          <div class="cover-drop" id="coverDrop">
-            <input type="file" id="coverFile" accept="image/*">
-            <p class="cover-drop-hint">&#128247; Drag a cover image here or click to choose</p>
+          <div class="count-strip">
+            <div class="count-item">words <span id="wordCount">0</span></div>
+            <div class="count-item">chars <span id="charCount">0</span></div>
+            <div class="count-item" id="readTimeCalc" style="margin-left:auto;color:rgba(255,255,255,.5)" aria-live="polite"></div>
           </div>
-          <div class="cover-uploading" id="coverUploading">uploading...</div>
-          <div class="cover-preview" id="coverPreview">
-            <img id="coverPreviewImg" src="" alt="">
-            <button class="cover-clear" id="coverClear">&#10005; remove</button>
-          </div>
-          <input type="hidden" id="coverUrl">
+          <div class="page-curl" aria-hidden="true"></div>
         </div>
-        <div class="writing-canvas">
-          <div class="diary-editor" id="editor" contenteditable="true" data-placeholder="Start writing..."></div>
-        </div>
-        <div class="count-strip">
-          <div class="count-item">words <span id="wordCount">0</span></div>
-          <div class="count-item">chars <span id="charCount">0</span></div>
-          <div class="count-item" id="readTimeCalc" style="margin-left:auto;color:rgba(255,255,255,.5)"></div>
-        </div>
-        <div class="page-curl"></div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="publish-modal-bg" id="publishModalBg">
-  <div class="publish-modal">
-    <div class="modal-pin"></div>
-    <button class="modal-close" id="modalClose">[ close ]</button>
-    <div class="modal-body">
-      <div class="modal-title">Ready to go live?</div>
-      <div class="modal-field">
-        <label>TAGS (enter to add)</label>
-        <div class="tags-wrap" id="tagsWrap"><input type="text" id="tagInput" placeholder="add a tag..."></div>
+  <!-- ✅ Preview overlay -->
+  <div class="preview-overlay" id="previewOverlay" role="dialog" aria-modal="true" aria-label="Post preview">
+    <button class="preview-close" id="previewClose">✕ Close preview</button>
+    <div class="preview-content" id="previewContent"></div>
+  </div>
+
+  <!-- ✅ Publish modal -->
+  <div class="publish-modal-bg" id="publishModalBg" role="dialog" aria-modal="true" aria-labelledby="publishModalTitle">
+    <div class="publish-modal">
+      <div class="modal-pin" aria-hidden="true"></div>
+      <button class="modal-close" id="modalClose" aria-label="Close publish dialog">[ close ]</button>
+      <div class="modal-body">
+        <div class="modal-title" id="publishModalTitle">Ready to go live?</div>
+        <div class="modal-field">
+          <label for="tagInput">TAGS (enter to add)</label>
+          <div class="tags-wrap" id="tagsWrap" role="listbox" aria-label="Post tags">
+            <input type="text" id="tagInput" placeholder="add a tag..." aria-label="Add tag">
+          </div>
+        </div>
+        <div class="modal-field">
+          <label for="typeSelect">TYPE</label>
+          <select id="typeSelect" aria-label="Post type">
+            <option value="blog">Blog</option>
+            <option value="story">Story</option>
+            <option value="poem">Poem</option>
+            <option value="review">Review</option>
+            <option value="news">News</option>
+            <option value="tech">Tech</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="modal-check">
+          <input type="checkbox" id="agreeCheck" aria-label="Confirm original content">
+          <label for="agreeCheck">This is my original content and I'm okay with it going live on HlyWor right now.</label>
+        </div>
+        <div class="modal-check">
+          <input type="checkbox" id="agreeImgCheck" aria-label="Confirm image rights">
+          <label for="agreeImgCheck">I have rights to all images included.</label>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="modal-submit" id="draftBtn" style="background:var(--t-paper3);color:var(--t-ink);border:1px solid rgba(0,0,0,0.1)">💾 Save as draft</button>
+          <button class="modal-submit" id="submitBtn" style="flex:1">✨ Go live now</button>
+        </div>
+        <div class="modal-status" id="modalStatus" role="status" aria-live="polite"></div>
       </div>
-      <div class="modal-field">
-        <label>TYPE</label>
-        <select id="typeSelect">
-          <option value="blog">Blog</option>
-          <option value="story">Story</option>
-          <option value="poem">Poem</option>
-          <option value="review">Review</option>
-          <option value="news">News</option>
-          <option value="tech">Tech</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="modal-check"><input type="checkbox" id="agreeCheck"><span>This is my original content and I'm okay with it going live on HlyWor right now.</span></div>
-      <div class="modal-check"><input type="checkbox" id="agreeImgCheck"><span>I have rights to all images included.</span></div>
-      <button class="modal-submit" id="submitBtn">Go live now &#10022;</button>
-      <div class="modal-status" id="modalStatus"></div>
     </div>
   </div>
-</div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { injectAuthNav, showLoginModal, currentUser, onAuthChange, getDisplayName } from "./auth.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { injectAuthNav, showLoginModal, currentUser, onAuthChange, getDisplayName } from "./auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
-    authDomain: "hlywor.firebaseapp.com",
-    projectId: "hlywor",
-    storageBucket: "hlywor.firebasestorage.app",
-    messagingSenderId: "697637160825",
-    appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
-    measurementId: "G-MQDXDWHLX8"
-  };
-  const CLD_NAME = "dgatfolot";
-  const CLD_PRESET = "hlywor";
-  const app = initializeApp(firebaseConfig), db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+      authDomain: "hlywor.firebaseapp.com",
+      projectId: "hlywor",
+      storageBucket: "hlywor.firebasestorage.app",
+      messagingSenderId: "697637160825",
+      appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+      measurementId: "G-MQDXDWHLX8"
+    };
+    
+    // ✅ Use Cloudinary for images (configurable)
+    const CLD_NAME = "dgatfolot";
+    const CLD_PRESET = "hlywor";
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // ── Auth nav ──────────────────────────────────────────
-  injectAuthNav(document.getElementById("authSlot"), {
-    onSignIn(user) {
-      const nameEl = document.getElementById("authorInput");
-      const emailEl = document.getElementById("emailInput");
-      if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
-      if (emailEl && !emailEl.value) emailEl.value = user.email || "";
-    },
-    onSignOut() {
-      document.getElementById("authorInput").value = "";
-      document.getElementById("emailInput").value = "";
-    }
-  });
+    // ── Auth nav ──
+    injectAuthNav(document.getElementById("authSlot"), {
+      onSignIn(user) {
+        const nameEl = document.getElementById("authorInput");
+        const emailEl = document.getElementById("emailInput");
+        if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+        if (emailEl && !emailEl.value) emailEl.value = user.email || "";
+      },
+      onSignOut() {
+        document.getElementById("authorInput").value = "";
+        document.getElementById("emailInput").value = "";
+      }
+    });
 
-  // ── Gate: require login to use this page ──────────────
-  onAuthChange(user => {
-    if (!user) {
-      showLoginModal({
-        closeable: true,
-        prompt: "Sign in to write and publish your story on HlyWor.",
-        onSuccess(u) {
-          const nameEl = document.getElementById("authorInput");
-          const emailEl = document.getElementById("emailInput");
-          if (nameEl && !nameEl.value) nameEl.value = getDisplayName(u);
-          if (emailEl && !emailEl.value) emailEl.value = u.email || "";
+    // ── Gate: require login ──
+    onAuthChange(user => {
+      if (!user) {
+        showLoginModal({
+          closeable: true,
+          prompt: "Sign in to write and publish your story on HlyWor.",
+          onSuccess(u) {
+            const nameEl = document.getElementById("authorInput");
+            const emailEl = document.getElementById("emailInput");
+            if (nameEl && !nameEl.value) nameEl.value = getDisplayName(u);
+            if (emailEl && !emailEl.value) emailEl.value = u.email || "";
+          }
+        });
+      } else {
+        const nameEl = document.getElementById("authorInput");
+        const emailEl = document.getElementById("emailInput");
+        if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+        if (emailEl && !emailEl.value) emailEl.value = user.email || "";
+      }
+    });
+
+    // ── Templates ──
+    const TEMPLATES = {
+      diary:   { label:"diary entry",   ph:"Start writing...\n\nJust write. Use the tools on the left to format, add stickers, tape, photos, sticky notes.\n\nThis is your space." },
+      magazine:{ label:"review",        ph:"Start with a hook. What did you think before you even read it / watched it? Then get into it..." },
+      news:    { label:"news article",  ph:"Lead with the most important fact. Who, what, when, where, why — in the first paragraph." },
+      tech:    { label:"tech post",     ph:"What problem does this solve? Start with that. Then explain how.\n\nUse the </> button to add code blocks." },
+      college: { label:"college life",  ph:"What happened today? What are you thinking about?\n\nAdd stickers, doodles, anything — this is your journal." },
+    };
+
+    let activeTemplate="diary", selectedCat="story", selectedMood="", starRating=0, currentColor="#1a1208", savedRange=null, uploadingCount=0, isPreviewMode=false, draftId=null;
+    const body=document.body, editor=document.getElementById("editor");
+
+    // ── Template picker ──
+    document.querySelectorAll(".t-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".t-pill").forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-pressed", "false");
+        });
+        btn.classList.add("active");
+        btn.setAttribute("aria-pressed", "true");
+        
+        const t=btn.dataset.t, cat=btn.dataset.cat;
+        activeTemplate=t; body.setAttribute("data-t",t);
+        document.getElementById("navTemplateLabel").textContent=TEMPLATES[t].label;
+        editor.setAttribute("data-placeholder",TEMPLATES[t].ph);
+        
+        document.querySelectorAll(".cat-pill").forEach(p => {
+          const isActive = p.dataset.cat===cat;
+          p.classList.toggle("active", isActive);
+          p.setAttribute("aria-checked", isActive ? "true" : "false");
+        });
+        selectedCat=cat;
+        
+        currentColor=t==="tech"?"#e6edf3":"#1a1208";
+        editor.style.color=currentColor;
+        
+        // Update preview if open
+        if (isPreviewMode) updatePreview();
+      });
+    });
+
+    // ── Date & UI init ──
+    const d=new Date();
+    document.getElementById("todayDate").textContent=d.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    document.getElementById("newsDateline").textContent=d.toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric"}).toUpperCase()+" — HLYWOR NEWS";
+
+    function autoGrow(el){el.style.height="auto";el.style.height=el.scrollHeight+"px";}
+    ["titleInput","descInput"].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener("input",()=>autoGrow(el));autoGrow(el);}});
+
+    // ── Mood selector ──
+    document.querySelectorAll(".mood-opt").forEach(el=>{
+      el.addEventListener("click",()=>{
+        document.querySelectorAll(".mood-opt").forEach(m=>{
+          m.classList.remove("selected");
+          m.setAttribute("aria-checked", "false");
+        });
+        el.classList.add("selected");
+        el.setAttribute("aria-checked", "true");
+        selectedMood=el.dataset.mood;
+      });
+      // Keyboard support
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          el.click();
         }
       });
-    } else {
-      const nameEl = document.getElementById("authorInput");
-      const emailEl = document.getElementById("emailInput");
-      if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
-      if (emailEl && !emailEl.value) emailEl.value = user.email || "";
-    }
-  });
-
-  const TEMPLATES = {
-    diary:   { label:"diary entry",   ph:"Start writing...\n\nJust write. Use the tools on the left to format, add stickers, tape, photos, sticky notes.\n\nThis is your space." },
-    magazine:{ label:"review",        ph:"Start with a hook. What did you think before you even read it / watched it? Then get into it..." },
-    news:    { label:"news article",  ph:"Lead with the most important fact. Who, what, when, where, why — in the first paragraph." },
-    tech:    { label:"tech post",     ph:"What problem does this solve? Start with that. Then explain how.\n\nUse the </> button to add code blocks." },
-    college: { label:"college life",  ph:"What happened today? What are you thinking about?\n\nAdd stickers, doodles, anything — this is your journal." },
-  };
-
-  let activeTemplate="diary", selectedCat="story", selectedMood="", starRating=0, currentColor="#1a1208", savedRange=null, uploadingCount=0;
-  const body=document.body, editor=document.getElementById("editor");
-
-  document.querySelectorAll(".t-pill").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".t-pill").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const t=btn.dataset.t, cat=btn.dataset.cat;
-      activeTemplate=t; body.setAttribute("data-t",t);
-      document.getElementById("navTemplateLabel").textContent=TEMPLATES[t].label;
-      editor.setAttribute("data-placeholder",TEMPLATES[t].ph);
-      document.querySelectorAll(".cat-pill").forEach(p => p.classList.toggle("active",p.dataset.cat===cat));
-      selectedCat=cat;
-      currentColor=t==="tech"?"#e6edf3":"#1a1208";
-      editor.style.color=currentColor;
     });
-  });
 
-  const d=new Date();
-  document.getElementById("todayDate").textContent=d.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-  document.getElementById("newsDateline").textContent=d.toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric"}).toUpperCase()+" — HLYWOR NEWS";
+    // ── Star rating ──
+    document.querySelectorAll(".star").forEach(s=>{
+      s.addEventListener("click",()=>{
+        starRating=parseInt(s.dataset.v);
+        document.querySelectorAll(".star").forEach(st=>{
+          const v = parseInt(st.dataset.v);
+          st.classList.toggle("lit", v <= starRating);
+          st.setAttribute("aria-checked", v <= starRating ? "true" : "false");
+        });
+        document.getElementById("ratingText").textContent=starRating+"/5";
+      });
+      s.addEventListener("mouseenter",()=>{
+        const v=parseInt(s.dataset.v);
+        document.querySelectorAll(".star").forEach(st=>{
+          st.style.opacity=parseInt(st.dataset.v)<=v?"1":"0.3";
+        });
+      });
+      s.addEventListener("mouseleave",()=>{
+        document.querySelectorAll(".star").forEach(st=>{
+          st.style.opacity=parseInt(st.dataset.v)<=starRating?"1":"0.3";
+        });
+      });
+      // Keyboard support
+      s.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          s.click();
+        }
+      });
+    });
 
-  function autoGrow(el){el.style.height="auto";el.style.height=el.scrollHeight+"px";}
-  ["titleInput","descInput"].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener("input",()=>autoGrow(el));autoGrow(el);}});
+    // ── Category pills ──
+    document.querySelectorAll(".cat-pill").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        document.querySelectorAll(".cat-pill").forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-checked", "false");
+        });
+        btn.classList.add("active");
+        btn.setAttribute("aria-checked", "true");
+        selectedCat=btn.dataset.cat;
+      });
+      // Keyboard support
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
 
-  document.querySelectorAll(".mood-opt").forEach(el=>{
-    el.addEventListener("click",()=>{document.querySelectorAll(".mood-opt").forEach(m=>m.classList.remove("selected"));el.classList.add("selected");selectedMood=el.dataset.mood;});
-  });
+    // ── Word/char count ──
+    function updateCounts(){
+      const text=editor.innerText.trim();
+      const words=text?text.split(/\s+/).filter(Boolean).length:0;
+      document.getElementById("wordCount").textContent=words;
+      document.getElementById("charCount").textContent=text.replace(/\s/g,"").length;
+      document.getElementById("readTimeCalc").textContent="~"+Math.max(1,Math.ceil(words/200))+" min read";
+      updateSaveStatus("unsaved");
+    }
+    editor.addEventListener("input", updateCounts);
 
-  document.querySelectorAll(".star").forEach(s=>{
-    s.addEventListener("click",()=>{starRating=parseInt(s.dataset.v);document.querySelectorAll(".star").forEach(st=>st.classList.toggle("lit",parseInt(st.dataset.v)<=starRating));document.getElementById("ratingText").textContent=starRating+"/5";});
-    s.addEventListener("mouseenter",()=>{const v=parseInt(s.dataset.v);document.querySelectorAll(".star").forEach(st=>st.style.opacity=parseInt(st.dataset.v)<=v?"1":"0.3");});
-    s.addEventListener("mouseleave",()=>{document.querySelectorAll(".star").forEach(st=>st.style.opacity=parseInt(st.dataset.v)<=starRating?"1":"0.3");});
-  });
+    function updateSaveStatus(s){
+      const el=document.getElementById("saveStatus");
+      el.textContent=s;
+      el.className="nav-save-status"+(s==="saved"?" saved":s==="draft"?" draft":"");
+    }
 
-  document.querySelectorAll(".cat-pill").forEach(btn=>{
-    btn.addEventListener("click",()=>{document.querySelectorAll(".cat-pill").forEach(b=>b.classList.remove("active"));btn.classList.add("active");selectedCat=btn.dataset.cat;});
-  });
+    // ── Safe content insertion (XSS prevention) ──
+    function sanitizeHTML(html) {
+      const temp = document.createElement('div');
+      temp.innerHTML = html;
+      
+      // Remove dangerous attributes
+      temp.querySelectorAll('*').forEach(el => {
+        // Remove event handlers
+        [...el.attributes].forEach(attr => {
+          if (attr.name.startsWith('on')) {
+            el.removeAttribute(attr.name);
+          }
+        });
+        // Remove javascript: URLs
+        if (el.href && el.href.startsWith('javascript:')) {
+          el.removeAttribute('href');
+        }
+        if (el.src && el.src.startsWith('javascript:')) {
+          el.removeAttribute('src');
+        }
+      });
+      
+      return temp.innerHTML;
+    }
 
-  function updateCounts(){const text=editor.innerText.trim();const words=text?text.split(/\s+/).filter(Boolean).length:0;document.getElementById("wordCount").textContent=words;document.getElementById("charCount").textContent=text.replace(/\s/g,"").length;document.getElementById("readTimeCalc").textContent="~"+Math.max(1,Math.ceil(words/200))+" min read";updateSaveStatus("unsaved");}
-  editor.addEventListener("input",updateCounts);
+    function insertAtCursor(html){
+      editor.focus();
+      if(savedRange){
+        const sel=window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(savedRange);
+      }
+      // ✅ Sanitize before inserting
+      const safeHTML = sanitizeHTML(html);
+      document.execCommand("insertHTML", false, safeHTML);
+      updateSaveStatus("unsaved");
+    }
 
-  function updateSaveStatus(s){const el=document.getElementById("saveStatus");el.textContent=s;el.className="nav-save-status"+(s==="saved"?" saved":"");}
+    // Save selection state before tool clicks
+    document.getElementById("toolsPanel").addEventListener("mousedown",()=>{
+      const sel=window.getSelection();
+      if(sel.rangeCount) savedRange=sel.getRangeAt(0).cloneRange();
+    });
 
-  document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn=>{
-    btn.addEventListener("mousedown",e=>{e.preventDefault();editor.focus();const cmd=btn.dataset.cmd;if(cmd==="h2")document.execCommand("formatBlock",false,"h2");else if(cmd==="h3")document.execCommand("formatBlock",false,"h3");else if(cmd==="blockquote")document.execCommand("formatBlock",false,"blockquote");else document.execCommand(cmd);});
-  });
+    // ── Formatting tools (with deprecation fallback) ──
+    document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn=>{
+      btn.addEventListener("mousedown", e => {
+        e.preventDefault();
+        editor.focus();
+        const cmd = btn.dataset.cmd;
+        
+        // ✅ Modern approach with fallback
+        try {
+          if (cmd === "h2") {
+            document.execCommand("formatBlock", false, "h2");
+          } else if (cmd === "h3") {
+            document.execCommand("formatBlock", false, "h3");
+          } else if (cmd === "blockquote") {
+            document.execCommand("formatBlock", false, "blockquote");
+          } else if (cmd === "undo" || cmd === "redo") {
+            document.execCommand(cmd);
+          } else {
+            document.execCommand(cmd);
+          }
+        } catch (err) {
+          console.warn("Formatting command failed:", cmd, err);
+          // Fallback: insert styled span
+          if (cmd === "bold") {
+            insertAtCursor("<strong>text</strong>");
+          } else if (cmd === "italic") {
+            insertAtCursor("<em>text</em>");
+          }
+        }
+        updateSaveStatus("unsaved");
+      });
+    });
 
-  // ── Font picker ───────────────────────────────────────
-  document.querySelectorAll(".font-btn").forEach(btn => {
-    btn.addEventListener("mousedown", e => {
-      e.preventDefault();
-      document.querySelectorAll(".font-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const font = btn.dataset.font;
+    // ── Font picker ──
+    document.querySelectorAll(".font-btn").forEach(btn => {
+      btn.addEventListener("mousedown", e => {
+        e.preventDefault();
+        document.querySelectorAll(".font-btn").forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-checked", "false");
+        });
+        btn.classList.add("active");
+        btn.setAttribute("aria-checked", "true");
+        
+        const font = btn.dataset.font;
+        const sel = window.getSelection();
+        
+        if (sel && !sel.isCollapsed && sel.rangeCount) {
+          const range = sel.getRangeAt(0);
+          const span = document.createElement("span");
+          span.style.fontFamily = font || "inherit";
+          try { 
+            range.surroundContents(span); 
+          } catch(e) {
+            // Fallback
+            document.execCommand("insertHTML", false, `<span style="font-family:${font||'inherit'}">${sel.toString()}</span>`);
+          }
+          sel.removeAllRanges();
+        } else {
+          editor.style.fontFamily = font || "";
+        }
+        editor.focus();
+        updateSaveStatus("unsaved");
+      });
+      // Keyboard support
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    // ── Text color picker ──
+    document.querySelectorAll(".text-color-swatch").forEach(sw => {
+      sw.addEventListener("click", () => {
+        document.querySelectorAll(".text-color-swatch").forEach(s => {
+          s.classList.remove("active");
+          s.setAttribute("aria-checked", "false");
+        });
+        sw.classList.add("active");
+        sw.setAttribute("aria-checked", "true");
+        
+        currentColor = sw.dataset.color;
+        editor.focus();
+        const sel = window.getSelection();
+        if (sel && !sel.isCollapsed) {
+          document.execCommand("foreColor", false, currentColor);
+        }
+        editor.style.color = currentColor;
+        updateSaveStatus("unsaved");
+      });
+      // Keyboard support
+      sw.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          sw.click();
+        }
+      });
+    });
+
+    const customColorInput = document.getElementById("customColorInput");
+    document.getElementById("customColorBtn").addEventListener("click", () => customColorInput.click());
+    customColorInput.addEventListener("input", () => {
+      currentColor = customColorInput.value;
+      document.querySelectorAll(".text-color-swatch").forEach(s => {
+        s.classList.remove("active");
+        s.setAttribute("aria-checked", "false");
+      });
+      editor.focus();
       const sel = window.getSelection();
-      if (sel && !sel.isCollapsed && sel.rangeCount) {
+      if (sel && !sel.isCollapsed) {
+        document.execCommand("foreColor", false, currentColor);
+      }
+      editor.style.color = currentColor;
+      updateSaveStatus("unsaved");
+    });
+
+    // ── Highlights ──
+    document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn => {
+      btn.addEventListener("mousedown", e => {
+        e.preventDefault();
+        const sel = window.getSelection();
+        if (!sel.rangeCount || sel.isCollapsed) return;
+        const cls = btn.dataset.highlight;
         const range = sel.getRangeAt(0);
         const span = document.createElement("span");
-        span.style.fontFamily = font || "inherit";
-        try { range.surroundContents(span); } catch(e) {
-          document.execCommand("insertHTML", false, `<span style="font-family:${font||'inherit'}">${sel.toString()}</span>`);
+        span.className = cls;
+        try { 
+          range.surroundContents(span); 
+        } catch(err) { 
+          document.execCommand("insertHTML", false, `<span class="${cls}">${sel.toString()}</span>`); 
         }
         sel.removeAllRanges();
-      } else {
-        editor.style.fontFamily = font || "";
-      }
-      editor.focus();
-    });
-  });
-
-  // ── Text color picker ─────────────────────────────────
-  document.querySelectorAll(".text-color-swatch").forEach(sw => {
-    sw.addEventListener("click", () => {
-      document.querySelectorAll(".text-color-swatch").forEach(s => s.classList.remove("active"));
-      sw.classList.add("active");
-      currentColor = sw.dataset.color;
-      editor.focus();
-      const sel = window.getSelection();
-      if (sel && !sel.isCollapsed) document.execCommand("foreColor", false, currentColor);
-      editor.style.color = currentColor;
-    });
-  });
-
-  const customColorInput = document.getElementById("customColorInput");
-  document.getElementById("customColorBtn").addEventListener("click", () => customColorInput.click());
-  customColorInput.addEventListener("input", () => {
-    currentColor = customColorInput.value;
-    document.querySelectorAll(".text-color-swatch").forEach(s => s.classList.remove("active"));
-    editor.focus();
-    const sel = window.getSelection();
-    if (sel && !sel.isCollapsed) document.execCommand("foreColor", false, currentColor);
-    editor.style.color = currentColor;
-  });
-
-  // ── Highlights ────────────────────────────────────────
-  document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn => {
-    btn.addEventListener("mousedown", e => {
-      e.preventDefault();
-      const sel = window.getSelection();
-      if (!sel.rangeCount || sel.isCollapsed) return;
-      const cls = btn.dataset.highlight;
-      const range = sel.getRangeAt(0);
-      const span = document.createElement("span");
-      span.className = cls;
-      try { range.surroundContents(span); }
-      catch(err) { document.execCommand("insertHTML", false, `<span class="${cls}">${sel.toString()}</span>`); }
-      sel.removeAllRanges();
-      editor.focus();
-    });
-  });
-
-  function insertAtCursor(html){editor.focus();if(savedRange){const sel=window.getSelection();sel.removeAllRanges();sel.addRange(savedRange);}document.execCommand("insertHTML",false,html);updateSaveStatus("unsaved");}
-  document.getElementById("toolsPanel").addEventListener("mousedown",()=>{const sel=window.getSelection();if(sel.rangeCount)savedRange=sel.getRangeAt(0).cloneRange();});
-
-  // ── Sticker picker ────────────────────────────────────
-  const sp=document.getElementById("stickerPicker");
-  document.getElementById("insertStickerBtn").addEventListener("click",e=>{const r=e.currentTarget.getBoundingClientRect();sp.style.left=(r.right+8)+"px";sp.style.top=r.top+"px";sp.classList.toggle("open");const sel=window.getSelection();if(sel.rangeCount)savedRange=sel.getRangeAt(0).cloneRange();});
-  document.querySelectorAll(".sticker-option").forEach(opt=>{opt.addEventListener("click",()=>{insertAtCursor("<span class='floating-sticker'>"+opt.textContent+"</span>");sp.classList.remove("open");});});
-  document.addEventListener("click",e=>{if(!e.target.closest("#stickerPicker")&&!e.target.closest("#insertStickerBtn"))sp.classList.remove("open");});
-
-  // ── Sticky note ───────────────────────────────────────
-  const stickyBtn=document.getElementById("insertStickyBtn");
-  if(stickyBtn) stickyBtn.addEventListener("mousedown", e => {
-    e.preventDefault();
-    const variants=["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"];
-    const v=variants[Math.floor(Math.random()*variants.length)];
-    const id="sticky-"+Date.now();
-    insertAtCursor(`<div id="${id}" class="sticky-callout${v?" "+v:""}" contenteditable="true" data-sticky="1">Write your note here...</div><p><br></p>`);
-    setTimeout(()=>{const el=document.getElementById(id);if(el){el.focus();const r=document.createRange();r.selectNodeContents(el);const s=window.getSelection();s.removeAllRanges();s.addRange(r);}},50);
-  });
-  editor.addEventListener("click",e=>{if(e.target.closest("[data-sticky]"))e.stopPropagation();});
-
-  // ── Doodle ────────────────────────────────────────────
-  const doodleBtn=document.getElementById("insertDoodleBtn");
-  if(doodleBtn)doodleBtn.addEventListener("mousedown",e=>{e.preventDefault();const w=["<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='"+currentColor+"' stroke-width='1.5' opacity='0.4'/></svg>","<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><line x1='0' y1='10' x2='400' y2='10' stroke='"+currentColor+"' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg>"];insertAtCursor(w[Math.floor(Math.random()*2)]+"<p><br></p>");});
-
-  // ── Pull quote ────────────────────────────────────────
-  const pullBtn=document.getElementById("insertPullBtn");
-  if(pullBtn)pullBtn.addEventListener("mousedown",e=>{e.preventDefault();insertAtCursor("<div class='pull-quote' contenteditable='true'>Your pull quote here...</div><p><br></p>");});
-
-  // ── Code block ────────────────────────────────────────
-  const codeBtn=document.getElementById("insertCodeBtn");
-  if(codeBtn)codeBtn.addEventListener("mousedown",e=>{e.preventDefault();insertAtCursor("<pre contenteditable='true'>// paste your code here</pre><p><br></p>");});
-
-  // ── Washi tape ────────────────────────────────────────
-  document.querySelectorAll(".tape-swatch").forEach(sw=>{sw.addEventListener("click",()=>{insertAtCursor("<div class='washi-tape' style='--tape-color:"+sw.dataset.tape+"'></div><p><br></p>");editor.focus();});});
-
-  // ── Single image insert ───────────────────────────────
-  const imgPopup=document.getElementById("imgPopup");
-  document.getElementById("insertImgBtn").addEventListener("click",e=>{const r=e.currentTarget.getBoundingClientRect();imgPopup.style.left=(r.right+8)+"px";imgPopup.style.top=Math.min(r.top,window.innerHeight-340)+"px";imgPopup.classList.toggle("open");const sel=window.getSelection();if(sel.rangeCount)savedRange=sel.getRangeAt(0).cloneRange();});
-  document.getElementById("inlineImgUploadBtn").addEventListener("click",()=>document.getElementById("inlineImgFile").click());
-
-  let selectedImgAlign="center";
-  document.querySelectorAll(".img-align-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{document.querySelectorAll(".img-align-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");selectedImgAlign=btn.dataset.align;});
-  });
-
-  document.getElementById("inlineImgFile").addEventListener("change", async () => {
-    const file=document.getElementById("inlineImgFile").files[0]; if(!file)return;
-    const frameStyle=document.getElementById("inlineImgStyle").value;
-    const caption=document.getElementById("inlineImgCaption").value.trim();
-    const localUrl=URL.createObjectURL(file);
-    const imgId="img-"+Date.now();
-    const alignClass="img-"+selectedImgAlign;
-    let html;
-    if(frameStyle==="tilt-l"||frameStyle==="tilt-r"||frameStyle==="straight"){
-      const tiltClass=frameStyle==="tilt-l"?"tilt-l":frameStyle==="tilt-r"?"tilt-r":"";
-      html=`<figure id="${imgId}" class="${alignClass}" style="display:inline-block;max-width:${selectedImgAlign==='full'?'100%':'220px'}"><div class="polaroid ${tiltClass}"><img src="${localUrl}" alt="${caption}" style="width:100%;display:block;height:160px;object-fit:cover">${caption?`<span class='polaroid-caption'>${caption}</span>`:""}</div></figure><p><br></p>`;
-    }else{
-      html=`<figure id="${imgId}" class="${alignClass}"><img src="${localUrl}" alt="${caption}" style="display:block">${caption?`<figcaption>${caption}</figcaption>`:""}</figure><p><br></p>`;
-    }
-    insertAtCursor(html);
-    imgPopup.classList.remove("open");
-    document.getElementById("inlineImgCaption").value="";
-    document.getElementById("inlineImgFile").value="";
-    uploadingCount++;
-    const url=await uploadToCloudinary(file);
-    uploadingCount--;
-    if(url){const el=document.getElementById(imgId);if(el){const img=el.querySelector("img");if(img)img.src=url;}URL.revokeObjectURL(localUrl);}
-  });
-
-  document.addEventListener("click",e=>{
-    if(!e.target.closest("#imgPopup")&&!e.target.closest("#insertImgBtn"))imgPopup.classList.remove("open");
-    if(!e.target.closest("#imgRowPopup")&&!e.target.closest("#insertImgRowBtn"))document.getElementById("imgRowPopup").classList.remove("open");
-  });
-
-  // ── Image row ─────────────────────────────────────────
-  const imgRowPopup=document.getElementById("imgRowPopup");
-  document.getElementById("insertImgRowBtn").addEventListener("click",e=>{const r=e.currentTarget.getBoundingClientRect();imgRowPopup.style.left=(r.right+8)+"px";imgRowPopup.style.top=Math.min(r.top,window.innerHeight-300)+"px";imgRowPopup.classList.toggle("open");const sel=window.getSelection();if(sel.rangeCount)savedRange=sel.getRangeAt(0).cloneRange();});
-
-  const rowUrls=[null,null,null];
-  function bindRowSlot(slot,i){
-    const input=slot.querySelector("input");
-    slot.addEventListener("click",()=>input.click());
-    input.addEventListener("change",async()=>{
-      const file=input.files[0];if(!file)return;
-      const localUrl=URL.createObjectURL(file);
-      slot.classList.add("filled");
-      slot.innerHTML=`<img src="${localUrl}"><input type="file" accept="image/*" style="display:none">`;
-      bindRowSlot(slot,i);
-      rowUrls[i]=localUrl;
-      uploadingCount++;
-      const url=await uploadToCloudinary(file);
-      uploadingCount--;
-      if(url){rowUrls[i]=url;const img=slot.querySelector("img");if(img)img.src=url;URL.revokeObjectURL(localUrl);}
-    });
-  }
-  document.querySelectorAll(".img-row-slot").forEach((slot,i)=>bindRowSlot(slot,i));
-
-  document.getElementById("imgRowInsert").addEventListener("click",()=>{
-    const validUrls=rowUrls.filter(Boolean);
-    if(!validUrls.length)return;
-    const style=document.getElementById("imgRowStyle").value;
-    const tilts=["tilt-l","","tilt-r"];
-    const html=style==="polaroid"
-      ?`<div class="img-row-block">${validUrls.map((u,i)=>`<figure><div class="polaroid ${tilts[i%3]}"><img src="${u}" style="width:100%;display:block;height:120px;object-fit:cover"></div></figure>`).join("")}</div><p><br></p>`
-      :`<div class="img-row-block">${validUrls.map(u=>`<figure><img src="${u}"></figure>`).join("")}</div><p><br></p>`;
-    insertAtCursor(html);
-    imgRowPopup.classList.remove("open");
-    rowUrls.fill(null);
-    document.querySelectorAll(".img-row-slot").forEach((slot,i)=>{
-      slot.classList.remove("filled");
-      slot.innerHTML=`<input type="file" accept="image/*" style="display:none"><span>📷</span>`;
-      bindRowSlot(slot,i);
-    });
-  });
-
-  // ── Cover image ───────────────────────────────────────
-  const coverDrop=document.getElementById("coverDrop"),coverFile=document.getElementById("coverFile"),coverPreview=document.getElementById("coverPreview"),coverUrlEl=document.getElementById("coverUrl");
-  coverDrop.addEventListener("click",()=>coverFile.click());
-  coverDrop.addEventListener("dragover",e=>{e.preventDefault();coverDrop.style.borderColor="var(--t-acc)";});
-  coverDrop.addEventListener("dragleave",()=>coverDrop.style.borderColor="");
-  coverDrop.addEventListener("drop",e=>{e.preventDefault();coverDrop.style.borderColor="";if(e.dataTransfer.files[0])uploadCover(e.dataTransfer.files[0]);});
-  coverFile.addEventListener("change",()=>{if(coverFile.files[0])uploadCover(coverFile.files[0]);});
-  document.getElementById("coverClear").addEventListener("click",()=>{coverPreview.style.display="none";coverDrop.style.display="block";coverUrlEl.value="";coverFile.value="";});
-
-  async function uploadCover(file){
-    const local=URL.createObjectURL(file);
-    document.getElementById("coverPreviewImg").src=local;
-    coverDrop.style.display="none";
-    document.getElementById("coverUploading").style.display="block";
-    coverPreview.style.display="block";
-    uploadingCount++;
-    const url=await uploadToCloudinary(file);
-    uploadingCount--;
-    document.getElementById("coverUploading").style.display="none";
-    if(url){document.getElementById("coverPreviewImg").src=url;coverUrlEl.value=url;URL.revokeObjectURL(local);}
-    else{coverUrlEl.value="";}
-  }
-
-  async function uploadToCloudinary(file){
-    const fd=new FormData();
-    fd.append("file",file);fd.append("upload_preset",CLD_PRESET);fd.append("folder","hlywor");
-    try{
-      const res=await fetch("https://api.cloudinary.com/v1_1/"+CLD_NAME+"/image/upload",{method:"POST",body:fd});
-      const data=await res.json();
-      if(data.error){console.error("Cloudinary:",data.error.message);return null;}
-      return data.secure_url||null;
-    }catch(e){console.error(e);return null;}
-  }
-
-  // ── Publish modal ─────────────────────────────────────
-  document.getElementById("publishOpenBtn").addEventListener("click",()=>{
-    if(!currentUser){showLoginModal({prompt:"Sign in to publish your post."});return;}
-    document.getElementById("publishModalBg").classList.add("open");
-  });
-  document.getElementById("modalClose").addEventListener("click",()=>document.getElementById("publishModalBg").classList.remove("open"));
-  document.getElementById("publishModalBg").addEventListener("click",e=>{if(e.target===document.getElementById("publishModalBg"))document.getElementById("publishModalBg").classList.remove("open");});
-
-  const tagsWrap=document.getElementById("tagsWrap"),tagInput=document.getElementById("tagInput"),tags=[];
-  tagInput.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===",")&&tagInput.value.trim()){e.preventDefault();const t=tagInput.value.trim().replace(/,/g,"");if(!tags.includes(t)){tags.push(t);const chip=document.createElement("span");chip.className="tag-chip";chip.innerHTML=t+" <span class='rm'>&#10005;</span>";chip.querySelector(".rm").addEventListener("click",()=>{tags.splice(tags.indexOf(t),1);chip.remove();});tagsWrap.insertBefore(chip,tagInput);}tagInput.value="";}});
-  tagsWrap.addEventListener("click",()=>tagInput.focus());
-
-  function serializeContent(){const clone=editor.cloneNode(true);clone.querySelectorAll("[contenteditable]").forEach(el=>el.removeAttribute("contenteditable"));return clone.innerHTML;}
-
-  // ── Submit / publish ──────────────────────────────────
-  document.getElementById("submitBtn").addEventListener("click", async () => {
-    if(!currentUser){showLoginModal({prompt:"Sign in to publish your post."});return;}
-
-    const name=document.getElementById("authorInput").value.trim()||getDisplayName(currentUser),
-          email=document.getElementById("emailInput").value.trim()||currentUser.email||"",
-          title=document.getElementById("titleInput").value.trim(),
-          desc=document.getElementById("descInput").value.trim(),
-          readtime=document.getElementById("readtimeInput").value.trim()||document.getElementById("readTimeCalc").textContent,
-          coverUrl=document.getElementById("coverUrl").value,
-          content=serializeContent(),
-          plainText=editor.innerText.trim(),
-          type=document.getElementById("typeSelect").value,
-          agree=document.getElementById("agreeCheck").checked,
-          agreeImg=document.getElementById("agreeImgCheck").checked,
-          techTag=(document.getElementById("techTagInput")||{}).value?.trim()||"",
-          statusEl=document.getElementById("modalStatus");
-
-    if(uploadingCount>0){statusEl.textContent="⚠ Images still uploading, wait a moment...";statusEl.className="modal-status err";return;}
-    if(!title){statusEl.textContent="⚠ Title is required";statusEl.className="modal-status err";return;}
-    if(!desc){statusEl.textContent="⚠ Homepage desc is required";statusEl.className="modal-status err";return;}
-    if(plainText.length<30){statusEl.textContent="⚠ Write a little more first";statusEl.className="modal-status err";return;}
-    if(!agree){statusEl.textContent="⚠ Confirm your content";statusEl.className="modal-status err";return;}
-    if(!agreeImg){statusEl.textContent="⚠ Confirm image rights";statusEl.className="modal-status err";return;}
-
-    const btn=document.getElementById("submitBtn");
-    btn.disabled=true;btn.textContent="Sending...";statusEl.textContent="";
-
-    try{
-      const slug=title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-      await addDoc(collection(db,"posts"),{
-        name, email, type, readtime, title, desc,
-        thumbnail: coverUrl||"",
-        category: selectedCat,
-        template: activeTemplate,
-        mood: selectedMood,
-        rating: starRating||null,
-        techTag: techTag||null,
-        tags, content,
-        url: "post.html?slug="+slug,
-        slug,
-        status: "published",
-        author: name,
-        date: new Date().toISOString(),
-        // auth fields
-        authorUid: currentUser.uid,
-        authorEmail: currentUser.email||"",
-        authorPhoto: currentUser.photoURL||"",
-        publishedAt: serverTimestamp(),
-        createdAt: serverTimestamp()
+        editor.focus();
+        updateSaveStatus("unsaved");
       });
-      btn.textContent="Live ✦";
-      statusEl.textContent="✓ Your post is live on the homepage! 🎉";
-      statusEl.className="modal-status ok";
-      updateSaveStatus("saved");
-    }catch(err){
-      console.error(err);
-      btn.disabled=false;
-      btn.textContent="Go live now ✦";
-      statusEl.textContent="✕ Failed — "+err.message;
-      statusEl.className="modal-status err";
-    }
-  });
+    });
 
-  document.addEventListener("keydown",e=>{if(e.metaKey||e.ctrlKey){if(e.key==="b"){e.preventDefault();document.execCommand("bold");}if(e.key==="i"){e.preventDefault();document.execCommand("italic");}}});
-</script>
+    // ── Sticker picker ──
+    const sp=document.getElementById("stickerPicker");
+    document.getElementById("insertStickerBtn").addEventListener("click", e => {
+      const r=e.currentTarget.getBoundingClientRect();
+      sp.style.left=(r.right+8)+"px";
+      sp.style.top=r.top+"px";
+      sp.classList.toggle("open");
+      const sel=window.getSelection();
+      if(sel.rangeCount) savedRange=sel.getRangeAt(0).cloneRange();
+    });
+    
+    document.querySelectorAll(".sticker-option").forEach(opt => {
+      opt.addEventListener("click", () => {
+        insertAtCursor(`<span class='floating-sticker'>${opt.textContent}</span>`);
+        sp.classList.remove("open");
+      });
+      // Keyboard support
+      opt.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          opt.click();
+        }
+      });
+    });
+    
+    document.addEventListener("click", e => {
+      if (!e.target.closest("#stickerPicker") && !e.target.closest("#insertStickerBtn")) {
+        sp.classList.remove("open");
+      }
+    });
+
+    // ── Sticky note ──
+    const stickyBtn=document.getElementById("insertStickyBtn");
+    if(stickyBtn) stickyBtn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      const variants=["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"];
+      const v=variants[Math.floor(Math.random()*variants.length)];
+      const id="sticky-"+Date.now();
+      insertAtCursor(`<div id="${id}" class="sticky-callout${v?" "+v:""}" contenteditable="true" data-sticky="1">Write your note here...</div><p><br></p>`);
+      setTimeout(()=>{
+        const el=document.getElementById(id);
+        if(el){
+          el.focus();
+          const r=document.createRange();
+          r.selectNodeContents(el);
+          const s=window.getSelection();
+          s.removeAllRanges();
+          s.addRange(r);
+        }
+      },50);
+    });
+    
+    editor.addEventListener("click", e => {
+      if (e.target.closest("[data-sticky]")) e.stopPropagation();
+    });
+
+    // ── Doodle ──
+    const doodleBtn=document.getElementById("insertDoodleBtn");
+    if(doodleBtn) doodleBtn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      const w=[
+        `<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='${currentColor}' stroke-width='1.5' opacity='0.4'/></svg>`,
+        `<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><line x1='0' y1='10' x2='400' y2='10' stroke='${currentColor}' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg>`
+      ];
+      insertAtCursor(w[Math.floor(Math.random()*2)]+"<p><br></p>");
+    });
+
+    // ── Pull quote ──
+    const pullBtn=document.getElementById("insertPullBtn");
+    if(pullBtn) pullBtn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      insertAtCursor("<div class='pull-quote' contenteditable='true'>Your pull quote here...</div><p><br></p>");
+    });
+
+    // ── Code block ──
+    const codeBtn=document.getElementById("insertCodeBtn");
+    if(codeBtn) codeBtn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      insertAtCursor("<pre contenteditable='true'>// paste your code here</pre><p><br></p>");
+    });
+
+    // ── Washi tape ──
+    document.querySelectorAll(".tape-swatch").forEach(sw => {
+      sw.addEventListener("click", () => {
+        insertAtCursor(`<div class='washi-tape' style='--tape-color:${sw.dataset.tape}'></div><p><br></p>`);
+        editor.focus();
+      });
+      // Keyboard support
+      sw.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          sw.click();
+        }
+      });
+    });
+
+    // ── Image compression helper ──
+    async function compressImage(file, maxWidth = 1200, quality = 0.8) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            canvas.toBlob((blob) => {
+              resolve(blob);
+            }, 'image/jpeg', quality);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ── Single image insert ──
+    const imgPopup=document.getElementById("imgPopup");
+    document.getElementById("insertImgBtn").addEventListener("click", e => {
+      const r=e.currentTarget.getBoundingClientRect();
+      imgPopup.style.left=(r.right+8)+"px";
+      imgPopup.style.top=Math.min(r.top,window.innerHeight-340)+"px";
+      imgPopup.classList.toggle("open");
+      const sel=window.getSelection();
+      if(sel.rangeCount) savedRange=sel.getRangeAt(0).cloneRange();
+    });
+    
+    document.getElementById("inlineImgUploadBtn").addEventListener("click", () => {
+      document.getElementById("inlineImgFile").click();
+    });
+
+    let selectedImgAlign="center";
+    document.querySelectorAll(".img-align-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".img-align-btn").forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-checked", "false");
+        });
+        btn.classList.add("active");
+        btn.setAttribute("aria-checked", "true");
+        selectedImgAlign=btn.dataset.align;
+      });
+      // Keyboard support
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    document.getElementById("inlineImgFile").addEventListener("change", async () => {
+      const file = document.getElementById("inlineImgFile").files[0];
+      if(!file) return;
+      
+      const frameStyle = document.getElementById("inlineImgStyle").value;
+      const caption = document.getElementById("inlineImgCaption").value.trim();
+      
+      // ✅ Compress image before upload
+      const compressedFile = await compressImage(file);
+      const localUrl = URL.createObjectURL(compressedFile);
+      
+      const imgId = "img-" + Date.now();
+      const alignClass = "img-" + selectedImgAlign;
+      
+      let html;
+      if (frameStyle === "tilt-l" || frameStyle === "tilt-r" || frameStyle === "straight") {
+        const tiltClass = frameStyle === "tilt-l" ? "tilt-l" : frameStyle === "tilt-r" ? "tilt-r" : "";
+        html = `<figure id="${imgId}" class="${alignClass}" style="display:inline-block;max-width:${selectedImgAlign==='full'?'100%':'220px'}"><div class="polaroid ${tiltClass}"><img src="${localUrl}" alt="${caption}" style="width:100%;display:block;height:160px;object-fit:cover">${caption ? `<span class='polaroid-caption'>${caption}</span>` : ""}</div></figure><p><br></p>`;
+      } else {
+        html = `<figure id="${imgId}" class="${alignClass}"><img src="${localUrl}" alt="${caption}" style="display:block">${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure><p><br></p>`;
+      }
+      
+      insertAtCursor(html);
+      imgPopup.classList.remove("open");
+      document.getElementById("inlineImgCaption").value = "";
+      document.getElementById("inlineImgFile").value = "";
+      
+      uploadingCount++;
+      const url = await uploadToCloudinary(compressedFile);
+      uploadingCount--;
+      
+      if (url) {
+        const el = document.getElementById(imgId);
+        if (el) {
+          const img = el.querySelector("img");
+          if (img) img.src = url;
+        }
+        URL.revokeObjectURL(localUrl);
+      }
+    });
+
+    document.addEventListener("click", e => {
+      if (!e.target.closest("#imgPopup") && !e.target.closest("#insertImgBtn")) {
+        imgPopup.classList.remove("open");
+      }
+      if (!e.target.closest("#imgRowPopup") && !e.target.closest("#insertImgRowBtn")) {
+        document.getElementById("imgRowPopup").classList.remove("open");
+      }
+    });
+
+    // ── Image row ──
+    const imgRowPopup = document.getElementById("imgRowPopup");
+    document.getElementById("insertImgRowBtn").addEventListener("click", e => {
+      const r = e.currentTarget.getBoundingClientRect();
+      imgRowPopup.style.left = (r.right + 8) + "px";
+      imgRowPopup.style.top = Math.min(r.top, window.innerHeight - 300) + "px";
+      imgRowPopup.classList.toggle("open");
+      const sel = window.getSelection();
+      if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
+    });
+
+    const rowUrls = [null, null, null];
+    
+    function bindRowSlot(slot, i) {
+      const input = slot.querySelector("input");
+      slot.addEventListener("click", () => input.click());
+      
+      input.addEventListener("change", async () => {
+        const file = input.files[0];
+        if (!file) return;
+        
+        // ✅ Compress
+        const compressedFile = await compressImage(file);
+        const localUrl = URL.createObjectURL(compressedFile);
+        
+        slot.classList.add("filled");
+        slot.innerHTML = `<img src="${localUrl}"><input type="file" accept="image/*" style="display:none">`;
+        bindRowSlot(slot, i);
+        rowUrls[i] = localUrl;
+        
+        uploadingCount++;
+        const url = await uploadToCloudinary(compressedFile);
+        uploadingCount--;
+        
+        if (url) {
+          rowUrls[i] = url;
+          const img = slot.querySelector("img");
+          if (img) img.src = url;
+          URL.revokeObjectURL(localUrl);
+        }
+      });
+    }
+    
+    document.querySelectorAll(".img-row-slot").forEach((slot, i) => bindRowSlot(slot, i));
+
+    document.getElementById("imgRowInsert").addEventListener("click", () => {
+      const validUrls = rowUrls.filter(Boolean);
+      if (!validUrls.length) return;
+      
+      const style = document.getElementById("imgRowStyle").value;
+      const tilts = ["tilt-l", "", "tilt-r"];
+      
+      const html = style === "polaroid"
+        ? `<div class="img-row-block">${validUrls.map((u, i) => `<figure><div class="polaroid ${tilts[i % 3]}"><img src="${u}" style="width:100%;display:block;height:120px;object-fit:cover"></div></figure>`).join("")}</div><p><br></p>`
+        : `<div class="img-row-block">${validUrls.map(u => `<figure><img src="${u}"></figure>`).join("")}</div><p><br></p>`;
+      
+      insertAtCursor(html);
+      imgRowPopup.classList.remove("open");
+      rowUrls.fill(null);
+      
+      document.querySelectorAll(".img-row-slot").forEach((slot, i) => {
+        slot.classList.remove("filled");
+        slot.innerHTML = `<input type="file" accept="image/*" style="display:none"><span>📷</span>`;
+        bindRowSlot(slot, i);
+      });
+    });
+
+    // ── Cover image ──
+    const coverDrop = document.getElementById("coverDrop");
+    const coverFile = document.getElementById("coverFile");
+    const coverPreview = document.getElementById("coverPreview");
+    const coverUrlEl = document.getElementById("coverUrl");
+    
+    coverDrop.addEventListener("click", () => coverFile.click());
+    coverDrop.addEventListener("dragover", e => {
+      e.preventDefault();
+      coverDrop.style.borderColor = "var(--t-acc)";
+    });
+    coverDrop.addEventListener("dragleave", () => coverDrop.style.borderColor = "");
+    coverDrop.addEventListener("drop", e => {
+      e.preventDefault();
+      coverDrop.style.borderColor = "";
+      if (e.dataTransfer.files[0]) uploadCover(e.dataTransfer.files[0]);
+    });
+    coverFile.addEventListener("change", () => {
+      if (coverFile.files[0]) uploadCover(coverFile.files[0]);
+    });
+    
+    document.getElementById("coverClear").addEventListener("click", () => {
+      coverPreview.style.display = "none";
+      coverDrop.style.display = "block";
+      coverUrlEl.value = "";
+      coverFile.value = "";
+      document.getElementById("coverAlt").value = "";
+    });
+
+    async function uploadCover(file) {
+      // ✅ Compress cover image
+      const compressedFile = await compressImage(file, 1600, 0.85);
+      const local = URL.createObjectURL(compressedFile);
+      
+      document.getElementById("coverPreviewImg").src = local;
+      coverDrop.style.display = "none";
+      document.getElementById("coverUploading").style.display = "block";
+      coverPreview.style.display = "block";
+      
+      uploadingCount++;
+      const url = await uploadToCloudinary(compressedFile);
+      uploadingCount--;
+      
+      document.getElementById("coverUploading").style.display = "none";
+      
+      if (url) {
+        document.getElementById("coverPreviewImg").src = url;
+        coverUrlEl.value = url;
+        URL.revokeObjectURL(local);
+      } else {
+        coverUrlEl.value = "";
+      }
+    }
+
+    async function uploadToCloudinary(file) {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("upload_preset", CLD_PRESET);
+      fd.append("folder", "hlywor");
+      
+      try {
+        const res = await fetch("https://api.cloudinary.com/v1_1/" + CLD_NAME + "/image/upload", {
+          method: "POST",
+          body: fd
+        });
+        const data = await res.json();
+        if (data.error) {
+          console.error("Cloudinary:", data.error.message);
+          return null;
+        }
+        return data.secure_url || null;
+      } catch (e) {
+        console.error("Upload error:", e);
+        return null;
+      }
+    }
+
+    // ── Publish modal ──
+    document.getElementById("publishOpenBtn").addEventListener("click", () => {
+      if (!currentUser) {
+        showLoginModal({ prompt: "Sign in to publish your post." });
+        return;
+      }
+      document.getElementById("publishModalBg").classList.add("open");
+    });
+    
+    document.getElementById("modalClose").addEventListener("click", () => {
+      document.getElementById("publishModalBg").classList.remove("open");
+    });
+    
+    document.getElementById("publishModalBg").addEventListener("click", e => {
+      if (e.target === document.getElementById("publishModalBg")) {
+        document.getElementById("publishModalBg").classList.remove("open");
+      }
+    });
+
+    // ── Tags handling ──
+    const tagsWrap = document.getElementById("tagsWrap");
+    const tagInput = document.getElementById("tagInput");
+    const tags = [];
+    
+    tagInput.addEventListener("keydown", e => {
+      if ((e.key === "Enter" || e.key === ",") && tagInput.value.trim()) {
+        e.preventDefault();
+        const t = tagInput.value.trim().replace(/,/g, "");
+        if (!tags.includes(t)) {
+          tags.push(t);
+          const chip = document.createElement("span");
+          chip.className = "tag-chip";
+          chip.setAttribute("role", "option");
+          chip.innerHTML = t + ' <span class="rm" role="button" tabindex="0" aria-label="Remove tag ' + t + '">&#10005;</span>';
+          chip.querySelector(".rm").addEventListener("click", () => {
+            tags.splice(tags.indexOf(t), 1);
+            chip.remove();
+          });
+          // Keyboard support for remove
+          chip.querySelector(".rm").addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              chip.querySelector(".rm").click();
+            }
+          });
+          tagsWrap.insertBefore(chip, tagInput);
+        }
+        tagInput.value = "";
+      }
+    });
+    
+    tagsWrap.addEventListener("click", () => tagInput.focus());
+
+    // ── Content serialization (safe) ──
+    function serializeContent() {
+      const clone = editor.cloneNode(true);
+      // Remove contenteditable and data attrs for published content
+      clone.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
+      clone.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
+      return clone.innerHTML;
+    }
+
+    // ── Draft auto-save (localStorage + Firestore) ──
+    let autoSaveTimer = null;
+    const DRAFT_KEY = "hlywor_draft_" + (currentUser?.uid || "anon");
+    
+    function saveDraftLocally() {
+      const draft = {
+        title: document.getElementById("titleInput").value,
+        desc: document.getElementById("descInput").value,
+        content: editor.innerHTML,
+        template: activeTemplate,
+        category: selectedCat,
+        mood: selectedMood,
+        rating: starRating,
+        coverUrl: document.getElementById("coverUrl").value,
+        coverAlt: document.getElementById("coverAlt").value,
+        author: document.getElementById("authorInput").value,
+        email: document.getElementById("emailInput").value,
+        readtime: document.getElementById("readtimeInput").value,
+        techTag: document.getElementById("techTagInput")?.value || "",
+        tags: [...tags],
+        savedAt: new Date().toISOString()
+      };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      updateSaveStatus("draft");
+    }
+    
+    function loadDraftLocally() {
+      const saved = localStorage.getItem(DRAFT_KEY);
+      if (saved) {
+        try {
+          const draft = JSON.parse(saved);
+          document.getElementById("titleInput").value = draft.title || "";
+          document.getElementById("descInput").value = draft.desc || "";
+          editor.innerHTML = draft.content || "";
+          if (draft.template) {
+            activeTemplate = draft.template;
+            body.setAttribute("data-t", draft.template);
+            document.getElementById("navTemplateLabel").textContent = TEMPLATES[draft.template].label;
+            editor.setAttribute("data-placeholder", TEMPLATES[draft.template].ph);
+          }
+          if (draft.category) {
+            selectedCat = draft.category;
+            document.querySelectorAll(".cat-pill").forEach(p => {
+              const isActive = p.dataset.cat === draft.category;
+              p.classList.toggle("active", isActive);
+              p.setAttribute("aria-checked", isActive ? "true" : "false");
+            });
+          }
+          if (draft.mood) {
+            selectedMood = draft.mood;
+            document.querySelectorAll(".mood-opt").forEach(m => {
+              const isSelected = m.dataset.mood === draft.mood;
+              m.classList.toggle("selected", isSelected);
+              m.setAttribute("aria-checked", isSelected ? "true" : "false");
+            });
+          }
+          if (draft.rating) {
+            starRating = draft.rating;
+            document.querySelectorAll(".star").forEach(st => {
+              const v = parseInt(st.dataset.v);
+              st.classList.toggle("lit", v <= draft.rating);
+              st.setAttribute("aria-checked", v <= draft.rating ? "true" : "false");
+            });
+            document.getElementById("ratingText").textContent = draft.rating + "/5";
+          }
+          if (draft.coverUrl) {
+            document.getElementById("coverUrl").value = draft.coverUrl;
+            document.getElementById("coverPreviewImg").src = draft.coverUrl;
+            document.getElementById("coverPreview").style.display = "block";
+            document.getElementById("coverDrop").style.display = "none";
+          }
+          if (draft.coverAlt) {
+            document.getElementById("coverAlt").value = draft.coverAlt;
+          }
+          if (draft.author) document.getElementById("authorInput").value = draft.author;
+          if (draft.email) document.getElementById("emailInput").value = draft.email;
+          if (draft.readtime) document.getElementById("readtimeInput").value = draft.readtime;
+          if (draft.techTag && document.getElementById("techTagInput")) {
+            document.getElementById("techTagInput").value = draft.techTag;
+          }
+          if (draft.tags) {
+            tags.length = 0;
+            draft.tags.forEach(t => {
+              tags.push(t);
+              const chip = document.createElement("span");
+              chip.className = "tag-chip";
+              chip.setAttribute("role", "option");
+              chip.innerHTML = t + ' <span class="rm" role="button" tabindex="0" aria-label="Remove tag ' + t + '">&#10005;</span>';
+              chip.querySelector(".rm").addEventListener("click", () => {
+                tags.splice(tags.indexOf(t), 1);
+                chip.remove();
+              });
+              tagsWrap.insertBefore(chip, tagInput);
+            });
+          }
+          updateCounts();
+          updateSaveStatus("draft");
+          return true;
+        } catch (e) {
+          console.warn("Failed to load draft:", e);
+        }
+      }
+      return false;
+    }
+    
+    async function saveDraftToFirestore() {
+      if (!currentUser) return null;
+      
+      try {
+        const draftData = {
+          title: document.getElementById("titleInput").value.trim(),
+          desc: document.getElementById("descInput").value.trim(),
+          content: serializeContent(),
+          template: activeTemplate,
+          category: selectedCat,
+          mood: selectedMood,
+          rating: starRating || null,
+          thumbnail: document.getElementById("coverUrl").value || "",
+          coverAlt: document.getElementById("coverAlt").value || "",
+          author: document.getElementById("authorInput").value.trim() || getDisplayName(currentUser),
+          email: document.getElementById("emailInput").value.trim() || currentUser.email || "",
+          readtime: document.getElementById("readtimeInput").value.trim() || document.getElementById("readTimeCalc").textContent,
+          techTag: document.getElementById("techTagInput")?.value?.trim() || null,
+          tags: [...tags],
+          status: "draft",
+          authorUid: currentUser.uid,
+          authorEmail: currentUser.email || "",
+          authorPhoto: currentUser.photoURL || "",
+          updatedAt: serverTimestamp()
+        };
+        
+        let docRef;
+        if (draftId) {
+          docRef = doc(db, "posts", draftId);
+          await setDoc(docRef, draftData, { merge: true });
+        } else {
+          docRef = await addDoc(collection(db, "posts"), {
+            ...draftData,
+            createdAt: serverTimestamp()
+          });
+          draftId = docRef.id;
+        }
+        return draftId;
+      } catch (err) {
+        console.error("Draft save error:", err);
+        return null;
+      }
+    }
+    
+    // Auto-save on input (debounced)
+    editor.addEventListener("input", () => {
+      if (autoSaveTimer) clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(() => {
+        saveDraftLocally();
+        // Optional: sync to Firestore if online
+        if (navigator.onLine && currentUser) {
+          saveDraftToFirestore();
+        }
+      }, 2000);
+    });
+    
+    // Load draft on page load
+    window.addEventListener("load", () => {
+      const loaded = loadDraftLocally();
+      if (loaded) {
+        updateSaveStatus("draft");
+      }
+    });
+    
+    // Warn before leaving with unsaved changes
+    window.addEventListener("beforeunload", (e) => {
+      const status = document.getElementById("saveStatus").textContent;
+      if (status === "unsaved") {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    });
+
+    // ── Preview mode ──
+    document.getElementById("previewToggle").addEventListener("click", () => {
+      isPreviewMode = !isPreviewMode;
+      const toggle = document.getElementById("previewToggle");
+      const overlay = document.getElementById("previewOverlay");
+      
+      toggle.classList.toggle("active", isPreviewMode);
+      toggle.setAttribute("aria-pressed", isPreviewMode ? "true" : "false");
+      toggle.textContent = isPreviewMode ? "✏️ Edit" : "👁 Preview";
+      
+      if (isPreviewMode) {
+        updatePreview();
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+      } else {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    });
+    
+    document.getElementById("previewClose").addEventListener("click", () => {
+      isPreviewMode = false;
+      document.getElementById("previewToggle").classList.remove("active");
+      document.getElementById("previewToggle").setAttribute("aria-pressed", "false");
+      document.getElementById("previewToggle").textContent = "👁 Preview";
+      document.getElementById("previewOverlay").classList.remove("open");
+      document.body.style.overflow = "";
+    });
+    
+    function updatePreview() {
+      const previewContent = document.getElementById("previewContent");
+      
+      // Build preview HTML based on current template
+      const title = document.getElementById("titleInput").value || "Untitled";
+      const desc = document.getElementById("descInput").value || "";
+      const coverUrl = document.getElementById("coverUrl").value;
+      const coverAlt = document.getElementById("coverAlt").value || title;
+      const content = serializeContent();
+      
+      let previewHTML = `
+        <article style="font-family:var(--t-font);color:var(--t-ink);line-height:1.6">
+          ${coverUrl ? `<figure style="margin:0 0 24px 0"><img src="${coverUrl}" alt="${coverAlt}" style="width:100%;max-height:400px;object-fit:cover;border-radius:4px"><figcaption style="font-family:var(--t-title);font-size:0.9rem;color:var(--t-ink3);text-align:center;margin-top:8px">${coverAlt}</figcaption></figure>` : ""}
+          <h1 style="font-family:var(--t-title);font-size:2.2rem;color:var(--t-ink);margin:0 0 8px 0;line-height:1.2">${title}</h1>
+          ${desc ? `<p style="font-family:var(--t-font);font-size:1.1rem;font-style:italic;color:var(--t-ink3);margin:0 0 24px 0;line-height:1.6">${desc}</p>` : ""}
+          <div style="border-top:1px solid var(--t-rule);margin:24px 0"></div>
+          <div style="font-size:1.05rem;line-height:1.8">${content}</div>
+        </article>
+      `;
+      
+      previewContent.innerHTML = previewHTML;
+    }
+
+    // ── Submit / publish ──
+    document.getElementById("submitBtn").addEventListener("click", async () => {
+      await publishPost("published");
+    });
+    
+    document.getElementById("draftBtn").addEventListener("click", async () => {
+      await publishPost("draft");
+    });
+
+    async function publishPost(status) {
+      if (!currentUser) {
+        showLoginModal({ prompt: "Sign in to publish your post." });
+        return;
+      }
+
+      const name = document.getElementById("authorInput").value.trim() || getDisplayName(currentUser),
+            email = document.getElementById("emailInput").value.trim() || currentUser.email || "",
+            title = document.getElementById("titleInput").value.trim(),
+            desc = document.getElementById("descInput").value.trim(),
+            readtime = document.getElementById("readtimeInput").value.trim() || document.getElementById("readTimeCalc").textContent,
+            coverUrl = document.getElementById("coverUrl").value,
+            coverAlt = document.getElementById("coverAlt").value.trim(),
+            content = serializeContent(),
+            plainText = editor.innerText.trim(),
+            type = document.getElementById("typeSelect").value,
+            agree = document.getElementById("agreeCheck").checked,
+            agreeImg = document.getElementById("agreeImgCheck").checked,
+            techTag = (document.getElementById("techTagInput") || {}).value?.trim() || "",
+            statusEl = document.getElementById("modalStatus");
+
+      if (uploadingCount > 0) {
+        statusEl.textContent = "⚠ Images still uploading, wait a moment...";
+        statusEl.className = "modal-status err";
+        return;
+      }
+      
+      if (!title) {
+        statusEl.textContent = "⚠ Title is required";
+        statusEl.className = "modal-status err";
+        return;
+      }
+      
+      if (!desc) {
+        statusEl.textContent = "⚠ Homepage desc is required";
+        statusEl.className = "modal-status err";
+        return;
+      }
+      
+      if (plainText.length < 30) {
+        statusEl.textContent = "⚠ Write a little more first";
+        statusEl.className = "modal-status err";
+        return;
+      }
+      
+      if (!agree) {
+        statusEl.textContent = "⚠ Confirm your content";
+        statusEl.className = "modal-status err";
+        return;
+      }
+      
+      if (!agreeImg) {
+        statusEl.textContent = "⚠ Confirm image rights";
+        statusEl.className = "modal-status err";
+        return;
+      }
+
+      const btn = document.getElementById("submitBtn");
+      const draftBtn = document.getElementById("draftBtn");
+      btn.disabled = true;
+      draftBtn.disabled = true;
+      btn.textContent = status === "published" ? "Sending..." : "Saving...";
+      statusEl.textContent = "";
+
+      try {
+        // ✅ Generate unique slug (client-side fallback)
+        const baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        const slug = baseSlug + "-" + Date.now().toString(36).slice(-4);
+        
+        const postData = {
+          name, email, type, readtime, title, desc,
+          thumbnail: coverUrl || "",
+          coverAlt: coverAlt || title,
+          category: selectedCat,
+          template: activeTemplate,
+          mood: selectedMood,
+          rating: starRating || null,
+          techTag: techTag || null,
+          tags,
+          content,
+          url: "post.html?slug=" + slug,
+          slug,
+          status: status,
+          author: name,
+          date: new Date().toISOString(),
+          // auth fields
+          authorUid: currentUser.uid,
+          authorEmail: currentUser.email || "",
+          authorPhoto: currentUser.photoURL || "",
+          publishedAt: status === "published" ? serverTimestamp() : null,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        };
+        
+        let docRef;
+        if (draftId && status === "draft") {
+          // Update existing draft
+          docRef = doc(db, "posts", draftId);
+          await setDoc(docRef, postData, { merge: true });
+        } else {
+          // Create new post
+          docRef = await addDoc(collection(db, "posts"), postData);
+          if (status === "draft") {
+            draftId = docRef.id;
+          }
+        }
+        
+        // Clear local draft if published
+        if (status === "published") {
+          localStorage.removeItem(DRAFT_KEY);
+          draftId = null;
+        }
+        
+        btn.textContent = status === "published" ? "Live ✦" : "Saved ✦";
+        statusEl.textContent = status === "published" 
+          ? "✓ Your post is live on the homepage! 🎉" 
+          : "✓ Draft saved. You can publish anytime.";
+        statusEl.className = "modal-status ok";
+        updateSaveStatus(status === "published" ? "saved" : "draft");
+        
+        // Redirect after publish
+        if (status === "published") {
+          setTimeout(() => {
+            window.location.href = "post.html?slug=" + slug;
+          }, 1500);
+        }
+        
+      } catch (err) {
+        console.error("Publish error:", err);
+        btn.disabled = false;
+        draftBtn.disabled = false;
+        btn.textContent = status === "published" ? "✨ Go live now" : "💾 Save as draft";
+        statusEl.textContent = "✕ Failed — " + err.message;
+        statusEl.className = "modal-status err";
+      }
+    }
+
+    // ── Keyboard shortcuts ──
+    document.addEventListener("keydown", e => {
+      // Ctrl/Cmd + B/I for bold/italic
+      if ((e.metaKey || e.ctrlKey) && !e.shiftKey) {
+        if (e.key.toLowerCase() === "b") {
+          e.preventDefault();
+          document.execCommand("bold");
+          updateSaveStatus("unsaved");
+        }
+        if (e.key.toLowerCase() === "i") {
+          e.preventDefault();
+          document.execCommand("italic");
+          updateSaveStatus("unsaved");
+        }
+        if (e.key.toLowerCase() === "s") {
+          e.preventDefault();
+          // Save draft
+          saveDraftLocally();
+          if (navigator.onLine && currentUser) {
+            saveDraftToFirestore();
+          }
+        }
+      }
+    });
+
+    // ── Offline support ──
+    window.addEventListener("online", () => {
+      // Sync draft to Firestore if online
+      if (currentUser && document.getElementById("saveStatus").textContent === "draft") {
+        saveDraftToFirestore();
+      }
+    });
+  </script>
 </body>
 </html>
