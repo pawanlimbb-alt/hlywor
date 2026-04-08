@@ -3,23 +3,34 @@
 <head>
   <meta charset="UTF-8"/>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HlyWor</title>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+  
+  <!-- ✅ Dynamic SEO: Will be updated by JS per post -->
+  <title>HlyWor — A place to open up</title>
+  <meta name="description" content="A place to open up. Some things don't fit in a conversation. This is where they go.">
+  <meta name="theme-color" content="#2a1f14">
+  
+  <!-- ✅ Open Graph / Twitter (defaults, updated dynamically) -->
+  <meta property="og:title" content="HlyWor — A place to open up">
+  <meta property="og:description" content="Some things don't fit in a conversation. This is where they go.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hlywor.fun">
+  <meta property="og:image" content="https://hlywor.fun/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- ✅ Canonical (updated dynamically) -->
+  <link rel="canonical" href="https://hlywor.fun">
+
+  <!-- ✅ Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Kalam:wght@300;400;700&family=Satisfy&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
-
-    <!-- Google tag (gtag.js) -->
+  <!-- ✅ Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQDXDWHLX8"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-MQDXDWHLX8');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MQDXDWHLX8');</script>
   
   <style>
     :root {
@@ -29,15 +40,50 @@
       --pin-shadow:0 8px 40px rgba(0,0,0,0.5),0 2px 8px rgba(0,0,0,0.3);
       --pixel:'Press Start 2P',monospace;--serif:'Crimson Pro',Georgia,serif;
       --sans:'DM Sans',system-ui,sans-serif;--hand:'Caveat',cursive;
+      --focus-ring: rgba(212, 160, 32, 0.6);
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+      .ambientPulse, .bookDrop, .pinDrop, .commentIn { animation: none !important; transition: none !important; }
+      #progress-bar { transition: none !important; }
+    }
+
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{background:var(--board);font-family:var(--serif);min-height:100vh;overflow-x:hidden}
+    body{background:var(--board);font-family:var(--serif);min-height:100vh;overflow-x:hidden;color:var(--ink)}
+    
+    /* ✅ Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--fire);
+      color: #fff;
+      padding: 8px 16px;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      text-decoration: none;
+      z-index: 10000;
+      border-radius: 0 0 4px 4px;
+      transition: top 0.2s;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
     body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 20% 30%,rgba(80,50,20,0.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(60,35,10,0.25) 0%,transparent 50%),url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");background-size:auto,auto,200px 200px;pointer-events:none;z-index:0}
     body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,104,26,0.06) 0%,transparent 70%);top:20%;left:50%;transform:translateX(-50%);pointer-events:none;z-index:0;animation:ambientPulse 8s ease-in-out infinite}
     @keyframes ambientPulse{0%,100%{opacity:0.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
     ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--board)}::-webkit-scrollbar-thumb{background:var(--fire);border-radius:2px}
-    #progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--fire),var(--gold));z-index:9999;transition:width 0.08s linear}
+    
+    /* ✅ Enhanced Progress Bar */
+    #progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--fire),var(--gold));z-index:10000;transition:width 0.08s linear;box-shadow:0 0 8px rgba(232,104,26,0.6)}
+    #progress-bar[style*="width: 9"] { animation: pulseEnd 1.5s ease-in-out infinite; }
+    @keyframes pulseEnd { 0%, 100% { box-shadow: 0 0 8px rgba(232,104,26,0.6); } 50% { box-shadow: 0 0 16px rgba(232,104,26,0.9); } }
+
     .nav{position:sticky;top:0;z-index:200;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px}
     .nav-logo{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:2px;text-decoration:none;text-shadow:0 0 12px rgba(212,160,32,0.4);animation:flicker 7s infinite}
     @keyframes flicker{0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1}}
@@ -45,6 +91,7 @@
     .nav-back{font-family:var(--sans);font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;display:flex;align-items:center;gap:6px}
     .nav-back:hover{color:rgba(255,255,255,0.85)}
     .nav-back::before{content:'←'}
+    
     .loading-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:20px;position:relative;z-index:1}
     .loading-book{display:flex;gap:0;animation:loadingWobble 1.2s ease-in-out infinite}
     @keyframes loadingWobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
@@ -53,6 +100,7 @@
     .loading-page-el::after{content:'';width:30px;height:2px;background:linear-gradient(90deg,var(--fire),transparent);box-shadow:0 8px 0 var(--rule),0 16px 0 var(--rule),0 24px 0 var(--rule)}
     .loading-text{font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.4);font-style:italic;animation:loadFade 1.2s ease-in-out infinite}
     @keyframes loadFade{0%,100%{opacity:.4}50%{opacity:.9}}
+    
     .page-wrap{max-width:800px;margin:0 auto;padding:0 24px 100px;position:relative;z-index:1}
     @keyframes bookDrop{0%{opacity:0;transform:translateY(-60px) rotate(-3deg) scale(0.96)}60%{opacity:1;transform:translateY(8px) rotate(0.5deg) scale(1.005)}80%{transform:translateY(-4px) rotate(-0.3deg) scale(0.999)}100%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}}
     @keyframes shadowGrow{0%{opacity:0;transform:scaleX(0.7)}100%{opacity:1;transform:scaleX(1)}}
@@ -69,6 +117,31 @@
     .diary-page::after{content:'';position:absolute;top:0;bottom:0;left:68px;width:1px;background:rgba(220,80,80,0.2);pointer-events:none;z-index:0}
     .page-curl{position:absolute;bottom:0;right:0;width:40px;height:40px;background:linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.1) 50%,var(--paper2) 50%);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;z-index:10;transition:width 0.3s,height 0.3s}
     .diary-book:hover .page-curl{width:55px;height:55px}
+    
+    /* ✅ Breadcrumb */
+    .breadcrumb {
+      padding: 12px 36px 0 84px;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      color: var(--ink4);
+    }
+    .breadcrumb a {
+      color: var(--ink3);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover,
+    .breadcrumb a:focus {
+      color: var(--fire);
+      outline: none;
+    }
+    .breadcrumb a:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+    .breadcrumb span[aria-current="page"] {
+      color: var(--fire);
+    }
+    
     .post-header{padding:32px 36px 24px 84px;border-bottom:1px solid var(--rule);position:relative;z-index:2}
     .post-date-mood{display:flex;align-items:center;gap:12px;margin-bottom:14px}
     .post-date{font-family:var(--hand);font-size:0.95rem;color:var(--ink3);font-style:italic}
@@ -85,8 +158,10 @@
     .cat-news{background:#f0c030;color:var(--ink)}.cat-default{background:var(--ink2)}
     .post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
     .post-tag{font-family:var(--hand);font-size:0.82rem;color:var(--ink3);padding:2px 10px;border:1px solid rgba(26,18,8,0.15);border-radius:2px}
+    
     .post-cover{position:relative;z-index:2;margin:0 36px 0 84px}
     .post-cover img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;filter:sepia(8%) brightness(0.96)}
+    
     .post-body{padding:24px 36px 40px 84px;position:relative;z-index:2;font-family:var(--serif);font-size:1.05rem;color:var(--ink);line-height:32px}
     .post-body h2{font-family:var(--hand);font-size:1.8rem;color:var(--ink);line-height:1.4;margin:20px 0 10px;font-weight:600}
     .post-body h3{font-family:var(--hand);font-size:1.3rem;color:var(--ink2);line-height:1.4;margin:16px 0 8px}
@@ -112,7 +187,7 @@
     .post-body .doodle-divider{display:block;margin:16px 0;width:100%}
     .post-body .floating-sticker{display:inline-block;font-size:1.8rem;margin:0 4px;vertical-align:middle}
 
-    /* ── NEW: image alignment ── */
+    /* Image alignment */
     .post-body figure{margin:12px 0}
     .post-body figure img{display:block}
     .post-body figure figcaption{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);text-align:center;padding-top:4px;font-style:italic}
@@ -124,101 +199,88 @@
     .post-body figure.img-full img{width:100%}
     .post-body::after{content:'';display:table;clear:both}
 
-    /* ── NEW: photo row ── */
+    /* Photo row */
     .post-body .img-row-block{display:flex;gap:12px;margin:16px 0;clear:both;align-items:flex-start;flex-wrap:wrap}
     .post-body .img-row-block figure{flex:1;min-width:0;margin:0}
     .post-body .img-row-block figure img{width:100%;display:block;object-fit:cover}
 
-    /* ── NEW: line highlights ── */
+    /* Line highlights */
     .post-body .hl-line-y{background:rgba(255,230,0,0.28);display:block;padding:1px 4px;margin:1px 0}
     .post-body .hl-line-r{background:rgba(255,100,100,0.2);display:block;padding:1px 4px;margin:1px 0}
     .post-body .hl-line-b{background:rgba(100,160,255,0.2);display:block;padding:1px 4px;margin:1px 0}
     .post-body .hl-line-g{background:rgba(80,220,120,0.2);display:block;padding:1px 4px;margin:1px 0}
 
-    /* ── NEW: inline highlights ── */
+    /* Inline highlights */
     .post-body .highlight-y{background:rgba(255,220,50,0.4);padding:0 2px}
     .post-body .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
     .post-body .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
     .post-body .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
 
-    /* ── NEW: pull quote (magazine template) ── */
+    /* Pull quote */
     .post-body .pull-quote{display:block;font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;font-weight:700;color:var(--fire);border-top:2px solid var(--fire);border-bottom:2px solid var(--fire);padding:14px 0;margin:20px 0;line-height:1.4}
 
-    /* ── NEW: code blocks (tech template) ── */
+    /* Code blocks */
     .post-body pre{font-family:'JetBrains Mono',monospace;background:rgba(22,27,34,0.95);color:#e6edf3;padding:16px 20px;margin:14px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.65;border-radius:6px;font-size:0.88rem}
     .post-body code{font-family:'JetBrains Mono',monospace;background:rgba(22,27,34,0.8);color:#79c0ff;padding:2px 6px;border-radius:4px;font-size:0.88rem}
 
-    /* ── Strip contenteditable from rendered posts ── */
+    /* Strip contenteditable from rendered posts */
     .post-body [contenteditable]{-webkit-user-modify:read-only!important;user-modify:read-only!important}
     .post-body .sticky-callout{transform:rotate(-1.2deg)}
-    .post-body .highlight-y{background:rgba(255,220,50,0.4);padding:0 2px}
-    .post-body .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
-    .post-body .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
-    .post-body .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
+
+    /* ✅ Enhanced Reactions + Share */
     .post-reactions{padding:18px 36px 20px 84px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--rule)}
     .react-btn{font-size:0.85rem;padding:5px 14px;background:var(--paper2);border:1px solid rgba(26,18,8,0.12);color:var(--ink3);cursor:pointer;display:flex;align-items:center;gap:5px;font-family:var(--sans);border-radius:2px;transition:all 0.15s}
-    .react-btn:hover{background:var(--paper3)}
+    .react-btn:hover,
+    .react-btn:focus{background:var(--paper3);outline:none}
+    .react-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .react-btn.reacted{background:rgba(232,104,26,0.08);border-color:var(--fire);color:var(--fire)}
+    
+    /* Share buttons */
+    .post-share{padding:12px 36px 20px 84px;display:flex;gap:8px;align-items:center;border-top:1px dashed var(--rule);margin-top:12px}
+    .share-btn{font-size:1.1rem;background:none;border:1px solid rgba(26,18,8,0.15);border-radius:4px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s}
+    .share-btn:hover,
+    .share-btn:focus{background:var(--paper3);border-color:var(--fire);transform:translateY(-1px);outline:none}
+    .share-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
+    
     .card-stick-btn{font-family:var(--pixel);font-size:0.24rem;letter-spacing:.5px;padding:4px 10px;background:transparent;border:1px solid rgba(26,18,8,0.18);color:var(--ink4);cursor:pointer;transition:all .18s;white-space:nowrap}
-    .card-stick-btn:hover{border-color:var(--fire);color:var(--fire);background:rgba(232,104,26,0.06)}
+    .card-stick-btn:hover,
+    .card-stick-btn:focus{border-color:var(--fire);color:var(--fire);background:rgba(232,104,26,0.06);outline:none}
+    .card-stick-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .card-stick-btn.is-stuck{background:rgba(232,104,26,0.1);border-color:rgba(232,104,26,0.4);color:var(--fire)}
     .card-stick-btn.is-stuck:hover{background:rgba(192,57,43,0.08);border-color:rgba(192,57,43,0.4);color:#c0392b}
     .card-stick-btn:disabled{opacity:.4;cursor:wait}
 
-    /* ── AUTHOR TOOLBAR ── */
-    .author-toolbar{
-      display:none;
-      padding:14px 36px 14px 84px;
-      background:rgba(232,104,26,0.06);
-      border-top:1px solid rgba(232,104,26,0.2);
-      align-items:center;gap:10px;
-      position:relative;z-index:3;
-    }
+    /* Author toolbar */
+    .author-toolbar{display:none;padding:14px 36px 14px 84px;background:rgba(232,104,26,0.06);border-top:1px solid rgba(232,104,26,0.2);align-items:center;gap:10px;position:relative;z-index:3}
     .author-toolbar.visible{display:flex}
-    .author-toolbar-label{
-      font-family:var(--pixel);font-size:0.24rem;
-      color:rgba(232,104,26,0.7);letter-spacing:2px;
-      margin-right:4px;
-    }
-    .toolbar-btn{
-      font-family:var(--hand);font-size:0.95rem;font-weight:600;
-      padding:6px 18px;border:none;cursor:pointer;
-      transition:all 0.18s;border-radius:2px;
-    }
+    .author-toolbar-label{font-family:var(--pixel);font-size:0.24rem;color:rgba(232,104,26,0.7);letter-spacing:2px;margin-right:4px}
+    .toolbar-btn{font-family:var(--hand);font-size:0.95rem;font-weight:600;padding:6px 18px;border:none;cursor:pointer;transition:all 0.18s;border-radius:2px}
     .toolbar-btn-edit{background:var(--fire);color:#fff}
-    .toolbar-btn-edit:hover{background:#ff7a2a;transform:translateY(-1px)}
+    .toolbar-btn-edit:hover,
+    .toolbar-btn-edit:focus{background:#ff7a2a;transform:translateY(-1px);outline:none}
+    .toolbar-btn-edit:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .toolbar-btn-delete{background:transparent;color:#c0392b;border:1px solid rgba(192,57,43,0.35)}
-    .toolbar-btn-delete:hover{background:rgba(192,57,43,0.08);border-color:#c0392b}
+    .toolbar-btn-delete:hover,
+    .toolbar-btn-delete:focus{background:rgba(192,57,43,0.08);border-color:#c0392b;outline:none}
+    .toolbar-btn-delete:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .toolbar-btn-save{background:#2a8a2a;color:#fff}
-    .toolbar-btn-save:hover{background:#3aaa3a;transform:translateY(-1px)}
+    .toolbar-btn-save:hover,
+    .toolbar-btn-save:focus{background:#3aaa3a;transform:translateY(-1px);outline:none}
+    .toolbar-btn-save:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .toolbar-btn-cancel{background:transparent;color:var(--ink3);border:1px solid rgba(26,18,8,0.2)}
-    .toolbar-btn-cancel:hover{background:var(--paper3)}
+    .toolbar-btn-cancel:hover,
+    .toolbar-btn-cancel:focus{background:var(--paper3);outline:none}
+    .toolbar-btn-cancel:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .toolbar-save-status{font-family:var(--sans);font-size:0.72rem;color:#2a8a2a;margin-left:8px}
 
-    /* ── EDIT MODE OVERRIDES ── */
+    /* Edit mode */
     .edit-mode .post-title,
-    .edit-mode .post-desc{
-      border-bottom:1.5px dashed var(--fire);
-      outline:none;
-      background:rgba(232,104,26,0.03);
-      border-radius:2px;
-    }
-    .edit-mode #postBody{
-      outline:none;
-      border:1.5px dashed rgba(232,104,26,0.3);
-      background:rgba(232,104,26,0.02);
-      min-height:200px;
-      border-radius:2px;
-    }
-    .edit-hint{
-      display:none;
-      font-family:var(--pixel);font-size:0.22rem;
-      color:rgba(232,104,26,0.5);letter-spacing:1px;
-      padding:4px 36px 0 84px;position:relative;z-index:2;
-    }
+    .edit-mode .post-desc{border-bottom:1.5px dashed var(--fire);outline:none;background:rgba(232,104,26,0.03);border-radius:2px}
+    .edit-mode #postBody{outline:none;border:1.5px dashed rgba(232,104,26,0.3);background:rgba(232,104,26,0.02);min-height:200px;border-radius:2px}
+    .edit-hint{display:none;font-family:var(--pixel);font-size:0.22rem;color:rgba(232,104,26,0.5);letter-spacing:1px;padding:4px 36px 0 84px;position:relative;z-index:2;role:status;aria-live:polite}
     .edit-mode ~ .edit-hint,.edit-mode + .edit-hint{display:block}
 
-    /* ── COMMENTS ── */
+    /* Comments */
     .comments-section{padding:28px 36px 36px 84px;border-top:1px solid var(--rule);position:relative;z-index:2}
     .comments-heading{font-family:var(--hand);font-size:1.4rem;color:var(--ink);font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px}
     .comments-count{font-family:var(--pixel);font-size:0.28rem;color:var(--ink4);letter-spacing:2px;background:var(--paper3);padding:3px 8px}
@@ -233,13 +295,15 @@
     .comment-textarea:focus{border-color:var(--fire)}
     .comment-textarea::placeholder{color:var(--ink4);font-style:italic}
     .comment-submit{font-family:var(--hand);font-size:1rem;padding:8px 24px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all 0.2s;font-weight:600}
-    .comment-submit:hover{background:#ff7a2a;transform:translateY(-1px)}
+    .comment-submit:hover,
+    .comment-submit:focus{background:#ff7a2a;transform:translateY(-1px);outline:none}
+    .comment-submit:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .comment-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
     .comment-status{font-family:var(--hand);font-size:0.85rem;color:var(--fire);margin-top:8px;font-style:italic;min-height:20px}
     .comment-status.ok{color:#3a8a3a}
     .comments-list{display:flex;flex-direction:column;gap:0}
 
-    /* ── Threaded comment styles ── */
+    /* Threaded comments */
     .comment-thread{border-bottom:1px dashed var(--rule);padding-bottom:4px;margin-bottom:4px}
     .comment-thread:last-child{border-bottom:none}
     .comment-item{padding:14px 0 8px;position:relative;animation:commentIn 0.4s ease both}
@@ -252,16 +316,22 @@
     .comment-text{font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.65}
     .comment-actions{display:flex;align-items:center;gap:12px;margin-top:6px}
     .comment-reply-btn{font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
-    .comment-reply-btn:hover{color:var(--fire)}
+    .comment-reply-btn:hover,
+    .comment-reply-btn:focus{color:var(--fire);outline:none}
+    .comment-reply-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .comment-delete-btn{font-family:var(--pixel);font-size:0.2rem;color:rgba(192,57,43,0.5);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
-    .comment-delete-btn:hover{color:#c0392b}
+    .comment-delete-btn:hover,
+    .comment-delete-btn:focus{color:#c0392b;outline:none}
+    .comment-delete-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .comment-vote{display:flex;align-items:center;gap:5px}
     .vote-btn{font-size:0.78rem;background:none;border:none;cursor:pointer;color:var(--ink4);transition:all .15s;padding:1px 3px;border-radius:2px}
-    .vote-btn:hover{color:var(--fire);background:rgba(232,104,26,0.06)}
+    .vote-btn:hover,
+    .vote-btn:focus{color:var(--fire);background:rgba(232,104,26,0.06);outline:none}
+    .vote-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .vote-btn.voted{color:var(--fire)}
     .vote-count{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);min-width:16px;text-align:center}
 
-    /* Replies — indented */
+    /* Replies */
     .replies-wrap{margin-left:20px;padding-left:14px;border-left:2px solid rgba(26,18,8,0.1);margin-top:4px}
     .replies-wrap .comment-item{padding:10px 0 6px}
     .replies-wrap .comment-author{font-size:0.95rem}
@@ -275,22 +345,31 @@
     .reply-input::placeholder{color:var(--ink4);font-style:italic}
     .reply-form-actions{display:flex;gap:8px;align-items:center}
     .reply-submit-btn{font-family:var(--hand);font-size:0.9rem;padding:5px 16px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all .2s;font-weight:600}
-    .reply-submit-btn:hover{background:#ff7a2a}
+    .reply-submit-btn:hover,
+    .reply-submit-btn:focus{background:#ff7a2a;outline:none}
+    .reply-submit-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .reply-submit-btn:disabled{opacity:.5;cursor:not-allowed}
     .reply-cancel-btn{font-family:var(--hand);font-size:0.9rem;padding:5px 12px;background:transparent;border:1px solid rgba(26,18,8,0.15);color:var(--ink3);cursor:pointer;transition:all .2s}
-    .reply-cancel-btn:hover{background:var(--paper3)}
+    .reply-cancel-btn:hover,
+    .reply-cancel-btn:focus{background:var(--paper3);outline:none}
+    .reply-cancel-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .reply-status{font-family:var(--hand);font-size:0.78rem;color:var(--fire);font-style:italic}
 
-    /* Show/hide replies toggle */
+    /* Toggle replies */
     .toggle-replies-btn{font-family:var(--pixel);font-size:0.2rem;color:var(--fire);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:4px 0;display:flex;align-items:center;gap:5px;transition:opacity .15s}
-    .toggle-replies-btn:hover{opacity:.7}
+    .toggle-replies-btn:hover,
+    .toggle-replies-btn:focus{opacity:.7;outline:none}
+    .toggle-replies-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
     .toggle-replies-btn::before{content:'▼';font-size:0.5rem;transition:transform .2s}
     .toggle-replies-btn.collapsed::before{transform:rotate(-90deg)}
 
     .comment-empty{font-family:var(--hand);font-size:1rem;color:var(--ink4);font-style:italic;padding:16px 0}
     .post-back-strip{padding:20px 36px 32px 84px;border-top:1px solid var(--rule)}
     .back-link{font-family:var(--hand);font-size:1rem;color:var(--fire);text-decoration:none;transition:letter-spacing 0.2s}
-    .back-link:hover{letter-spacing:1px}
+    .back-link:hover,
+    .back-link:focus{letter-spacing:1px;outline:none}
+    .back-link:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
+    
     .more-by-author{margin-top:48px;position:relative}
     .more-heading{font-family:var(--pixel);font-size:0.36rem;color:var(--fire);letter-spacing:4px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
     .more-heading::before{content:'';display:inline-block;width:18px;height:1px;background:var(--fire)}
@@ -298,7 +377,9 @@
     .more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
     .more-card{background:var(--paper);box-shadow:0 4px 16px rgba(0,0,0,0.35);position:relative;cursor:pointer;text-decoration:none;display:block;transition:transform 0.22s,box-shadow 0.22s}
     .more-card:nth-child(odd){transform:rotate(-1.2deg)}.more-card:nth-child(even){transform:rotate(0.9deg)}
-    .more-card:hover{transform:rotate(0deg) translateY(-6px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.5);z-index:5}
+    .more-card:hover,
+    .more-card:focus{transform:rotate(0deg) translateY(-6px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.5);z-index:5;outline:none}
+    .more-card:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px}
     .more-card-pin{position:absolute;top:-9px;left:40%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9999,#cc3333);box-shadow:0 2px 4px rgba(0,0,0,0.5);z-index:2}
     .more-card-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:9px;background:linear-gradient(to bottom,#777,#333)}
     .more-card-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:sepia(10%)}
@@ -308,9 +389,11 @@
     .more-card-cat{font-family:var(--pixel);font-size:0.24rem;color:var(--fire);letter-spacing:2px;margin-bottom:5px}
     .more-card-title{font-family:var(--hand);font-size:1rem;color:var(--ink);line-height:1.4;font-weight:600}
     .more-card-date{font-family:var(--sans);font-size:0.65rem;color:var(--ink4);margin-top:6px}
+    
     .not-found{text-align:center;padding:80px 24px;position:relative;z-index:1}
     .not-found h2{font-family:var(--hand);font-size:2rem;color:var(--paper);margin-bottom:12px}
     .not-found p{font-family:var(--sans);font-size:0.85rem;color:rgba(245,230,200,0.4);margin-bottom:24px}
+    
     @media(max-width:640px){
       .page-wrap{padding:0 12px 80px}.diary-book-wrap{padding-top:28px}.diary-spine{width:14px}
       .post-header{padding:24px 18px 18px 22px}.post-cover{margin:0 18px 0 22px}
@@ -320,12 +403,12 @@
       .more-grid{grid-template-columns:1fr 1fr}.comment-form-row{grid-template-columns:1fr}
       .author-toolbar{padding:12px 18px 12px 22px}
       .edit-hint{padding:4px 18px 0 22px}
+      .breadcrumb{padding:12px 18px 0 22px}
+      .post-share{padding:12px 18px 20px 22px}
     }
     @media(max-width:380px){.more-grid{grid-template-columns:1fr}}
   
-    /* ══════════════════════════════════
-       BOTTOM DOCK — mobile nav
-    ══════════════════════════════════ */
+    /* Bottom dock */
     .bottom-dock {
       display: none;
       position: fixed;
@@ -416,1029 +499,1322 @@
       .bottom-dock { display: block; }
       body { padding-bottom: 62px; }
     }
-</style>
+  </style>
 </head>
 <body>
-<div id="progress-bar"></div>
+  <!-- ✅ Skip Link -->
+  <a href="#postBody" class="skip-link">Skip to post content</a>
+  
+  <div id="progress-bar" aria-hidden="true"></div>
 
-<nav class="nav">
-  <a href="index.html" class="nav-logo">HlYWoR</a>
-  <div class="nav-right">
-    <!-- Auth slot -->
-    <div id="authSlot"></div>
-    <a href="index.html" class="nav-back">Back to board</a>
-  </div>
-</nav>
-
-<div class="page-wrap">
-  <div class="loading-page" id="loadingState">
-    <div class="loading-book">
-      <div class="loading-spine-el"></div>
-      <div class="loading-page-el"></div>
+  <nav class="nav" role="navigation" aria-label="Main">
+    <a href="index.html" class="nav-logo" aria-label="HlyWor Home">HlYWoR</a>
+    <div class="nav-right">
+      <div id="authSlot" aria-label="Account"></div>
+      <a href="index.html" class="nav-back" id="navBack">Back to board</a>
     </div>
-    <div class="loading-text">opening your diary...</div>
-  </div>
+  </nav>
 
-  <div id="postWrap" style="display:none">
-    <div class="diary-book-wrap">
-      <div class="book-pin" id="bookPin"></div>
-      <div class="diary-book" id="postBook">
-        <div class="diary-spine"></div>
-        <div class="diary-page">
-          <div class="post-header" id="postHeader"></div>
-          <div class="post-cover" id="postCover" style="display:none"></div>
-          <div class="post-body" id="postBody"></div>
-
-          <!-- Edit hint — only visible in edit mode -->
-          <div class="edit-hint" id="editHint">✏ editing — click title, desc or body to change text</div>
-
-          <div class="post-reactions" id="postReactions"></div>
-
-          <!-- ── AUTHOR TOOLBAR ── -->
-          <div class="author-toolbar" id="authorToolbar">
-            <span class="author-toolbar-label">YOUR POST</span>
-            <button class="toolbar-btn toolbar-btn-edit" id="toolbarEditBtn">✏ Edit</button>
-            <button class="toolbar-btn toolbar-btn-delete" id="toolbarDeleteBtn">✕ Delete</button>
-            <span class="toolbar-save-status" id="toolbarSaveStatus"></span>
-          </div>
-
-          <!-- Comments -->
-          <div class="comments-section">
-            <div class="comments-heading">
-              Leave a note
-              <span class="comments-count" id="commentsCount">0 notes</span>
-            </div>
-            <div class="comment-form">
-              <div class="comment-form-row">
-                <div class="comment-input-wrap">
-                  <label class="comment-input-label">YOUR NAME</label>
-                  <input class="comment-input" id="commentName" placeholder="what do you go by?">
-                </div>
-                <div class="comment-input-wrap">
-                  <label class="comment-input-label">YOUR VIBE (optional)</label>
-                  <input class="comment-input" id="commentMood" placeholder="one emoji..." maxlength="4">
-                </div>
-              </div>
-              <textarea class="comment-textarea" id="commentText"
-                placeholder="write something... a reaction, a thought, a feeling." rows="3"></textarea>
-              <button class="comment-submit" id="commentSubmit">Pin this note ✦</button>
-              <div class="comment-status" id="commentStatus"></div>
-            </div>
-            <div class="comments-list" id="commentsList">
-              <div class="comment-empty">No notes yet — be the first to leave one.</div>
-            </div>
-          </div>
-
-          <div class="post-back-strip">
-            <a href="index.html" class="back-link">← back to the board</a>
-          </div>
-          <div class="page-curl"></div>
-        </div>
+  <div class="page-wrap">
+    <div class="loading-page" id="loadingState" role="status" aria-live="polite">
+      <div class="loading-book" aria-hidden="true">
+        <div class="loading-spine-el"></div>
+        <div class="loading-page-el"></div>
       </div>
-      <div class="book-shadow"></div>
+      <div class="loading-text">opening your diary...</div>
     </div>
 
-    <div class="more-by-author" id="moreByAuthor" style="display:none">
-      <div class="more-heading">MORE FROM THIS AUTHOR</div>
-      <div class="more-subheading" id="moreSubheading">More by —</div>
-      <div class="more-grid" id="moreGrid"></div>
-    </div>
-  </div>
+    <div id="postWrap" style="display:none">
+      <div class="diary-book-wrap">
+        <div class="book-pin" id="bookPin" aria-hidden="true"></div>
+        <div class="diary-book" id="postBook">
+          <div class="diary-spine" aria-hidden="true"></div>
+          <div class="diary-page">
+            <!-- ✅ Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+              <a href="index.html">Board</a>
+              <span aria-hidden="true">/</span>
+              <span id="breadcrumbTitle" aria-current="page"></span>
+            </nav>
+            
+            <div class="post-header" id="postHeader"></div>
+            <div class="post-cover" id="postCover" style="display:none"></div>
+            <div class="post-body" id="postBody" role="article" aria-label="Post content"></div>
 
-  <div class="not-found" id="notFound" style="display:none">
-    <h2>Page not found</h2>
-    <p>This post doesn't exist or was removed.</p>
-    <a href="index.html" class="back-link">← back to the board</a>
-  </div>
+            <!-- Edit hint -->
+            <div class="edit-hint" id="editHint" role="status" aria-live="polite">✏ editing — click title, desc or body to change text</div>
+
+            <div class="post-reactions" id="postReactions" aria-label="Reactions"></div>
+            
+            <!-- ✅ Share Buttons -->
+            <!-- ✅ Share Buttons -->
+<div class="post-share" aria-label="Share this post">
+  <span style="font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px">SHARE</span>
+  <button class="share-btn" id="shareTwitter" aria-label="Share on Twitter">🐦</button>
+  <button class="share-btn" id="shareWhatsApp" aria-label="Share on WhatsApp">💬</button>
+  <button class="share-btn" id="shareInstagramStory" aria-label="Share to Instagram Story">📸</button>
+  <button class="share-btn" id="shareInstagramChat" aria-label="Share via Instagram Chat">💌</button>
+  <button class="share-btn" id="copyLinkBtn" aria-label="Copy link to clipboard">🔗</button>
+  <button class="share-btn" id="savePostBtn" aria-label="Save for later" aria-pressed="false">🔖</button>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore, collection, query, where, getDocs,
-  addDoc, updateDoc, deleteDoc, doc,
-  orderBy, limit, serverTimestamp, onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { injectAuthNav, currentUser, onAuthChange, showConfirmDelete, getDisplayName, showLoginModal } from "./auth.js";
+            <!-- Author toolbar -->
+            <div class="author-toolbar" id="authorToolbar" aria-label="Post actions">
+              <span class="author-toolbar-label">YOUR POST</span>
+              <button class="toolbar-btn toolbar-btn-edit" id="toolbarEditBtn">✏ Edit</button>
+              <button class="toolbar-btn toolbar-btn-delete" id="toolbarDeleteBtn">✕ Delete</button>
+              <span class="toolbar-save-status" id="toolbarSaveStatus" aria-live="polite"></span>
+            </div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
-  authDomain: "hlywor.firebaseapp.com",
-  projectId: "hlywor",
-  storageBucket: "hlywor.firebasestorage.app",
-  messagingSenderId: "697637160825",
-  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
-  measurementId: "G-MQDXDWHLX8"
-};
+            <!-- Comments -->
+            <div class="comments-section">
+              <div class="comments-heading">
+                Leave a note
+                <span class="comments-count" id="commentsCount" aria-live="polite">0 notes</span>
+              </div>
+              <div class="comment-form">
+                <div class="comment-form-row">
+                  <div class="comment-input-wrap">
+                    <label class="comment-input-label" for="commentName">YOUR NAME</label>
+                    <input class="comment-input" id="commentName" placeholder="what do you go by?" aria-required="true">
+                  </div>
+                  <div class="comment-input-wrap">
+                    <label class="comment-input-label" for="commentMood">YOUR VIBE (optional)</label>
+                    <input class="comment-input" id="commentMood" placeholder="one emoji..." maxlength="4" aria-label="Optional mood emoji">
+                  </div>
+                </div>
+                <label class="comment-input-label" for="commentText" style="display:block;margin-bottom:4px">YOUR NOTE</label>
+                <textarea class="comment-textarea" id="commentText"
+                  placeholder="write something... a reaction, a thought, a feeling." rows="3" aria-required="true" maxlength="500"></textarea>
+                <div style="font-family:var(--sans);font-size:0.7rem;color:var(--ink4);margin-bottom:8px" id="charCount">0/500 characters</div>
+                <button class="comment-submit" id="commentSubmit" aria-label="Submit your note">Pin this note ✦</button>
+                <div class="comment-status" id="commentStatus" role="status" aria-live="polite"></div>
+              </div>
+              <div class="comments-list" id="commentsList" role="list" aria-label="Comments">
+                <div class="comment-empty">No notes yet — be the first to leave one.</div>
+              </div>
+            </div>
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+            <div class="post-back-strip">
+              <a href="index.html" class="back-link" id="backLinkBottom">← back to the board</a>
+            </div>
+            <div class="page-curl" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="book-shadow" aria-hidden="true"></div>
+      </div>
 
-// ── Auth nav ─────────────────────────────────────────
-injectAuthNav(document.getElementById('authSlot'), {
-  onSignIn(user) {
-    // Auto-fill comment name if empty
-    const nameEl = document.getElementById('commentName');
-    if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
-    // Re-check toolbar visibility
-    if (currentPostData) maybeShowToolbar(currentPostData);
-  },
-  onSignOut() {
-    hideToolbar();
-  }
-});
-
-// ── Auth state — auto-fill comment name ─────────────
-onAuthChange(user => {
-  const nameEl = document.getElementById('commentName');
-  if (user && nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
-});
-
-// ── Reading progress ─────────────────────────────────
-window.addEventListener('scroll', () => {
-  const d = document.documentElement;
-  document.getElementById('progress-bar').style.width =
-    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
-}, { passive: true });
-
-// ── Slug from URL ────────────────────────────────────
-const slug = new URLSearchParams(window.location.search).get('slug');
-if (!slug) { showNotFound(); } else { loadPost(slug); }
-
-let currentPostData = null;
-let isEditMode = false;
-
-// ── Load post ────────────────────────────────────────
-async function loadPost(slug) {
-  try {
-    const snap = await getDocs(query(
-      collection(db,'posts'),
-      where('slug','==',slug),
-      where('status','==','published'),
-      limit(1)
-    ));
-    if (snap.empty) { showNotFound(); return; }
-    currentPostData = { id: snap.docs[0].id, ...snap.docs[0].data() };
-    renderPost(currentPostData);
-    loadComments(currentPostData.id, currentPostData.slug, currentPostData.title, currentPostData.authorUid);
-    loadMoreByAuthor(currentPostData.author, currentPostData.slug);
-  } catch(err) {
-    console.error(err); showNotFound();
-  }
-}
-
-// ── Render post ──────────────────────────────────────
-function renderPost(post) {
-  document.title = `${post.title} — HlyWor`;
-  const dateStr = post.date
-    ? new Date(post.date).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})
-    : '';
-  const catClass = {story:'cat-story',movies:'cat-movies',books:'cat-books',thoughts:'cat-thoughts',college:'cat-college',news:'cat-news'}[post.category] || 'cat-default';
-  const tagsHtml = (post.tags||[]).length
-    ? `<div class="post-tags">${post.tags.map(t=>`<span class="post-tag">#${t}</span>`).join('')}</div>`
-    : '';
-  const readtime = post.readtime || calcReadTime(post.content||'');
-
-  // Apply template styling to the page
-  if (post.template && post.template !== 'diary') {
-    document.body.setAttribute('data-template', post.template);
-    // Inject template-specific post-body styles
-    const tStyles = {
-      magazine: `
-        .post-body{font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;line-height:1.85}
-        .post-body h2,.post-body h3{font-family:'Playfair Display',serif}
-        .post-title{font-family:'Playfair Display',serif;font-style:italic}`,
-      news: `
-        .post-body{font-family:'IM Fell English',Georgia,serif;font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
-        .post-body h2{column-span:all;border-top:1px solid var(--ink);padding-top:8px}
-        .post-title{font-family:'IM Fell English',serif;letter-spacing:-0.5px}
-        @media(max-width:640px){.post-body{columns:1}}`,
-      tech: `
-        .post-body{font-family:'DM Sans',system-ui,sans-serif;font-size:0.95rem;line-height:1.8}
-        .post-body h2,.post-body h3{font-family:'DM Sans',sans-serif;font-weight:600}`,
-      college: `
-        .post-body{font-family:'Caveat',cursive;font-size:1.15rem;line-height:1.85}
-        .post-body h2,.post-body h3{font-family:'Caveat',cursive}`
-    };
-    if (tStyles[post.template]) {
-      const s = document.createElement('style');
-      s.textContent = tStyles[post.template];
-      document.head.appendChild(s);
-    }
-  }
-
-  document.getElementById('postHeader').innerHTML = `
-    <div class="post-date-mood">
-      ${dateStr ? `<span class="post-date">${dateStr}</span>` : ''}
-      ${post.mood ? `<span class="post-mood">${post.mood}</span>` : ''}
-    </div>
-    <h1 class="post-title">${post.title}</h1>
-    ${post.desc ? `<p class="post-desc">${post.desc}</p>` : ''}
-    <div class="post-meta">
-      ${post.author ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val" style="cursor:pointer;text-decoration:underline dotted;color:var(--fire)" onclick="openAuthorPopup('${post.author}','${post.authorUid||''}')">${post.author}</span></div>` : ''}
-      ${readtime   ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
-      <span class="post-cat-tape ${catClass}">${(post.category||'post').toUpperCase()}</span>
-      ${post.authorUid ? `<button class="card-stick-btn" id="postPageStickBtn" data-touid="${post.authorUid}" data-toname="${post.author||''}">📌 Stick ${(post.author||'').split(' ')[0]}</button>` : ''}
-    </div>
-    ${tagsHtml}`;
-
-  if (post.thumbnail) {
-    const c = document.getElementById('postCover');
-    c.innerHTML = `<img src="${post.thumbnail}" alt="${post.title}" loading="eager">`;
-    c.style.display = 'block';
-  }
-
-  // Render content — strip contenteditable attrs so sticky notes etc aren't editable
-  const postBodyEl = document.getElementById('postBody');
-  const rawContent = post.content || '<p>No content.</p>';
-  // Parse and sanitize
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = rawContent;
-  // Remove contenteditable from all elements
-  tempDiv.querySelectorAll('[contenteditable]').forEach(el => {
-    el.removeAttribute('contenteditable');
-  });
-  // Remove data-sticky attribute (not needed in read mode)
-  tempDiv.querySelectorAll('[data-sticky]').forEach(el => {
-    el.removeAttribute('data-sticky');
-  });
-  postBodyEl.innerHTML = tempDiv.innerHTML;
-
-  // ── Reactions (Firestore-synced) ──────────────────────
-  const EMOJIS = ['🔥','❤️','😭'];
-  const postSlug = post.slug || post.id;
-  const rEl = document.getElementById('postReactions');
-
-  // Render placeholder buttons immediately
-  rEl.innerHTML = EMOJIS.map(emoji =>
-    `<button class="react-btn" data-emoji="${emoji}">${emoji} <span>…</span></button>`
-  ).join('');
-
-  // Load real counts async
-  async function loadPostReactions() {
-    try {
-      const snap = await getDocs(query(
-        collection(db,'reactions'),
-        where('postSlug','==', postSlug)
-      ));
-      const counts = {};
-      const userReacted = {};
-      EMOJIS.forEach(e => { counts[e] = 0; userReacted[e] = false; });
-      snap.docs.forEach(d => {
-        const { emoji, uid } = d.data();
-        if (counts[emoji] !== undefined) {
-          counts[emoji]++;
-          if (currentUser && uid === currentUser.uid) userReacted[emoji] = true;
-        }
-      });
-      rEl.querySelectorAll('.react-btn').forEach(btn => {
-        const emoji = btn.dataset.emoji;
-        btn.querySelector('span').textContent = counts[emoji];
-        btn.classList.toggle('reacted', userReacted[emoji]);
-      });
-    } catch(e) { console.error('Reactions:', e); }
-  }
-  loadPostReactions();
-
-  rEl.querySelectorAll('.react-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      if (!currentUser) {
-        showLoginModal({ prompt: 'Sign in to react to posts.' });
-        return;
-      }
-      const emoji = btn.dataset.emoji;
-      const isReacted = btn.classList.contains('reacted');
-      const countEl = btn.querySelector('span');
-      const cur = parseInt(countEl.textContent) || 0;
-
-      // Optimistic update
-      btn.classList.toggle('reacted', !isReacted);
-      countEl.textContent = isReacted ? Math.max(0, cur - 1) : cur + 1;
-
-      try {
-        if (isReacted) {
-          const snap = await getDocs(query(
-            collection(db,'reactions'),
-            where('postSlug','==', postSlug),
-            where('emoji','==', emoji),
-            where('uid','==', currentUser.uid),
-            limit(1)
-          ));
-          if (!snap.empty) await deleteDoc(doc(db,'reactions', snap.docs[0].id));
-        } else {
-          await addDoc(collection(db,'reactions'), {
-            postSlug, emoji,
-            uid: currentUser.uid,
-            createdAt: serverTimestamp()
-          });
-        }
-      } catch(e) {
-        // Revert on failure
-        btn.classList.toggle('reacted', isReacted);
-        countEl.textContent = cur;
-        console.error(e);
-      }
-    });
-  });
-
-  // ── Author popup on author name ───────────────────────
-  const authorEl = document.querySelector('.post-meta-val[data-author]') ||
-    (() => {
-      // Make author name clickable if it's rendered as plain text
-      const metas = document.querySelectorAll('.post-meta-val');
-      for (const m of metas) {
-        const prev = m.previousElementSibling;
-        if (prev && prev.textContent.trim() === 'BY') {
-          m.dataset.author = post.author || '';
-          m.dataset.uid = post.authorUid || '';
-          m.style.cursor = 'pointer';
-          m.style.textDecoration = 'underline dotted';
-          m.style.color = 'var(--fire)';
-          m.title = 'View profile';
-          return m;
-        }
-      }
-      return null;
-    })();
-
-  if (authorEl) {
-    authorEl.addEventListener('click', () => {
-      openAuthorPopup(post.author || '', post.authorUid || '');
-    });
-  }
-
-  document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('postWrap').style.display = 'block';
-  setupCommentForm(post.id, post.slug, post.title, post.authorUid);
-  maybeShowToolbar(post);
-  wirePostStickBtn(post);
-}
-
-// ── Show/hide author toolbar ─────────────────────────
-// ── Author popup ─────────────────────────────────────
-let _popupCache = {};
-
-function openAuthorPopup(authorName, authorUid) {
-  let overlay = document.getElementById('authorPopupOverlay');
-  if (!overlay) {
-    // Inject popup HTML if not present
-    overlay = document.createElement('div');
-    overlay.className = 'author-popup-overlay';
-    overlay.id = 'authorPopupOverlay';
-    overlay.innerHTML = `
-      <div class="author-popup" id="authorPopup">
-        <div class="popup-handle-wrap"><div class="popup-handle"></div></div>
-        <div class="popup-inner" id="authorPopupInner"><div class="popup-loading">Looking them up...</div></div>
-      </div>`;
-    document.body.appendChild(overlay);
-    // Inject CSS if needed
-    if (!document.getElementById('authorPopupStyle')) {
-      const s = document.createElement('style');
-      s.id = 'authorPopupStyle';
-      s.textContent = `
-        .author-popup-overlay{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,0);pointer-events:none;transition:background .25s}
-        .author-popup-overlay.open{background:rgba(0,0,0,0.55);pointer-events:all}
-        .author-popup{position:fixed;bottom:-100%;left:0;right:0;z-index:801;background:#faf6ee;max-height:72vh;overflow-y:auto;border-radius:16px 16px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.5);transition:bottom .35s cubic-bezier(0.34,1.1,0.64,1);background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(180,160,120,0.15) 31px,rgba(180,160,120,0.15) 32px)}
-        .author-popup-overlay.open .author-popup{bottom:0}
-        @media(min-width:641px){.author-popup{left:50%;right:auto;transform:translateX(-50%) translateY(20px);bottom:auto;top:50%;margin-top:-180px;width:380px;border-radius:4px;max-height:80vh;transition:opacity .2s,transform .25s cubic-bezier(0.34,1.2,0.64,1);opacity:0}.author-popup-overlay.open .author-popup{opacity:1;transform:translateX(-50%) translateY(0)}}
-        .popup-handle{width:36px;height:4px;border-radius:2px;background:rgba(26,18,8,0.15);margin:10px auto 0}
-        @media(min-width:641px){.popup-handle{display:none}}
-        .popup-handle-wrap{padding:8px 0 0}
-        .popup-inner{padding:18px 22px 28px;position:relative;z-index:1}
-        .popup-spine-accent{position:absolute;left:0;top:0;bottom:0;width:4px}
-        .popup-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
-        .popup-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #e8681a;flex-shrink:0}
-        .popup-avatar-placeholder{width:48px;height:48px;border-radius:50%;background:#e8681a;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-size:1.4rem;color:#fff;font-weight:700;flex-shrink:0}
-        .popup-name{font-family:'Caveat',cursive;font-size:1.4rem;color:#1a1208;font-weight:700;line-height:1.1}
-        .popup-role{font-family:'Press Start 2P',monospace;font-size:0.3rem;color:#a09078;letter-spacing:1px;margin-top:3px}
-        .popup-bio{font-family:'Crimson Pro',Georgia,serif;font-size:0.92rem;font-style:italic;color:#3d3020;line-height:1.65;margin-bottom:14px}
-        .popup-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-        .popup-stick-btn{font-family:'Caveat',cursive;font-size:1rem;font-weight:700;padding:8px 20px;border:none;cursor:pointer;transition:all .2s}
-        .popup-stick-btn.unstuck{background:#e8681a;color:#fff}
-        .popup-stick-btn.unstuck:hover{background:#ff7a2a;transform:translateY(-1px)}
-        .popup-stick-btn.stuck-state{background:#ede3c8;color:#3d3020;border:1px solid rgba(26,18,8,0.15)}
-        .popup-stick-btn.stuck-state:hover{color:#c0392b;border-color:rgba(192,57,43,0.3)}
-        .popup-profile-link{font-family:'Caveat',cursive;font-size:0.9rem;color:#e8681a;text-decoration:none;border-bottom:1px dashed rgba(232,104,26,0.4);padding-bottom:1px;transition:letter-spacing .2s}
-        .popup-profile-link:hover{letter-spacing:1px}
-        .popup-stick-count{font-family:'Press Start 2P',monospace;font-size:0.26rem;color:#a09078;margin-left:4px}
-        .popup-loading{font-family:'Caveat',cursive;font-size:1rem;color:#6a5840;font-style:italic;padding:12px 0}
-        .popup-no-profile{font-family:'Crimson Pro',Georgia,serif;font-size:0.88rem;color:#6a5840;font-style:italic}
-      `;
-      document.head.appendChild(s);
-    }
-  }
-  const inner = document.getElementById('authorPopupInner');
-  inner.innerHTML = `<div class="popup-loading">Looking them up...</div>`;
-  overlay.classList.add('open');
-  overlay.onclick = e => { if (e.target === overlay) overlay.classList.remove('open'); };
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); }, { once: true });
-  fetchAndRenderAuthorPopup(authorName, authorUid, inner);
-}
-
-async function fetchAndRenderAuthorPopup(authorName, authorUid, inner) {
-  const db = getFirestore();
-  const cacheKey = authorUid || authorName;
-  let person = _popupCache[cacheKey];
-
-  if (person === undefined) {
-    try {
-      let snap;
-
-      // Strategy 1 — by authorUid
-      if (authorUid) {
-        snap = await getDocs(query(collection(db,'people'), where('authorUid','==',authorUid), limit(1)));
-      }
-
-      // Strategy 2 — exact nameLower
-      if (!snap || snap.empty) {
-        snap = await getDocs(query(collection(db,'people'), where('nameLower','==',authorName.toLowerCase()), limit(1)));
-      }
-
-      // Strategy 3 — first name partial match (handles "Pawan L." → "Pawan Limbu")
-      if (!snap || snap.empty) {
-        const firstName = authorName.split(/[\s.]/)[0].toLowerCase();
-        if (firstName.length >= 3) {
-          const allPeople = await getDocs(collection(db,'people'));
-          const match = allPeople.docs.find(d => {
-            const nl = (d.data().nameLower || '').split(' ')[0];
-            return nl === firstName;
-          });
-          if (match) snap = { empty: false, docs: [match] };
-        }
-      }
-
-      person = (!snap || snap.empty) ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
-      _popupCache[cacheKey] = person;
-    } catch(e) { console.error(e); person = null; }
-  }
-
-  const acc = person?.accent || '#e8681a';
-  const toUid = person?.authorUid;
-  let stickDocId = null, stickCount = 0;
-
-  if (toUid) {
-    try {
-      const sc = await getDocs(query(collection(db,'sticks'), where('toUid','==',toUid)));
-      stickCount = sc.size;
-      if (currentUser && currentUser.uid !== toUid) {
-        const ex = sc.docs.find(d => d.data().fromUid === currentUser.uid);
-        if (ex) stickDocId = ex.id;
-      }
-    } catch(e) {}
-  }
-
-  const isOwnProfile = currentUser && toUid && currentUser.uid === toUid;
-  const canStick = !!toUid && !isOwnProfile;
-  const isStuck  = !!stickDocId;
-
-  const avatarHtml = person?.photos?.[0]
-    ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${person.name||authorName}">`
-    : `<div class="popup-avatar-placeholder">${(person?.name||authorName)[0].toUpperCase()}</div>`;
-
-  const stickBtn = canStick ? `
-    <button class="popup-stick-btn ${isStuck?'stuck-state':'unstuck'}" id="popupStickBtn">
-      ${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}
-    </button>
-    ${stickCount > 0 ? `<span class="popup-stick-count">${stickCount} stuck</span>` : ''}` : '';
-
-  const profileLink = person?.slug
-    ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>` : '';
-
-  inner.innerHTML = `
-    <div class="popup-spine-accent" style="background:${acc}"></div>
-    <div class="popup-header">
-      ${avatarHtml}
-      <div>
-        <div class="popup-name">${person?.name||authorName}</div>
-        ${person?.role?`<div class="popup-role">${person.role.toUpperCase()}</div>`:''}
+      <div class="more-by-author" id="moreByAuthor" style="display:none">
+        <div class="more-heading">MORE FROM THIS AUTHOR</div>
+        <div class="more-subheading" id="moreSubheading">More by —</div>
+        <div class="more-grid" id="moreGrid" role="list"></div>
       </div>
     </div>
-    ${person?.bio?`<p class="popup-bio">${person.bio}</p>`:person===null?`<p class="popup-no-profile">No profile card yet.</p>`:''}
-    <div class="popup-actions">${stickBtn}${profileLink}</div>`;
 
-  const stickBtnEl = inner.querySelector('#popupStickBtn');
-  if (stickBtnEl) {
-    stickBtnEl.addEventListener('click', async () => {
-      if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
-      stickBtnEl.disabled = true;
+    <div class="not-found" id="notFound" style="display:none">
+      <h2>Page not found</h2>
+      <p id="notFoundMsg">This post doesn't exist or was removed.</p>
+      <a href="index.html" class="back-link">← back to the board</a>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getFirestore, collection, query, where, getDocs,
+      addDoc, updateDoc, deleteDoc, doc,
+      orderBy, limit, serverTimestamp, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { injectAuthNav, currentUser, onAuthChange, showConfirmDelete, getDisplayName, showLoginModal } from "./auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+      authDomain: "hlywor.firebaseapp.com",
+      projectId: "hlywor",
+      storageBucket: "hlywor.firebasestorage.app",
+      messagingSenderId: "697637160825",
+      appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+      measurementId: "G-MQDXDWHLX8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    // ── Auth nav ──
+    injectAuthNav(document.getElementById('authSlot'), {
+      onSignIn(user) {
+        const nameEl = document.getElementById('commentName');
+        if (nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+        if (currentPostData) maybeShowToolbar(currentPostData);
+      },
+      onSignOut() {
+        hideToolbar();
+      }
+    });
+
+    // ── Auth state ──
+    onAuthChange(user => {
+      const nameEl = document.getElementById('commentName');
+      if (user && nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+    });
+
+    // ── Reading progress ──
+    window.addEventListener('scroll', () => {
+      const d = document.documentElement;
+      const bar = document.getElementById('progress-bar');
+      if (bar) {
+        const pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
+        bar.style.width = pct + '%';
+      }
+    }, { passive: true });
+
+    // ── Slug from URL (normalized) ──
+    const rawSlug = new URLSearchParams(window.location.search).get('slug');
+    const slug = rawSlug?.toLowerCase().trim();
+    
+    console.log("🔍 Loading post for slug:", slug); // Debug log
+    
+    if (!slug) { 
+      showNotFound("No post specified."); 
+    } else { 
+      loadPost(slug); 
+    }
+
+    let currentPostData = null;
+    let isEditMode = false;
+    let commentsUnsub = null; // For memory leak fix
+
+    // ── Load post ──
+    async function loadPost(slug) {
       try {
-        if (stickDocId) {
-          await deleteDoc(doc(db,'sticks',stickDocId));
-          stickDocId = null;
-          stickBtnEl.textContent = '📌 Stick them';
-          stickBtnEl.className = 'popup-stick-btn unstuck';
-        } else {
-          const fromName = getDisplayName(currentUser);
-          const fromSnap = await getDocs(query(collection(db,'people'),where('authorUid','==',currentUser.uid),limit(1)));
-          const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug||'';
-          const ref = await addDoc(collection(db,'sticks'), {
-            fromUid: currentUser.uid, fromName, fromSlug,
-            toUid, toSlug: person?.slug||'', toName: person?.name||authorName,
-            createdAt: serverTimestamp()
-          });
-          stickDocId = ref.id;
-          stickBtnEl.textContent = '📌 Stuck ✦';
-          stickBtnEl.className = 'popup-stick-btn stuck-state';
+        const q = query(
+          collection(db,'posts'),
+          where('slug','==',slug),
+          where('status','==','published'),
+          limit(1)
+        );
+        const snap = await getDocs(q);
+        
+        console.log("✅ Found docs:", snap.size); // Debug log
+        
+        if (snap.empty) { 
+          showNotFound(`No post found with slug "${slug}". It may have been removed.`); 
+          return; 
         }
-        _popupCache = {};
-      } catch(e) { console.error(e); }
-      stickBtnEl.disabled = false;
-    });
-  }
-}
-
-// ── Wire post-page stick button ───────────────────────
-function wirePostStickBtn(post) {
-  const btn = document.getElementById('postPageStickBtn');
-  if (!btn || !post.authorUid) return;
-  const toUid  = post.authorUid;
-  const toName = post.author || '';
-
-  // Hide on own post
-  if (currentUser && currentUser.uid === toUid) { btn.style.display='none'; return; }
-  if (!currentUser) { btn.style.display='none'; }
-
-  onAuthChange(async user => {
-    if (!user || user.uid === toUid) { btn.style.display='none'; return; }
-    btn.style.display='';
-    try {
-      const snap = await getDocs(query(
-        collection(db,'sticks'),
-        where('fromUid','==',user.uid),
-        where('toUid','==',toUid),
-        limit(1)
-      ));
-      if (!snap.empty) {
-        btn.dataset.stickid = snap.docs[0].id;
-        btn.classList.add('is-stuck');
-        btn.textContent = '📌 Stuck ✦';
-      } else {
-        btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
+        
+        currentPostData = { id: snap.docs[0].id, ...snap.docs[0].data() };
+        renderPost(currentPostData);
+        loadComments(currentPostData.id, currentPostData.slug, currentPostData.title, currentPostData.authorUid);
+        loadMoreByAuthor(currentPostData.author, currentPostData.slug);
+      } catch(err) {
+        console.error("❌ Load post error:", err);
+        showNotFound("An error occurred while loading this post.");
       }
-    } catch(e) {}
-  });
+    }
 
-  btn.addEventListener('click', async e => {
-    e.stopPropagation();
-    if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
-    if (currentUser.uid === toUid) return;
-    btn.disabled = true;
-    const isStuck = btn.classList.contains('is-stuck');
-    try {
-      if (isStuck) {
-        if (btn.dataset.stickid) await deleteDoc(doc(db,'sticks',btn.dataset.stickid));
-        btn.classList.remove('is-stuck');
-        btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
-        btn.dataset.stickid = '';
-      } else {
-        const fromName = getDisplayName(currentUser);
-        let toSlug = '';
+    // ── Render post ──
+    function renderPost(post) {
+      // ✅ Dynamic SEO tags
+      document.title = `${post.title} — HlyWor`;
+      
+      const updateMeta = (name, content, property = false) => {
+        let el = document.querySelector(`meta[${property?'property':'name'}="${name}"]`);
+        if (!el) {
+          el = document.createElement('meta');
+          if (property) el.setAttribute('property', name);
+          else el.setAttribute('name', name);
+          document.head.appendChild(el);
+        }
+        el.setAttribute('content', content);
+      };
+
+      const excerpt = post.desc || (post.content?.replace(/<[^>]+>/g, '').slice(0, 150) + '...') || 'A story on HlyWor';
+      
+      updateMeta('description', excerpt);
+      updateMeta('og:title', `${post.title} — HlyWor`, true);
+      updateMeta('og:description', excerpt, true);
+      updateMeta('og:type', 'article', true);
+      updateMeta('og:url', `https://hlywor.fun/post.html?slug=${post.slug}`, true);
+      if (post.thumbnail) updateMeta('og:image', post.thumbnail, true);
+      updateMeta('twitter:card', 'summary_large_image');
+      updateMeta('twitter:title', post.title);
+      updateMeta('twitter:description', excerpt);
+      
+      // ✅ Canonical URL
+      let canonical = document.querySelector('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonical);
+      }
+      canonical.setAttribute('href', `https://hlywor.fun/post.html?slug=${post.slug}`);
+      
+      // ✅ Breadcrumb title
+      const breadcrumbTitle = document.getElementById('breadcrumbTitle');
+      if (breadcrumbTitle) breadcrumbTitle.textContent = post.title;
+
+      const dateStr = post.date
+        ? new Date(post.date).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})
+        : '';
+      const catClass = {story:'cat-story',movies:'cat-movies',books:'cat-books',thoughts:'cat-thoughts',college:'cat-college',news:'cat-news'}[post.category] || 'cat-default';
+      const tagsHtml = (post.tags||[]).length
+        ? `<div class="post-tags">${post.tags.map(t=>`<span class="post-tag">#${t}</span>`).join('')}</div>`
+        : '';
+      const readtime = post.readtime || calcReadTime(post.content||'');
+
+      // Template styling
+      if (post.template && post.template !== 'diary') {
+        document.body.setAttribute('data-template', post.template);
+        const tStyles = {
+          magazine: `.post-body{font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;line-height:1.85}.post-body h2,.post-body h3{font-family:'Playfair Display',serif}.post-title{font-family:'Playfair Display',serif;font-style:italic}`,
+          news: `.post-body{font-family:'IM Fell English',Georgia,serif;font-size:1rem;line-height:1.75;columns:2;column-gap:28px}.post-body h2{column-span:all;border-top:1px solid var(--ink);padding-top:8px}.post-title{font-family:'IM Fell English',serif;letter-spacing:-0.5px}@media(max-width:640px){.post-body{columns:1}}`,
+          tech: `.post-body{font-family:'DM Sans',system-ui,sans-serif;font-size:0.95rem;line-height:1.8}.post-body h2,.post-body h3{font-family:'DM Sans',sans-serif;font-weight:600}`,
+          college: `.post-body{font-family:'Caveat',cursive;font-size:1.15rem;line-height:1.85}.post-body h2,.post-body h3{font-family:'Caveat',cursive}`
+        };
+        if (tStyles[post.template]) {
+          const s = document.createElement('style');
+          s.textContent = tStyles[post.template];
+          document.head.appendChild(s);
+        }
+      }
+
+      document.getElementById('postHeader').innerHTML = `
+        <div class="post-date-mood">
+          ${dateStr ? `<span class="post-date">${dateStr}</span>` : ''}
+          ${post.mood ? `<span class="post-mood" aria-label="Mood: ${post.mood}">${post.mood}</span>` : ''}
+        </div>
+        <h1 class="post-title" tabindex="-1">${escHtml(post.title)}</h1>
+        ${post.desc ? `<p class="post-desc">${escHtml(post.desc)}</p>` : ''}
+        <div class="post-meta">
+          ${post.author ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val" id="authorName" style="cursor:pointer;text-decoration:underline dotted;color:var(--fire)" tabindex="0" role="button" aria-label="View ${post.author}'s profile">${escHtml(post.author)}</span></div>` : ''}
+          ${readtime   ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
+          <span class="post-cat-tape ${catClass}" aria-label="Category: ${(post.category||'post').toUpperCase()}">${(post.category||'post').toUpperCase()}</span>
+          ${post.authorUid ? `<button class="card-stick-btn" id="postPageStickBtn" data-touid="${post.authorUid}" data-toname="${escHtml(post.author||'')}" aria-label="Follow ${post.author||'author'}">📌 Stick</button>` : ''}
+        </div>
+        ${tagsHtml}`;
+
+      if (post.thumbnail) {
+        const c = document.getElementById('postCover');
+        c.innerHTML = `<img src="${post.thumbnail}" alt="${escHtml(post.title)} - cover image" loading="eager" decoding="async">`;
+        c.style.display = 'block';
+      }
+
+      // Render content — strip contenteditable + lazy-load images
+      const postBodyEl = document.getElementById('postBody');
+      const rawContent = post.content || '<p>No content.</p>';
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = rawContent;
+      
+      // Remove contenteditable and data-sticky attrs
+      tempDiv.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+      tempDiv.querySelectorAll('[data-sticky]').forEach(el => el.removeAttribute('data-sticky'));
+      
+      // Lazy-load images + alt fallback
+      tempDiv.querySelectorAll('img').forEach(img => {
+        if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+        if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+        if (!img.alt) img.alt = `${post.title} - image`;
+      });
+      
+      postBodyEl.innerHTML = tempDiv.innerHTML;
+
+      // ✅ Reactions
+      const EMOJIS = ['🔥','❤️','😭'];
+      const postSlug = post.slug || post.id;
+      const rEl = document.getElementById('postReactions');
+
+      rEl.innerHTML = EMOJIS.map(emoji =>
+        `<button class="react-btn" data-emoji="${emoji}" aria-label="React with ${emoji}" aria-pressed="false">${emoji} <span aria-live="polite">…</span></button>`
+      ).join('');
+
+      async function loadPostReactions() {
         try {
-          const ps = await getDocs(query(collection(db,'people'),where('authorUid','==',toUid),limit(1)));
-          if (!ps.empty) toSlug = ps.docs[0].data().slug||'';
-        } catch(e) {}
-        const ref = await addDoc(collection(db,'sticks'),{
-          fromUid: currentUser.uid, fromName, fromSlug:'',
-          toUid, toName, toSlug,
-          createdAt: serverTimestamp()
-        });
-        btn.dataset.stickid = ref.id;
-        btn.classList.add('is-stuck');
-        btn.textContent = '📌 Stuck ✦';
+          const snap = await getDocs(query(collection(db,'reactions'), where('postSlug','==', postSlug)));
+          const counts = {};
+          const userReacted = {};
+          EMOJIS.forEach(e => { counts[e] = 0; userReacted[e] = false; });
+          snap.docs.forEach(d => {
+            const { emoji, uid } = d.data();
+            if (counts[emoji] !== undefined) {
+              counts[emoji]++;
+              if (currentUser && uid === currentUser.uid) userReacted[emoji] = true;
+            }
+          });
+          rEl.querySelectorAll('.react-btn').forEach(btn => {
+            const emoji = btn.dataset.emoji;
+            const countEl = btn.querySelector('span');
+            if (countEl) countEl.textContent = counts[emoji];
+            btn.classList.toggle('reacted', userReacted[emoji]);
+            btn.setAttribute('aria-pressed', userReacted[emoji] ? 'true' : 'false');
+          });
+        } catch(e) { console.error('Reactions:', e); }
       }
-    } catch(err) { console.error(err); }
-    btn.disabled = false;
-  });
-}
+      loadPostReactions();
 
-function maybeShowToolbar(post) {
-  if (currentUser && post.authorUid && currentUser.uid === post.authorUid) {
-    document.getElementById('authorToolbar').classList.add('visible');
+      rEl.querySelectorAll('.react-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!currentUser) {
+            showLoginModal({ prompt: 'Sign in to react to posts.' });
+            return;
+          }
+          const emoji = btn.dataset.emoji;
+          const isReacted = btn.classList.contains('reacted');
+          const countEl = btn.querySelector('span');
+          const cur = parseInt(countEl?.textContent) || 0;
+
+          // Optimistic update
+          btn.classList.toggle('reacted', !isReacted);
+          btn.setAttribute('aria-pressed', !isReacted ? 'true' : 'false');
+          if (countEl) countEl.textContent = isReacted ? Math.max(0, cur - 1) : cur + 1;
+
+          try {
+            if (isReacted) {
+              const snap = await getDocs(query(
+                collection(db,'reactions'),
+                where('postSlug','==', postSlug),
+                where('emoji','==', emoji),
+                where('uid','==', currentUser.uid),
+                limit(1)
+              ));
+              if (!snap.empty) await deleteDoc(doc(db,'reactions', snap.docs[0].id));
+            } else {
+              await addDoc(collection(db,'reactions'), {
+                postSlug, emoji,
+                uid: currentUser.uid,
+                createdAt: serverTimestamp()
+              });
+            }
+          } catch(e) {
+            // Revert on failure
+            btn.classList.toggle('reacted', isReacted);
+            btn.setAttribute('aria-pressed', isReacted ? 'true' : 'false');
+            if (countEl) countEl.textContent = cur;
+            console.error(e);
+          }
+        });
+        
+        // Keyboard support
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            btn.click();
+          }
+        });
+      });
+
+      // ✅ Author popup
+      const authorEl = document.getElementById('authorName');
+      if (authorEl) {
+        authorEl.addEventListener('click', () => openAuthorPopup(post.author || '', post.authorUid || ''));
+        authorEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openAuthorPopup(post.author || '', post.authorUid || '');
+          }
+        });
+      }
+
+      // ✅ Share buttons
+      const postUrl = encodeURIComponent(window.location.href);
+      const postTitle = encodeURIComponent(post.title);
+      
+      document.getElementById('shareTwitter')?.addEventListener('click', () => {
+        window.open(`https://twitter.com/intent/tweet?text=${postTitle}&url=${postUrl}`, '_blank', 'width=550,height=420');
+      });
+      
+      document.getElementById('shareWhatsApp')?.addEventListener('click', () => {
+        window.open(`https://wa.me/?text=${postTitle}%20${postUrl}`, '_blank');
+      });
+      // Instagram Story Share
+document.getElementById('shareInstagramStory')?.addEventListener('click', async () => {
+  const postUrl = window.location.href;
+  const postTitle = post.title;
+  
+  // Try to open Instagram story creation
+  const instagramUrl = `https://www.instagram.com/stories/create/`;
+  
+  // For mobile, try to open Instagram app
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+  if (isMobile) {
+    // On mobile, copy link first then open Instagram
+    try {
+      await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
+      
+      const btn = document.getElementById('shareInstagramStory');
+      const original = btn.innerHTML;
+      btn.innerHTML = '✓';
+      btn.setAttribute('aria-label', 'Link copied! Open Instagram');
+      
+      // Try to open Instagram app
+      window.location.href = 'instagram://story';
+      
+      // Fallback to web after 2 seconds
+      setTimeout(() => {
+        window.open(instagramUrl, '_blank');
+      }, 2000);
+      
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.setAttribute('aria-label', 'Share to Instagram Story');
+      }, 2000);
+    } catch(e) {
+      // Fallback: just open Instagram
+      window.open(instagramUrl, '_blank');
+    }
+  } else {
+    // On desktop, open Instagram web and show instructions
+    const confirmed = confirm(
+      'To share to Instagram Story:\n\n' +
+      '1. We\'ll copy the link to your clipboard\n' +
+      '2. Instagram will open in a new tab\n' +
+      '3. Create a story and paste the link\n\n' +
+      'Continue?'
+    );
+    
+    if (confirmed) {
+      try {
+        await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
+        
+        const btn = document.getElementById('shareInstagramStory');
+        const original = btn.innerHTML;
+        btn.innerHTML = '✓';
+        
+        window.open(instagramUrl, '_blank');
+        
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      } catch(e) {
+        window.open(instagramUrl, '_blank');
+      }
+    }
   }
-}
-function hideToolbar() {
-  document.getElementById('authorToolbar').classList.remove('visible');
-  if (isEditMode) cancelEdit();
-}
-
-// ── EDIT MODE ────────────────────────────────────────
-function enterEditMode() {
-  if (isEditMode) return;
-  isEditMode = true;
-
-  // Make title editable
-  const titleEl = document.querySelector('.post-title');
-  if (titleEl) {
-    titleEl.contentEditable = 'true';
-    titleEl.focus();
-  }
-
-  // Make desc editable
-  const descEl = document.querySelector('.post-desc');
-  if (descEl) descEl.contentEditable = 'true';
-
-  // Make body editable
-  const bodyEl = document.getElementById('postBody');
-  if (bodyEl) bodyEl.contentEditable = 'true';
-
-  // Add edit-mode class to diary-page for visual feedback
-  document.querySelector('.diary-page').classList.add('edit-mode');
-
-  // Show edit hint
-  document.getElementById('editHint').style.display = 'block';
-
-  // Swap toolbar buttons
-  document.getElementById('authorToolbar').innerHTML = `
-    <span class="author-toolbar-label">EDITING</span>
-    <button class="toolbar-btn toolbar-btn-save" id="toolbarSaveBtn">✓ Save changes</button>
-    <button class="toolbar-btn toolbar-btn-cancel" id="toolbarCancelBtn">✕ Cancel</button>
-    <span class="toolbar-save-status" id="toolbarSaveStatus"></span>`;
-
-  document.getElementById('toolbarSaveBtn').addEventListener('click', saveEdit);
-  document.getElementById('toolbarCancelBtn').addEventListener('click', cancelEdit);
-}
-
-function cancelEdit() {
-  isEditMode = false;
-  // Restore original content
-  renderPost(currentPostData);
-  document.querySelector('.diary-page')?.classList.remove('edit-mode');
-  document.getElementById('editHint').style.display = 'none';
-  // Restore toolbar
-  restoreToolbar();
-}
-
-function restoreToolbar() {
-  document.getElementById('authorToolbar').innerHTML = `
-    <span class="author-toolbar-label">YOUR POST</span>
-    <button class="toolbar-btn toolbar-btn-edit" id="toolbarEditBtn">✏ Edit</button>
-    <button class="toolbar-btn toolbar-btn-delete" id="toolbarDeleteBtn">✕ Delete</button>
-    <span class="toolbar-save-status" id="toolbarSaveStatus"></span>`;
-  document.getElementById('toolbarEditBtn').addEventListener('click', enterEditMode);
-  document.getElementById('toolbarDeleteBtn').addEventListener('click', deletePost);
-}
-
-async function saveEdit() {
-  if (!currentUser || !currentPostData) return;
-
-  const titleEl = document.querySelector('.post-title');
-  const descEl  = document.querySelector('.post-desc');
-  const bodyEl  = document.getElementById('postBody');
-
-  const newTitle   = titleEl?.innerText.trim() || currentPostData.title;
-  const newDesc    = descEl?.innerText.trim()  || currentPostData.desc;
-
-  // Serialize body — strip contenteditable attrs
-  const bodyClone = bodyEl.cloneNode(true);
-  bodyClone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-  const newContent = bodyClone.innerHTML;
-
-  const statusEl = document.getElementById('toolbarSaveStatus');
-  statusEl.textContent = 'Saving...';
-  statusEl.style.color = 'var(--ink3)';
-
-  try {
-    await updateDoc(doc(db, 'posts', currentPostData.id), {
-      title:   newTitle,
-      desc:    newDesc,
-      content: newContent,
-      updatedAt: serverTimestamp()
-    });
-
-    // Update local data
-    currentPostData.title   = newTitle;
-    currentPostData.desc    = newDesc;
-    currentPostData.content = newContent;
-
-    isEditMode = false;
-    document.querySelector('.diary-page')?.classList.remove('edit-mode');
-    document.getElementById('editHint').style.display = 'none';
-
-    statusEl.textContent = '✓ Saved!';
-    statusEl.style.color = '#2a8a2a';
-
-    // Make fields non-editable again
-    if (titleEl) titleEl.contentEditable = 'false';
-    if (descEl)  descEl.contentEditable  = 'false';
-    if (bodyEl)  bodyEl.contentEditable  = 'false';
-
-    restoreToolbar();
-    // Show saved status briefly
-    setTimeout(() => {
-      const s = document.getElementById('toolbarSaveStatus');
-      if (s) { s.textContent = '✓ Saved'; s.style.color = '#2a8a2a'; }
-    }, 100);
-    setTimeout(() => {
-      const s = document.getElementById('toolbarSaveStatus');
-      if (s) s.textContent = '';
-    }, 3000);
-
-  } catch(err) {
-    console.error(err);
-    statusEl.textContent = '✕ Failed: ' + err.message;
-    statusEl.style.color = '#c0392b';
-  }
-}
-
-// ── DELETE ───────────────────────────────────────────
-async function deletePost() {
-  const confirmed = await showConfirmDelete(
-    `Delete "${currentPostData.title}"? This cannot be undone — the post will be removed from the board permanently.`
-  );
-  if (!confirmed) return;
-
-  try {
-    await deleteDoc(doc(db, 'posts', currentPostData.id));
-    // Redirect to homepage after deletion
-    window.location.href = 'index.html';
-  } catch(err) {
-    console.error(err);
-    const s = document.getElementById('toolbarSaveStatus');
-    if (s) { s.textContent = '✕ Delete failed'; s.style.color = '#c0392b'; }
-  }
-}
-
-// Wire up toolbar buttons (initial render calls renderPost which calls maybeShowToolbar,
-// but buttons aren't in DOM until toolbar is visible)
-document.getElementById('authorToolbar').addEventListener('click', e => {
-  if (e.target.id === 'toolbarEditBtn')   enterEditMode();
-  if (e.target.id === 'toolbarDeleteBtn') deletePost();
 });
 
-// ── Threaded Comments ─────────────────────────────────
-function loadComments(postId, postSlug, postTitle, postAuthorUid) {
-  const q = query(
-    collection(db,'comments'),
-    where('postId','==',postId),
-    orderBy('createdAt','asc')
-  );
-  onSnapshot(q, snap => {
-    const all = snap.docs.map(d => ({id:d.id,...d.data()}));
-    const list    = document.getElementById('commentsList');
-    const countEl = document.getElementById('commentsCount');
-    const topLevel = all.filter(c => !c.parentId);
-    const replies  = all.filter(c => !!c.parentId);
-    const total    = all.length;
-    countEl.textContent = `${total} note${total!==1?'s':''}`;
-    if (!topLevel.length) {
-      list.innerHTML = `<div class="comment-empty">No notes yet — be the first to leave one.</div>`;
-      return;
+// Instagram Chat/Direct Share
+document.getElementById('shareInstagramChat')?.addEventListener('click', async () => {
+  const postUrl = window.location.href;
+  const postTitle = post.title;
+  
+  // Instagram doesn't have a direct share URL, so we copy the link
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+  try {
+    await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
+    
+    const btn = document.getElementById('shareInstagramChat');
+    const original = btn.innerHTML;
+    btn.innerHTML = '✓';
+    btn.setAttribute('aria-label', 'Link copied! Open Instagram');
+    
+    if (isMobile) {
+      // Try to open Instagram app to direct messages
+      window.location.href = 'instagram://direct/inbox';
+      
+      // Fallback to web
+      setTimeout(() => {
+        window.open('https://www.instagram.com/direct/inbox/', '_blank');
+      }, 2000);
+    } else {
+      // Desktop: show instructions
+      alert(
+        'Link copied to clipboard! 📋\n\n' +
+        'To share via Instagram Chat:\n' +
+        '1. Open Instagram\n' +
+        '2. Go to Direct Messages (💌)\n' +
+        '3. Select a conversation\n' +
+        '4. Paste the link (Ctrl+V or Cmd+V)\n\n' +
+        'The link is ready to paste!'
+      );
+      
+      // Open Instagram web
+      window.open('https://www.instagram.com/direct/inbox/', '_blank');
     }
-    list.innerHTML = '';
-    topLevel.forEach((c, i) => {
-      const threadReplies = replies.filter(r => r.parentId === c.id);
-      const threadEl = document.createElement('div');
-      threadEl.className = 'comment-thread';
-      threadEl.innerHTML = renderComment(c, i, postAuthorUid, false);
-
-      if (threadReplies.length) {
-        const toggle = document.createElement('button');
-        toggle.className = 'toggle-replies-btn';
-        toggle.textContent = `${threadReplies.length} repl${threadReplies.length!==1?'ies':'y'}`;
-        const repliesWrap = document.createElement('div');
-        repliesWrap.className = 'replies-wrap';
-        repliesWrap.id = `replies-${c.id}`;
-        threadReplies.forEach((r,j) => { repliesWrap.innerHTML += renderComment(r, j, postAuthorUid, true); });
-        toggle.addEventListener('click', () => {
-          const hidden = repliesWrap.style.display === 'none';
-          repliesWrap.style.display = hidden ? 'block' : 'none';
-          toggle.classList.toggle('collapsed', !hidden);
-        });
-        threadEl.appendChild(toggle);
-        threadEl.appendChild(repliesWrap);
-      }
-
-      const replyForm = document.createElement('div');
-      replyForm.className = 'reply-form';
-      replyForm.id = `reply-form-${c.id}`;
-      replyForm.innerHTML = `
-        <textarea class="reply-input" placeholder="Write a reply..." rows="2"></textarea>
-        <div class="reply-form-actions">
-          <button class="reply-submit-btn">Reply ✦</button>
-          <button class="reply-cancel-btn">Cancel</button>
-          <span class="reply-status"></span>
-        </div>`;
-      threadEl.appendChild(replyForm);
-      list.appendChild(threadEl);
-
-      const replyBtn = threadEl.querySelector('.comment-reply-btn');
-      if (replyBtn) {
-        replyBtn.addEventListener('click', () => {
-          if (!currentUser) { showLoginModal({ prompt: 'Sign in to reply.' }); return; }
-          replyForm.classList.toggle('open');
-          if (replyForm.classList.contains('open')) replyForm.querySelector('.reply-input').focus();
-        });
-      }
-      replyForm.querySelector('.reply-cancel-btn').addEventListener('click', () => {
-        replyForm.classList.remove('open');
-        replyForm.querySelector('.reply-input').value = '';
-      });
-      replyForm.querySelector('.reply-submit-btn').addEventListener('click', async () => {
-        if (!currentUser) { showLoginModal({ prompt: 'Sign in to reply.' }); return; }
-        const text = replyForm.querySelector('.reply-input').value.trim();
-        const status = replyForm.querySelector('.reply-status');
-        if (!text) { status.textContent = '⚠ Write something'; return; }
-        const submitBtn = replyForm.querySelector('.reply-submit-btn');
-        submitBtn.disabled = true; submitBtn.textContent = 'Replying...';
+    
+    setTimeout(() => {
+      btn.innerHTML = original;
+      btn.setAttribute('aria-label', 'Share via Instagram Chat');
+    }, 2000);
+    
+  } catch(e) {
+    // Fallback: just open Instagram
+    window.open('https://www.instagram.com/direct/inbox/', '_blank');
+  }
+});
+      document.getElementById('copyLinkBtn')?.addEventListener('click', async () => {
         try {
-          await addDoc(collection(db,'comments'), {
+          await navigator.clipboard.writeText(window.location.href);
+          const btn = document.getElementById('copyLinkBtn');
+          const original = btn.innerHTML;
+          btn.innerHTML = '✓';
+          btn.setAttribute('aria-label', 'Link copied');
+          setTimeout(() => {
+            btn.innerHTML = original;
+            btn.setAttribute('aria-label', 'Copy link to clipboard');
+          }, 1500);
+        } catch(e) {
+          prompt('Copy this link:', window.location.href);
+        }
+      });
+      
+      // ✅ Save for later
+      const saveBtn = document.getElementById('savePostBtn');
+      if (saveBtn && currentUser) {
+        const saved = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+        const isSaved = saved.includes(post.id);
+        saveBtn.classList.toggle('reacted', isSaved);
+        saveBtn.setAttribute('aria-pressed', isSaved ? 'true' : 'false');
+        saveBtn.setAttribute('aria-label', isSaved ? 'Remove from saved' : 'Save for later');
+        
+        saveBtn.addEventListener('click', () => {
+          const saved = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+          const isSaved = saved.includes(post.id);
+          if (isSaved) {
+            saved.splice(saved.indexOf(post.id), 1);
+            saveBtn.classList.remove('reacted');
+            saveBtn.setAttribute('aria-pressed', 'false');
+            saveBtn.setAttribute('aria-label', 'Save for later');
+          } else {
+            saved.push(post.id);
+            saveBtn.classList.add('reacted');
+            saveBtn.setAttribute('aria-pressed', 'true');
+            saveBtn.setAttribute('aria-label', 'Remove from saved');
+          }
+          localStorage.setItem('hlywor_saved', JSON.stringify(saved));
+        });
+      } else if (saveBtn) {
+        saveBtn.style.display = 'none';
+      }
+
+      // Show content
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('postWrap').style.display = 'block';
+      
+      setupCommentForm(post.id, post.slug, post.title, post.authorUid);
+      maybeShowToolbar(post);
+      wirePostStickBtn(post);
+      
+      // ✅ Preserve scroll position on back nav
+      document.getElementById('navBack')?.addEventListener('click', (e) => {
+        sessionStorage.setItem('hlywor_scrollY', window.scrollY);
+      });
+      document.getElementById('backLinkBottom')?.addEventListener('click', (e) => {
+        sessionStorage.setItem('hlywor_scrollY', window.scrollY);
+      });
+    }
+
+    // ── Author popup (unchanged but with accessibility fixes) ──
+    let _popupCache = {};
+    function openAuthorPopup(authorName, authorUid) {
+      let overlay = document.getElementById('authorPopupOverlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'author-popup-overlay';
+        overlay.id = 'authorPopupOverlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-labelledby', 'authorPopupTitle');
+        overlay.innerHTML = `
+          <div class="author-popup" id="authorPopup" tabindex="-1">
+            <div class="popup-handle-wrap"><div class="popup-handle" aria-hidden="true"></div></div>
+            <div class="popup-inner" id="authorPopupInner"><div class="popup-loading">Looking them up...</div></div>
+          </div>`;
+        document.body.appendChild(overlay);
+        
+        if (!document.getElementById('authorPopupStyle')) {
+          const s = document.createElement('style');
+          s.id = 'authorPopupStyle';
+          s.textContent = `
+            .author-popup-overlay{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,0);pointer-events:none;transition:background .25s}
+            .author-popup-overlay.open{background:rgba(0,0,0,0.55);pointer-events:all}
+            .author-popup{position:fixed;bottom:-100%;left:0;right:0;z-index:801;background:#faf6ee;max-height:72vh;overflow-y:auto;border-radius:16px 16px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.5);transition:bottom .35s cubic-bezier(0.34,1.1,0.64,1);background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(180,160,120,0.15) 31px,rgba(180,160,120,0.15) 32px);outline:none}
+            .author-popup-overlay.open .author-popup{bottom:0}
+            @media(min-width:641px){.author-popup{left:50%;right:auto;transform:translateX(-50%) translateY(20px);bottom:auto;top:50%;margin-top:-180px;width:380px;border-radius:4px;max-height:80vh;transition:opacity .2s,transform .25s cubic-bezier(0.34,1.2,0.64,1);opacity:0}.author-popup-overlay.open .author-popup{opacity:1;transform:translateX(-50%) translateY(0)}}
+            .popup-handle{width:36px;height:4px;border-radius:2px;background:rgba(26,18,8,0.15);margin:10px auto 0}
+            @media(min-width:641px){.popup-handle{display:none}}
+            .popup-handle-wrap{padding:8px 0 0}
+            .popup-inner{padding:18px 22px 28px;position:relative;z-index:1}
+            .popup-spine-accent{position:absolute;left:0;top:0;bottom:0;width:4px}
+            .popup-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+            .popup-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #e8681a;flex-shrink:0}
+            .popup-avatar-placeholder{width:48px;height:48px;border-radius:50%;background:#e8681a;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-size:1.4rem;color:#fff;font-weight:700;flex-shrink:0}
+            .popup-name{font-family:'Caveat',cursive;font-size:1.4rem;color:#1a1208;font-weight:700;line-height:1.1}
+            .popup-role{font-family:'Press Start 2P',monospace;font-size:0.3rem;color:#a09078;letter-spacing:1px;margin-top:3px}
+            .popup-bio{font-family:'Crimson Pro',Georgia,serif;font-size:0.92rem;font-style:italic;color:#3d3020;line-height:1.65;margin-bottom:14px}
+            .popup-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+            .popup-stick-btn{font-family:'Caveat',cursive;font-size:1rem;font-weight:700;padding:8px 20px;border:none;cursor:pointer;transition:all .2s}
+            .popup-stick-btn.unstuck{background:#e8681a;color:#fff}
+            .popup-stick-btn.unstuck:hover{background:#ff7a2a;transform:translateY(-1px)}
+            .popup-stick-btn.stuck-state{background:#ede3c8;color:#3d3020;border:1px solid rgba(26,18,8,0.15)}
+            .popup-stick-btn.stuck-state:hover{color:#c0392b;border-color:rgba(192,57,43,0.3)}
+            .popup-profile-link{font-family:'Caveat',cursive;font-size:0.9rem;color:#e8681a;text-decoration:none;border-bottom:1px dashed rgba(232,104,26,0.4);padding-bottom:1px;transition:letter-spacing .2s}
+            .popup-profile-link:hover{letter-spacing:1px}
+            .popup-stick-count{font-family:'Press Start 2P',monospace;font-size:0.26rem;color:#a09078;margin-left:4px}
+            .popup-loading{font-family:'Caveat',cursive;font-size:1rem;color:#6a5840;font-style:italic;padding:12px 0}
+            .popup-no-profile{font-family:'Crimson Pro',Georgia,serif;font-size:0.88rem;color:#6a5840;font-style:italic}
+          `;
+          document.head.appendChild(s);
+        }
+      }
+      const inner = document.getElementById('authorPopupInner');
+      inner.innerHTML = `<div class="popup-loading">Looking them up...</div>`;
+      overlay.classList.add('open');
+      overlay.onclick = e => { if (e.target === overlay) { overlay.classList.remove('open'); document.getElementById('authorName')?.focus(); } };
+      document.addEventListener('keydown', function escHandler(e) { 
+        if (e.key === 'Escape') { 
+          overlay.classList.remove('open'); 
+          document.getElementById('authorName')?.focus();
+          document.removeEventListener('keydown', escHandler);
+        } 
+      });
+      fetchAndRenderAuthorPopup(authorName, authorUid, inner);
+    }
+
+    async function fetchAndRenderAuthorPopup(authorName, authorUid, inner) {
+      const cacheKey = authorUid || authorName;
+      let person = _popupCache[cacheKey];
+
+      if (person === undefined) {
+        try {
+          let snap;
+          if (authorUid) snap = await getDocs(query(collection(db,'people'), where('authorUid','==',authorUid), limit(1)));
+          if (!snap || snap.empty) snap = await getDocs(query(collection(db,'people'), where('nameLower','==',authorName.toLowerCase()), limit(1)));
+          if (!snap || snap.empty) {
+            const firstName = authorName.split(/[\s.]/)[0].toLowerCase();
+            if (firstName.length >= 3) {
+              const allPeople = await getDocs(collection(db,'people'));
+              const match = allPeople.docs.find(d => (d.data().nameLower || '').split(' ')[0] === firstName);
+              if (match) snap = { empty: false, docs: [match] };
+            }
+          }
+          person = (!snap || snap.empty) ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
+          _popupCache[cacheKey] = person;
+        } catch(e) { console.error(e); person = null; }
+      }
+
+      const acc = person?.accent || '#e8681a';
+      const toUid = person?.authorUid;
+      let stickDocId = null, stickCount = 0;
+
+      if (toUid) {
+        try {
+          const sc = await getDocs(query(collection(db,'sticks'), where('toUid','==',toUid)));
+          stickCount = sc.size;
+          if (currentUser && currentUser.uid !== toUid) {
+            const ex = sc.docs.find(d => d.data().fromUid === currentUser.uid);
+            if (ex) stickDocId = ex.id;
+          }
+        } catch(e) {}
+      }
+
+      const isOwnProfile = currentUser && toUid && currentUser.uid === toUid;
+      const canStick = !!toUid && !isOwnProfile;
+      const isStuck  = !!stickDocId;
+
+      const avatarHtml = person?.photos?.[0]
+        ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${escHtml(person.name||authorName)}" loading="lazy">`
+        : `<div class="popup-avatar-placeholder" aria-hidden="true">${(person?.name||authorName)[0].toUpperCase()}</div>`;
+
+      const stickBtn = canStick ? `
+        <button class="popup-stick-btn ${isStuck?'stuck-state':'unstuck'}" id="popupStickBtn" aria-pressed="${isStuck}">
+          ${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}
+        </button>
+        ${stickCount > 0 ? `<span class="popup-stick-count" aria-label="${stickCount} people stuck">${stickCount} stuck</span>` : ''}` : '';
+
+      const profileLink = person?.slug
+        ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>` : '';
+
+      inner.innerHTML = `
+        <div class="popup-spine-accent" style="background:${acc}" aria-hidden="true"></div>
+        <div class="popup-header">
+          ${avatarHtml}
+          <div>
+            <div class="popup-name" id="authorPopupTitle">${escHtml(person?.name||authorName)}</div>
+            ${person?.role?`<div class="popup-role">${person.role.toUpperCase()}</div>`:''}
+          </div>
+        </div>
+        ${person?.bio?`<p class="popup-bio">${escHtml(person.bio)}</p>`:person===null?`<p class="popup-no-profile">No profile card yet.</p>`:''}
+        <div class="popup-actions">${stickBtn}${profileLink}</div>`;
+
+      const stickBtnEl = inner.querySelector('#popupStickBtn');
+      if (stickBtnEl) {
+        stickBtnEl.addEventListener('click', async () => {
+          if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+          stickBtnEl.disabled = true;
+          try {
+            if (stickDocId) {
+              await deleteDoc(doc(db,'sticks',stickDocId));
+              stickDocId = null;
+              stickBtnEl.textContent = '📌 Stick them';
+              stickBtnEl.className = 'popup-stick-btn unstuck';
+              stickBtnEl.setAttribute('aria-pressed', 'false');
+            } else {
+              const fromName = getDisplayName(currentUser);
+              const fromSnap = await getDocs(query(collection(db,'people'),where('authorUid','==',currentUser.uid),limit(1)));
+              const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug||'';
+              const ref = await addDoc(collection(db,'sticks'), {
+                fromUid: currentUser.uid, fromName, fromSlug,
+                toUid, toSlug: person?.slug||'', toName: person?.name||authorName,
+                createdAt: serverTimestamp()
+              });
+              stickDocId = ref.id;
+              stickBtnEl.textContent = '📌 Stuck ✦';
+              stickBtnEl.className = 'popup-stick-btn stuck-state';
+              stickBtnEl.setAttribute('aria-pressed', 'true');
+            }
+            _popupCache = {};
+          } catch(e) { console.error(e); }
+          stickBtnEl.disabled = false;
+        });
+      }
+      
+      // Focus management
+      setTimeout(() => {
+        const popup = document.getElementById('authorPopup');
+        if (popup) popup.focus();
+      }, 100);
+    }
+
+    // ── Wire post-page stick button ──
+    function wirePostStickBtn(post) {
+      const btn = document.getElementById('postPageStickBtn');
+      if (!btn || !post.authorUid) return;
+      const toUid  = post.authorUid;
+      const toName = post.author || '';
+
+      if (currentUser && currentUser.uid === toUid) { btn.style.display='none'; return; }
+      if (!currentUser) { btn.style.display='none'; }
+
+      onAuthChange(async user => {
+        if (!user || user.uid === toUid) { btn.style.display='none'; return; }
+        btn.style.display='';
+        try {
+          const snap = await getDocs(query(
+            collection(db,'sticks'),
+            where('fromUid','==',user.uid),
+            where('toUid','==',toUid),
+            limit(1)
+          ));
+          if (!snap.empty) {
+            btn.dataset.stickid = snap.docs[0].id;
+            btn.classList.add('is-stuck');
+            btn.textContent = '📌 Stuck ✦';
+            btn.setAttribute('aria-pressed', 'true');
+          } else {
+            btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
+            btn.setAttribute('aria-pressed', 'false');
+          }
+        } catch(e) {}
+      });
+
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+        if (currentUser.uid === toUid) return;
+        btn.disabled = true;
+        const isStuck = btn.classList.contains('is-stuck');
+        try {
+          if (isStuck) {
+            if (btn.dataset.stickid) await deleteDoc(doc(db,'sticks',btn.dataset.stickid));
+            btn.classList.remove('is-stuck');
+            btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
+            btn.dataset.stickid = '';
+            btn.setAttribute('aria-pressed', 'false');
+          } else {
+            const fromName = getDisplayName(currentUser);
+            let toSlug = '';
+            try {
+              const ps = await getDocs(query(collection(db,'people'),where('authorUid','==',toUid),limit(1)));
+              if (!ps.empty) toSlug = ps.docs[0].data().slug||'';
+            } catch(e) {}
+            const ref = await addDoc(collection(db,'sticks'),{
+              fromUid: currentUser.uid, fromName, fromSlug:'',
+              toUid, toName, toSlug,
+              createdAt: serverTimestamp()
+            });
+            btn.dataset.stickid = ref.id;
+            btn.classList.add('is-stuck');
+            btn.textContent = '📌 Stuck ✦';
+            btn.setAttribute('aria-pressed', 'true');
+          }
+        } catch(err) { console.error(err); }
+        btn.disabled = false;
+      });
+    }
+
+    function maybeShowToolbar(post) {
+      if (currentUser && post.authorUid && currentUser.uid === post.authorUid) {
+        document.getElementById('authorToolbar').classList.add('visible');
+      }
+    }
+    function hideToolbar() {
+      document.getElementById('authorToolbar').classList.remove('visible');
+      if (isEditMode) cancelEdit();
+    }
+
+    // ── EDIT MODE ──
+    function enterEditMode() {
+      if (isEditMode) return;
+      isEditMode = true;
+
+      const titleEl = document.querySelector('.post-title');
+      if (titleEl) {
+        titleEl.contentEditable = 'true';
+        titleEl.setAttribute('aria-label', 'Edit post title');
+        titleEl.focus();
+      }
+
+      const descEl = document.querySelector('.post-desc');
+      if (descEl) {
+        descEl.contentEditable = 'true';
+        descEl.setAttribute('aria-label', 'Edit post description');
+      }
+
+      const bodyEl = document.getElementById('postBody');
+      if (bodyEl) {
+        bodyEl.contentEditable = 'true';
+        bodyEl.setAttribute('aria-label', 'Edit post content');
+      }
+
+      document.querySelector('.diary-page')?.classList.add('edit-mode');
+      document.getElementById('editHint').style.display = 'block';
+
+      document.getElementById('authorToolbar').innerHTML = `
+        <span class="author-toolbar-label">EDITING</span>
+        <button class="toolbar-btn toolbar-btn-save" id="toolbarSaveBtn">✓ Save changes</button>
+        <button class="toolbar-btn toolbar-btn-cancel" id="toolbarCancelBtn">✕ Cancel</button>
+        <span class="toolbar-save-status" id="toolbarSaveStatus" aria-live="polite"></span>`;
+
+      document.getElementById('toolbarSaveBtn').addEventListener('click', saveEdit);
+      document.getElementById('toolbarCancelBtn').addEventListener('click', cancelEdit);
+    }
+
+    function cancelEdit() {
+      isEditMode = false;
+      renderPost(currentPostData);
+      document.querySelector('.diary-page')?.classList.remove('edit-mode');
+      document.getElementById('editHint').style.display = 'none';
+      restoreToolbar();
+    }
+
+    function restoreToolbar() {
+      document.getElementById('authorToolbar').innerHTML = `
+        <span class="author-toolbar-label">YOUR POST</span>
+        <button class="toolbar-btn toolbar-btn-edit" id="toolbarEditBtn">✏ Edit</button>
+        <button class="toolbar-btn toolbar-btn-delete" id="toolbarDeleteBtn">✕ Delete</button>
+        <span class="toolbar-save-status" id="toolbarSaveStatus" aria-live="polite"></span>`;
+      document.getElementById('toolbarEditBtn').addEventListener('click', enterEditMode);
+      document.getElementById('toolbarDeleteBtn').addEventListener('click', deletePost);
+    }
+
+    async function saveEdit() {
+      if (!currentUser || !currentPostData) return;
+
+      const titleEl = document.querySelector('.post-title');
+      const descEl  = document.querySelector('.post-desc');
+      const bodyEl  = document.getElementById('postBody');
+
+      const newTitle   = titleEl?.innerText.trim() || currentPostData.title;
+      const newDesc    = descEl?.innerText.trim()  || currentPostData.desc;
+
+      const bodyClone = bodyEl.cloneNode(true);
+      bodyClone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+      const newContent = bodyClone.innerHTML;
+
+      const statusEl = document.getElementById('toolbarSaveStatus');
+      statusEl.textContent = 'Saving...';
+      statusEl.style.color = 'var(--ink3)';
+
+      try {
+        await updateDoc(doc(db, 'posts', currentPostData.id), {
+          title:   newTitle,
+          desc:    newDesc,
+          content: newContent,
+          updatedAt: serverTimestamp()
+        });
+
+        currentPostData.title   = newTitle;
+        currentPostData.desc    = newDesc;
+        currentPostData.content = newContent;
+
+        isEditMode = false;
+        document.querySelector('.diary-page')?.classList.remove('edit-mode');
+        document.getElementById('editHint').style.display = 'none';
+
+        statusEl.textContent = '✓ Saved!';
+        statusEl.style.color = '#2a8a2a';
+
+        if (titleEl) titleEl.contentEditable = 'false';
+        if (descEl)  descEl.contentEditable  = 'false';
+        if (bodyEl)  bodyEl.contentEditable  = 'false';
+
+        restoreToolbar();
+        setTimeout(() => {
+          const s = document.getElementById('toolbarSaveStatus');
+          if (s) { s.textContent = '✓ Saved'; s.style.color = '#2a8a2a'; }
+        }, 100);
+        setTimeout(() => {
+          const s = document.getElementById('toolbarSaveStatus');
+          if (s) s.textContent = '';
+        }, 3000);
+
+      } catch(err) {
+        console.error(err);
+        statusEl.textContent = '✕ Failed: ' + err.message;
+        statusEl.style.color = '#c0392b';
+      }
+    }
+
+    // ── DELETE ──
+    async function deletePost() {
+      const confirmed = await showConfirmDelete(
+        `Delete "${currentPostData.title}"? This cannot be undone — the post will be removed from the board permanently.`
+      );
+      if (!confirmed) return;
+
+      try {
+        await deleteDoc(doc(db, 'posts', currentPostData.id));
+        window.location.href = 'index.html';
+      } catch(err) {
+        console.error(err);
+        const s = document.getElementById('toolbarSaveStatus');
+        if (s) { s.textContent = '✕ Delete failed'; s.style.color = '#c0392b'; }
+      }
+    }
+
+    document.getElementById('authorToolbar').addEventListener('click', e => {
+      if (e.target.id === 'toolbarEditBtn')   enterEditMode();
+      if (e.target.id === 'toolbarDeleteBtn') deletePost();
+    });
+
+    // ── Threaded Comments (with memory leak fix) ──
+    function loadComments(postId, postSlug, postTitle, postAuthorUid) {
+      // ✅ Unsubscribe from previous if exists
+      if (commentsUnsub) commentsUnsub();
+      
+      const q = query(
+        collection(db,'comments'),
+        where('postId','==',postId),
+        orderBy('createdAt','asc')
+      );
+      
+      commentsUnsub = onSnapshot(q, snap => {
+        const all = snap.docs.map(d => ({id:d.id,...d.data()}));
+        const list    = document.getElementById('commentsList');
+        const countEl = document.getElementById('commentsCount');
+        const topLevel = all.filter(c => !c.parentId);
+        const replies  = all.filter(c => !!c.parentId);
+        const total    = all.length;
+        countEl.textContent = `${total} note${total!==1?'s':''}`;
+        if (!topLevel.length) {
+          list.innerHTML = `<div class="comment-empty">No notes yet — be the first to leave one.</div>`;
+          return;
+        }
+        list.innerHTML = '';
+        topLevel.forEach((c, i) => {
+          const threadReplies = replies.filter(r => r.parentId === c.id);
+          const threadEl = document.createElement('div');
+          threadEl.className = 'comment-thread';
+          threadEl.setAttribute('role', 'listitem');
+          threadEl.innerHTML = renderComment(c, i, postAuthorUid, false);
+
+          if (threadReplies.length) {
+            const toggle = document.createElement('button');
+            toggle.className = 'toggle-replies-btn';
+            toggle.textContent = `${threadReplies.length} repl${threadReplies.length!==1?'ies':'y'}`;
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.setAttribute('aria-controls', `replies-${c.id}`);
+            
+            const repliesWrap = document.createElement('div');
+            repliesWrap.className = 'replies-wrap';
+            repliesWrap.id = `replies-${c.id}`;
+            repliesWrap.setAttribute('role', 'list');
+            threadReplies.forEach((r,j) => { repliesWrap.innerHTML += renderComment(r, j, postAuthorUid, true); });
+            
+            toggle.addEventListener('click', () => {
+              const hidden = repliesWrap.style.display === 'none';
+              repliesWrap.style.display = hidden ? 'block' : 'none';
+              toggle.classList.toggle('collapsed', !hidden);
+              toggle.setAttribute('aria-expanded', hidden ? 'true' : 'false');
+            });
+            threadEl.appendChild(toggle);
+            threadEl.appendChild(repliesWrap);
+          }
+
+          const replyForm = document.createElement('div');
+          replyForm.className = 'reply-form';
+          replyForm.id = `reply-form-${c.id}`;
+          replyForm.setAttribute('role', 'form');
+          replyForm.setAttribute('aria-label', `Reply to ${escHtml(c.name||'Anonymous')}`);
+          replyForm.innerHTML = `
+            <textarea class="reply-input" placeholder="Write a reply..." rows="2" aria-label="Your reply"></textarea>
+            <div class="reply-form-actions">
+              <button class="reply-submit-btn">Reply ✦</button>
+              <button class="reply-cancel-btn">Cancel</button>
+              <span class="reply-status" role="status" aria-live="polite"></span>
+            </div>`;
+          threadEl.appendChild(replyForm);
+          list.appendChild(threadEl);
+
+          const replyBtn = threadEl.querySelector('.comment-reply-btn');
+          if (replyBtn) {
+            replyBtn.addEventListener('click', () => {
+              if (!currentUser) { showLoginModal({ prompt: 'Sign in to reply.' }); return; }
+              replyForm.classList.toggle('open');
+              if (replyForm.classList.contains('open')) replyForm.querySelector('.reply-input').focus();
+            });
+          }
+          replyForm.querySelector('.reply-cancel-btn').addEventListener('click', () => {
+            replyForm.classList.remove('open');
+            replyForm.querySelector('.reply-input').value = '';
+          });
+          replyForm.querySelector('.reply-submit-btn').addEventListener('click', async () => {
+            if (!currentUser) { showLoginModal({ prompt: 'Sign in to reply.' }); return; }
+            const text = replyForm.querySelector('.reply-input').value.trim();
+            const status = replyForm.querySelector('.reply-status');
+            if (!text) { status.textContent = '⚠ Write something'; return; }
+            const submitBtn = replyForm.querySelector('.reply-submit-btn');
+            submitBtn.disabled = true; submitBtn.textContent = 'Replying...';
+            try {
+              await addDoc(collection(db,'comments'), {
+                postId, postSlug: postSlug||'', postTitle: postTitle||'',
+                parentId: c.id, text,
+                name: getDisplayName(currentUser),
+                authorUid: currentUser.uid,
+                authorEmail: currentUser.email||'',
+                createdAt: serverTimestamp()
+              });
+              if (c.authorUid && c.authorUid !== currentUser.uid) {
+                await addNotification({ toUid: c.authorUid, type: 'reply',
+                  fromName: getDisplayName(currentUser), fromUid: currentUser.uid,
+                  postSlug: postSlug||'', postTitle: postTitle||'', preview: text.slice(0,80) });
+              }
+              replyForm.querySelector('.reply-input').value = '';
+              replyForm.classList.remove('open');
+            } catch(e) { console.error(e); status.textContent = '✕ Failed'; }
+            submitBtn.disabled = false; submitBtn.textContent = 'Reply ✦';
+          });
+
+          threadEl.querySelectorAll('.comment-delete-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const confirmed = await showConfirmDelete('Delete this note?');
+              if (!confirmed) return;
+              try { await deleteDoc(doc(db,'comments', btn.dataset.id)); } catch(e) { console.error(e); }
+            });
+          });
+        });
+      }, err => {
+        console.error("Comments error:", err);
+        document.getElementById('commentsList').innerHTML = `<div class="comment-empty">Couldn't load notes.</div>`;
+      });
+    }
+
+    function renderComment(c, i, postAuthorUid, isReply) {
+      const ds = c.createdAt?.toDate
+        ? c.createdAt.toDate().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
+      const isOP   = c.authorUid && c.authorUid === postAuthorUid;
+      const canDel = (currentUser && c.authorUid && currentUser.uid === c.authorUid)
+                  || (currentUser && currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
+      return `<div class="comment-item" style="animation-delay:${i*40}ms" role="listitem">
+        <div class="comment-header">
+          <span class="comment-author${isOP?' is-op':''}">${escHtml(c.mood||'')} ${escHtml(c.name||'Anonymous')}</span>
+          ${ds?`<span class="comment-date">${ds}</span>`:''}
+        </div>
+        <div class="comment-text">${escHtml(c.text)}</div>
+        <div class="comment-actions">
+          ${!isReply?`<button class="comment-reply-btn" aria-label="Reply to ${escHtml(c.name||'Anonymous')}">↩ Reply</button>`:''}
+          ${canDel?`<button class="comment-delete-btn" data-id="${c.id}" aria-label="Delete this note">✕ delete</button>`:''}
+        </div>
+      </div>`;
+    }
+
+    function setupCommentForm(postId, postSlug, postTitle, postAuthorUid) {
+      const btn    = document.getElementById('commentSubmit');
+      const status = document.getElementById('commentStatus');
+      const textInput = document.getElementById('commentText');
+      const charCount = document.getElementById('charCount');
+      
+      // Character counter
+      textInput?.addEventListener('input', () => {
+        const max = 500;
+        const remaining = max - textInput.value.length;
+        charCount.textContent = `${textInput.value.length}/${max} characters`;
+        if (remaining < 20) {
+          charCount.style.color = remaining < 10 ? '#c0392b' : 'var(--ink3)';
+        } else {
+          charCount.style.color = 'var(--ink4)';
+        }
+        btn.disabled = textInput.value.trim().length === 0 || remaining < 0;
+      });
+      
+      onAuthChange(user => {
+        const nameEl = document.getElementById('commentName');
+        if (user && nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
+      });
+      
+      btn.addEventListener('click', async () => {
+        if (!currentUser) { showLoginModal({ prompt: 'Sign in to leave a note.' }); return; }
+        const name = document.getElementById('commentName').value.trim() || getDisplayName(currentUser);
+        const mood = document.getElementById('commentMood').value.trim();
+        const text = textInput.value.trim();
+        if (!text) { status.textContent='⚠ Write something first!'; status.className='comment-status'; return; }
+        btn.disabled=true; btn.textContent='Pinning...'; status.textContent=''; status.className='comment-status';
+        try {
+          await addDoc(collection(db,'comments'),{
             postId, postSlug: postSlug||'', postTitle: postTitle||'',
-            parentId: c.id, text,
-            name: getDisplayName(currentUser),
-            authorUid: currentUser.uid,
-            authorEmail: currentUser.email||'',
+            parentId: null, name, mood, text,
+            authorUid: currentUser.uid, authorEmail: currentUser.email||'',
             createdAt: serverTimestamp()
           });
-          if (c.authorUid && c.authorUid !== currentUser.uid) {
-            await addNotification({ toUid: c.authorUid, type: 'reply',
+          if (postAuthorUid && postAuthorUid !== currentUser.uid) {
+            await addNotification({ toUid: postAuthorUid, type: 'comment',
               fromName: getDisplayName(currentUser), fromUid: currentUser.uid,
               postSlug: postSlug||'', postTitle: postTitle||'', preview: text.slice(0,80) });
           }
-          replyForm.querySelector('.reply-input').value = '';
-          replyForm.classList.remove('open');
-        } catch(e) { console.error(e); status.textContent = '✕ Failed'; }
-        submitBtn.disabled = false; submitBtn.textContent = 'Reply ✦';
+          document.getElementById('commentMood').value='';
+          textInput.value='';
+          charCount.textContent = '0/500 characters';
+          status.textContent='✓ Note pinned!'; status.className='comment-status ok';
+          setTimeout(()=>{ status.textContent=''; status.className='comment-status'; },3000);
+        } catch(err) {
+          console.error(err);
+          status.textContent='✕ Failed — check Firebase config';
+          status.className='comment-status';
+        }
+        btn.disabled=false; btn.textContent='Pin this note ✦';
       });
+    }
 
-      threadEl.querySelectorAll('.comment-delete-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const confirmed = await showConfirmDelete('Delete this note?');
-          if (!confirmed) return;
-          try { await deleteDoc(doc(db,'comments', btn.dataset.id)); } catch(e) { console.error(e); }
+    // ── Notifications helper ──
+    async function addNotification({ toUid, type, fromName, fromUid, postSlug, postTitle, preview }) {
+      if (!toUid || toUid === fromUid) return;
+      try {
+        await addDoc(collection(db,'notifications'), {
+          toUid, type, fromName, fromUid,
+          postSlug: postSlug||'', postTitle: postTitle||'',
+          preview: preview||'', read: false,
+          createdAt: serverTimestamp()
         });
-      });
-    });
-  });
-}
-
-function renderComment(c, i, postAuthorUid, isReply) {
-  const ds = c.createdAt?.toDate
-    ? c.createdAt.toDate().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
-  const isOP   = c.authorUid && c.authorUid === postAuthorUid;
-  const canDel = (currentUser && c.authorUid && currentUser.uid === c.authorUid)
-              || (currentUser && currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
-  return `<div class="comment-item" style="animation-delay:${i*40}ms">
-    <div class="comment-header">
-      <span class="comment-author${isOP?' is-op':''}">${c.mood||''} ${escHtml(c.name||'Anonymous')}</span>
-      ${ds?`<span class="comment-date">${ds}</span>`:''}
-    </div>
-    <div class="comment-text">${escHtml(c.text)}</div>
-    <div class="comment-actions">
-      ${!isReply?`<button class="comment-reply-btn">↩ Reply</button>`:''}
-      ${canDel?`<button class="comment-delete-btn" data-id="${c.id}">✕ delete</button>`:''}
-    </div>
-  </div>`;
-}
-
-function setupCommentForm(postId, postSlug, postTitle, postAuthorUid) {
-  const btn    = document.getElementById('commentSubmit');
-  const status = document.getElementById('commentStatus');
-  onAuthChange(user => {
-    const nameEl = document.getElementById('commentName');
-    if (user && nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
-  });
-  btn.addEventListener('click', async () => {
-    if (!currentUser) { showLoginModal({ prompt: 'Sign in to leave a note.' }); return; }
-    const name = document.getElementById('commentName').value.trim() || getDisplayName(currentUser);
-    const mood = document.getElementById('commentMood').value.trim();
-    const text = document.getElementById('commentText').value.trim();
-    if (!text) { status.textContent='⚠ Write something first!'; return; }
-    btn.disabled=true; btn.textContent='Pinning...'; status.textContent='';
-    try {
-      await addDoc(collection(db,'comments'),{
-        postId, postSlug: postSlug||'', postTitle: postTitle||'',
-        parentId: null, name, mood, text,
-        authorUid: currentUser.uid, authorEmail: currentUser.email||'',
-        createdAt: serverTimestamp()
-      });
-      if (postAuthorUid && postAuthorUid !== currentUser.uid) {
-        await addNotification({ toUid: postAuthorUid, type: 'comment',
-          fromName: getDisplayName(currentUser), fromUid: currentUser.uid,
-          postSlug: postSlug||'', postTitle: postTitle||'', preview: text.slice(0,80) });
-      }
-      document.getElementById('commentMood').value='';
-      document.getElementById('commentText').value='';
-      status.textContent='✓ Note pinned!'; status.className='comment-status ok';
-      setTimeout(()=>{ status.textContent=''; status.className='comment-status'; },3000);
-    } catch(err) {
-      console.error(err);
-      status.textContent='✕ Failed — check Firebase config';
+      } catch(e) { console.error('Notification write:', e); }
     }
-    btn.disabled=false; btn.textContent='Pin this note ✦';
-  });
-}
 
-// ── Notifications helper ──────────────────────────────
-async function addNotification({ toUid, type, fromName, fromUid, postSlug, postTitle, preview }) {
-  if (!toUid || toUid === fromUid) return;
-  try {
-    await addDoc(collection(db,'notifications'), {
-      toUid, type, fromName, fromUid,
-      postSlug: postSlug||'', postTitle: postTitle||'',
-      preview: preview||'', read: false,
-      createdAt: serverTimestamp()
-    });
-  } catch(e) { console.error('Notification write:', e); }
-}
-
-async function loadMoreByAuthor(author, currentSlug) {
-  if (!author) return;
-  try {
-    const snap = await getDocs(query(
-      collection(db,'posts'),
-      where('author','==',author),
-      where('status','==','published'),
-      orderBy('createdAt','desc'),
-      limit(4)
-    ));
-    const others = snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.slug!==currentSlug);
-    if (!others.length) return;
-    document.getElementById('moreSubheading').textContent = `More by ${author}`;
-    const grid = document.getElementById('moreGrid');
-    grid.innerHTML = others.map((p,i) => {
-      const cat = (p.category||'post').toUpperCase();
-      const ds = p.date ? new Date(p.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
-      const thumb = p.thumbnail
-        ? `<img class="more-card-img" src="${p.thumbnail}" alt="${p.title}" loading="lazy">`
-        : `<div class="more-card-noimg"><span class="more-card-noimg-num">${String(i+1).padStart(2,'0')}</span></div>`;
-      return `<a href="post.html?slug=${p.slug}" class="more-card">
-        <div class="more-card-pin"></div>${thumb}
-        <div class="more-card-body">
-          <div class="more-card-cat">${cat}</div>
-          <div class="more-card-title">${p.title}</div>
-          ${ds?`<div class="more-card-date">${ds}</div>`:''}
-        </div></a>`;
-    }).join('');
-    document.getElementById('moreByAuthor').style.display = 'block';
-  } catch(err) { console.error('More by author:',err); }
-}
-
-function showNotFound() {
-  document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('notFound').style.display = 'block';
-}
-function calcReadTime(html) {
-  const words = html.replace(/<[^>]+>/g,'').trim().split(/\s+/).filter(Boolean).length;
-  return words>0 ? `~${Math.max(1,Math.ceil(words/200))} min` : '';
-}
-function escHtml(str) {
-  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-/* ── Bottom dock ── */
-document.getElementById('dockSearchBtn')?.addEventListener('click', () => {
-  if(typeof openSearch==='function')openSearch(); else document.getElementById('searchOverlay')?.classList.add('open');
-});
-document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
-  e.preventDefault();
-  if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to write.');if(u)window.location.href='submit.html';}else window.location.href='submit.html';
-});
-document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
-  if(typeof currentUser!=='undefined'&&currentUser){window.location.href='dashboard.html';}else if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to access your board.');if(u)window.location.href='dashboard.html';}else window.location.href='dashboard.html';
-});
-/* Update dock Me icon on auth change */
-if (typeof onAuthChange === 'function') {
-  onAuthChange(user => {
-    const icon = document.getElementById('dockMeIcon');
-    const lbl  = document.getElementById('dockMeLabel');
-    if (!icon) return;
-    if (user) {
-      icon.innerHTML = user.photoURL
-        ? `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer">`
-        : `<div class="dock-avatar-placeholder">${(user.displayName||'U')[0].toUpperCase()}</div>`;
-      if (lbl) lbl.textContent = (user.displayName||'').split(' ')[0].slice(0,5)||'ME';
-    } else {
-      icon.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
-      if (lbl) lbl.textContent = 'ME';
+    async function loadMoreByAuthor(author, currentSlug) {
+      if (!author) return;
+      try {
+        const snap = await getDocs(query(
+          collection(db,'posts'),
+          where('author','==',author),
+          where('status','==','published'),
+          orderBy('createdAt','desc'),
+          limit(4)
+        ));
+        const others = snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.slug!==currentSlug);
+        if (!others.length) return;
+        document.getElementById('moreSubheading').textContent = `More by ${escHtml(author)}`;
+        const grid = document.getElementById('moreGrid');
+        grid.innerHTML = others.map((p,i) => {
+          const cat = (p.category||'post').toUpperCase();
+          const ds = p.date ? new Date(p.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
+          const thumb = p.thumbnail
+            ? `<img class="more-card-img" src="${p.thumbnail}" alt="${escHtml(p.title)}" loading="lazy" decoding="async">`
+            : `<div class="more-card-noimg"><span class="more-card-noimg-num">${String(i+1).padStart(2,'0')}</span></div>`;
+          return `<a href="post.html?slug=${p.slug}" class="more-card" role="listitem">
+            <div class="more-card-pin" aria-hidden="true"></div>${thumb}
+            <div class="more-card-body">
+              <div class="more-card-cat" aria-label="Category: ${cat}">${cat}</div>
+              <div class="more-card-title">${escHtml(p.title)}</div>
+              ${ds?`<div class="more-card-date">${ds}</div>`:''}
+            </div></a>`;
+        }).join('');
+        document.getElementById('moreByAuthor').style.display = 'block';
+      } catch(err) { console.error('More by author:',err); }
     }
-  });
-}
-</script>
 
-<!-- BOTTOM DOCK -->
-<div class="bottom-dock">
-  <div class="dock-inner">
-    <a href="index.html" class="dock-item">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
-      <span class="dock-label">HOME</span>
-    </a>
-    <a href="posts.html" class="dock-item  active">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <span class="dock-label">POSTS</span>
-    </a>
-    <a href="submit.html" class="dock-item dock-write" id="dockWriteBtn">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z"/></svg></div>
-      <span class="dock-label">WRITE</span>
-    </a>
-    <button class="dock-item dock-search" id="dockSearchBtn">
-      <div class="dock-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
-      <span class="dock-label">SEARCH</span>
-    </button>
-    <button class="dock-item dock-me" id="dockMeBtn">
-      <div class="dock-icon" id="dockMeIcon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-      <span class="dock-label" id="dockMeLabel">ME</span>
-    </button>
+    function showNotFound(msg = "This post doesn't exist or was removed.") {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('notFoundMsg').textContent = msg;
+      document.getElementById('notFound').style.display = 'block';
+      document.title = "Page not found — HlyWor";
+    }
+    
+    function calcReadTime(html) {
+      const words = html.replace(/<[^>]+>/g,'').trim().split(/\s+/).filter(Boolean).length;
+      return words>0 ? `~${Math.max(1,Math.ceil(words/200))} min` : '';
+    }
+    
+    function escHtml(str) {
+      return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ✅ Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      if (commentsUnsub) commentsUnsub();
+    });
+
+    // ✅ Restore scroll position on index.html load (add to index.html script)
+    // window.addEventListener('load', () => {
+    //   const scrollY = sessionStorage.getItem('hlywor_scrollY');
+    //   if (scrollY) {
+    //     setTimeout(() => window.scrollTo(0, parseInt(scrollY)), 100);
+    //     sessionStorage.removeItem('hlywor_scrollY');
+    //   }
+    // });
+
+    /* ── Bottom dock ── */
+    document.getElementById('dockSearchBtn')?.addEventListener('click', () => {
+      if(typeof openSearch==='function')openSearch(); else document.getElementById('searchOverlay')?.classList.add('open');
+    });
+    document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
+      e.preventDefault();
+      if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to write.');if(u)window.location.href='submit.html';}else window.location.href='submit.html';
+    });
+    document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
+      if(typeof currentUser!=='undefined'&&currentUser){window.location.href='dashboard.html';}else if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to access your board.');if(u)window.location.href='dashboard.html';}else window.location.href='dashboard.html';
+    });
+    
+    if (typeof onAuthChange === 'function') {
+      onAuthChange(user => {
+        const icon = document.getElementById('dockMeIcon');
+        const lbl  = document.getElementById('dockMeLabel');
+        if (!icon) return;
+        if (user) {
+          icon.innerHTML = user.photoURL
+            ? `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer" loading="lazy">`
+            : `<div class="dock-avatar-placeholder" aria-hidden="true">${(user.displayName||'U')[0].toUpperCase()}</div>`;
+          if (lbl) lbl.textContent = (user.displayName||'').split(' ')[0].slice(0,5)||'ME';
+        } else {
+          icon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+          if (lbl) lbl.textContent = 'ME';
+        }
+      });
+    }
+  </script>
+
+  <!-- BOTTOM DOCK -->
+  <div class="bottom-dock" role="navigation" aria-label="Mobile">
+    <div class="dock-inner">
+      <a href="index.html" class="dock-item" aria-label="Home">
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+        <span class="dock-label">HOME</span>
+      </a>
+      <a href="posts.html" class="dock-item active" aria-label="All posts">
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <span class="dock-label">POSTS</span>
+      </a>
+      <a href="submit.html" class="dock-item dock-write" id="dockWriteBtn" aria-label="Write a story">
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z"/></svg></div>
+        <span class="dock-label">WRITE</span>
+      </a>
+      <button class="dock-item dock-search" id="dockSearchBtn" aria-label="Search">
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <span class="dock-label">SEARCH</span>
+      </button>
+      <button class="dock-item dock-me" id="dockMeBtn" aria-label="My profile">
+        <div class="dock-icon" id="dockMeIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+        <span class="dock-label" id="dockMeLabel">ME</span>
+      </button>
+    </div>
   </div>
-</div>
 </body>
 </html>
