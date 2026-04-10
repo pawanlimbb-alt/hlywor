@@ -1,92 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQDXDWHLX8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MQDXDWHLX8');
+  </script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Profile — HlyWor</title>
-  
-  <!-- ✅ SEO Meta -->
-  <meta name="description" content="Read posts and learn more about this writer on HlyWor.">
-  <meta name="theme-color" content="#2a1f14">
-  
-  <!-- ✅ Analytics -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQDXDWHLX8"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MQDXDWHLX8');</script>
-  
-  <!-- ✅ Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
-  
+
   <style>
     :root {
-      --board: #2a1f14;
-      --paper: #faf6ee;
+      --board:  #2a1f14;
+      --paper:  #faf6ee;
       --paper2: #f5edd8;
       --paper3: #ede3c8;
-      --ink: #1a1208;
-      --ink2: #3d3020;
-      --ink3: #6a5840;
-      --ink4: #a09078;
-      --rule: rgba(180,160,120,0.22);
-      --fire: #e8681a;
-      --gold: #d4a020;
-      --accent: var(--fire);
+      --ink:    #1a1208;
+      --ink2:   #3d3020;
+      --ink3:   #6a5840;
+      --ink4:   #a09078;
+      --rule:   rgba(180,160,120,0.22);
+      --fire:   #e8681a;
+      --gold:   #d4a020;
+      --acc:    var(--fire); /* overridden per person */
       --pin-shadow: 0 8px 36px rgba(0,0,0,0.48), 0 2px 8px rgba(0,0,0,0.28);
-      --pixel: 'Press Start 2P', monospace;
-      --serif: 'Crimson Pro', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
-      --hand: 'Caveat', cursive;
-      --focus-ring: rgba(212, 160, 32, 0.6);
-      --transition: all 0.2s ease;
+      --pixel:  'Press Start 2P', monospace;
+      --serif:  'Crimson Pro', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      --hand:   'Caveat', cursive;
     }
-    
-    /* ✅ Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-      .page-curl, .follow-btn, .tab-btn { transition: none !important; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--board);
+      font-family: var(--serif);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    
-    /* ✅ Base reset */
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:var(--board);font-family:var(--serif);min-height:100vh;overflow-x:hidden;color:var(--ink)}
-    
-    /* ✅ Skip link */
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: var(--fire);
-      color: #fff;
-      padding: 8px 16px;
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      text-decoration: none;
-      z-index: 10000;
-      border-radius: 0 0 4px 4px;
-      transition: top 0.2s;
-    }
-    .skip-link:focus {
-      top: 0;
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-    }
-    
-    /* ✅ Cork texture */
-    body::before{
-      content:'';position:fixed;inset:0;
+
+    /* Cork texture */
+    body::before {
+      content: ''; position: fixed; inset: 0;
       background-image:
         radial-gradient(ellipse at 15% 25%, rgba(100,70,30,0.35) 0%, transparent 45%),
         radial-gradient(ellipse at 85% 70%, rgba(70,45,15,0.28) 0%, transparent 45%),
-        url("image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
-      background-size:auto,auto,200px 200px;
-      pointer-events:none;z-index:0;
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: auto,auto,200px 200px;
+      pointer-events: none; z-index: 0;
     }
-    
-    /* ✅ Warm glow */
+
+    /* Warm glow follows accent */
     .acc-glow {
       position: fixed; width: 600px; height: 600px; border-radius: 50%;
       background: radial-gradient(circle, rgba(232,104,26,0.07) 0%, transparent 70%);
@@ -95,8 +70,8 @@
       animation: glowPulse 7s ease-in-out infinite;
     }
     @keyframes glowPulse { 0%,100%{opacity:.6;transform:translateX(-50%) scale(1)} 50%{opacity:1;transform:translateX(-50%) scale(1.1)} }
-    
-    /* ✅ Embers */
+
+    /* Embers */
     .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
     .ember {
       position: absolute; border-radius: 50%;
@@ -107,20 +82,20 @@
       8%{opacity:.8} 85%{opacity:.3}
       100%{transform:translateY(-5vh) translateX(var(--ed));opacity:0}
     }
-    
+
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--board); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
-    
-    /* ✅ Reading progress */
+    ::-webkit-scrollbar-thumb { background: var(--acc); border-radius: 2px; }
+
+    /* Reading progress */
     #progress-bar {
       position: fixed; top: 0; left: 0;
       height: 3px; width: 0%;
-      background: linear-gradient(90deg, var(--accent), var(--gold));
+      background: linear-gradient(90deg, var(--acc), var(--gold));
       z-index: 9999; transition: width 0.08s linear;
     }
-    
-    /* ✅ NAV */
+
+    /* ── NAV ── */
     .nav {
       position: sticky; top: 0; z-index: 200;
       background: var(--ink);
@@ -141,12 +116,10 @@
       color: rgba(255,255,255,0.38); text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-back:hover,
-    .nav-back:focus { color: rgba(255,255,255,0.85); outline: none; }
-    .nav-back:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    .nav-back:hover { color: rgba(255,255,255,0.85); }
     .nav-back::before { content: '←'; margin-right: 5px; }
-    
-    /* ✅ LOADING */
+
+    /* ── LOADING ── */
     .loading {
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -163,717 +136,469 @@
     .l-page::after { content:'';width:28px;height:2px;background:linear-gradient(90deg,var(--fire),transparent);box-shadow:0 8px 0 var(--rule),0 16px 0 var(--rule),0 24px 0 var(--rule); }
     .loading-text { font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.4);font-style:italic;animation:lFade 1.2s ease-in-out infinite; }
     @keyframes lFade { 0%,100%{opacity:.4} 50%{opacity:.9} }
-    
-    /* ✅ PAGE WRAP */
+
+    /* ── PAGE WRAP ── */
     .page-wrap {
-      max-width: 1000px; margin: 0 auto;
+      max-width: 900px; margin: 0 auto;
       padding: 0 24px 80px;
       position: relative; z-index: 1;
     }
-    
-    /* ✅ PROFILE HEADER */
+
+    /* ── PROFILE HEADER — pinned card on board ── */
     .profile-header {
-      padding-top: 32px;
+      padding-top: 44px;
       position: relative;
     }
-    
-    /* ✅ Profile card - cleaner book style */
-    .profile-card {
-      background: var(--paper);
-      border-radius: 8px;
+
+    /* Book drop animation */
+    @keyframes bookDrop {
+      0%  { opacity:0; transform: translateY(-50px) rotate(-2deg) scale(0.96); }
+      65% { opacity:1; transform: translateY(6px) rotate(0.4deg) scale(1.004); }
+      82% { transform: translateY(-3px) rotate(-0.2deg); }
+      100%{ opacity:1; transform: translateY(0) rotate(0deg) scale(1); }
+    }
+
+    .profile-sheet {
+      display: flex;
       box-shadow: var(--pin-shadow);
+      animation: bookDrop 0.9s cubic-bezier(0.34,1.4,0.64,1) both;
       position: relative;
-      overflow: hidden;
-      animation: cardDrop 0.6s ease-out both;
     }
-    @keyframes cardDrop {
-      from { opacity: 0; transform: translateY(-20px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Big pin */
+    .profile-pin {
+      position: absolute; top: -13px; left: 50%;
+      transform: translateX(-50%);
+      width: 16px; height: 16px; border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.3);
+      z-index: 10;
+      animation: pinDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) both 0.1s;
     }
-    
-    /* ✅ Cover image */
-    .profile-cover {
-      height: 200px;
-      background: linear-gradient(135deg, var(--paper2), var(--paper3));
-      position: relative;
-      overflow: hidden;
+    @keyframes pinDrop { from{opacity:0;transform:translateX(-50%) translateY(-18px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+    .profile-pin::after {
+      content:''; position:absolute;
+      top:100%;left:50%;transform:translateX(-50%);
+      width:2px;height:14px;background:linear-gradient(to bottom,#888,#333);
     }
-    .profile-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.95) contrast(1.05);
+
+    /* Spine */
+    .profile-spine {
+      width: 26px; flex-shrink: 0;
+      background: linear-gradient(180deg,#3d2210 0%,#2a1608 20%,#4a2a12 40%,#2a1608 60%,#3d2210 80%,#2a1608 100%);
+      border-right: 2px solid rgba(0,0,0,0.5);
+      border-radius: 3px 0 0 3px; position: relative;
     }
-    .profile-cover::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, rgba(26,18,8,0.3));
+    .profile-spine::before {
+      content:''; position:absolute; top:0;left:50%;transform:translateX(-50%);
+      width:6px; bottom:0;
+      background:repeating-linear-gradient(to bottom,transparent 0px,transparent 28px,rgba(0,0,0,0.35) 28px,rgba(0,0,0,0.35) 34px);
     }
-    
-    /* ✅ Avatar */
-    .profile-avatar-wrap {
-      position: absolute;
-      bottom: -40px;
-      left: 32px;
-      z-index: 2;
+
+    /* Page */
+    .profile-page {
+      flex:1; background:var(--paper); position:relative; overflow:hidden;
     }
-    .profile-avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      border: 4px solid var(--paper);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-      object-fit: cover;
-      background: var(--paper3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--hand);
-      font-size: 2rem;
-      color: var(--ink3);
-      font-weight: 700;
+    .profile-page::before {
+      content:''; position:absolute; inset:0;
+      background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px);
+      background-position:0 100px;
+      pointer-events:none; z-index:0;
     }
-    
-    /* ✅ Profile info */
-    .profile-info {
-      padding: 56px 32px 24px 32px;
+    .profile-page::after {
+      content:''; position:absolute; top:0;bottom:0;left:72px;
+      width:1px; background:rgba(220,80,80,0.18);
+      pointer-events:none; z-index:0;
+    }
+    .page-curl {
+      position:absolute; bottom:0; right:0;
+      width:42px; height:42px;
+      background:linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.1) 50%,var(--paper2) 50%);
+      clip-path:polygon(100% 0,100% 100%,0 100%);
+      pointer-events:none; z-index:10;
+      transition:width 0.3s,height 0.3s;
+    }
+    .profile-sheet:hover .page-curl { width:56px; height:56px; }
+
+    /* ── PROFILE TOP SECTION ── */
+    .profile-top {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 28px;
+      padding: 32px 32px 24px 88px;
       border-bottom: 1px solid var(--rule);
+      position: relative; z-index: 2;
     }
-    
-    .profile-name {
-      font-family: var(--hand);
-      font-size: clamp(2rem, 5vw, 2.5rem);
-      color: var(--ink);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 4px;
+
+    /* Photos collage */
+    .profile-photos {
+      position: relative; height: 260px;
     }
-    
+    .p-photo {
+      position: absolute;
+      background: #fff;
+      padding: 6px 6px 22px;
+      box-shadow: 2px 4px 14px rgba(0,0,0,0.3), 1px 1px 3px rgba(0,0,0,0.15);
+      transition: transform 0.25s, box-shadow 0.25s, z-index 0s;
+    }
+    .p-photo:hover { box-shadow:4px 6px 22px rgba(0,0,0,0.45); z-index:20!important; }
+    .p-photo img { width:100%; height:100%; object-fit:cover; display:block; filter:sepia(6%) brightness(0.97); }
+    .p-photo-cap { font-family:var(--hand);font-size:0.72rem;color:var(--ink3);text-align:center;padding-top:4px;line-height:1.2; }
+    /* Tape */
+    .p-photo::before {
+      content:''; position:absolute;
+      top:-7px; left:50%; transform:translateX(-50%) rotate(-1deg);
+      width:44px; height:14px;
+      background:rgba(240,190,40,0.65); z-index:3;
+    }
+    .p-photo:nth-child(2)::before { background:rgba(80,130,220,0.55);transform:translateX(-50%) rotate(1.5deg); }
+    .p-photo:nth-child(3)::before { background:rgba(80,180,100,0.55);transform:translateX(-50%) rotate(-0.5deg); }
+
+    /* 1 photo */
+    .profile-photos.c1 .p-photo:nth-child(1) { top:14px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:148px;height:148px; }
+    /* 2 photos */
+    .profile-photos.c2 .p-photo:nth-child(1) { top:8px;left:4px;width:134px;height:130px;transform:rotate(-3deg);z-index:2; }
+    .profile-photos.c2 .p-photo:nth-child(2) { top:20px;right:4px;width:130px;height:126px;transform:rotate(2.5deg);z-index:1; }
+    /* 3 photos */
+    .profile-photos.c3 .p-photo:nth-child(1) { top:4px;left:50%;transform:translateX(-50%) rotate(-2deg);width:130px;height:122px;z-index:3; }
+    .profile-photos.c3 .p-photo:nth-child(2) { bottom:0;left:0;width:120px;height:112px;transform:rotate(3deg);z-index:2; }
+    .profile-photos.c3 .p-photo:nth-child(3) { bottom:0;right:0;width:120px;height:112px;transform:rotate(-2.5deg);z-index:1; }
+    /* No photo */
+    .profile-photos.c0 {
+      height:160px; background:var(--paper3);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .no-photo-txt { font-family:var(--hand);font-size:1rem;color:var(--ink4);font-style:italic; }
+
+    /* Right side of top */
+    .profile-info { display:flex; flex-direction:column; gap:10px; }
+
     .profile-handle {
-      font-family: var(--pixel);
-      font-size: 0.7rem;
-      color: var(--ink3);
-      letter-spacing: 1px;
-      margin-bottom: 12px;
+      font-family:var(--pixel); font-size:0.44rem;
+      letter-spacing:1px; padding:4px 12px;
+      color:#fff; display:inline-block;
+      align-self:flex-start; transform:rotate(-0.5deg);
+      margin-bottom:4px;
     }
-    
+    .profile-name {
+      font-family:var(--hand);
+      font-size:clamp(2rem,5vw,3rem);
+      color:var(--ink); font-weight:700; line-height:1.1;
+    }
+    .profile-role {
+      font-family:var(--pixel); font-size:0.36rem;
+      letter-spacing:1px; margin-top:2px;
+    }
+
+    /* Prof + age chips */
+    .chip-row { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; }
+    .prof-chip {
+      font-family:var(--hand); font-size:0.88rem;
+      padding:3px 12px; color:#fff; border-radius:1px; opacity:0.88;
+    }
+    .age-chip {
+      font-family:var(--pixel); font-size:0.32rem;
+      padding:2px 8px; letter-spacing:1px;
+      color:var(--ink3); border:1px solid rgba(26,18,8,0.15);
+      background:var(--paper3);
+    }
+    .loc-chip {
+      font-family:var(--hand); font-size:0.78rem;
+      color:var(--ink3); padding:2px 8px;
+      border:1px solid rgba(26,18,8,0.12);
+      background:var(--paper2); border-radius:1px;
+    }
+
     .profile-bio {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--ink2);
-      line-height: 1.7;
-      max-width: 600px;
-      margin-bottom: 16px;
+      font-family:var(--serif); font-size:1rem;
+      font-style:italic; color:var(--ink2);
+      line-height:1.75; margin-top:4px;
+      max-width:480px;
     }
-    
-    .profile-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 24px;
-      margin-bottom: 16px;
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      color: var(--ink3);
+
+    /* Info list — diary style */
+    .info-list {
+      list-style:none;
+      display:flex; flex-direction:column; gap:5px;
+      margin-top:6px;
     }
-    
-    .profile-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .info-list li {
+      font-family:var(--hand); font-size:0.95rem;
+      color:var(--ink2); display:flex; gap:8px;
     }
-    
-    .profile-stats {
-      display: flex;
-      gap: 24px;
-      padding: 12px 0;
-      border-top: 1px dashed var(--rule);
-      margin-top: 12px;
+    .info-list li .lbl {
+      font-family:var(--pixel); font-size:0.36rem;
+      color:var(--ink4); letter-spacing:1px;
+      width:74px; flex-shrink:0; padding-top:3px;
     }
-    
-    .stat-item {
-      text-align: center;
+
+    /* Social links */
+    .social-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .social-link {
+      font-family:var(--hand); font-size:0.85rem;
+      color:#fff; padding:4px 14px;
+      text-decoration:none; transition:all 0.2s;
+      display:flex; align-items:center; gap:5px;
     }
-    
-    .stat-value {
-      font-family: var(--pixel);
-      font-size: 1.1rem;
-      color: var(--ink);
-      font-weight: 600;
-    }
-    
-    .stat-label {
-      font-family: var(--sans);
-      font-size: 0.7rem;
-      color: var(--ink4);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    /* ✅ Follow button */
-    .follow-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 16px;
-    }
-    
-    .follow-btn {
-      font-family: var(--hand);
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 10px 28px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .follow-btn.unfollowed {
-      background: var(--fire);
-      color: #fff;
-    }
-    
-    .follow-btn.unfollowed:hover,
-    .follow-btn.unfollowed:focus {
-      background: #ff7a2a;
-      transform: translateY(-1px);
-      outline: none;
-    }
-    
-    .follow-btn.unfollowed:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
-    }
-    
-    .follow-btn.followed {
-      background: var(--paper2);
-      color: var(--ink2);
-      border: 1px solid rgba(26,18,8,0.15);
-    }
-    
-    .follow-btn.followed:hover,
-    .follow-btn.followed:focus {
-      background: rgba(192,57,43,0.08);
-      color: #c0392b;
-      border-color: rgba(192,57,43,0.3);
-      outline: none;
-    }
-    
-    .follow-btn.followed:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
-    }
-    
-    .follow-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-    
-    .follow-count {
-      font-family: var(--pixel);
-      font-size: 0.75rem;
-      color: var(--ink4);
-      letter-spacing: 0.5px;
-    }
-    
-    /* ✅ Tabs */
-    .profile-tabs {
-      display: flex;
-      gap: 4px;
-      padding: 0 32px;
-      border-bottom: 1px solid var(--rule);
-      background: var(--paper2);
-    }
-    
-    .tab-btn {
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      padding: 12px 20px;
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid transparent;
-      color: var(--ink3);
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-    }
-    
-    .tab-btn:hover,
-    .tab-btn:focus {
-      color: var(--ink);
-      outline: none;
-    }
-    
-    .tab-btn:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: -2px;
-    }
-    
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      font-weight: 500;
-    }
-    
-    .tab-btn::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transition: transform 0.2s ease;
-    }
-    
-    .tab-btn.active::after {
-      transform: scaleX(1);
-    }
-    
-    /* ✅ Tab content */
-    .tab-content {
-      display: none;
-      padding: 24px 32px;
-    }
-    
-    .tab-content.active {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* ✅ Posts grid */
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    
-    .post-card {
-      background: var(--paper);
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-      transition: var(--transition);
-      text-decoration: none;
-      color: var(--ink);
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .post-card:hover,
-    .post-card:focus {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      outline: none;
-    }
-    
-    .post-card:focus-visible {
-      outline: 3px solid var(--focus-ring);
-      outline-offset: 2px;
-    }
-    
-    .post-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      display: block;
-      filter: sepia(8%);
-      transition: filter 0.3s, transform 0.3s;
-    }
-    
-    .post-card:hover .post-thumb,
-    .post-card:focus .post-thumb {
-      filter: sepia(0%);
-      transform: scale(1.03);
-    }
-    
-    .post-noimg {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: var(--paper3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--pixel);
-      font-size: 2rem;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(26,18,8,0.08);
-    }
-    
-    .post-body {
-      padding: 16px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .post-cat {
-      font-family: var(--pixel);
-      font-size: 0.65rem;
-      color: var(--accent);
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    
-    .post-title {
-      font-family: var(--hand);
-      font-size: 1.1rem;
-      color: var(--ink);
-      font-weight: 600;
-      line-height: 1.4;
-      margin-bottom: 8px;
-    }
-    
-    .post-desc {
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      color: var(--ink3);
-      line-height: 1.6;
-      flex: 1;
-      margin-bottom: 12px;
-    }
-    
-    .post-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-family: var(--sans);
-      font-size: 0.7rem;
-      color: var(--ink4);
-    }
-    
-    .post-read {
-      font-family: var(--pixel);
-      font-size: 0.65rem;
-      color: var(--accent);
-      letter-spacing: 0.5px;
-      transition: letter-spacing 0.2s;
-    }
-    
-    .post-card:hover .post-read,
-    .post-card:focus .post-read {
-      letter-spacing: 2px;
-    }
-    
-    /* ✅ No posts state */
-    .no-posts {
-      grid-column: 1 / -1;
-      padding: 48px;
-      text-align: center;
-      font-family: var(--hand);
-      font-size: 1.1rem;
-      color: var(--ink3);
-      font-style: italic;
-    }
-    
-    /* ✅ About section */
-    .about-content {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      color: var(--ink2);
-      line-height: 1.8;
-      max-width: 680px;
-    }
-    
-    .about-content h2 {
-      font-family: var(--hand);
-      font-size: 1.6rem;
-      color: var(--ink);
-      margin: 24px 0 12px;
-      font-weight: 600;
-    }
-    
-    .about-content h3 {
-      font-family: var(--hand);
-      font-size: 1.2rem;
-      color: var(--ink2);
-      margin: 20px 0 8px;
-    }
-    
-    .about-content p {
-      margin-bottom: 12px;
-    }
-    
-    .about-content blockquote {
-      margin: 16px 0;
-      padding: 12px 20px;
-      border-left: 3px solid var(--accent);
-      background: rgba(232,104,26,0.04);
-      font-style: italic;
-      color: var(--ink2);
-    }
-    
-    .about-content ul,
-    .about-content ol {
-      padding-left: 24px;
-      margin: 12px 0;
-    }
-    
-    .about-content li {
-      line-height: 1.8;
-      margin-bottom: 4px;
-    }
-    
-    .interest-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-    
-    .interest-tag {
-      font-family: var(--hand);
-      font-size: 0.9rem;
-      color: var(--ink2);
-      padding: 4px 12px;
-      border: 1px solid rgba(26,18,8,0.15);
-      background: var(--paper2);
-      border-radius: 2px;
-      transition: var(--transition);
-    }
-    
-    .interest-tag:hover,
-    .interest-tag:focus {
-      background: var(--paper3);
-      outline: none;
-    }
-    
-    .interest-tag:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 1px;
-    }
-    
-    /* ✅ Stats tab */
+    .social-link:hover { transform:translateY(-2px); filter:brightness(1.1); }
+
+    /* Stats */
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      max-width: 680px;
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:8px 20px; margin-top:10px;
     }
-    
-    .stat-card {
-      background: var(--paper2);
-      padding: 20px;
-      border-radius: 4px;
-      text-align: center;
-      border: 1px solid var(--rule);
+    .stat-row { display:flex; align-items:center; gap:8px; }
+    .stat-lbl { font-family:var(--pixel);font-size:0.38rem;color:var(--ink4);letter-spacing:1px;width:62px;flex-shrink:0; }
+    .stat-bar-w { flex:1;height:5px;background:rgba(26,18,8,0.07);border-radius:1px;overflow:hidden; }
+    .stat-bar   { height:100%;border-radius:1px;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform 0.9s cubic-bezier(0.34,1.2,0.64,1); }
+    .stat-bar.in{ transform:scaleX(var(--sv,0.7)); }
+    .stat-n     { font-family:var(--pixel);font-size:0.36rem;color:var(--ink4);width:22px;text-align:right;flex-shrink:0; }
+
+    /* ── ABOUT SECTIONS — match pawan/charu style ── */
+    .about-section {
+      padding: 0;
+      position: relative; z-index: 2;
     }
-    
-    .stat-card-value {
-      font-family: var(--pixel);
-      font-size: 1.8rem;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    
-    .stat-card-label {
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      color: var(--ink3);
-    }
-    
-    /* ✅ Edit controls (owner only) */
-    .edit-controls {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      z-index: 3;
-      display: none;
-    }
-    
-    .edit-controls.visible {
-      display: block;
-    }
-    
-    .edit-btn {
-      font-family: var(--sans);
-      font-size: 0.75rem;
-      padding: 6px 14px;
-      background: var(--paper3);
-      border: 1px solid rgba(26,18,8,0.15);
-      border-radius: 4px;
-      color: var(--ink2);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    
-    .edit-btn:hover,
-    .edit-btn:focus {
-      background: var(--paper);
-      outline: none;
-    }
-    
-    .edit-btn:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 1px;
-    }
-    
-    /* ✅ Skeleton loaders */
-    .skeleton {
-      background: linear-gradient(90deg, var(--paper3) 25%, var(--paper2) 50%, var(--paper3) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-    }
-    
-    @keyframes shimmer {
-      from { background-position: 200% 0; }
-      to { background-position: -200% 0; }
-    }
-    
-    .skeleton-avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      margin-bottom: 16px;
-    }
-    
-    .skeleton-line {
-      height: 16px;
-      margin-bottom: 12px;
-      border-radius: 2px;
-    }
-    
-    .skeleton-line.short { width: 60%; }
-    .skeleton-line.medium { width: 80%; }
-    .skeleton-line.long { width: 100%; }
-    
-    .skeleton-post {
-      background: var(--paper);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    
-    .skeleton-post-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-    }
-    
-    .skeleton-post-body {
-      padding: 16px;
-    }
-    
-    /* ✅ Not found */
-    .not-found {
-      text-align: center;
-      padding: 80px 24px;
+
+    /* Colored left-border block — same as join.html sec-block */
+    .about-block {
+      padding: 20px 32px 22px 88px;
       position: relative;
-      z-index: 1;
+      border-left: 4px solid var(--acc);
+      border-top: 1px dashed var(--rule);
     }
-    
-    .not-found h2 {
-      font-family: var(--hand);
-      font-size: 2rem;
-      color: var(--paper);
-      margin-bottom: 12px;
-    }
-    
-    .not-found p {
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      color: rgba(245,230,200,0.4);
-      margin-bottom: 24px;
-    }
-    
-    .back-link {
-      font-family: var(--hand);
-      font-size: 1rem;
-      color: var(--fire);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-    
-    .back-link:hover,
-    .back-link:focus {
-      letter-spacing: 1px;
-      outline: none;
-    }
-    
-    .back-link:focus-visible {
-      outline: 2px solid var(--focus-ring);
-      outline-offset: 2px;
-    }
-    
-    /* ✅ Responsive */
-    @media (max-width: 768px) {
-      .profile-cover { height: 160px; }
-      .profile-avatar-wrap { left: 24px; bottom: -36px; }
-      .profile-avatar { width: 80px; height: 80px; font-size: 1.6rem; }
-      .profile-info { padding: 48px 24px 20px 24px; }
-      .profile-tabs { padding: 0 24px; overflow-x: auto; scrollbar-width: none; }
-      .profile-tabs::-webkit-scrollbar { display: none; }
-      .tab-btn { padding: 12px 16px; white-space: nowrap; }
-      .tab-content { padding: 20px 24px; }
-      .posts-grid { grid-template-columns: 1fr; }
-      .profile-stats { gap: 16px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .follow-wrap { flex-wrap: wrap; }
-    }
-    
-    @media (max-width: 480px) {
-      .page-wrap { padding: 0 16px 60px; }
-      .profile-cover { height: 140px; }
-      .profile-avatar-wrap { left: 16px; bottom: -32px; }
-      .profile-avatar { width: 72px; height: 72px; font-size: 1.4rem; }
-      .profile-info { padding: 44px 20px 16px 20px; }
-      .profile-name { font-size: 1.8rem; }
-      .profile-bio { font-size: 1rem; }
-      .profile-meta { font-size: 0.8rem; gap: 8px 16px; }
-      .profile-stats { gap: 12px; }
-      .stat-value { font-size: 1rem; }
-      .stat-label { font-size: 0.65rem; }
-      .follow-btn { padding: 8px 20px; font-size: 0.95rem; }
-      .follow-count { font-size: 0.7rem; }
-      .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
-      .posts-grid { gap: 16px; }
-      .post-body { padding: 14px; }
-      .post-title { font-size: 1rem; }
-      .post-desc { font-size: 0.75rem; }
-      .stats-grid { grid-template-columns: 1fr; }
-    }
-    
-    /* ✅ Footer */
-    .site-footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 20px 28px;
-      margin-top: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .site-footer p {
-      font-family: var(--sans);
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.2);
-    }
-    
-    .footer-logo {
-      font-family: var(--pixel);
-      font-size: 0.38rem;
-      color: var(--gold);
+    .about-block:first-child { border-top: none; }
+
+    /* Tape label floating at top */
+    .about-block-label {
+      display: inline-block;
+      font-family: var(--pixel); font-size: 0.4rem;
       letter-spacing: 2px;
+      background: var(--acc); color: #fff;
+      padding: 4px 14px; line-height: 1.4;
+      margin-bottom: 14px;
+      transform: rotate(-0.3deg);
     }
-    
-    /* ✅ Bottom dock (mobile nav) */
+
+    .about-text {
+      font-family: var(--serif); font-size: 1rem;
+      color: var(--ink2); line-height: 1.85; font-style: italic;
+      max-width: 600px;
+    }
+    .about-text strong { font-style: normal; color: var(--ink); }
+
+    /* Tags / interests */
+    .tag-cloud { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+    .interest-tag {
+      font-family: var(--hand); font-size: 0.9rem;
+      color: var(--ink2); padding: 3px 12px;
+      border: 1px solid rgba(26,18,8,0.15);
+      background: var(--paper2); border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .interest-tag:hover { background: var(--paper3); }
+
+    /* ── SOCIAL CARDS — pinned below the book exactly like pawan.html ── */
+    .social-section {
+      margin-top: 44px; position: relative; z-index: 1;
+    }
+    .social-heading {
+      font-family: var(--pixel); font-size: 0.38rem;
+      color: var(--acc); letter-spacing: 3px;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .social-heading::before {
+      content: ''; display: inline-block;
+      width: 18px; height: 1px; background: var(--acc);
+    }
+    .social-cards-wrap { display: flex; flex-wrap: wrap; gap: 14px; }
+    .social-card-pin {
+      background: var(--paper);
+      padding: 12px 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--ink);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .social-card-pin:nth-child(odd)  { transform: rotate(-1deg); }
+    .social-card-pin:nth-child(even) { transform: rotate(0.8deg); }
+    .social-card-pin:hover {
+      transform: rotate(0deg) translateY(-5px) !important;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+    .social-card-pin::before {
+      content: ''; position: absolute; top: -7px; left: 50%;
+      transform: translateX(-50%);
+      width: 36px; height: 12px;
+      background: rgba(240,190,40,0.65);
+    }
+    .social-card-icon  { font-size: 1.2rem; }
+    .social-card-label { font-family: var(--hand); font-size: 1rem; color: var(--ink); }
+    .social-card-handle{ font-family: var(--pixel); font-size: 0.28rem; color: var(--ink4); letter-spacing: 1px; }
+
+    /* ── POSTS BY PERSON — below the book ── */
+    .posts-section {
+      margin-top:48px;
+      position:relative;z-index:1;
+    }
+    .posts-section-head {
+      display:flex;align-items:center;gap:14px;margin-bottom:24px;
+    }
+    .psh-label {
+      font-family:var(--pixel);font-size:0.3rem;
+      letter-spacing:3px;white-space:nowrap;
+    }
+    .psh-line { flex:1;height:1px;background:var(--rule); }
+
+    .posts-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:1px;background:rgba(245,230,200,0.08);
+    }
+    .post-card {
+      background:var(--paper);
+      display:flex;flex-direction:column;
+      transition:background 0.25s;position:relative;
+      text-decoration:none;color:var(--ink);
+    }
+    .post-card:hover { background:var(--paper2); }
+    .post-card::before {
+      content:'';position:absolute;left:0;top:0;bottom:0;
+      width:2px;background:var(--acc);
+      transform:scaleY(0);transform-origin:bottom;
+      transition:transform 0.3s ease;
+    }
+    .post-card:hover::before { transform:scaleY(1); }
+    .post-thumb { width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:sepia(8%);transition:filter 0.4s,transform 0.4s; }
+    .post-card:hover .post-thumb { filter:sepia(0%);transform:scale(1.03); }
+    .post-noimg { width:100%;aspect-ratio:16/9;background:var(--paper3);display:flex;align-items:center;justify-content:center; }
+    .post-noimg-n { font-family:var(--pixel);font-size:2rem;color:transparent;-webkit-text-stroke:1px rgba(26,18,8,0.08); }
+    .post-body { padding:18px;flex:1;display:flex;flex-direction:column; }
+    .post-cat {
+      font-family:var(--pixel);font-size:0.26rem;
+      color:var(--acc);letter-spacing:2px;margin-bottom:8px;
+    }
+    .post-title {
+      font-family:var(--hand);font-size:1.1rem;
+      color:var(--ink);font-weight:600;line-height:1.4;margin-bottom:8px;
+    }
+    .post-desc {
+      font-family:var(--sans);font-size:0.75rem;
+      color:var(--ink3);line-height:1.7;flex:1;margin-bottom:12px;
+    }
+    .post-date {
+      font-family:var(--sans);font-size:0.65rem;color:var(--ink4);
+    }
+    .post-read-link {
+      font-family:var(--pixel);font-size:0.26rem;
+      color:var(--acc);letter-spacing:1px;
+      transition:letter-spacing 0.2s;
+    }
+    .post-card:hover .post-read-link { letter-spacing:3px; }
+
+    /* No posts */
+    .no-posts {
+      grid-column:1/-1;padding:48px;text-align:center;
+      font-family:var(--hand);font-size:1.1rem;
+      color:rgba(245,230,200,0.35);font-style:italic;
+    }
+
+    /* Skel */
+    .skel-p { background:var(--paper); }
+    .skel-img { width:100%;aspect-ratio:16/9; }
+    .skel-b { padding:18px;display:flex;flex-direction:column;gap:9px; }
+    .skel-l { height:8px;border-radius:1px; }
+    @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+    .shimmer {
+      background:linear-gradient(90deg,var(--paper3) 25%,var(--paper2) 50%,var(--paper3) 75%);
+      background-size:200% 100%;animation:shimmer 1.5s infinite;
+    }
+
+    /* Not found */
+    .not-found {
+      text-align:center;padding:80px 24px;
+      position:relative;z-index:1;
+    }
+    .not-found h2 { font-family:var(--hand);font-size:2rem;color:var(--paper);margin-bottom:12px; }
+    .not-found p  { font-family:var(--sans);font-size:0.85rem;color:rgba(245,230,200,0.4);margin-bottom:24px; }
+    .back-link { font-family:var(--hand);font-size:1rem;color:var(--fire);text-decoration:none; }
+
+    /* Rich intro content — mirrors submit.html diary editor styles */
+    .about-rich-content {
+      font-family: var(--serif); font-size: 1rem;
+      color: var(--ink2); line-height: 32px;
+      max-width: 600px;
+    }
+    .about-rich-content h2 { font-family:var(--hand);font-size:1.7rem;color:var(--ink);margin:16px 0 8px;font-weight:600;line-height:1.4; }
+    .about-rich-content h3 { font-family:var(--hand);font-size:1.25rem;color:var(--ink2);margin:12px 0 6px;line-height:1.4; }
+    .about-rich-content p  { margin-bottom:6px; }
+    .about-rich-content blockquote { margin:14px 0;padding:10px 18px;border-left:3px solid var(--acc);background:rgba(232,104,26,0.04);font-style:italic;color:var(--ink2); }
+    .about-rich-content ul,.about-rich-content ol { padding-left:22px;margin:8px 0; }
+    .about-rich-content li { line-height:32px; }
+    .about-rich-content .sticky-callout { display:block;background:#fef9c3;padding:12px 16px;margin:12px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.15);max-width:360px;font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.6;position:relative; }
+    .about-rich-content .sticky-callout::before { content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:48px;height:14px;background:rgba(240,190,40,0.65); }
+    .about-rich-content .sticky-callout-blue  { background:#e8f0ff; }
+    .about-rich-content .sticky-callout-blue::before  { background:rgba(80,130,220,0.55); }
+    .about-rich-content .sticky-callout-green { background:#e8f5e8; }
+    .about-rich-content .sticky-callout-green::before { background:rgba(80,180,100,0.55); }
+    .about-rich-content .sticky-callout-pink  { background:#ffe8f0; }
+    .about-rich-content .sticky-callout-pink::before  { background:rgba(220,80,120,0.55); }
+    .about-rich-content .washi-tape { display:block;height:22px;margin:10px -36px 10px -88px;position:relative;overflow:hidden; }
+    .about-rich-content .washi-tape::before { content:'';position:absolute;inset:0;background:var(--tape-color,rgba(240,190,40,0.65)); }
+    .about-rich-content .doodle-divider { display:block;margin:16px 0;width:100%; }
+    .about-rich-content .floating-sticker { display:inline-block;font-size:1.8rem;margin:0 4px;vertical-align:middle; }
+    .about-rich-content .hl-y { background:rgba(255,220,50,0.4);padding:0 2px; }
+    .about-rich-content .hl-r { background:rgba(255,100,100,0.3);padding:0 2px; }
+    .about-rich-content .hl-g { background:rgba(100,220,100,0.3);padding:0 2px; }
+    .about-rich-content .hl-b { background:rgba(100,150,255,0.3);padding:0 2px; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:680px) {
+      .profile-top { grid-template-columns:1fr; padding:24px 18px 18px 22px; }
+      .profile-photos { height:200px; }
+      .about-block { padding:18px 18px 18px 22px; }
+      .profile-page::after { left:14px; }
+      .posts-section { margin-top:32px; }
+      .posts-grid { grid-template-columns:1fr; }
+      .stats-grid { grid-template-columns:1fr; }
+      .social-cards-wrap { flex-direction:column; }
+    }
+    @media(max-width:420px) {
+      .page-wrap { padding:0 12px 60px; }
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top:1px solid rgba(255,255,255,0.06);
+      padding:20px 28px; margin-top:48px;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:10px;
+      position:relative; z-index:1;
+    }
+    .site-footer p { font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.2); }
+    .footer-logo { font-family:var(--pixel);font-size:0.38rem;color:var(--gold);letter-spacing:2px; }
+
+    /* ── STICK BUTTON ── */
+    .stick-btn-wrap {
+      position: relative; z-index: 2;
+      padding: 0 32px 20px 88px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .stick-btn {
+      font-family: var(--hand); font-size: 1rem; font-weight: 700;
+      padding: 8px 24px; border: none; cursor: pointer;
+      transition: all .2s; display: flex; align-items: center; gap: 7px;
+    }
+    .stick-btn.unstuck { background: var(--acc); color: #fff; }
+    .stick-btn.unstuck:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .stick-btn.stuck-state { background: var(--paper3); color: var(--ink2); border: 1px solid rgba(26,18,8,0.15); }
+    .stick-btn.stuck-state:hover { background: rgba(192,57,43,0.08); color: #c0392b; border-color: rgba(192,57,43,0.3); }
+    .stick-count { font-family: var(--pixel); font-size: 0.3rem; color: var(--ink4); letter-spacing: 1px; }
+  
+    /* ══════════════════════════════════
+       BOTTOM DOCK — mobile nav
+    ══════════════════════════════════ */
     .bottom-dock {
       display: none;
       position: fixed;
@@ -887,7 +612,7 @@
     .bottom-dock::before {
       content: '';
       position: absolute; inset: 0;
-      background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 62' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 62' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
     }
     .bottom-dock::after {
@@ -964,780 +689,546 @@
       .bottom-dock { display: block; }
       body { padding-bottom: 62px; }
     }
-  </style>
+</style>
 </head>
 <body>
-  <!-- ✅ Skip Link -->
-  <a href="#profileContent" class="skip-link">Skip to profile content</a>
-  
-  <div class="acc-glow" id="accGlow" aria-hidden="true"></div>
-  <div class="embers" id="embers" aria-hidden="true"></div>
-  <div id="progress-bar" aria-hidden="true"></div>
 
-  <nav class="nav" role="navigation" aria-label="Main">
-    <a href="index.html" class="nav-logo" aria-label="HlyWor Home">HlYWoR</a>
-    <div style="display:flex;align-items:center;gap:14px">
-      <div id="authSlot" aria-label="Account"></div>
-      <a href="character.html" class="nav-back" aria-label="Back to crew page">Back to crew</a>
-    </div>
-  </nav>
+<div class="acc-glow" id="accGlow"></div>
+<div class="embers" id="embers"></div>
+<div id="progress-bar"></div>
 
-  <div class="page-wrap">
-    <!-- ✅ Loading State -->
-    <div class="loading" id="loadingState" role="status" aria-live="polite">
-      <div class="loading-book" aria-hidden="true">
-        <div class="l-spine"></div>
-        <div class="l-page"></div>
-      </div>
-      <div class="loading-text">opening their page...</div>
-    </div>
+<nav class="nav">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div id="authSlot"></div>
+    <a href="character.html" class="nav-back">Back to crew</a>
+  </div>
+</nav>
 
-    <!-- ✅ Profile Content -->
-    <div id="profileWrap" style="display:none">
-      <div class="profile-header">
-        <div class="profile-card">
-          <!-- ✅ Cover Image -->
-          <div class="profile-cover" id="profileCover">
-            <img id="coverImg" src="" alt="Profile cover" loading="eager">
-          </div>
-          
-          <!-- ✅ Avatar -->
-          <div class="profile-avatar-wrap">
-            <div class="profile-avatar" id="profileAvatar" aria-hidden="true">
-              <span id="avatarInitial">A</span>
-            </div>
-          </div>
-          
-          <!-- ✅ Edit Controls (Owner Only) -->
-          <div class="edit-controls" id="editControls">
-            <button class="edit-btn" id="editProfileBtn" aria-label="Edit profile">✏️ Edit Profile</button>
-          </div>
-          
-          <!-- ✅ Profile Info -->
-          <div class="profile-info">
-            <h1 class="profile-name" id="profileName">Loading...</h1>
-            <div class="profile-handle" id="profileHandle">@username</div>
-            <p class="profile-bio" id="profileBio">Loading bio...</p>
-            
-            <div class="profile-meta" id="profileMeta">
-              <!-- Dynamically populated -->
-            </div>
-            
-            <div class="profile-stats">
-              <div class="stat-item">
-                <div class="stat-value" id="postCount">0</div>
-                <div class="stat-label">Posts</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value" id="followerCount">0</div>
-                <div class="stat-label">Followers</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value" id="reactionCount">0</div>
-                <div class="stat-label">Reactions</div>
-              </div>
-            </div>
-            
-            <!-- ✅ Follow Button -->
-            <div class="follow-wrap" id="followWrap" style="display:none">
-              <button class="follow-btn unfollowed" id="followBtn" aria-pressed="false">
-                <span id="followBtnText">+ Follow</span>
-              </button>
-              <span class="follow-count" id="followCountText"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- ✅ Tabs Navigation -->
-      <div class="profile-tabs" role="tablist" aria-label="Profile sections">
-        <button class="tab-btn active" id="postsTab" role="tab" aria-selected="true" aria-controls="postsContent" tabindex="0">Posts</button>
-        <button class="tab-btn" id="aboutTab" role="tab" aria-selected="false" aria-controls="aboutContent" tabindex="-1">About</button>
-        <button class="tab-btn" id="statsTab" role="tab" aria-selected="false" aria-controls="statsContent" tabindex="-1">Stats</button>
-      </div>
-      
-      <!-- ✅ Posts Tab -->
-      <div class="tab-content active" id="postsContent" role="tabpanel" aria-labelledby="postsTab">
-        <div class="posts-grid" id="postsGrid" role="list">
-          <!-- Skeleton loaders -->
-          <div class="skeleton-post" aria-hidden="true">
-            <div class="skeleton skeleton-post-thumb"></div>
-            <div class="skeleton-post-body">
-              <div class="skeleton skeleton-line short"></div>
-              <div class="skeleton skeleton-line medium"></div>
-              <div class="skeleton skeleton-line long"></div>
-            </div>
-          </div>
-          <div class="skeleton-post" aria-hidden="true">
-            <div class="skeleton skeleton-post-thumb"></div>
-            <div class="skeleton-post-body">
-              <div class="skeleton skeleton-line short"></div>
-              <div class="skeleton skeleton-line medium"></div>
-              <div class="skeleton skeleton-line long"></div>
-            </div>
-          </div>
-          <div class="skeleton-post" aria-hidden="true">
-            <div class="skeleton skeleton-post-thumb"></div>
-            <div class="skeleton-post-body">
-              <div class="skeleton skeleton-line short"></div>
-              <div class="skeleton skeleton-line medium"></div>
-              <div class="skeleton skeleton-line long"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- ✅ About Tab -->
-      <div class="tab-content" id="aboutContent" role="tabpanel" aria-labelledby="aboutTab" hidden>
-        <div class="about-content" id="aboutContentBody">
-          <p>Loading about section...</p>
-        </div>
-      </div>
-      
-      <!-- ✅ Stats Tab -->
-      <div class="tab-content" id="statsContent" role="tabpanel" aria-labelledby="statsTab" hidden>
-        <div class="stats-grid" id="statsGrid">
-          <!-- Dynamically populated -->
-        </div>
-      </div>
-    </div>
+<div class="page-wrap">
 
-    <!-- ✅ Not Found State -->
-    <div class="not-found" id="notFound" style="display:none">
-      <h2>Profile not found</h2>
-      <p>This profile doesn't exist or was removed.</p>
-      <a href="character.html" class="back-link">← back to the crew</a>
+  <!-- Loading -->
+  <div class="loading" id="loadingState">
+    <div class="loading-book">
+      <div class="l-spine"></div>
+      <div class="l-page"></div>
     </div>
+    <div class="loading-text">opening their page...</div>
   </div>
 
-  <footer class="site-footer" role="contentinfo">
-    <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
-    <span class="footer-logo" aria-label="HlyWor">HlYWoR</span>
-  </footer>
+  <!-- Profile -->
+  <div id="profileWrap" style="display:none">
 
-  <!-- ✅ Bottom Dock (Mobile Nav) -->
-  <div class="bottom-dock" role="navigation" aria-label="Mobile">
-    <div class="dock-inner">
-      <a href="index.html" class="dock-item" aria-label="Home">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
-        <span class="dock-label">HOME</span>
-      </a>
-      <a href="posts.html" class="dock-item" aria-label="All posts">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <span class="dock-label">POSTS</span>
-      </a>
-      <a href="submit.html" class="dock-item dock-write" id="dockWriteBtn" aria-label="Write a story">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z"/></svg></div>
-        <span class="dock-label">WRITE</span>
-      </a>
-      <button class="dock-item dock-search" id="dockSearchBtn" aria-label="Search">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
-        <span class="dock-label">SEARCH</span>
-      </button>
-      <button class="dock-item dock-me active" id="dockMeBtn" aria-label="My profile">
-        <div class="dock-icon" id="dockMeIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-        <span class="dock-label" id="dockMeLabel">ME</span>
-      </button>
+    <div class="profile-header">
+      <div class="profile-pin" id="profilePin"></div>
+      <div class="profile-sheet" id="profileSheet">
+        <div class="profile-spine"></div>
+        <div class="profile-page">
+
+          <!-- Top: photos + info -->
+          <div class="profile-top" id="profileTop"></div>
+
+
+    <!-- Stick button — shown when logged in and not own profile -->
+    <div class="stick-btn-wrap" id="stickBtnWrap" style="display:none">
+      <button class="stick-btn unstuck" id="stickBtn">📌 Stick them</button>
+      <span class="stick-count" id="stickCount"></span>
     </div>
+          <!-- About sections (rendered dynamically) -->
+          <div id="profileSections"></div>
+
+          <div class="page-curl"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Posts by this person -->
+    <div class="posts-section" id="postsSection" style="display:none">
+      <div class="posts-section-head">
+        <span class="psh-label" id="postsLabel" style="color:var(--acc)">THEIR POSTS</span>
+        <div class="psh-line"></div>
+        <span id="postsCount" style="font-family:var(--pixel);font-size:0.3rem;color:var(--ink4);letter-spacing:1px"></span>
+      </div>
+      <div class="posts-grid" id="postsGrid">
+        <div class="skel-p"><div class="skel-img shimmer"></div><div class="skel-b"><div class="skel-l shimmer" style="width:40%"></div><div class="skel-l shimmer" style="width:70%"></div></div></div>
+        <div class="skel-p"><div class="skel-img shimmer"></div><div class="skel-b"><div class="skel-l shimmer" style="width:45%"></div><div class="skel-l shimmer" style="width:65%"></div></div></div>
+        <div class="skel-p"><div class="skel-img shimmer"></div><div class="skel-b"><div class="skel-l shimmer" style="width:35%"></div><div class="skel-l shimmer" style="width:75%"></div></div></div>
+      </div>
+    </div>
+
+    <!-- Social cards — pinned below the book like pawan/charu -->
+    <div class="social-section" id="socialSection" style="display:none">
+      <div class="social-heading">FIND ME</div>
+      <div class="social-cards-wrap" id="socialCardsWrap"></div>
+    </div>
+
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { 
-      getFirestore, collection, query, where, getDocs, 
-      addDoc, deleteDoc, doc, limit, orderBy, 
-      updateDoc, serverTimestamp 
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { 
-      injectAuthNav, currentUser, onAuthChange, 
-      showLoginModal, getDisplayName 
-    } from "./auth.js";
+  <!-- Not found -->
+  <div class="not-found" id="notFound" style="display:none">
+    <h2>Person not found</h2>
+    <p>This profile doesn't exist or was removed.</p>
+    <a href="character.html" class="back-link">← back to the crew</a>
+  </div>
 
-    // 🔧 Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
-      authDomain: "hlywor.firebaseapp.com",
-      projectId: "hlywor",
-      storageBucket: "hlywor.firebasestorage.app",
-      messagingSenderId: "697637160825",
-      appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
-      measurementId: "G-MQDXDWHLX8"
-    };
+</div>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+<footer class="site-footer">
+  <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
 
-    // ── Auth Navigation ──
-    injectAuthNav(document.getElementById('authSlot'), {
-      onSignIn(user) {
-        if (currentPersonData) setupFollowButton(currentPersonData, user);
-      },
-      onSignOut() {
-        hideFollowButton();
-      }
-    });
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, doc, limit, orderBy, getCountFromServer }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { injectAuthNav, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
-    // ── Auth State Watcher ──
-    onAuthChange(user => {
-      if (currentPersonData) setupFollowButton(currentPersonData, user);
-    });
+// 🔧 YOUR FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+  authDomain: "hlywor.firebaseapp.com",
+  projectId: "hlywor",
+  storageBucket: "hlywor.firebasestorage.app",
+  messagingSenderId: "697637160825",
+  appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+  measurementId: "G-MQDXDWHLX8"
+};
 
-    // ── Reading Progress ──
-    window.addEventListener('scroll', () => {
-      const d = document.documentElement;
-      const bar = document.getElementById('progress-bar');
-      if (bar) {
-        const pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
-        bar.style.width = pct + '%';
-      }
-    }, { passive: true });
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
-    // ── Embers Animation ──
-    const emberContainer = document.getElementById('embers');
-    for (let i = 0; i < 14; i++) {
-      const e = document.createElement('div');
-      e.className = 'ember';
-      const s = 1 + Math.random() * 2;
-      e.style.cssText = `left:${10+Math.random()*80}%;bottom:0;width:${s}px;height:${s}px;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;--ed:${(Math.random()-.5)*90}px;background:var(--accent);box-shadow:0 0 4px var(--accent);`;
-      emberContainer.appendChild(e);
+// ── Auth nav ──────────────────────────────────────────
+injectAuthNav(document.getElementById('authSlot'), {
+  onSignIn(user)  { if (currentPersonData) setupStickButton(currentPersonData, user); },
+  onSignOut()     { hideStickButton(); }
+});
+
+// ── Auth state watcher ────────────────────────────────
+onAuthChange(user => {
+  if (currentPersonData) setupStickButton(currentPersonData, user);
+});
+
+/* Reading progress */
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('progress-bar').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, { passive: true });
+
+/* Embers */
+const ec = document.getElementById('embers');
+for (let i = 0; i < 14; i++) {
+  const e = document.createElement('div');
+  e.className = 'ember';
+  const s = 1 + Math.random() * 2;
+  e.style.cssText = `left:${10+Math.random()*80}%;bottom:0;width:${s}px;height:${s}px;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;--ed:${(Math.random()-.5)*90}px;background:var(--acc);box-shadow:0 0 4px var(--acc);`;
+  ec.appendChild(e);
+}
+
+/* Get identifier — supports ?slug=pawan or ?name=Pawan */
+const params = new URLSearchParams(window.location.search);
+const slug   = params.get('slug') || params.get('name');
+
+let currentPersonData = null;
+
+if (!slug) { showNotFound(); }
+else { loadProfile(slug); }
+
+/* ── Load person ── */
+async function loadProfile(slug) {
+  try {
+    /* Try by slug field first, then by name (for legacy links) */
+    let snap = await getDocs(query(
+      collection(db,'people'),
+      where('slug','==',slug.toLowerCase()),
+      limit(1)
+    ));
+    if (snap.empty) {
+      snap = await getDocs(query(
+        collection(db,'people'),
+        where('nameLower','==',slug.toLowerCase()),
+        limit(1)
+      ));
     }
+    if (snap.empty) { showNotFound(); return; }
+    const person = { id: snap.docs[0].id, ...snap.docs[0].data() };
+    currentPersonData = person;
+    renderProfile(person);
+    loadPosts(person.name);
+  } catch(err) {
+    console.error(err); showNotFound();
+  }
+}
 
-    // ── Get Profile Identifier ──
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug') || params.get('name');
-    
-    let currentPersonData = null;
-    let currentTab = 'posts';
-    let isOwner = false;
+/* ── Render profile ── */
+function renderProfile(p) {
+  document.title = `${p.name} — HlyWor`;
+  const acc = p.accent || '#e8681a';
 
-    if (!slug) { 
-      showNotFound(); 
-    } else { 
-      loadProfile(slug); 
-    }
+  /* Apply accent color globally */
+  document.documentElement.style.setProperty('--acc', acc);
+  document.getElementById('profilePin').style.background =
+    `radial-gradient(circle at 35% 35%, ${lighten(acc)}, ${acc})`;
+  document.getElementById('accGlow').style.background =
+    `radial-gradient(circle, ${acc}12 0%, transparent 70%)`;
+  document.querySelector('::-webkit-scrollbar-thumb');
 
-    // ── Load Profile ──
-    async function loadProfile(identifier) {
-      try {
-        // Try by slug first, then by nameLower for legacy support
-        let snap = await getDocs(query(
-          collection(db, 'people'),
-          where('slug', '==', identifier.toLowerCase()),
-          limit(1)
-        ));
-        
-        if (snap.empty) {
-          snap = await getDocs(query(
-            collection(db, 'people'),
-            where('nameLower', '==', identifier.toLowerCase()),
-            limit(1)
-          ));
-        }
-        
-        if (snap.empty) { 
-          showNotFound(); 
-          return; 
-        }
-        
-        const person = { id: snap.docs[0].id, ...snap.docs[0].data() };
-        currentPersonData = person;
-        
-        // Check if current user is viewing their own profile
-        isOwner = currentUser && person.authorUid && currentUser.uid === person.authorUid;
-        
-        renderProfile(person);
-        loadPosts(person.name);
-        loadFollowCount(person.authorUid);
-        
-        // Show edit controls if owner
-        if (isOwner) {
-          document.getElementById('editControls').classList.add('visible');
-          document.getElementById('editProfileBtn').addEventListener('click', () => {
-            // Redirect to edit profile page or open modal
-            alert('Edit profile feature coming soon! For now, update your profile via the dashboard.');
-          });
-        }
-        
-      } catch(err) {
-        console.error('Load profile error:', err);
-        showNotFound();
-      }
-    }
+  /* Photos */
+  const photos = (p.photos||[]).filter(Boolean).slice(0,3);
+  let photosHtml = '';
+  if (!photos.length) {
+    photosHtml = `<div class="profile-photos c0"><span class="no-photo-txt">no photos yet</span></div>`;
+  } else {
+    const imgs = photos.map((url,i) => `
+      <div class="p-photo">
+        <img src="${url}" alt="${p.name}" loading="eager">
+        ${p.photoCaptions?.[i] ? `<div class="p-photo-cap">${p.photoCaptions[i]}</div>` : ''}
+      </div>`).join('');
+    photosHtml = `<div class="profile-photos c${photos.length}">${imgs}</div>`;
+  }
 
-    // ── Render Profile ──
-    function renderProfile(p) {
-      document.title = `${p.name} — HlyWor`;
-      const accent = p.accent || '#e8681a';
-      
-      // Apply accent color
-      document.documentElement.style.setProperty('--accent', accent);
-      
-      // Cover image
-      const coverImg = document.getElementById('coverImg');
-      if (p.coverUrl) {
-        coverImg.src = p.coverUrl;
-        coverImg.alt = `Cover image for ${p.name}`;
-        coverImg.style.display = 'block';
-      } else {
-        coverImg.style.display = 'none';
-      }
-      
-      // Avatar
-      const avatarEl = document.getElementById('profileAvatar');
-      const avatarInitial = document.getElementById('avatarInitial');
-      if (p.avatarUrl) {
-        avatarEl.style.backgroundImage = `url(${p.avatarUrl})`;
-        avatarEl.style.backgroundSize = 'cover';
-        avatarEl.style.backgroundPosition = 'center';
-        avatarInitial.style.display = 'none';
-      } else {
-        avatarInitial.textContent = (p.name || 'A').charAt(0).toUpperCase();
-        avatarInitial.style.display = 'block';
-      }
-      avatarEl.setAttribute('aria-label', `Profile photo of ${p.name}`);
-      
-      // Name & handle
-      document.getElementById('profileName').textContent = p.name || 'Anonymous';
-      document.getElementById('profileHandle').textContent = p.handle ? `@${p.handle}` : '';
-      
-      // Bio
-      document.getElementById('profileBio').textContent = p.bio || 'No bio yet.';
-      
-      // Meta info
-      const metaEl = document.getElementById('profileMeta');
-      const metaItems = [];
-      
-      if (p.location) {
-        metaItems.push(`<span class="profile-meta-item">📍 ${p.location}</span>`);
-      }
-      if (p.pronouns) {
-        metaItems.push(`<span class="profile-meta-item">Pronouns: ${p.pronouns}</span>`);
-      }
-      if (p.joined) {
-        const joinedDate = new Date(p.joined);
-        const joinedStr = joinedDate.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-        metaItems.push(`<span class="profile-meta-item">Joined ${joinedStr}</span>`);
-      }
-      
-      metaEl.innerHTML = metaItems.join('');
-      
-      // Stats (initial values, will be updated with real data)
-      document.getElementById('postCount').textContent = p.stats?.postCount || '0';
-      document.getElementById('followerCount').textContent = p.stats?.followerCount || '0';
-      document.getElementById('reactionCount').textContent = p.stats?.totalReactions || '0';
-      
-      // About content
-      const aboutContent = document.getElementById('aboutContentBody');
-      if (p.aboutContent && p.aboutContent.trim() && p.aboutContent !== '<p><br></p>') {
-        aboutContent.innerHTML = sanitizeHTML(p.aboutContent);
-      } else if (p.bio) {
-        aboutContent.innerHTML = `<p>${sanitizeHTML(p.bio)}</p>`;
-      } else {
-        aboutContent.innerHTML = '<p>No about section yet.</p>';
-      }
-      
-      // Interests/tags
-      if (p.interests && p.interests.length) {
-        const tagsHtml = p.interests.map(tag => 
-          `<span class="interest-tag" tabindex="0">${sanitizeHTML(tag)}</span>`
-        ).join('');
-        aboutContent.innerHTML += `<div class="interest-tags" role="list" aria-label="Interests">${tagsHtml}</div>`;
-      }
-      
-      // Stats tab content
-      renderStatsTab(p);
-      
-      // Show profile, hide loading
-      document.getElementById('loadingState').style.display = 'none';
-      document.getElementById('profileWrap').style.display = 'block';
-    }
+  /* Chips */
+  const profChips = (p.professions||[]).slice(0,3).map(pr =>
+    `<span class="prof-chip" style="background:${acc}">${pr}</span>`
+  ).join('');
+  const ageChip = p.age ? `<span class="age-chip">AGE: ${p.age}</span>` : '';
+  const locChip = p.location ? `<span class="loc-chip">📍 ${p.location}</span>` : '';
+  const chipRow = (profChips||ageChip||locChip)
+    ? `<div class="chip-row">${profChips}${ageChip}${locChip}</div>` : '';
 
-    // ── Render Stats Tab ──
-    function renderStatsTab(p) {
-      const statsGrid = document.getElementById('statsGrid');
-      const stats = [
-        { label: 'Posts', value: p.stats?.postCount || 0 },
-        { label: 'Followers', value: p.stats?.followerCount || 0 },
-        { label: 'Following', value: p.stats?.followingCount || 0 },
-        { label: 'Reactions', value: p.stats?.totalReactions || 0 },
-        { label: 'Words Written', value: p.stats?.totalWords || 0 },
-        { label: 'Days Active', value: p.stats?.daysActive || 0 }
-      ];
-      
-      statsGrid.innerHTML = stats.map(stat => `
-        <div class="stat-card">
-          <div class="stat-card-value">${formatNumber(stat.value)}</div>
-          <div class="stat-card-label">${stat.label}</div>
+  /* Social links — rendered as pinned cards below the book */
+  const socials = p.socials || {};
+  const socialEntries = Object.entries(socials).filter(([,v])=>v);
+  if (socialEntries.length) {
+    const icons = { instagram:'📷', twitter:'🐦', youtube:'▶️', github:'💻', spotify:'🎵', mal:'🎌', portfolio:'🔗' };
+    document.getElementById('socialCardsWrap').innerHTML = socialEntries.map(([k,v]) => `
+      <a class="social-card-pin" href="${v}" target="_blank" rel="noopener">
+        <span class="social-card-icon">${icons[k]||'🔗'}</span>
+        <div>
+          <div class="social-card-label">${k.charAt(0).toUpperCase()+k.slice(1)}</div>
+          <div class="social-card-handle">${v.replace(/https?:\/\/(www\.)?/,'').split('/')[0]}</div>
         </div>
-      `).join('');
-    }
+      </a>`).join('');
+    document.getElementById('socialSection').style.display = 'block';
+  }
 
-    // ── Format Numbers ──
-    function formatNumber(num) {
-      if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-      if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-      return num.toString();
-    }
+  /* Also add HlyWor posts link card always */
+  const hlywor = document.createElement('a');
+  hlywor.className = 'social-card-pin';
+  hlywor.href = 'index.html';
+  hlywor.innerHTML = `<span class="social-card-icon">📖</span><div><div class="social-card-label">HlyWor</div><div class="social-card-handle">read their posts</div></div>`;
+  document.getElementById('socialCardsWrap').appendChild(hlywor);
+  document.getElementById('socialSection').style.display = 'block';
 
-    // ── Sanitize HTML (XSS Prevention) ──
-    function sanitizeHTML(html) {
-      const temp = document.createElement('div');
-      temp.innerHTML = html;
-      
-      // Remove dangerous attributes
-      temp.querySelectorAll('*').forEach(el => {
-        // Remove event handlers
-        [...el.attributes].forEach(attr => {
-          if (attr.name.startsWith('on')) {
-            el.removeAttribute(attr.name);
-          }
-        });
-        // Remove javascript: URLs
-        if (el.href && el.href.startsWith('javascript:')) {
-          el.removeAttribute('href');
+  /* Stats */
+  const stats = p.stats || [];
+  const statsHtml = stats.length ? `
+    <div class="stats-grid" id="statsGrid">
+      ${stats.slice(0,4).map(s => {
+        const v = Math.min(99,Math.max(1,parseInt(s.val)||50));
+        return `<div class="stat-row">
+          <span class="stat-lbl">${(s.label||'').slice(0,7)}</span>
+          <div class="stat-bar-w"><div class="stat-bar" style="--sv:${(v/100).toFixed(2)}"></div></div>
+          <span class="stat-n">${String(v).padStart(2,'0')}</span>
+        </div>`;
+      }).join('')}
+    </div>` : '';
+
+  /* MBTI / pronouns / birthday */
+  const infoItems = [
+    p.pronouns  && ['PRONOUNS',  p.pronouns],
+    p.birthday  && ['BIRTHDAY',  p.birthday],
+    p.mbti      && ['MBTI',      p.mbti],
+    p.language  && ['LANGUAGE',  p.language],
+  ].filter(Boolean);
+  const infoHtml = infoItems.length ? `
+    <ul class="info-list">
+      ${infoItems.map(([lbl,val])=>`<li><span class="lbl">${lbl}</span>${val}</li>`).join('')}
+    </ul>` : '';
+
+  document.getElementById('profileTop').innerHTML = `
+    ${photosHtml}
+    <div class="profile-info">
+      <span class="profile-handle" style="background:${acc}">${p.handle || p.name.split(' ')[0].toUpperCase()+'.EXE'}</span>
+      <div class="profile-name">${p.name}</div>
+      <div class="profile-role" style="color:${acc}">${(p.role||'').toUpperCase()}</div>
+      ${chipRow}
+      <p class="profile-bio">${p.bio||''}</p>
+      ${infoHtml}
+      ${statsHtml}
+    </div>`;
+
+  /* Animate stat bars */
+  setTimeout(() => {
+    document.querySelectorAll('.stat-bar').forEach(b => b.classList.add('in'));
+  }, 700);
+
+  /* ── About sections ── */
+  const sections = [];
+  if (p.beforeFollow) sections.push(['BEFORE YOU FOLLOW', p.beforeFollow, false]);
+  if (p.interests && p.interests.length) sections.push(['INTERESTS', p.interests, true]);
+  if (p.likes)      sections.push(['LIKES',    p.likes, false]);
+  if (p.dislikes)   sections.push(['NOT FOR ME', p.dislikes, false]);
+  if (p.cwList)     sections.push(['TW / CW', p.cwList, false]);
+  if (p.extraNote)  sections.push(['NOTE',    p.extraNote, false]);
+
+  let sectionsHtml = sections.map(([lbl, content, isTags]) => `
+    <div class="about-section">
+      <div class="about-block">
+        <div class="about-block-label">${lbl}</div>
+        ${isTags
+          ? `<div class="tag-cloud">${content.map(t=>`<span class="interest-tag">${t}</span>`).join('')}</div>`
+          : `<p class="about-text">${content}</p>`
         }
-        if (el.src && el.src.startsWith('javascript:')) {
-          el.removeAttribute('src');
-        }
-      });
-      
-      return temp.innerHTML;
+      </div>
+    </div>`).join('');
+
+  /* Full intro — rich diary content written by user */
+  if (p.aboutContent && p.aboutContent.trim() && p.aboutContent.trim() !== '<p><br></p>') {
+    sectionsHtml += `
+      <div class="about-section">
+        <div class="about-block">
+          <div class="about-block-label">IN THEIR OWN WORDS</div>
+          <div class="about-rich-content">${p.aboutContent}</div>
+        </div>
+      </div>`;
+  }
+
+  document.getElementById('profileSections').innerHTML = sectionsHtml + `<div style="height:32px"></div>`;
+
+  /* Show */
+  document.getElementById('loadingState').style.display  = 'none';
+  document.getElementById('profileWrap').style.display   = 'block';
+}
+
+/* ── Load their posts ── */
+async function loadPosts(authorName) {
+  try {
+    const snap = await getDocs(query(
+      collection(db,'posts'),
+      where('author','==',authorName),
+      where('status','==','published'),
+      orderBy('createdAt','desc')
+    ));
+    const posts = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    const section  = document.getElementById('postsSection');
+    const grid     = document.getElementById('postsGrid');
+    const countEl  = document.getElementById('postsCount');
+    const labelEl  = document.getElementById('postsLabel');
+
+    labelEl.textContent = `${authorName.split(' ')[0].toUpperCase()}'S POSTS`;
+    countEl.textContent = `${posts.length} POST${posts.length!==1?'S':''}`;
+    section.style.display = 'block';
+
+    if (!posts.length) {
+      grid.innerHTML = `<div class="no-posts">No posts yet — watch this space.</div>`;
+      return;
     }
 
-    // ── Load Posts ──
-    async function loadPosts(authorName) {
-      try {
-        const snap = await getDocs(query(
-          collection(db, 'posts'),
-          where('author', '==', authorName),
-          where('status', '==', 'published'),
-          orderBy('createdAt', 'desc')
-        ));
-        
-        const posts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        const grid = document.getElementById('postsGrid');
-        const countEl = document.getElementById('postCount');
-        
-        // Update post count in stats
-        countEl.textContent = posts.length;
-        
-        if (!posts.length) {
-          grid.innerHTML = `<div class="no-posts" role="status">No posts yet — watch this space.</div>`;
-          return;
-        }
-        
-        grid.innerHTML = '';
-        posts.forEach((post, i) => {
-          const card = document.createElement('a');
-          card.className = 'post-card';
-          card.href = `post.html?slug=${post.slug}`;
-          card.setAttribute('role', 'listitem');
-          card.setAttribute('aria-label', `Read post: ${post.title}`);
-          card.style.animationDelay = `${i * 50}ms`;
-          
-          const thumb = post.thumbnail
-            ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy" decoding="async">`
-            : `<div class="post-noimg" aria-hidden="true">${String(i + 1).padStart(2, '0')}</div>`;
-          
-          const dateStr = post.date
-            ? new Date(post.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
-            : '';
-          
-          card.innerHTML = `
-            ${thumb}
-            <div class="post-body">
-              <div class="post-cat">${(post.category || post.type || 'post').toUpperCase()}</div>
-              <h3 class="post-title">${sanitizeHTML(post.title)}</h3>
-              <p class="post-desc">${sanitizeHTML(post.desc || '')}</p>
-              <div class="post-meta">
-                ${dateStr ? `<span>${dateStr}</span>` : '<span></span>'}
-                <span class="post-read">Read →</span>
-              </div>
-            </div>`;
-          
-          // Keyboard support
-          card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              window.location.href = card.href;
-            }
-          });
-          
-          grid.appendChild(card);
-        });
-        
-      } catch(err) {
-        console.error('Load posts error:', err);
-        document.getElementById('postsGrid').innerHTML = 
-          `<div class="no-posts">Couldn't load posts. Try refreshing.</div>`;
-      }
-    }
+    grid.innerHTML = '';
+    posts.forEach((post, i) => {
+      const card = document.createElement('a');
+      card.className = 'post-card';
+      card.href = `post.html?slug=${post.slug}`;
+      card.style.animationDelay = `${i*55}ms`;
 
-    // ── Load Follow Count ──
-    async function loadFollowCount(toUid) {
-      if (!toUid) return;
-      
-      try {
-        const snap = await getDocs(query(
-          collection(db, 'follows'),
-          where('toUid', '==', toUid)
-        ));
-        const count = snap.size;
-        
-        const countEl = document.getElementById('followerCount');
-        const followTextEl = document.getElementById('followCountText');
-        
-        countEl.textContent = formatNumber(count);
-        followTextEl.textContent = count === 1 ? '1 follower' : `${count} followers`;
-        
-      } catch(e) {
-        console.error('Load follow count error:', e);
-      }
-    }
+      const thumb = post.thumbnail
+        ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
+        : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
 
-    // ── Setup Follow Button ──
-    async function setupFollowButton(person, user) {
-      const wrap = document.getElementById('followWrap');
-      const btn = document.getElementById('followBtn');
-      
-      if (!wrap || !btn) return;
-      
-      // Don't show on own profile
-      if (!user || !person.authorUid || user.uid === person.authorUid) {
-        hideFollowButton();
-        return;
-      }
-      
-      wrap.style.display = 'flex';
-      
-      // Check if already following
-      let followDocId = null;
+      const dateStr = post.date
+        ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+        : '';
+
+      card.innerHTML = `
+        ${thumb}
+        <div class="post-body">
+          <div class="post-cat">${(post.category||post.type||'post').toUpperCase()}</div>
+          <div class="post-title">${post.title}</div>
+          <p class="post-desc">${post.desc||''}</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto">
+            ${dateStr?`<span class="post-date">${dateStr}</span>`:'<span></span>'}
+            <span class="post-read-link">READ →</span>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  } catch(err) { console.error('Posts:', err); }
+}
+
+/* ── Stick count ── */
+async function loadStickCount(toUid) {
+  try {
+    const snap = await getDocs(query(collection(db,'sticks'), where('toUid','==',toUid)));
+    const count = snap.size;
+    const countEl = document.getElementById('stickCount');
+    if (countEl) countEl.textContent = count > 0 ? `${count} stuck` : '';
+  } catch(e) {}
+}
+
+/* ── Stick button setup ── */
+async function setupStickButton(person, user) {
+  const wrap = document.getElementById('stickBtnWrap');
+  const btn  = document.getElementById('stickBtn');
+  if (!wrap || !btn) return;
+
+  // Don't show on own profile
+  if (!user || !person.authorUid || user.uid === person.authorUid) {
+    hideStickButton(); return;
+  }
+
+  wrap.style.display = 'flex';
+  loadStickCount(person.authorUid);
+
+  // Check if already stuck
+  let stickDocId = null;
+  try {
+    const existing = await getDocs(query(
+      collection(db,'sticks'),
+      where('fromUid','==',user.uid),
+      where('toUid','==',person.authorUid),
+      limit(1)
+    ));
+    if (!existing.empty) {
+      stickDocId = existing.docs[0].id;
+      setStuckState(btn, true);
+    } else {
+      setStuckState(btn, false);
+    }
+  } catch(e) { console.error(e); }
+
+  // Remove old listener by cloning
+  const newBtn = btn.cloneNode(true);
+  btn.parentNode.replaceChild(newBtn, btn);
+
+  newBtn.addEventListener('click', async () => {
+    if (!currentUser) {
+      showLoginModal({ prompt: 'Sign in to stick someone to your board.' });
+      return;
+    }
+    newBtn.disabled = true;
+
+    if (stickDocId) {
+      // Unstick
       try {
-        const existing = await getDocs(query(
-          collection(db, 'follows'),
-          where('fromUid', '==', user.uid),
-          where('toUid', '==', person.authorUid),
+        await deleteDoc(doc(db,'sticks',stickDocId));
+        stickDocId = null;
+        setStuckState(newBtn, false);
+        loadStickCount(person.authorUid);
+      } catch(e) { console.error(e); }
+    } else {
+      // Stick
+      try {
+        const fromName = getDisplayName(currentUser);
+        const fromSnap = await getDocs(query(
+          collection(db,'people'),
+          where('authorUid','==',currentUser.uid),
           limit(1)
         ));
-        
-        if (!existing.empty) {
-          followDocId = existing.docs[0].id;
-          setFollowState(btn, true);
-        } else {
-          setFollowState(btn, false);
-        }
-      } catch(e) {
-        console.error('Check follow status error:', e);
-        setFollowState(btn, false);
-      }
-      
-      // Remove old listener by cloning
-      const newBtn = btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn, btn);
-      
-      newBtn.addEventListener('click', async () => {
-        if (!currentUser) {
-          showLoginModal({ prompt: 'Sign in to follow this writer.' });
-          return;
-        }
-        
-        newBtn.disabled = true;
-        const isFollowing = newBtn.classList.contains('followed');
-        
-        try {
-          if (isFollowing) {
-            // Unfollow
-            if (followDocId) {
-              await deleteDoc(doc(db, 'follows', followDocId));
-            }
-            setFollowState(newBtn, false);
-            loadFollowCount(person.authorUid);
-          } else {
-            // Follow
-            const fromName = getDisplayName(currentUser);
-            const fromSnap = await getDocs(query(
-              collection(db, 'people'),
-              where('authorUid', '==', currentUser.uid),
-              limit(1)
-            ));
-            const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
-            
-            await addDoc(collection(db, 'follows'), {
-              fromUid: currentUser.uid,
-              fromName,
-              fromSlug,
-              toUid: person.authorUid,
-              toSlug: person.slug || '',
-              toName: person.name,
-              createdAt: serverTimestamp()
-            });
-            
-            setFollowState(newBtn, true);
-            loadFollowCount(person.authorUid);
-            
-            // Optional: Send notification to followed user
-            if (person.authorUid !== currentUser.uid) {
-              await addNotification({
-                toUid: person.authorUid,
-                type: 'follow',
-                fromName,
-                fromUid: currentUser.uid,
-                preview: `started following you`
-              });
-            }
-          }
-        } catch(e) {
-          console.error('Follow toggle error:', e);
-          // Revert UI on error
-          setFollowState(newBtn, isFollowing);
-        }
-        
-        newBtn.disabled = false;
-      });
-    }
-
-    // ── Set Follow Button State ──
-    function setFollowState(btn, isFollowing) {
-      if (isFollowing) {
-        btn.classList.remove('unfollowed');
-        btn.classList.add('followed');
-        btn.setAttribute('aria-pressed', 'true');
-        btn.setAttribute('aria-label', 'Unfollow this writer');
-        document.getElementById('followBtnText').textContent = '✓ Following';
-      } else {
-        btn.classList.remove('followed');
-        btn.classList.add('unfollowed');
-        btn.setAttribute('aria-pressed', 'false');
-        btn.setAttribute('aria-label', 'Follow this writer');
-        document.getElementById('followBtnText').textContent = '+ Follow';
-      }
-    }
-
-    // ── Hide Follow Button ──
-    function hideFollowButton() {
-      const wrap = document.getElementById('followWrap');
-      if (wrap) wrap.style.display = 'none';
-    }
-
-    // ── Tab Navigation ──
-    document.querySelectorAll('.tab-btn').forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Update ARIA states
-        document.querySelectorAll('.tab-btn').forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-          t.setAttribute('tabindex', '-1');
+        const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
+        const ref = await addDoc(collection(db,'sticks'), {
+          fromUid:  currentUser.uid,
+          fromName, fromSlug,
+          toUid:    person.authorUid,
+          toSlug:   person.slug || '',
+          toName:   person.name,
+          createdAt: new Date()
         });
-        
-        document.querySelectorAll('.tab-content').forEach(c => {
-          c.classList.remove('active');
-          c.hidden = true;
-        });
-        
-        // Activate selected tab
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        tab.setAttribute('tabindex', '0');
-        
-        const target = tab.getAttribute('aria-controls');
-        const content = document.getElementById(target);
-        if (content) {
-          content.classList.add('active');
-          content.hidden = false;
-        }
-        
-        currentTab = tab.id.replace('Tab', '');
-      });
-      
-      // Keyboard navigation
-      tab.addEventListener('keydown', (e) => {
-        const tabs = Array.from(document.querySelectorAll('.tab-btn'));
-        const idx = tabs.indexOf(tab);
-        
-        if (e.key === 'ArrowRight') {
-          e.preventDefault();
-          tabs[(idx + 1) % tabs.length].focus();
-        } else if (e.key === 'ArrowLeft') {
-          e.preventDefault();
-          tabs[(idx - 1 + tabs.length) % tabs.length].focus();
-        } else if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          tab.click();
-        }
-      });
-    });
-
-    // ── Show Not Found ──
-    function showNotFound() {
-      document.getElementById('loadingState').style.display = 'none';
-      document.getElementById('notFound').style.display = 'block';
-      document.title = 'Profile not found — HlyWor';
+        stickDocId = ref.id;
+        setStuckState(newBtn, true);
+        loadStickCount(person.authorUid);
+      } catch(e) { console.error(e); }
     }
+    newBtn.disabled = false;
+  });
+}
 
-    // ── Add Notification Helper ──
-    async function addNotification({ toUid, type, fromName, fromUid, preview }) {
-      if (!toUid || toUid === fromUid) return;
-      
-      try {
-        await addDoc(collection(db, 'notifications'), {
-          toUid,
-          type,
-          fromName,
-          fromUid,
-          preview: preview || '',
-          read: false,
-          createdAt: serverTimestamp()
-        });
-      } catch(e) {
-        console.error('Notification error:', e);
-      }
-    }
+function setStuckState(btn, isStuck) {
+  if (isStuck) {
+    btn.textContent = '📌 Stuck ✦';
+    btn.className = 'stick-btn stuck-state';
+    btn.title = 'Click to unstick';
+  } else {
+    btn.textContent = '📌 Stick them';
+    btn.className = 'stick-btn unstuck';
+    btn.title = 'Add to your board';
+  }
+}
 
-    // ── Bottom Dock Handlers ──
-    document.getElementById('dockSearchBtn')?.addEventListener('click', () => {
-      if (typeof openSearch === 'function') openSearch(); 
-      else document.getElementById('searchOverlay')?.classList.add('open');
-    });
-    
-    document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
-      e.preventDefault();
-      if (typeof requireLogin === 'function') {
-        const u = await requireLogin('Sign in to write.');
-        if (u) window.location.href = 'submit.html';
-      } else {
-        window.location.href = 'submit.html';
-      }
-    });
-    
-    document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
-      if (typeof currentUser !== 'undefined' && currentUser) {
-        window.location.href = 'dashboard.html';
-      } else if (typeof requireLogin === 'function') {
-        const u = await requireLogin('Sign in to access your board.');
-        if (u) window.location.href = 'dashboard.html';
-      } else {
-        window.location.href = 'dashboard.html';
-      }
-    });
-    
-    // Update dock Me icon on auth change
-    if (typeof onAuthChange === 'function') {
-      onAuthChange(user => {
-        const icon = document.getElementById('dockMeIcon');
-        const lbl = document.getElementById('dockMeLabel');
-        if (!icon) return;
-        
-        if (user) {
-          icon.innerHTML = user.photoURL
-            ? `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer" loading="lazy">`
-            : `<div class="dock-avatar-placeholder" aria-hidden="true">${(user.displayName || 'U')[0].toUpperCase()}</div>`;
-          if (lbl) lbl.textContent = (user.displayName || '').split(' ')[0].slice(0, 5) || 'ME';
-        } else {
-          icon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
-          if (lbl) lbl.textContent = 'ME';
-        }
-      });
+function hideStickButton() {
+  const wrap = document.getElementById('stickBtnWrap');
+  if (wrap) wrap.style.display = 'none';
+}
+
+function showNotFound() {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('notFound').style.display = 'block';
+}
+
+function lighten(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgb(${Math.min(255,r+60)},${Math.min(255,g+60)},${Math.min(255,b+60)})`;
+}
+
+/* ── Bottom dock ── */
+document.getElementById('dockSearchBtn')?.addEventListener('click', () => {
+  if(typeof openSearch==='function')openSearch(); else document.getElementById('searchOverlay')?.classList.add('open');
+});
+document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
+  e.preventDefault();
+  if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to write.');if(u)window.location.href='submit.html';}else window.location.href='submit.html';
+});
+document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
+  if(typeof currentUser!=='undefined'&&currentUser){window.location.href='dashboard.html';}else if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to access your board.');if(u)window.location.href='dashboard.html';}else window.location.href='dashboard.html';
+});
+/* Update dock Me icon on auth change */
+if (typeof onAuthChange === 'function') {
+  onAuthChange(user => {
+    const icon = document.getElementById('dockMeIcon');
+    const lbl  = document.getElementById('dockMeLabel');
+    if (!icon) return;
+    if (user) {
+      icon.innerHTML = user.photoURL
+        ? `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer">`
+        : `<div class="dock-avatar-placeholder">${(user.displayName||'U')[0].toUpperCase()}</div>`;
+      if (lbl) lbl.textContent = (user.displayName||'').split(' ')[0].slice(0,5)||'ME';
+    } else {
+      icon.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+      if (lbl) lbl.textContent = 'ME';
     }
-  </script>
+  });
+}
+</script>
+
+<!-- BOTTOM DOCK -->
+<div class="bottom-dock">
+  <div class="dock-inner">
+    <a href="index.html" class="dock-item">
+      <div class="dock-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+      <span class="dock-label">HOME</span>
+    </a>
+    <a href="posts.html" class="dock-item">
+      <div class="dock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <span class="dock-label">POSTS</span>
+    </a>
+    <a href="submit.html" class="dock-item dock-write" id="dockWriteBtn">
+      <div class="dock-icon"><svg viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z"/></svg></div>
+      <span class="dock-label">WRITE</span>
+    </a>
+    <button class="dock-item dock-search" id="dockSearchBtn">
+      <div class="dock-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
+      <span class="dock-label">SEARCH</span>
+    </button>
+    <button class="dock-item dock-me active" id="dockMeBtn">
+      <div class="dock-icon" id="dockMeIcon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+      <span class="dock-label" id="dockMeLabel">ME</span>
+    </button>
+  </div>
+</div>
 </body>
 </html>
+
