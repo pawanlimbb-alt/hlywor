@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy & Terms — HlyWor</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board:  #2a1f14;
+      --paper:  #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #eee5c8;
+      --ink:    #1a1208;
+      --ink2:   #3d3020;
+      --ink3:   #6a5840;
+      --fire:   #e8681a;
+      --gold:   #d4a020;
+      --tape-b: #5c8ae8;
+      --tape-g: #5cbc7a;
+      --pin-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.3);
+      --pixel:  'Press Start 2P', monospace;
+      --serif:  'Crimson Pro', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      --hand:   'Caveat', cursive;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; scroll-behavior: smooth; }
+
+    body {
+      background: var(--board);
+      min-height: 100vh;
+      font-family: var(--serif);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(100,70,30,0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(70,45,15,0.3) 0%, transparent 45%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── NAV ── */
+    .nav-strip {
+      position: fixed; left:0; top:0; bottom:0;
+      width:72px; z-index:1000;
+      background: var(--ink);
+      display:flex; flex-direction:column;
+      align-items:center; padding:24px 0 20px;
+      border-right:1px solid rgba(255,255,255,0.08);
+    }
+    .nav-logo {
+      font-family: var(--pixel); font-size:0.55rem;
+      color:var(--gold); writing-mode:vertical-rl;
+      text-orientation:mixed; transform:rotate(180deg);
+      letter-spacing:4px; text-shadow:0 0 16px rgba(212,160,32,0.5);
+      margin-bottom:32px; text-decoration:none;
+    }
+    .nav-divider { width:32px; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent); margin:10px 0; }
+    .nav-icon-links { display:flex; flex-direction:column; align-items:center; gap:2px; flex:1; width:100%; }
+    .nav-icon-link {
+      width:100%; display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,0.38); font-family:var(--sans); font-size:0.68rem;
+      font-weight:500; writing-mode:vertical-rl; text-orientation:mixed;
+      transform:rotate(180deg); transition:color 0.2s,background 0.2s;
+      text-decoration:none; white-space:nowrap; padding:12px 0;
+      letter-spacing:1.5px; position:relative;
+    }
+    .nav-icon-link:hover { color:rgba(255,255,255,0.9); background:rgba(255,255,255,0.04); }
+
+    /* ── BOARD ── */
+    .board {
+      margin-left:72px;
+      min-height:100vh;
+      position:relative;
+      padding:48px 40px 80px;
+      max-width:1100px;
+    }
+
+    /* ── TAB SWITCHER ── */
+    .tab-row {
+      display:flex; gap:10px; margin-bottom:40px; flex-wrap:wrap;
+    }
+    .tab-btn {
+      font-family:var(--pixel); font-size:0.3rem; letter-spacing:1.5px;
+      padding:8px 20px; color:#fff; border:none; cursor:pointer;
+      opacity:0.6; transition:opacity 0.2s, transform 0.2s;
+    }
+    .tab-btn:nth-child(1) { background:var(--fire); transform:rotate(-0.5deg); }
+    .tab-btn:nth-child(2) { background:var(--tape-b); transform:rotate(0.5deg); }
+    .tab-btn.active { opacity:1; transform:rotate(0deg) !important; }
+
+    /* ── HEADER SHEET ── */
+    .header-sheet {
+      background:var(--paper);
+      padding:32px 32px 40px;
+      position:relative;
+      transform:rotate(-0.5deg);
+      box-shadow:var(--pin-shadow);
+      margin-bottom:36px;
+      display:inline-block;
+      max-width:600px;
+    }
+    .header-sheet::after {
+      content:''; position:absolute; bottom:-8px; left:0; right:0; height:12px;
+      background:var(--paper);
+      clip-path:polygon(0% 0%,3% 100%,6% 30%,9% 100%,12% 20%,15% 100%,18% 40%,21% 100%,24% 10%,27% 100%,30% 50%,33% 100%,36% 20%,39% 100%,42% 30%,45% 100%,48% 10%,51% 100%,54% 40%,57% 100%,60% 20%,63% 100%,66% 50%,69% 100%,72% 10%,75% 100%,78% 30%,81% 100%,84% 20%,87% 100%,90% 40%,93% 100%,96% 20%,100% 100%,100% 0%);
+    }
+    .header-pin {
+      position:absolute; top:-10px; left:48%;
+      width:13px; height:13px; border-radius:50%;
+      background:radial-gradient(circle at 35% 35%,#ff6b6b,#cc2222);
+      box-shadow:0 2px 4px rgba(0,0,0,0.5);
+    }
+    .header-pin::after {
+      content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+      width:2px; height:11px; background:linear-gradient(to bottom,#888,#444);
+    }
+    .header-eyebrow {
+      font-family:var(--pixel); font-size:0.3rem;
+      color:var(--fire); letter-spacing:3px; margin-bottom:10px;
+    }
+    .header-title {
+      font-family:var(--serif); font-size:2.6rem;
+      font-weight:300; font-style:italic; color:var(--ink); line-height:1.1;
+    }
+    .header-title em { color:var(--fire); font-weight:600; }
+    .header-meta {
+      font-family:var(--sans); font-size:0.75rem;
+      color:var(--ink3); margin-top:10px;
+    }
+
+    /* ── CONTENT PANEL ── */
+    .panel { display:none; }
+    .panel.active { display:block; }
+
+    /* ── SECTION SHEET ── */
+    .section-sheet {
+      background:var(--paper);
+      box-shadow:var(--pin-shadow);
+      margin-bottom:24px;
+      position:relative;
+    }
+    .section-sheet:nth-child(odd)  { transform:rotate(-0.4deg); }
+    .section-sheet:nth-child(even) { transform:rotate(0.3deg); }
+
+    .section-pin {
+      position:absolute; top:-9px;
+      width:11px; height:11px; border-radius:50%;
+      box-shadow:0 2px 4px rgba(0,0,0,0.45); z-index:2;
+    }
+    .section-pin::after {
+      content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+      width:2px; height:9px; background:linear-gradient(to bottom,#888,#444);
+    }
+    .section-sheet:nth-child(odd)  .section-pin { left:25%; background:radial-gradient(circle at 35% 35%,#ff9999,#cc3333); }
+    .section-sheet:nth-child(even) .section-pin { left:70%; background:radial-gradient(circle at 35% 35%,#aaddff,#3366cc); }
+    .section-sheet:nth-child(3n)   .section-pin { left:45%; background:radial-gradient(circle at 35% 35%,#aaeeaa,#228844); }
+
+    .section-inner { padding:28px 30px 32px; }
+
+    .section-num {
+      font-family:var(--pixel); font-size:0.26rem;
+      color:var(--fire); letter-spacing:3px; margin-bottom:8px;
+    }
+    .section-title {
+      font-family:var(--serif); font-size:1.4rem;
+      font-weight:600; color:var(--ink); margin-bottom:16px;
+      padding-bottom:10px;
+      border-bottom:1px dashed rgba(26,18,8,0.15);
+    }
+    .section-body {
+      font-family:var(--sans); font-size:0.82rem;
+      color:var(--ink2); line-height:1.85;
+    }
+    .section-body p { margin-bottom:12px; }
+    .section-body p:last-child { margin-bottom:0; }
+    .section-body strong { color:var(--ink); font-weight:500; }
+    .section-body em { font-style:italic; color:var(--ink3); }
+
+    /* bullet list inside section */
+    .section-body ul {
+      list-style:none; padding:0; margin:10px 0 14px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .section-body ul li {
+      display:flex; align-items:flex-start; gap:10px;
+      font-size:0.8rem; color:var(--ink2); line-height:1.7;
+    }
+    .section-body ul li::before {
+      content:'—'; color:var(--fire); flex-shrink:0; margin-top:1px;
+    }
+
+    /* sub-heading inside section */
+    .section-body h3 {
+      font-family:var(--serif); font-size:1rem;
+      font-weight:600; font-style:italic;
+      color:var(--ink); margin:18px 0 8px;
+    }
+
+    /* crisis box */
+    .crisis-box {
+      background:var(--paper2);
+      border-left:3px solid var(--fire);
+      padding:16px 18px; margin-top:14px;
+    }
+    .crisis-box p {
+      font-family:var(--sans); font-size:0.8rem;
+      color:var(--ink2); line-height:1.8; margin:0;
+    }
+    .crisis-box strong { color:var(--ink); }
+
+    /* ── STICKY NOTE — effective date ── */
+    .sticky-date {
+      background:#fef9c3;
+      padding:16px 18px 20px;
+      transform:rotate(1.5deg);
+      box-shadow:var(--pin-shadow);
+      display:inline-block;
+      margin-bottom:32px;
+      position:relative;
+    }
+    .sticky-date .pin {
+      position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+      width:11px; height:11px; border-radius:50%;
+      background:radial-gradient(circle at 35% 35%,#aaddff,#3366cc);
+      box-shadow:0 2px 4px rgba(0,0,0,0.4);
+    }
+    .sticky-date .pin::after {
+      content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+      width:2px; height:9px; background:linear-gradient(to bottom,#888,#444);
+    }
+    .sticky-date p {
+      font-family:var(--hand); font-size:1rem;
+      color:var(--ink2); line-height:1.6;
+    }
+    .sticky-date span { color:var(--fire); }
+
+    /* ── FOOTER ── */
+    .board-footer {
+      margin-left:72px;
+      background:var(--ink);
+      border-top:2px solid rgba(255,255,255,0.06);
+      padding:16px 32px;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:10px;
+    }
+    .footer-p { font-family:var(--sans); font-size:0.7rem; color:rgba(255,255,255,0.3); }
+    .footer-logo { font-family:var(--pixel); font-size:0.38rem; color:var(--gold); letter-spacing:2px; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:640px) {
+      .nav-strip { display:none; }
+      .board { margin-left:0; padding:24px 16px 60px; }
+      .board-footer { margin-left:0; }
+      .header-sheet { transform:rotate(0); }
+      .section-sheet { transform:rotate(0) !important; }
+      .sticky-date { transform:rotate(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <a href="index.html" class="nav-logo">HlYWoR</a>
+  <div class="nav-divider"></div>
+  <div class="nav-icon-links">
+    <a href="about.html"      class="nav-icon-link">ABOUT</a>
+    <a href="suggestion.html" class="nav-icon-link">SUGGEST</a>
+    <a href="goal.html"       class="nav-icon-link">GOALS</a>
+    <a href="blogs.html"      class="nav-icon-link">ALL POSTS</a>
+  </div>
+</nav>
+
+<!-- BOARD -->
+<div class="board">
+
+  <!-- Header -->
+  <div class="header-sheet">
+    <div class="header-pin"></div>
+    <div class="header-eyebrow">// LEGAL STUFF</div>
+    <h1 class="header-title">Privacy &amp; <em>Terms</em></h1>
+    <p class="header-meta">Effective Date: 01 April 2026 &nbsp;·&nbsp; hlywor.fun</p>
+  </div>
+
+  <br><br>
+
+  <!-- Effective date sticky -->
+  <div class="sticky-date">
+    <div class="pin"></div>
+    <p>Last updated: <span>01 April 2026</span><br>Made by two people in <span>Guwahati, Assam</span> 🇮🇳<br>We handle your data the way we'd want ours handled.</p>
+  </div>
+
+  <!-- Tab switcher -->
+  <div class="tab-row">
+    <button class="tab-btn active" data-tab="privacy">🔒 PRIVACY POLICY</button>
+    <button class="tab-btn"        data-tab="terms">📋 TERMS &amp; CONDITIONS</button>
+  </div>
+
+  <!-- ══ PRIVACY POLICY ══ -->
+  <div class="panel active" id="panel-privacy">
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// INTRO</div>
+        <h2 class="section-title">What is this?</h2>
+        <div class="section-body">
+          <p>This Privacy Policy explains how HlyWor collects, uses, and protects your information when you visit hlywor.fun. By using this site, you agree to the practices described below.</p>
+          <p>We are not a large corporation. HlyWor is built and maintained by two people in Guwahati, Assam. We handle your data with the same care we would want for our own.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 01</div>
+        <h2 class="section-title">Information We Collect</h2>
+        <div class="section-body">
+          <h3>What you give us</h3>
+          <ul>
+            <li>Account details: name, email, and profile photo when you sign in via Google</li>
+            <li>Content you submit: stories, posts, descriptions, and images</li>
+            <li>Reactions, sticks (follows), and comments you make on posts</li>
+            <li>Suggestions or feedback submitted through our suggestion page</li>
+          </ul>
+          <h3>What we collect automatically</h3>
+          <ul>
+            <li>Usage data: pages visited, time spent, clicks, navigation patterns</li>
+            <li>Device info: browser type, OS, screen size, device category</li>
+            <li>IP address and approximate location (city/region only — not precise)</li>
+            <li>Cookies and local storage to keep you signed in and remember preferences</li>
+          </ul>
+          <h3>Third-party services we use</h3>
+          <ul>
+            <li><strong>Google Firebase</strong> — Authentication, Firestore database, Storage</li>
+            <li><strong>Google Analytics</strong> — Aggregated, anonymous usage data</li>
+            <li><strong>Google Fonts</strong> — Your IP may be sent to Google's servers for font loading</li>
+          </ul>
+          <p>Each of these has their own privacy policy. We encourage you to review them if you have concerns.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 02</div>
+        <h2 class="section-title">How We Use Your Information</h2>
+        <div class="section-body">
+          <ul>
+            <li>To create and manage your account</li>
+            <li>To display your submitted stories and posts</li>
+            <li>To enable reactions, sticks, and author profiles</li>
+            <li>To improve the website based on how it's used</li>
+            <li>To contact you about your account if necessary (no marketing emails without consent)</li>
+            <li>To moderate content and maintain platform safety</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 03</div>
+        <h2 class="section-title">Your Content</h2>
+        <div class="section-body">
+          <p>When you submit a story or post on HlyWor, that content is <strong>visible to the public</strong>. Please don't share personal information in posts that you wouldn't want others to see.</p>
+          <p>You retain ownership of the content you submit. By posting on HlyWor, you grant us a non-exclusive, royalty-free license to display, store, and share your content on the platform. You may request deletion of your content at any time by contacting us.</p>
+          <p><strong>We do not sell your content to third parties.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 04</div>
+        <h2 class="section-title">Images &amp; Uploaded Files</h2>
+        <div class="section-body">
+          <p>Images you upload are stored on Google Firebase Storage. Please only upload images you own or have explicit rights to use. Do not upload copyrighted photographs, movie posters, game artwork, or other protected material.</p>
+          <p>We reserve the right to remove images that violate copyright or community guidelines.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 05</div>
+        <h2 class="section-title">Data Sharing</h2>
+        <div class="section-body">
+          <p>We do not sell, rent, or trade your personal information. We may share data only in these limited circumstances:</p>
+          <ul>
+            <li>With third-party service providers (Firebase, Google Analytics) solely to operate the platform</li>
+            <li>If required by law, court order, or government authority</li>
+            <li>To protect the rights, safety, or property of HlyWor, our users, or the public</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 06</div>
+        <h2 class="section-title">Cookies</h2>
+        <div class="section-body">
+          <p>We use cookies and browser local storage to keep you signed in and remember your preferences. We do not use advertising cookies or tracking cookies beyond Google Analytics.</p>
+          <p>You can disable cookies in your browser settings, but some features may not work correctly without them.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 07 — 10</div>
+        <h2 class="section-title">Data Retention, Children, Security &amp; Your Rights</h2>
+        <div class="section-body">
+          <h3>Data Retention</h3>
+          <p>We retain your account data and content for as long as your account is active. If you request deletion, we'll remove your personal data within 30 days.</p>
+          <h3>Children's Privacy</h3>
+          <p>HlyWor is not directed at children under 13. We do not knowingly collect personal information from anyone under 13. If we become aware of this, we will delete it promptly.</p>
+          <h3>Security</h3>
+          <p>We use Firebase's built-in security infrastructure. However, no system is completely secure and we cannot guarantee absolute security of data transmitted over the internet.</p>
+          <h3>Your Rights</h3>
+          <ul>
+            <li>Access the personal information we hold about you</li>
+            <li>Request correction of inaccurate information</li>
+            <li>Request deletion of your account and associated data</li>
+            <li>Withdraw consent for data processing at any time</li>
+          </ul>
+          <p>To exercise any of these rights, contact us at the email below or via our Suggestion page.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// CONTACT</div>
+        <h2 class="section-title">Contact Us</h2>
+        <div class="section-body">
+          <p><strong>HlyWor</strong><br>Guwahati, Assam, India<br>Website: <a href="https://hlywor.fun" style="color:var(--fire)">hlywor.fun</a></p>
+          <p>You can also reach us via the <a href="suggestion.html" style="color:var(--fire)">Suggestion page</a>.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-privacy -->
+
+  <!-- ══ TERMS ══ -->
+  <div class="panel" id="panel-terms">
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// INTRO</div>
+        <h2 class="section-title">About HlyWor</h2>
+        <div class="section-body">
+          <p>HlyWor (hlywor.fun) is an independent personal storytelling platform created and operated by <strong>Pawan Limbu and Suvam Limbu</strong>, based in Guwahati, Assam, India. It is a space for people to share personal stories, thoughts, and experiences.</p>
+          <p>Please read these Terms carefully before using HlyWor. By accessing or using this website, you agree to be bound by these terms.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 01</div>
+        <h2 class="section-title">Eligibility</h2>
+        <div class="section-body">
+          <ul>
+            <li>You must be at least <strong>13 years old</strong> to use HlyWor</li>
+            <li>If you are between 13 and 18, you should have parental or guardian consent</li>
+            <li>By using the site, you confirm that the information you provide is accurate</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 02</div>
+        <h2 class="section-title">User Accounts</h2>
+        <div class="section-body">
+          <p>You may sign in using Google Sign-In. You are responsible for maintaining the confidentiality of your account and for all activity that occurs under it. Please notify us immediately if you suspect unauthorised use of your account.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 03</div>
+        <h2 class="section-title">Content You Submit</h2>
+        <div class="section-body">
+          <h3>Your Responsibility</h3>
+          <p>You are solely responsible for any content you submit. By submitting, you confirm that:</p>
+          <ul>
+            <li>The content is your own original work, or you have rights to share it</li>
+            <li>It does not violate any law or the rights of any third party</li>
+            <li>Any images you upload are owned by you or free from copyright restrictions</li>
+            <li>You are not impersonating any person or organisation</li>
+          </ul>
+          <h3>Prohibited Content</h3>
+          <p>The following is strictly not allowed on HlyWor:</p>
+          <ul>
+            <li>Sexually explicit or pornographic content of any kind</li>
+            <li>Content that sexualises, exploits, or endangers minors in any way</li>
+            <li>Hate speech targeting individuals or groups based on race, religion, gender, caste, sexual orientation, disability, or nationality</li>
+            <li>Content that promotes, glorifies, or provides instructions for self-harm or suicide</li>
+            <li>Threats, harassment, or targeted abuse of any individual</li>
+            <li>Spam, fake stories, or deliberately misleading content</li>
+            <li>Copyrighted material you do not have rights to use</li>
+            <li>Content that promotes illegal activities</li>
+            <li>Malicious links, phishing, or any form of malware</li>
+          </ul>
+          <h3>Sensitive Content</h3>
+          <p>Content about mental health struggles, trauma, grief, and difficult experiences is welcome and valued here. However, content must not describe self-harm methods in detail or present such behaviour in a way that could encourage or instruct others. If your post deals with heavy topics, we encourage you to add a content warning when submitting.</p>
+          <h3>Content License</h3>
+          <p>By submitting content, you grant us a non-exclusive, royalty-free, worldwide license to display, store, and distribute your content on the platform. You retain ownership and may request removal at any time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 04</div>
+        <h2 class="section-title">Reporting &amp; Moderation</h2>
+        <div class="section-body">
+          <p>HlyWor is moderated by its founders. We review flagged content and reserve the right to remove any content that violates these Terms without prior notice.</p>
+          <p>If you see content that violates these Terms, please report it using the report function on the post or contact us directly. We take all reports seriously and aim to respond within <strong>48 hours</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 05</div>
+        <h2 class="section-title">Copyright &amp; DMCA</h2>
+        <div class="section-body">
+          <p>We respect intellectual property rights. If you believe content on HlyWor infringes your copyright, please contact us with:</p>
+          <ul>
+            <li>Your name and contact details</li>
+            <li>A description of the copyrighted work claimed to be infringed</li>
+            <li>The URL or location of the infringing content on HlyWor</li>
+            <li>A statement that you have a good faith belief the use is not authorised</li>
+          </ul>
+          <p>We will review valid takedown requests and remove infringing content promptly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 06</div>
+        <h2 class="section-title">Mental Health &amp; Crisis Resources</h2>
+        <div class="section-body">
+          <p>If you or someone you know is in crisis or experiencing thoughts of self-harm, please reach out for help:</p>
+          <div class="crisis-box">
+            <p>
+              <strong>iCall India (TISS):</strong> 9152987821<br>
+              <strong>Vandrevala Foundation:</strong> 1860-2662-345 (24/7)<br>
+              <strong>AASRA:</strong> 9820466627
+            </p>
+          </div>
+          <p style="margin-top:14px">HlyWor is a storytelling platform, not a mental health service. We are not equipped to provide crisis support. Please reach out to the resources above if you need immediate help.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// 07 — 10</div>
+        <h2 class="section-title">Disclaimers, Liability &amp; Governing Law</h2>
+        <div class="section-body">
+          <h3>Disclaimer of Warranties</h3>
+          <p>HlyWor is provided "as is" without any warranties. We do not guarantee the site will be uninterrupted, error-free, or free of harmful components. We are not responsible for the accuracy or reliability of user-submitted content.</p>
+          <h3>Limitation of Liability</h3>
+          <p>To the maximum extent permitted by applicable law, HlyWor and its founders shall not be liable for any indirect, incidental, or consequential damages arising from your use of the site.</p>
+          <h3>Third-Party Links</h3>
+          <p>HlyWor may contain links to external websites. We are not responsible for their content, privacy practices, or accuracy. Links do not imply endorsement.</p>
+          <h3>Termination</h3>
+          <p>We reserve the right to suspend or terminate any account that violates these Terms, without notice. You may deactivate your account at any time by contacting us.</p>
+          <h3>Governing Law</h3>
+          <p>These Terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of the courts in Guwahati, Assam, India.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sheet">
+      <div class="section-pin"></div>
+      <div class="section-inner">
+        <div class="section-num">// CONTACT</div>
+        <h2 class="section-title">Contact</h2>
+        <div class="section-body">
+          <p>For questions about these Terms, content removal requests, or copyright complaints:</p>
+          <p><strong>HlyWor</strong><br>Guwahati, Assam, India<br>Website: <a href="https://hlywor.fun" style="color:var(--fire)">hlywor.fun</a></p>
+          <p>Suggestion Page: <a href="suggestion.html" style="color:var(--fire)">hlywor.fun/suggestion.html</a></p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-terms -->
+
+</div><!-- /board -->
+
+<footer class="board-footer">
+  <p class="footer-p">© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <span class="footer-logo">HlYWoR</span>
+</footer>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
