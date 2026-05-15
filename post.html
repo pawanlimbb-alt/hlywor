@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- ✅ Dynamic SEO: Will be updated by JS per post -->
   <title>HlyWor — A place to open up</title>
-  <meta name="description" content="A place to open up. Some things don't fit in a conversation. This is where they go.">
+  <meta name="description"
+    content="A place to open up. Some things don't fit in a conversation. This is where they go.">
   <meta name="theme-color" content="#2a1f14">
-  
+
   <!-- ✅ Open Graph / Twitter (defaults, updated dynamically) -->
   <meta property="og:title" content="HlyWor — A place to open up">
   <meta property="og:description" content="Some things don't fit in a conversation. This is where they go.">
@@ -17,42 +19,91 @@
   <meta property="og:url" content="https://hlywor.fun">
   <meta property="og:image" content="https://hlywor.fun/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  
+
   <!-- ✅ Canonical (updated dynamically) -->
   <link rel="canonical" href="https://hlywor.fun">
 
   <!-- ✅ Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Kalam:wght@300;400;700&family=Satisfy&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Kalam:wght@300;400;700&family=Satisfy&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet">
 
   <!-- ✅ Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-ZVLSVF6T3J');</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQDXDWHLX8"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MQDXDWHLX8');</script>
-  
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-MQDXDWHLX8');</script>
+
+  <!-- ✅ Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4255364002792942"
+    crossorigin="anonymous"></script>
   <style>
     :root {
-      --board:#2a1f14;--paper:#faf6ee;--paper2:#f5edd8;--paper3:#ede3c8;
-      --ink:#1a1208;--ink2:#3d3020;--ink3:#6a5840;--ink4:#a09078;
-      --rule:rgba(180,160,120,0.22);--fire:#e8681a;--gold:#d4a020;
-      --pin-shadow:0 8px 40px rgba(0,0,0,0.5),0 2px 8px rgba(0,0,0,0.3);
-      --pixel:'Press Start 2P',monospace;--serif:'Crimson Pro',Georgia,serif;
-      --sans:'DM Sans',system-ui,sans-serif;--hand:'Caveat',cursive;
+      --board: #2a1f14;
+      --paper: #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #ede3c8;
+      --ink: #1a1208;
+      --ink2: #3d3020;
+      --ink3: #6a5840;
+      --ink4: #a09078;
+      --rule: rgba(180, 160, 120, 0.22);
+      --fire: #e8681a;
+      --gold: #d4a020;
+      --pin-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+      --pixel: 'Press Start 2P', monospace;
+      --serif: 'Crimson Pro', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --hand: 'Caveat', cursive;
       --focus-ring: rgba(212, 160, 32, 0.6);
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-      .ambientPulse, .bookDrop, .pinDrop, .commentIn { animation: none !important; transition: none !important; }
-      #progress-bar { transition: none !important; }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .ambientPulse,
+      .bookDrop,
+      .pinDrop,
+      .commentIn {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      #progress-bar {
+        transition: none !important;
+      }
     }
 
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:var(--board);font-family:var(--serif);min-height:100vh;overflow-x:hidden;color:var(--ink)}
-    
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--board);
+      font-family: var(--serif);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--ink)
+    }
+
     /* ✅ Skip Link */
     .skip-link {
       position: absolute;
@@ -68,56 +119,404 @@
       border-radius: 0 0 4px 4px;
       transition: top 0.2s;
     }
+
     .skip-link:focus {
       top: 0;
       outline: 2px solid var(--gold);
       outline-offset: 2px;
     }
 
-    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 20% 30%,rgba(80,50,20,0.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(60,35,10,0.25) 0%,transparent 50%),url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");background-size:auto,auto,200px 200px;pointer-events:none;z-index:0}
-    body::after{content:'';position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,104,26,0.06) 0%,transparent 70%);top:20%;left:50%;transform:translateX(-50%);pointer-events:none;z-index:0;animation:ambientPulse 8s ease-in-out infinite}
-    @keyframes ambientPulse{0%,100%{opacity:0.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
-    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--board)}::-webkit-scrollbar-thumb{background:var(--fire);border-radius:2px}
-    
-    /* ✅ Enhanced Progress Bar */
-    #progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--fire),var(--gold));z-index:10000;transition:width 0.08s linear;box-shadow:0 0 8px rgba(232,104,26,0.6)}
-    #progress-bar[style*="width: 9"] { animation: pulseEnd 1.5s ease-in-out infinite; }
-    @keyframes pulseEnd { 0%, 100% { box-shadow: 0 0 8px rgba(232,104,26,0.6); } 50% { box-shadow: 0 0 16px rgba(232,104,26,0.9); } }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(ellipse at 20% 30%, rgba(80, 50, 20, 0.3) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(60, 35, 10, 0.25) 0%, transparent 50%), url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+      background-size: auto, auto, 200px 200px;
+      pointer-events: none;
+      z-index: 0
+    }
 
-    .nav{position:sticky;top:0;z-index:200;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px}
-    .nav-logo{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:2px;text-decoration:none;text-shadow:0 0 12px rgba(212,160,32,0.4);animation:flicker 7s infinite}
-    @keyframes flicker{0%,91%,100%{opacity:1}92%{opacity:.3}93%{opacity:1}95%{opacity:.65}96%{opacity:1}}
-    .nav-right{display:flex;align-items:center;gap:14px}
-    .nav-back{font-family:var(--sans);font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;display:flex;align-items:center;gap:6px}
-    .nav-back:hover{color:rgba(255,255,255,0.85)}
-    .nav-back::before{content:'←'}
-    
-    .loading-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:20px;position:relative;z-index:1}
-    .loading-book{display:flex;gap:0;animation:loadingWobble 1.2s ease-in-out infinite}
-    @keyframes loadingWobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-    .loading-spine-el{width:10px;height:70px;background:linear-gradient(180deg,#3d2210,#2a1608,#4a2a12);border-radius:2px 0 0 2px}
-    .loading-page-el{width:50px;height:70px;background:var(--paper);display:flex;align-items:center;justify-content:center}
-    .loading-page-el::after{content:'';width:30px;height:2px;background:linear-gradient(90deg,var(--fire),transparent);box-shadow:0 8px 0 var(--rule),0 16px 0 var(--rule),0 24px 0 var(--rule)}
-    .loading-text{font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.4);font-style:italic;animation:loadFade 1.2s ease-in-out infinite}
-    @keyframes loadFade{0%,100%{opacity:.4}50%{opacity:.9}}
-    
-    .page-wrap{max-width:800px;margin:0 auto;padding:0 24px 100px;position:relative;z-index:1}
-    @keyframes bookDrop{0%{opacity:0;transform:translateY(-60px) rotate(-3deg) scale(0.96)}60%{opacity:1;transform:translateY(8px) rotate(0.5deg) scale(1.005)}80%{transform:translateY(-4px) rotate(-0.3deg) scale(0.999)}100%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}}
-    @keyframes shadowGrow{0%{opacity:0;transform:scaleX(0.7)}100%{opacity:1;transform:scaleX(1)}}
-    .diary-book-wrap{padding-top:40px;position:relative}
-    .book-shadow{height:16px;background:radial-gradient(ellipse at center,rgba(0,0,0,0.45) 0%,transparent 70%);margin:0 40px;animation:shadowGrow 0.8s cubic-bezier(0.34,1.56,0.64,1) both}
-    .diary-book{display:flex;box-shadow:var(--pin-shadow);animation:bookDrop 0.9s cubic-bezier(0.34,1.4,0.64,1) both;transform-origin:top center}
-    .book-pin{position:absolute;top:28px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,#cc2222);box-shadow:0 2px 6px rgba(0,0,0,0.6),inset 0 1px 2px rgba(255,255,255,0.3);z-index:10;animation:pinDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) both 0.1s}
-    @keyframes pinDrop{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-    .book-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:14px;background:linear-gradient(to bottom,#888,#444)}
-    .diary-spine{width:24px;flex-shrink:0;background:linear-gradient(180deg,#3d2210 0%,#2a1608 20%,#4a2a12 40%,#2a1608 60%,#3d2210 80%,#2a1608 100%);border-right:2px solid rgba(0,0,0,0.5);border-radius:3px 0 0 3px;position:relative}
-    .diary-spine::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:6px;bottom:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 28px,rgba(0,0,0,0.35) 28px,rgba(0,0,0,0.35) 34px)}
-    .diary-page{flex:1;background:var(--paper);position:relative;overflow:hidden}
-    .diary-page::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px);background-position:0 80px;pointer-events:none;z-index:0}
-    .diary-page::after{content:'';position:absolute;top:0;bottom:0;left:68px;width:1px;background:rgba(220,80,80,0.2);pointer-events:none;z-index:0}
-    .page-curl{position:absolute;bottom:0;right:0;width:40px;height:40px;background:linear-gradient(225deg,var(--paper3) 45%,rgba(0,0,0,0.1) 50%,var(--paper2) 50%);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;z-index:10;transition:width 0.3s,height 0.3s}
-    .diary-book:hover .page-curl{width:55px;height:55px}
-    
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 104, 26, 0.06) 0%, transparent 70%);
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+      animation: ambientPulse 8s ease-in-out infinite
+    }
+
+    @keyframes ambientPulse {
+
+      0%,
+      100% {
+        opacity: 0.6;
+        transform: translateX(-50%) scale(1)
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.1)
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--board)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--fire);
+      border-radius: 2px
+    }
+
+    /* ✅ Enhanced Progress Bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      z-index: 10000;
+      transition: width 0.08s linear;
+      box-shadow: 0 0 8px rgba(232, 104, 26, 0.6)
+    }
+
+    #progress-bar[style*="width: 9"] {
+      animation: pulseEnd 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseEnd {
+
+      0%,
+      100% {
+        box-shadow: 0 0 8px rgba(232, 104, 26, 0.6);
+      }
+
+      50% {
+        box-shadow: 0 0 16px rgba(232, 104, 26, 0.9);
+      }
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--ink);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 52px
+    }
+
+    .nav-logo {
+      font-family: var(--pixel);
+      font-size: 0.55rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+      text-shadow: 0 0 12px rgba(212, 160, 32, 0.4);
+      animation: flicker 7s infinite
+    }
+
+    @keyframes flicker {
+
+      0%,
+      91%,
+      100% {
+        opacity: 1
+      }
+
+      92% {
+        opacity: .3
+      }
+
+      93% {
+        opacity: 1
+      }
+
+      95% {
+        opacity: .65
+      }
+
+      96% {
+        opacity: 1
+      }
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px
+    }
+
+    .nav-back {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .nav-back:hover {
+      color: rgba(255, 255, 255, 0.85)
+    }
+
+    .nav-back::before {
+      content: '←'
+    }
+
+    .loading-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      gap: 20px;
+      position: relative;
+      z-index: 1
+    }
+
+    .loading-book {
+      display: flex;
+      gap: 0;
+      animation: loadingWobble 1.2s ease-in-out infinite
+    }
+
+    @keyframes loadingWobble {
+
+      0%,
+      100% {
+        transform: rotate(-2deg)
+      }
+
+      50% {
+        transform: rotate(2deg)
+      }
+    }
+
+    .loading-spine-el {
+      width: 10px;
+      height: 70px;
+      background: linear-gradient(180deg, #3d2210, #2a1608, #4a2a12);
+      border-radius: 2px 0 0 2px
+    }
+
+    .loading-page-el {
+      width: 50px;
+      height: 70px;
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .loading-page-el::after {
+      content: '';
+      width: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--fire), transparent);
+      box-shadow: 0 8px 0 var(--rule), 0 16px 0 var(--rule), 0 24px 0 var(--rule)
+    }
+
+    .loading-text {
+      font-family: var(--hand);
+      font-size: 1.1rem;
+      color: rgba(245, 230, 200, 0.4);
+      font-style: italic;
+      animation: loadFade 1.2s ease-in-out infinite
+    }
+
+    @keyframes loadFade {
+
+      0%,
+      100% {
+        opacity: .4
+      }
+
+      50% {
+        opacity: .9
+      }
+    }
+
+    .page-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+      position: relative;
+      z-index: 1
+    }
+
+    @keyframes bookDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-60px) rotate(-3deg) scale(0.96)
+      }
+
+      60% {
+        opacity: 1;
+        transform: translateY(8px) rotate(0.5deg) scale(1.005)
+      }
+
+      80% {
+        transform: translateY(-4px) rotate(-0.3deg) scale(0.999)
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1)
+      }
+    }
+
+    @keyframes shadowGrow {
+      0% {
+        opacity: 0;
+        transform: scaleX(0.7)
+      }
+
+      100% {
+        opacity: 1;
+        transform: scaleX(1)
+      }
+    }
+
+    .diary-book-wrap {
+      padding-top: 40px;
+      position: relative
+    }
+
+    .book-shadow {
+      height: 16px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45) 0%, transparent 70%);
+      margin: 0 40px;
+      animation: shadowGrow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both
+    }
+
+    .diary-book {
+      display: flex;
+      box-shadow: var(--pin-shadow);
+      animation: bookDrop 0.9s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+      transform-origin: top center
+    }
+
+    .book-pin {
+      position: absolute;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2222);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+      z-index: 10;
+      animation: pinDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.1s
+    }
+
+    @keyframes pinDrop {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0)
+      }
+    }
+
+    .book-pin::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 14px;
+      background: linear-gradient(to bottom, #888, #444)
+    }
+
+    .diary-spine {
+      width: 24px;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, #3d2210 0%, #2a1608 20%, #4a2a12 40%, #2a1608 60%, #3d2210 80%, #2a1608 100%);
+      border-right: 2px solid rgba(0, 0, 0, 0.5);
+      border-radius: 3px 0 0 3px;
+      position: relative
+    }
+
+    .diary-spine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      bottom: 0;
+      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 28px, rgba(0, 0, 0, 0.35) 28px, rgba(0, 0, 0, 0.35) 34px)
+    }
+
+    .diary-page {
+      flex: 1;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden
+    }
+
+    .diary-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, var(--rule) 31px, var(--rule) 32px);
+      background-position: 0 80px;
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .diary-page::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 68px;
+      width: 1px;
+      background: rgba(220, 80, 80, 0.2);
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .page-curl {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(225deg, var(--paper3) 45%, rgba(0, 0, 0, 0.1) 50%, var(--paper2) 50%);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+      pointer-events: none;
+      z-index: 10;
+      transition: width 0.3s, height 0.3s
+    }
+
+    .diary-book:hover .page-curl {
+      width: 55px;
+      height: 55px
+    }
+
     /* ✅ Breadcrumb */
     .breadcrumb {
       padding: 12px 36px 0 84px;
@@ -125,386 +524,1723 @@
       font-size: 0.8rem;
       color: var(--ink4);
     }
+
     .breadcrumb a {
       color: var(--ink3);
       text-decoration: none;
     }
+
     .breadcrumb a:hover,
     .breadcrumb a:focus {
       color: var(--fire);
       outline: none;
     }
+
     .breadcrumb a:focus-visible {
       outline: 2px solid var(--focus-ring);
       outline-offset: 2px;
     }
+
     .breadcrumb span[aria-current="page"] {
       color: var(--fire);
     }
-    
-    .post-header{padding:32px 36px 24px 84px;border-bottom:1px solid var(--rule);position:relative;z-index:2}
-    .post-date-mood{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-    .post-date{font-family:var(--hand);font-size:0.95rem;color:var(--ink3);font-style:italic}
-    .post-mood{font-size:1.3rem}
-    .post-title{font-family:var(--hand);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--ink);font-weight:600;line-height:1.2;margin-bottom:10px}
-    .post-desc{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--ink3);line-height:1.65;margin-bottom:16px}
-    .post-meta{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
-    .post-meta-item{display:flex;align-items:center;gap:5px;font-family:var(--sans);font-size:0.72rem;color:var(--ink4)}
-    .post-meta-label{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px}
-    .post-meta-val{color:var(--ink2);font-weight:500}
-    .post-cat-tape{display:inline-block;font-family:var(--pixel);font-size:0.26rem;letter-spacing:2px;padding:3px 12px;color:#fff;opacity:0.85}
-    .cat-story{background:#e85c5c}.cat-movies{background:#5c8ae8}.cat-books{background:#5cbc7a}
-    .cat-thoughts{background:#a06ae8}.cat-college{background:#e8901a}
-    .cat-news{background:#f0c030;color:var(--ink)}.cat-default{background:var(--ink2)}
-    .post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-    .post-tag{font-family:var(--hand);font-size:0.82rem;color:var(--ink3);padding:2px 10px;border:1px solid rgba(26,18,8,0.15);border-radius:2px}
-    
-    .post-cover{position:relative;z-index:2;margin:0 36px 0 84px}
-    .post-cover img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;filter:sepia(8%) brightness(0.96)}
-    
-    .post-body{padding:24px 36px 40px 84px;position:relative;z-index:2;font-family:var(--serif);font-size:1.05rem;color:var(--ink);line-height:32px}
-    .post-body h2{font-family:var(--hand);font-size:1.8rem;color:var(--ink);line-height:1.4;margin:20px 0 10px;font-weight:600}
-    .post-body h3{font-family:var(--hand);font-size:1.3rem;color:var(--ink2);line-height:1.4;margin:16px 0 8px}
-    .post-body p{margin-bottom:8px}
-    .post-body blockquote{margin:16px 0;padding:10px 20px;border-left:3px solid var(--fire);background:rgba(232,104,26,0.04);font-style:italic;color:var(--ink2)}
-    .post-body ul,.post-body ol{padding-left:24px;margin:8px 0}
-    .post-body li{line-height:32px}
-    .post-body img{max-width:100%;display:block;margin:12px auto}
-    .post-body figure{margin:16px 0;display:block}
-    .post-body figcaption{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);text-align:center;margin-top:4px}
-    .post-body .sticky-callout{display:block;background:#fef9c3;padding:12px 16px;margin:14px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.15);max-width:360px;font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.6;position:relative}
-    .post-body .sticky-callout::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:48px;height:14px;background:rgba(240,190,40,0.65)}
-    .post-body .sticky-callout-blue{background:#e8f0ff}.post-body .sticky-callout-blue::before{background:rgba(80,130,220,0.55)}
-    .post-body .sticky-callout-green{background:#e8f5e8}.post-body .sticky-callout-green::before{background:rgba(80,180,100,0.55)}
-    .post-body .sticky-callout-pink{background:#ffe8f0}.post-body .sticky-callout-pink::before{background:rgba(220,80,120,0.55)}
-    .post-body .polaroid{display:inline-block;background:#fff;padding:8px 8px 28px;box-shadow:2px 4px 14px rgba(0,0,0,0.25);margin:12px 8px;max-width:200px;position:relative}
-    .post-body .polaroid img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
-    .post-body .polaroid-caption{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);text-align:center;margin-top:6px;display:block}
-    .post-body .polaroid::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(-1deg);width:52px;height:16px;background:rgba(240,190,40,0.65);z-index:2}
-    .post-body .polaroid.tilt-l{transform:rotate(-3deg)}.post-body .polaroid.tilt-r{transform:rotate(3deg)}
-    .post-body .washi-tape{display:block;height:22px;margin:10px -36px 10px -84px;position:relative;overflow:hidden}
-    .post-body .washi-tape::before{content:'';position:absolute;inset:0;background:var(--tape-color,rgba(240,190,40,0.65))}
-    .post-body .doodle-divider{display:block;margin:16px 0;width:100%}
-    .post-body .floating-sticker{display:inline-block;font-size:1.8rem;margin:0 4px;vertical-align:middle}
+
+    .post-header {
+      padding: 32px 36px 24px 84px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      z-index: 2
+    }
+
+    .post-date-mood {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px
+    }
+
+    .post-date {
+      font-family: var(--hand);
+      font-size: 0.95rem;
+      color: var(--ink3);
+      font-style: italic
+    }
+
+    .post-mood {
+      font-size: 1.3rem
+    }
+
+    .post-title {
+      font-family: var(--hand);
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--ink);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 10px
+    }
+
+    .post-desc {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--ink3);
+      line-height: 1.65;
+      margin-bottom: 16px
+    }
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center
+    }
+
+    .post-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--ink4)
+    }
+
+    .post-meta-label {
+      font-family: var(--pixel);
+      font-size: 0.24rem;
+      color: var(--ink4);
+      letter-spacing: 2px
+    }
+
+    .post-meta-val {
+      color: var(--ink2);
+      font-weight: 500
+    }
+
+    .post-cat-tape {
+      display: inline-block;
+      font-family: var(--pixel);
+      font-size: 0.26rem;
+      letter-spacing: 2px;
+      padding: 3px 12px;
+      color: #fff;
+      opacity: 0.85
+    }
+
+    .cat-story {
+      background: #e85c5c
+    }
+
+    .cat-movies {
+      background: #5c8ae8
+    }
+
+    .cat-books {
+      background: #5cbc7a
+    }
+
+    .cat-thoughts {
+      background: #a06ae8
+    }
+
+    .cat-college {
+      background: #e8901a
+    }
+
+    .cat-news {
+      background: #f0c030;
+      color: var(--ink)
+    }
+
+    .cat-default {
+      background: var(--ink2)
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px
+    }
+
+    .post-tag {
+      font-family: var(--hand);
+      font-size: 0.82rem;
+      color: var(--ink3);
+      padding: 2px 10px;
+      border: 1px solid rgba(26, 18, 8, 0.15);
+      border-radius: 2px
+    }
+
+    .post-cover {
+      position: relative;
+      z-index: 2;
+      margin: 0 36px 0 84px
+    }
+
+    .post-cover img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      filter: sepia(8%) brightness(0.96)
+    }
+
+    .post-body {
+      padding: 24px 36px 40px 84px;
+      position: relative;
+      z-index: 2;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--ink);
+      line-height: 32px
+    }
+
+    .post-body h2 {
+      font-family: var(--hand);
+      font-size: 1.8rem;
+      color: var(--ink);
+      line-height: 1.4;
+      margin: 20px 0 10px;
+      font-weight: 600
+    }
+
+    .post-body h3 {
+      font-family: var(--hand);
+      font-size: 1.3rem;
+      color: var(--ink2);
+      line-height: 1.4;
+      margin: 16px 0 8px
+    }
+
+    .post-body p {
+      margin-bottom: 8px
+    }
+
+    .post-body blockquote {
+      margin: 16px 0;
+      padding: 10px 20px;
+      border-left: 3px solid var(--fire);
+      background: rgba(232, 104, 26, 0.04);
+      font-style: italic;
+      color: var(--ink2)
+    }
+
+    .post-body ul,
+    .post-body ol {
+      padding-left: 24px;
+      margin: 8px 0
+    }
+
+    .post-body li {
+      line-height: 32px
+    }
+
+    .post-body img {
+      max-width: 100%;
+      display: block;
+      margin: 12px auto
+    }
+
+    .post-body figure {
+      margin: 16px 0;
+      display: block
+    }
+
+    .post-body figcaption {
+      font-family: var(--hand);
+      font-size: 0.85rem;
+      color: var(--ink3);
+      text-align: center;
+      margin-top: 4px
+    }
+
+    .post-body .sticky-callout {
+      display: block;
+      background: #fef9c3;
+      padding: 12px 16px;
+      margin: 14px 0;
+      transform: rotate(-1deg);
+      box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.15);
+      max-width: 360px;
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink2);
+      line-height: 1.6;
+      position: relative
+    }
+
+    .post-body .sticky-callout::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 14px;
+      background: rgba(240, 190, 40, 0.65)
+    }
+
+    .post-body .sticky-callout-blue {
+      background: #e8f0ff
+    }
+
+    .post-body .sticky-callout-blue::before {
+      background: rgba(80, 130, 220, 0.55)
+    }
+
+    .post-body .sticky-callout-green {
+      background: #e8f5e8
+    }
+
+    .post-body .sticky-callout-green::before {
+      background: rgba(80, 180, 100, 0.55)
+    }
+
+    .post-body .sticky-callout-pink {
+      background: #ffe8f0
+    }
+
+    .post-body .sticky-callout-pink::before {
+      background: rgba(220, 80, 120, 0.55)
+    }
+
+    .post-body .polaroid {
+      display: inline-block;
+      background: #fff;
+      padding: 8px 8px 28px;
+      box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.25);
+      margin: 12px 8px;
+      max-width: 200px;
+      position: relative
+    }
+
+    .post-body .polaroid img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 4/3;
+      object-fit: cover
+    }
+
+    .post-body .polaroid-caption {
+      font-family: var(--hand);
+      font-size: 0.85rem;
+      color: var(--ink3);
+      text-align: center;
+      margin-top: 6px;
+      display: block
+    }
+
+    .post-body .polaroid::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 52px;
+      height: 16px;
+      background: rgba(240, 190, 40, 0.65);
+      z-index: 2
+    }
+
+    .post-body .polaroid.tilt-l {
+      transform: rotate(-3deg)
+    }
+
+    .post-body .polaroid.tilt-r {
+      transform: rotate(3deg)
+    }
+
+    .post-body .washi-tape {
+      display: block;
+      height: 22px;
+      margin: 10px -36px 10px -84px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .post-body .washi-tape::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--tape-color, rgba(240, 190, 40, 0.65))
+    }
+
+    .post-body .doodle-divider {
+      display: block;
+      margin: 16px 0;
+      width: 100%
+    }
+
+    .post-body .floating-sticker {
+      display: inline-block;
+      font-size: 1.8rem;
+      margin: 0 4px;
+      vertical-align: middle
+    }
 
     /* Image alignment */
-    .post-body figure{margin:12px 0}
-    .post-body figure img{display:block}
-    .post-body figure figcaption{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);text-align:center;padding-top:4px;font-style:italic}
-    .post-body figure.img-center{text-align:center;clear:both}
-    .post-body figure.img-center img{max-width:80%;margin:0 auto}
-    .post-body figure.img-left{float:left;margin:6px 20px 10px 0;max-width:45%}
-    .post-body figure.img-right{float:right;margin:6px 0 10px 20px;max-width:45%}
-    .post-body figure.img-full{clear:both;margin:14px 0}
-    .post-body figure.img-full img{width:100%}
-    .post-body::after{content:'';display:table;clear:both}
+    .post-body figure {
+      margin: 12px 0
+    }
+
+    .post-body figure img {
+      display: block
+    }
+
+    .post-body figure figcaption {
+      font-family: var(--hand);
+      font-size: 0.85rem;
+      color: var(--ink3);
+      text-align: center;
+      padding-top: 4px;
+      font-style: italic
+    }
+
+    .post-body figure.img-center {
+      text-align: center;
+      clear: both
+    }
+
+    .post-body figure.img-center img {
+      max-width: 80%;
+      margin: 0 auto
+    }
+
+    .post-body figure.img-left {
+      float: left;
+      margin: 6px 20px 10px 0;
+      max-width: 45%
+    }
+
+    .post-body figure.img-right {
+      float: right;
+      margin: 6px 0 10px 20px;
+      max-width: 45%
+    }
+
+    .post-body figure.img-full {
+      clear: both;
+      margin: 14px 0
+    }
+
+    .post-body figure.img-full img {
+      width: 100%
+    }
+
+    .post-body::after {
+      content: '';
+      display: table;
+      clear: both
+    }
 
     /* Photo row */
-    .post-body .img-row-block{display:flex;gap:12px;margin:16px 0;clear:both;align-items:flex-start;flex-wrap:wrap}
-    .post-body .img-row-block figure{flex:1;min-width:0;margin:0}
-    .post-body .img-row-block figure img{width:100%;display:block;object-fit:cover}
+    .post-body .img-row-block {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+      clear: both;
+      align-items: flex-start;
+      flex-wrap: wrap
+    }
+
+    .post-body .img-row-block figure {
+      flex: 1;
+      min-width: 0;
+      margin: 0
+    }
+
+    .post-body .img-row-block figure img {
+      width: 100%;
+      display: block;
+      object-fit: cover
+    }
 
     /* Line highlights */
-    .post-body .hl-line-y{background:rgba(255,230,0,0.28);display:block;padding:1px 4px;margin:1px 0}
-    .post-body .hl-line-r{background:rgba(255,100,100,0.2);display:block;padding:1px 4px;margin:1px 0}
-    .post-body .hl-line-b{background:rgba(100,160,255,0.2);display:block;padding:1px 4px;margin:1px 0}
-    .post-body .hl-line-g{background:rgba(80,220,120,0.2);display:block;padding:1px 4px;margin:1px 0}
+    .post-body .hl-line-y {
+      background: rgba(255, 230, 0, 0.28);
+      display: block;
+      padding: 1px 4px;
+      margin: 1px 0
+    }
+
+    .post-body .hl-line-r {
+      background: rgba(255, 100, 100, 0.2);
+      display: block;
+      padding: 1px 4px;
+      margin: 1px 0
+    }
+
+    .post-body .hl-line-b {
+      background: rgba(100, 160, 255, 0.2);
+      display: block;
+      padding: 1px 4px;
+      margin: 1px 0
+    }
+
+    .post-body .hl-line-g {
+      background: rgba(80, 220, 120, 0.2);
+      display: block;
+      padding: 1px 4px;
+      margin: 1px 0
+    }
 
     /* Inline highlights */
-    .post-body .highlight-y{background:rgba(255,220,50,0.4);padding:0 2px}
-    .post-body .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
-    .post-body .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
-    .post-body .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
+    .post-body .highlight-y {
+      background: rgba(255, 220, 50, 0.4);
+      padding: 0 2px
+    }
+
+    .post-body .highlight-r {
+      background: rgba(255, 100, 100, 0.3);
+      padding: 0 2px
+    }
+
+    .post-body .highlight-g {
+      background: rgba(100, 220, 100, 0.3);
+      padding: 0 2px
+    }
+
+    .post-body .highlight-b {
+      background: rgba(100, 150, 255, 0.3);
+      padding: 0 2px
+    }
 
     /* Pull quote */
-    .post-body .pull-quote{display:block;font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;font-weight:700;color:var(--fire);border-top:2px solid var(--fire);border-bottom:2px solid var(--fire);padding:14px 0;margin:20px 0;line-height:1.4}
+    .post-body .pull-quote {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      font-weight: 700;
+      color: var(--fire);
+      border-top: 2px solid var(--fire);
+      border-bottom: 2px solid var(--fire);
+      padding: 14px 0;
+      margin: 20px 0;
+      line-height: 1.4
+    }
 
     /* Code blocks */
-    .post-body pre{font-family:'JetBrains Mono',monospace;background:rgba(22,27,34,0.95);color:#e6edf3;padding:16px 20px;margin:14px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.65;border-radius:6px;font-size:0.88rem}
-    .post-body code{font-family:'JetBrains Mono',monospace;background:rgba(22,27,34,0.8);color:#79c0ff;padding:2px 6px;border-radius:4px;font-size:0.88rem}
+    .post-body pre {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(22, 27, 34, 0.95);
+      color: #e6edf3;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-x: auto;
+      line-height: 1.65;
+      border-radius: 6px;
+      font-size: 0.88rem
+    }
+
+    .post-body code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(22, 27, 34, 0.8);
+      color: #79c0ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88rem
+    }
 
     /* Strip contenteditable from rendered posts */
-    .post-body [contenteditable]{-webkit-user-modify:read-only!important;user-modify:read-only!important}
-    .post-body .sticky-callout{transform:rotate(-1.2deg)}
+    .post-body [contenteditable] {
+      -webkit-user-modify: read-only !important;
+      user-modify: read-only !important
+    }
+
+    .post-body .sticky-callout {
+      transform: rotate(-1.2deg)
+    }
 
     /* ✅ Enhanced Reactions + Share */
-    .post-reactions{padding:18px 36px 20px 84px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--rule)}
-    .react-btn{font-size:0.85rem;padding:5px 14px;background:var(--paper2);border:1px solid rgba(26,18,8,0.12);color:var(--ink3);cursor:pointer;display:flex;align-items:center;gap:5px;font-family:var(--sans);border-radius:2px;transition:all 0.15s}
+    .post-reactions {
+      padding: 18px 36px 20px 84px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      border-top: 1px dashed var(--rule)
+    }
+
+    .react-btn {
+      font-size: 0.85rem;
+      padding: 5px 14px;
+      background: var(--paper2);
+      border: 1px solid rgba(26, 18, 8, 0.12);
+      color: var(--ink3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--sans);
+      border-radius: 2px;
+      transition: all 0.15s
+    }
+
     .react-btn:hover,
-    .react-btn:focus{background:var(--paper3);outline:none}
-    .react-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .react-btn.reacted{background:rgba(232,104,26,0.08);border-color:var(--fire);color:var(--fire)}
-    
+    .react-btn:focus {
+      background: var(--paper3);
+      outline: none
+    }
+
+    .react-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .react-btn.reacted {
+      background: rgba(232, 104, 26, 0.08);
+      border-color: var(--fire);
+      color: var(--fire)
+    }
+
     /* Share buttons */
-    .post-share{padding:12px 36px 20px 84px;display:flex;gap:8px;align-items:center;border-top:1px dashed var(--rule);margin-top:12px}
-    .share-btn{font-size:1.1rem;background:none;border:1px solid rgba(26,18,8,0.15);border-radius:4px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s}
+    .post-share {
+      padding: 12px 36px 20px 84px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border-top: 1px dashed var(--rule);
+      margin-top: 12px
+    }
+
+    .share-btn {
+      font-size: 1.1rem;
+      background: none;
+      border: 1px solid rgba(26, 18, 8, 0.15);
+      border-radius: 4px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s
+    }
+
     .share-btn:hover,
-    .share-btn:focus{background:var(--paper3);border-color:var(--fire);transform:translateY(-1px);outline:none}
-    .share-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    
-    .card-stick-btn{font-family:var(--pixel);font-size:0.24rem;letter-spacing:.5px;padding:4px 10px;background:transparent;border:1px solid rgba(26,18,8,0.18);color:var(--ink4);cursor:pointer;transition:all .18s;white-space:nowrap}
+    .share-btn:focus {
+      background: var(--paper3);
+      border-color: var(--fire);
+      transform: translateY(-1px);
+      outline: none
+    }
+
+    .share-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .card-stick-btn {
+      font-family: var(--pixel);
+      font-size: 0.24rem;
+      letter-spacing: .5px;
+      padding: 4px 10px;
+      background: transparent;
+      border: 1px solid rgba(26, 18, 8, 0.18);
+      color: var(--ink4);
+      cursor: pointer;
+      transition: all .18s;
+      white-space: nowrap
+    }
+
     .card-stick-btn:hover,
-    .card-stick-btn:focus{border-color:var(--fire);color:var(--fire);background:rgba(232,104,26,0.06);outline:none}
-    .card-stick-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .card-stick-btn.is-stuck{background:rgba(232,104,26,0.1);border-color:rgba(232,104,26,0.4);color:var(--fire)}
-    .card-stick-btn.is-stuck:hover{background:rgba(192,57,43,0.08);border-color:rgba(192,57,43,0.4);color:#c0392b}
-    .card-stick-btn:disabled{opacity:.4;cursor:wait}
+    .card-stick-btn:focus {
+      border-color: var(--fire);
+      color: var(--fire);
+      background: rgba(232, 104, 26, 0.06);
+      outline: none
+    }
+
+    .card-stick-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .card-stick-btn.is-stuck {
+      background: rgba(232, 104, 26, 0.1);
+      border-color: rgba(232, 104, 26, 0.4);
+      color: var(--fire)
+    }
+
+    .card-stick-btn.is-stuck:hover {
+      background: rgba(192, 57, 43, 0.08);
+      border-color: rgba(192, 57, 43, 0.4);
+      color: #c0392b
+    }
+
+    .card-stick-btn:disabled {
+      opacity: .4;
+      cursor: wait
+    }
 
     /* Author toolbar */
-    .author-toolbar{display:none;padding:14px 36px 14px 84px;background:rgba(232,104,26,0.06);border-top:1px solid rgba(232,104,26,0.2);align-items:center;gap:10px;position:relative;z-index:3}
-    .author-toolbar.visible{display:flex}
-    .author-toolbar-label{font-family:var(--pixel);font-size:0.24rem;color:rgba(232,104,26,0.7);letter-spacing:2px;margin-right:4px}
-    .toolbar-btn{font-family:var(--hand);font-size:0.95rem;font-weight:600;padding:6px 18px;border:none;cursor:pointer;transition:all 0.18s;border-radius:2px}
-    .toolbar-btn-edit{background:var(--fire);color:#fff}
+    .author-toolbar {
+      display: none;
+      padding: 14px 36px 14px 84px;
+      background: rgba(232, 104, 26, 0.06);
+      border-top: 1px solid rgba(232, 104, 26, 0.2);
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 3
+    }
+
+    .author-toolbar.visible {
+      display: flex
+    }
+
+    .author-toolbar-label {
+      font-family: var(--pixel);
+      font-size: 0.24rem;
+      color: rgba(232, 104, 26, 0.7);
+      letter-spacing: 2px;
+      margin-right: 4px
+    }
+
+    .toolbar-btn {
+      font-family: var(--hand);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 6px 18px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.18s;
+      border-radius: 2px
+    }
+
+    .toolbar-btn-edit {
+      background: var(--fire);
+      color: #fff
+    }
+
     .toolbar-btn-edit:hover,
-    .toolbar-btn-edit:focus{background:#ff7a2a;transform:translateY(-1px);outline:none}
-    .toolbar-btn-edit:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .toolbar-btn-delete{background:transparent;color:#c0392b;border:1px solid rgba(192,57,43,0.35)}
+    .toolbar-btn-edit:focus {
+      background: #ff7a2a;
+      transform: translateY(-1px);
+      outline: none
+    }
+
+    .toolbar-btn-edit:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .toolbar-btn-delete {
+      background: transparent;
+      color: #c0392b;
+      border: 1px solid rgba(192, 57, 43, 0.35)
+    }
+
     .toolbar-btn-delete:hover,
-    .toolbar-btn-delete:focus{background:rgba(192,57,43,0.08);border-color:#c0392b;outline:none}
-    .toolbar-btn-delete:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .toolbar-btn-save{background:#2a8a2a;color:#fff}
+    .toolbar-btn-delete:focus {
+      background: rgba(192, 57, 43, 0.08);
+      border-color: #c0392b;
+      outline: none
+    }
+
+    .toolbar-btn-delete:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .toolbar-btn-save {
+      background: #2a8a2a;
+      color: #fff
+    }
+
     .toolbar-btn-save:hover,
-    .toolbar-btn-save:focus{background:#3aaa3a;transform:translateY(-1px);outline:none}
-    .toolbar-btn-save:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .toolbar-btn-cancel{background:transparent;color:var(--ink3);border:1px solid rgba(26,18,8,0.2)}
+    .toolbar-btn-save:focus {
+      background: #3aaa3a;
+      transform: translateY(-1px);
+      outline: none
+    }
+
+    .toolbar-btn-save:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .toolbar-btn-cancel {
+      background: transparent;
+      color: var(--ink3);
+      border: 1px solid rgba(26, 18, 8, 0.2)
+    }
+
     .toolbar-btn-cancel:hover,
-    .toolbar-btn-cancel:focus{background:var(--paper3);outline:none}
-    .toolbar-btn-cancel:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .toolbar-save-status{font-family:var(--sans);font-size:0.72rem;color:#2a8a2a;margin-left:8px}
+    .toolbar-btn-cancel:focus {
+      background: var(--paper3);
+      outline: none
+    }
+
+    .toolbar-btn-cancel:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .toolbar-save-status {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: #2a8a2a;
+      margin-left: 8px
+    }
 
     /* Edit mode */
     .edit-mode .post-title,
-    .edit-mode .post-desc{border-bottom:1.5px dashed var(--fire);outline:none;background:rgba(232,104,26,0.03);border-radius:2px}
-    .edit-mode #postBody{outline:none;border:1.5px dashed rgba(232,104,26,0.3);background:rgba(232,104,26,0.02);min-height:200px;border-radius:2px}
-    .edit-hint{display:none;font-family:var(--pixel);font-size:0.22rem;color:rgba(232,104,26,0.5);letter-spacing:1px;padding:4px 36px 0 84px;position:relative;z-index:2;role:status;aria-live:polite}
-    .edit-mode ~ .edit-hint,.edit-mode + .edit-hint{display:block}
+    .edit-mode .post-desc {
+      border-bottom: 1.5px dashed var(--fire);
+      outline: none;
+      background: rgba(232, 104, 26, 0.03);
+      border-radius: 2px
+    }
+
+    .edit-mode #postBody {
+      outline: none;
+      border: 1.5px dashed rgba(232, 104, 26, 0.3);
+      background: rgba(232, 104, 26, 0.02);
+      min-height: 200px;
+      border-radius: 2px
+    }
+
+    .edit-hint {
+      display: none;
+      font-family: var(--pixel);
+      font-size: 0.22rem;
+      color: rgba(232, 104, 26, 0.5);
+      letter-spacing: 1px;
+      padding: 4px 36px 0 84px;
+      position: relative;
+      z-index: 2;
+      role: status;
+      aria-live: polite
+    }
+
+    .edit-mode~.edit-hint,
+    .edit-mode+.edit-hint {
+      display: block
+    }
 
     /* Comments */
-    .comments-section{padding:28px 36px 36px 84px;border-top:1px solid var(--rule);position:relative;z-index:2}
-    .comments-heading{font-family:var(--hand);font-size:1.4rem;color:var(--ink);font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-    .comments-count{font-family:var(--pixel);font-size:0.28rem;color:var(--ink4);letter-spacing:2px;background:var(--paper3);padding:3px 8px}
-    .comment-form{margin-bottom:28px}
-    .comment-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-    .comment-input-wrap{position:relative}
-    .comment-input-label{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px;display:block;margin-bottom:4px}
-    .comment-input{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(26,18,8,0.2);font-family:var(--hand);font-size:1rem;color:var(--ink);padding:4px 0;outline:none;transition:border-color 0.2s}
-    .comment-input:focus{border-color:var(--fire)}
-    .comment-input::placeholder{color:var(--ink4);font-style:italic}
-    .comment-textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(26,18,8,0.2);font-family:var(--hand);font-size:1rem;color:var(--ink);padding:4px 0;outline:none;resize:none;min-height:64px;line-height:1.6;transition:border-color 0.2s;margin-bottom:12px}
-    .comment-textarea:focus{border-color:var(--fire)}
-    .comment-textarea::placeholder{color:var(--ink4);font-style:italic}
-    .comment-submit{font-family:var(--hand);font-size:1rem;padding:8px 24px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all 0.2s;font-weight:600}
+    .comments-section {
+      padding: 28px 36px 36px 84px;
+      border-top: 1px solid var(--rule);
+      position: relative;
+      z-index: 2
+    }
+
+    .comments-heading {
+      font-family: var(--hand);
+      font-size: 1.4rem;
+      color: var(--ink);
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .comments-count {
+      font-family: var(--pixel);
+      font-size: 0.28rem;
+      color: var(--ink4);
+      letter-spacing: 2px;
+      background: var(--paper3);
+      padding: 3px 8px
+    }
+
+    .comment-form {
+      margin-bottom: 28px
+    }
+
+    .comment-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px
+    }
+
+    .comment-input-wrap {
+      position: relative
+    }
+
+    .comment-input-label {
+      font-family: var(--pixel);
+      font-size: 0.24rem;
+      color: var(--ink4);
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 4px
+    }
+
+    .comment-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(26, 18, 8, 0.2);
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink);
+      padding: 4px 0;
+      outline: none;
+      transition: border-color 0.2s
+    }
+
+    .comment-input:focus {
+      border-color: var(--fire)
+    }
+
+    .comment-input::placeholder {
+      color: var(--ink4);
+      font-style: italic
+    }
+
+    .comment-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(26, 18, 8, 0.2);
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink);
+      padding: 4px 0;
+      outline: none;
+      resize: none;
+      min-height: 64px;
+      line-height: 1.6;
+      transition: border-color 0.2s;
+      margin-bottom: 12px
+    }
+
+    .comment-textarea:focus {
+      border-color: var(--fire)
+    }
+
+    .comment-textarea::placeholder {
+      color: var(--ink4);
+      font-style: italic
+    }
+
+    .comment-submit {
+      font-family: var(--hand);
+      font-size: 1rem;
+      padding: 8px 24px;
+      background: var(--fire);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600
+    }
+
     .comment-submit:hover,
-    .comment-submit:focus{background:#ff7a2a;transform:translateY(-1px);outline:none}
-    .comment-submit:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .comment-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
-    .comment-status{font-family:var(--hand);font-size:0.85rem;color:var(--fire);margin-top:8px;font-style:italic;min-height:20px}
-    .comment-status.ok{color:#3a8a3a}
-    .comments-list{display:flex;flex-direction:column;gap:0}
+    .comment-submit:focus {
+      background: #ff7a2a;
+      transform: translateY(-1px);
+      outline: none
+    }
+
+    .comment-submit:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .comment-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .comment-status {
+      font-family: var(--hand);
+      font-size: 0.85rem;
+      color: var(--fire);
+      margin-top: 8px;
+      font-style: italic;
+      min-height: 20px
+    }
+
+    .comment-status.ok {
+      color: #3a8a3a
+    }
+
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0
+    }
 
     /* Threaded comments */
-    .comment-thread{border-bottom:1px dashed var(--rule);padding-bottom:4px;margin-bottom:4px}
-    .comment-thread:last-child{border-bottom:none}
-    .comment-item{padding:14px 0 8px;position:relative;animation:commentIn 0.4s ease both}
-    @keyframes commentIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .comment-header{display:flex;align-items:baseline;gap:10px;margin-bottom:5px;flex-wrap:wrap}
-    .comment-author{font-family:var(--hand);font-size:1.05rem;color:var(--ink);font-weight:600}
-    .comment-author.is-op{color:var(--fire)}
-    .comment-author.is-op::after{content:'OP';font-family:var(--pixel);font-size:0.2rem;color:#fff;background:var(--fire);padding:1px 5px;margin-left:5px;vertical-align:middle}
-    .comment-date{font-family:var(--sans);font-size:0.68rem;color:var(--ink4)}
-    .comment-text{font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.65}
-    .comment-actions{display:flex;align-items:center;gap:12px;margin-top:6px}
-    .comment-reply-btn{font-family:var(--pixel);font-size:0.2rem;color:var(--ink4);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
+    .comment-thread {
+      border-bottom: 1px dashed var(--rule);
+      padding-bottom: 4px;
+      margin-bottom: 4px
+    }
+
+    .comment-thread:last-child {
+      border-bottom: none
+    }
+
+    .comment-item {
+      padding: 14px 0 8px;
+      position: relative;
+      animation: commentIn 0.4s ease both
+    }
+
+    @keyframes commentIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 5px;
+      flex-wrap: wrap
+    }
+
+    .comment-author {
+      font-family: var(--hand);
+      font-size: 1.05rem;
+      color: var(--ink);
+      font-weight: 600
+    }
+
+    .comment-author.is-op {
+      color: var(--fire)
+    }
+
+    .comment-author.is-op::after {
+      content: 'OP';
+      font-family: var(--pixel);
+      font-size: 0.2rem;
+      color: #fff;
+      background: var(--fire);
+      padding: 1px 5px;
+      margin-left: 5px;
+      vertical-align: middle
+    }
+
+    .comment-date {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      color: var(--ink4)
+    }
+
+    .comment-text {
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink2);
+      line-height: 1.65
+    }
+
+    .comment-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px
+    }
+
+    .comment-reply-btn {
+      font-family: var(--pixel);
+      font-size: 0.2rem;
+      color: var(--ink4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      padding: 2px 0;
+      transition: color .15s
+    }
+
     .comment-reply-btn:hover,
-    .comment-reply-btn:focus{color:var(--fire);outline:none}
-    .comment-reply-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .comment-delete-btn{font-family:var(--pixel);font-size:0.2rem;color:rgba(192,57,43,0.5);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:2px 0;transition:color .15s}
+    .comment-reply-btn:focus {
+      color: var(--fire);
+      outline: none
+    }
+
+    .comment-reply-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .comment-delete-btn {
+      font-family: var(--pixel);
+      font-size: 0.2rem;
+      color: rgba(192, 57, 43, 0.5);
+      background: none;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      padding: 2px 0;
+      transition: color .15s
+    }
+
     .comment-delete-btn:hover,
-    .comment-delete-btn:focus{color:#c0392b;outline:none}
-    .comment-delete-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .comment-vote{display:flex;align-items:center;gap:5px}
-    .vote-btn{font-size:0.78rem;background:none;border:none;cursor:pointer;color:var(--ink4);transition:all .15s;padding:1px 3px;border-radius:2px}
+    .comment-delete-btn:focus {
+      color: #c0392b;
+      outline: none
+    }
+
+    .comment-delete-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .comment-vote {
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .vote-btn {
+      font-size: 0.78rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink4);
+      transition: all .15s;
+      padding: 1px 3px;
+      border-radius: 2px
+    }
+
     .vote-btn:hover,
-    .vote-btn:focus{color:var(--fire);background:rgba(232,104,26,0.06);outline:none}
-    .vote-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .vote-btn.voted{color:var(--fire)}
-    .vote-count{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);min-width:16px;text-align:center}
+    .vote-btn:focus {
+      color: var(--fire);
+      background: rgba(232, 104, 26, 0.06);
+      outline: none
+    }
+
+    .vote-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .vote-btn.voted {
+      color: var(--fire)
+    }
+
+    .vote-count {
+      font-family: var(--pixel);
+      font-size: 0.24rem;
+      color: var(--ink4);
+      min-width: 16px;
+      text-align: center
+    }
 
     /* Replies */
-    .replies-wrap{margin-left:20px;padding-left:14px;border-left:2px solid rgba(26,18,8,0.1);margin-top:4px}
-    .replies-wrap .comment-item{padding:10px 0 6px}
-    .replies-wrap .comment-author{font-size:0.95rem}
-    .replies-wrap .comment-text{font-size:0.92rem}
+    .replies-wrap {
+      margin-left: 20px;
+      padding-left: 14px;
+      border-left: 2px solid rgba(26, 18, 8, 0.1);
+      margin-top: 4px
+    }
+
+    .replies-wrap .comment-item {
+      padding: 10px 0 6px
+    }
+
+    .replies-wrap .comment-author {
+      font-size: 0.95rem
+    }
+
+    .replies-wrap .comment-text {
+      font-size: 0.92rem
+    }
 
     /* Inline reply form */
-    .reply-form{display:none;margin:8px 0 4px;padding:10px 14px;background:rgba(26,18,8,0.03);border-left:2px solid var(--fire)}
-    .reply-form.open{display:block}
-    .reply-input{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(26,18,8,0.2);font-family:var(--hand);font-size:0.95rem;color:var(--ink);padding:4px 0;outline:none;resize:none;min-height:48px;line-height:1.6;transition:border-color .2s;margin-bottom:8px}
-    .reply-input:focus{border-color:var(--fire)}
-    .reply-input::placeholder{color:var(--ink4);font-style:italic}
-    .reply-form-actions{display:flex;gap:8px;align-items:center}
-    .reply-submit-btn{font-family:var(--hand);font-size:0.9rem;padding:5px 16px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all .2s;font-weight:600}
+    .reply-form {
+      display: none;
+      margin: 8px 0 4px;
+      padding: 10px 14px;
+      background: rgba(26, 18, 8, 0.03);
+      border-left: 2px solid var(--fire)
+    }
+
+    .reply-form.open {
+      display: block
+    }
+
+    .reply-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(26, 18, 8, 0.2);
+      font-family: var(--hand);
+      font-size: 0.95rem;
+      color: var(--ink);
+      padding: 4px 0;
+      outline: none;
+      resize: none;
+      min-height: 48px;
+      line-height: 1.6;
+      transition: border-color .2s;
+      margin-bottom: 8px
+    }
+
+    .reply-input:focus {
+      border-color: var(--fire)
+    }
+
+    .reply-input::placeholder {
+      color: var(--ink4);
+      font-style: italic
+    }
+
+    .reply-form-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .reply-submit-btn {
+      font-family: var(--hand);
+      font-size: 0.9rem;
+      padding: 5px 16px;
+      background: var(--fire);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      font-weight: 600
+    }
+
     .reply-submit-btn:hover,
-    .reply-submit-btn:focus{background:#ff7a2a;outline:none}
-    .reply-submit-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .reply-submit-btn:disabled{opacity:.5;cursor:not-allowed}
-    .reply-cancel-btn{font-family:var(--hand);font-size:0.9rem;padding:5px 12px;background:transparent;border:1px solid rgba(26,18,8,0.15);color:var(--ink3);cursor:pointer;transition:all .2s}
+    .reply-submit-btn:focus {
+      background: #ff7a2a;
+      outline: none
+    }
+
+    .reply-submit-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .reply-submit-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed
+    }
+
+    .reply-cancel-btn {
+      font-family: var(--hand);
+      font-size: 0.9rem;
+      padding: 5px 12px;
+      background: transparent;
+      border: 1px solid rgba(26, 18, 8, 0.15);
+      color: var(--ink3);
+      cursor: pointer;
+      transition: all .2s
+    }
+
     .reply-cancel-btn:hover,
-    .reply-cancel-btn:focus{background:var(--paper3);outline:none}
-    .reply-cancel-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .reply-status{font-family:var(--hand);font-size:0.78rem;color:var(--fire);font-style:italic}
+    .reply-cancel-btn:focus {
+      background: var(--paper3);
+      outline: none
+    }
+
+    .reply-cancel-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .reply-status {
+      font-family: var(--hand);
+      font-size: 0.78rem;
+      color: var(--fire);
+      font-style: italic
+    }
 
     /* Toggle replies */
-    .toggle-replies-btn{font-family:var(--pixel);font-size:0.2rem;color:var(--fire);background:none;border:none;cursor:pointer;letter-spacing:1px;padding:4px 0;display:flex;align-items:center;gap:5px;transition:opacity .15s}
-    .toggle-replies-btn:hover,
-    .toggle-replies-btn:focus{opacity:.7;outline:none}
-    .toggle-replies-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .toggle-replies-btn::before{content:'▼';font-size:0.5rem;transition:transform .2s}
-    .toggle-replies-btn.collapsed::before{transform:rotate(-90deg)}
-
-    .comment-empty{font-family:var(--hand);font-size:1rem;color:var(--ink4);font-style:italic;padding:16px 0}
-    .post-back-strip{padding:20px 36px 32px 84px;border-top:1px solid var(--rule)}
-    .back-link{font-family:var(--hand);font-size:1rem;color:var(--fire);text-decoration:none;transition:letter-spacing 0.2s}
-    .back-link:hover,
-    .back-link:focus{letter-spacing:1px;outline:none}
-    .back-link:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    
-    .more-by-author{margin-top:48px;position:relative}
-    .more-heading{font-family:var(--pixel);font-size:0.36rem;color:var(--fire);letter-spacing:4px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
-    .more-heading::before{content:'';display:inline-block;width:18px;height:1px;background:var(--fire)}
-    .more-subheading{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:var(--paper);margin-bottom:24px;font-weight:300}
-    .more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
-    .more-card{background:var(--paper);box-shadow:0 4px 16px rgba(0,0,0,0.35);position:relative;cursor:pointer;text-decoration:none;display:block;transition:transform 0.22s,box-shadow 0.22s}
-    .more-card:nth-child(odd){transform:rotate(-1.2deg)}.more-card:nth-child(even){transform:rotate(0.9deg)}
-    .more-card:hover,
-    .more-card:focus{transform:rotate(0deg) translateY(-6px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.5);z-index:5;outline:none}
-    .more-card:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px}
-    .more-card-pin{position:absolute;top:-9px;left:40%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9999,#cc3333);box-shadow:0 2px 4px rgba(0,0,0,0.5);z-index:2}
-    .more-card-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:9px;background:linear-gradient(to bottom,#777,#333)}
-    .more-card-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:sepia(10%)}
-    .more-card-noimg{width:100%;aspect-ratio:4/3;background:var(--paper3);display:flex;align-items:center;justify-content:center}
-    .more-card-noimg-num{font-family:var(--pixel);font-size:1.8rem;color:transparent;-webkit-text-stroke:1px rgba(26,18,8,0.1)}
-    .more-card-body{padding:12px 14px 16px}
-    .more-card-cat{font-family:var(--pixel);font-size:0.24rem;color:var(--fire);letter-spacing:2px;margin-bottom:5px}
-    .more-card-title{font-family:var(--hand);font-size:1rem;color:var(--ink);line-height:1.4;font-weight:600}
-    .more-card-date{font-family:var(--sans);font-size:0.65rem;color:var(--ink4);margin-top:6px}
-    
-    .not-found{text-align:center;padding:80px 24px;position:relative;z-index:1}
-    .not-found h2{font-family:var(--hand);font-size:2rem;color:var(--paper);margin-bottom:12px}
-    .not-found p{font-family:var(--sans);font-size:0.85rem;color:rgba(245,230,200,0.4);margin-bottom:24px}
-    
-    @media(max-width:640px){
-      .page-wrap{padding:0 12px 80px}.diary-book-wrap{padding-top:28px}.diary-spine{width:14px}
-      .post-header{padding:24px 18px 18px 22px}.post-cover{margin:0 18px 0 22px}
-      .post-body{padding:18px 18px 36px 22px}.diary-page::after{left:14px}
-      .post-reactions{padding:14px 18px 16px 22px}.comments-section{padding:22px 18px 28px 22px}
-      .post-back-strip{padding:16px 18px 24px 22px}.post-body .washi-tape{margin:10px -18px 10px -22px}
-      .more-grid{grid-template-columns:1fr 1fr}.comment-form-row{grid-template-columns:1fr}
-      .author-toolbar{padding:12px 18px 12px 22px}
-      .edit-hint{padding:4px 18px 0 22px}
-      .breadcrumb{padding:12px 18px 0 22px}
-      .post-share{padding:12px 18px 20px 22px}
+    .toggle-replies-btn {
+      font-family: var(--pixel);
+      font-size: 0.2rem;
+      color: var(--fire);
+      background: none;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: opacity .15s
     }
-    @media(max-width:380px){.more-grid{grid-template-columns:1fr}}
-  
+
+    .toggle-replies-btn:hover,
+    .toggle-replies-btn:focus {
+      opacity: .7;
+      outline: none
+    }
+
+    .toggle-replies-btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .toggle-replies-btn::before {
+      content: '▼';
+      font-size: 0.5rem;
+      transition: transform .2s
+    }
+
+    .toggle-replies-btn.collapsed::before {
+      transform: rotate(-90deg)
+    }
+
+    .comment-empty {
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink4);
+      font-style: italic;
+      padding: 16px 0
+    }
+
+    .post-back-strip {
+      padding: 20px 36px 32px 84px;
+      border-top: 1px solid var(--rule)
+    }
+
+    .back-link {
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--fire);
+      text-decoration: none;
+      transition: letter-spacing 0.2s
+    }
+
+    .back-link:hover,
+    .back-link:focus {
+      letter-spacing: 1px;
+      outline: none
+    }
+
+    .back-link:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px
+    }
+
+    .more-by-author {
+      margin-top: 48px;
+      position: relative
+    }
+
+    .more-heading {
+      font-family: var(--pixel);
+      font-size: 0.36rem;
+      color: var(--fire);
+      letter-spacing: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px
+    }
+
+    .more-heading::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--fire)
+    }
+
+    .more-subheading {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--paper);
+      margin-bottom: 24px;
+      font-weight: 300
+    }
+
+    .more-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px
+    }
+
+    .more-card {
+      background: var(--paper);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.22s, box-shadow 0.22s
+    }
+
+    .more-card:nth-child(odd) {
+      transform: rotate(-1.2deg)
+    }
+
+    .more-card:nth-child(even) {
+      transform: rotate(0.9deg)
+    }
+
+    .more-card:hover,
+    .more-card:focus {
+      transform: rotate(0deg) translateY(-6px) !important;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      z-index: 5;
+      outline: none
+    }
+
+    .more-card:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 3px
+    }
+
+    .more-card-pin {
+      position: absolute;
+      top: -9px;
+      left: 40%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff9999, #cc3333);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      z-index: 2
+    }
+
+    .more-card-pin::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 9px;
+      background: linear-gradient(to bottom, #777, #333)
+    }
+
+    .more-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      filter: sepia(10%)
+    }
+
+    .more-card-noimg {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--paper3);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .more-card-noimg-num {
+      font-family: var(--pixel);
+      font-size: 1.8rem;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(26, 18, 8, 0.1)
+    }
+
+    .more-card-body {
+      padding: 12px 14px 16px
+    }
+
+    .more-card-cat {
+      font-family: var(--pixel);
+      font-size: 0.24rem;
+      color: var(--fire);
+      letter-spacing: 2px;
+      margin-bottom: 5px
+    }
+
+    .more-card-title {
+      font-family: var(--hand);
+      font-size: 1rem;
+      color: var(--ink);
+      line-height: 1.4;
+      font-weight: 600
+    }
+
+    .more-card-date {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      color: var(--ink4);
+      margin-top: 6px
+    }
+
+    .not-found {
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      z-index: 1
+    }
+
+    .not-found h2 {
+      font-family: var(--hand);
+      font-size: 2rem;
+      color: var(--paper);
+      margin-bottom: 12px
+    }
+
+    .not-found p {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: rgba(245, 230, 200, 0.4);
+      margin-bottom: 24px
+    }
+
+    @media(max-width:640px) {
+      .page-wrap {
+        padding: 0 12px 80px
+      }
+
+      .diary-book-wrap {
+        padding-top: 28px
+      }
+
+      .diary-spine {
+        width: 14px
+      }
+
+      .post-header {
+        padding: 24px 18px 18px 22px
+      }
+
+      .post-cover {
+        margin: 0 18px 0 22px
+      }
+
+      .post-body {
+        padding: 18px 18px 36px 22px
+      }
+
+      .diary-page::after {
+        left: 14px
+      }
+
+      .post-reactions {
+        padding: 14px 18px 16px 22px
+      }
+
+      .comments-section {
+        padding: 22px 18px 28px 22px
+      }
+
+      .post-back-strip {
+        padding: 16px 18px 24px 22px
+      }
+
+      .post-body .washi-tape {
+        margin: 10px -18px 10px -22px
+      }
+
+      .more-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .comment-form-row {
+        grid-template-columns: 1fr
+      }
+
+      .author-toolbar {
+        padding: 12px 18px 12px 22px
+      }
+
+      .edit-hint {
+        padding: 4px 18px 0 22px
+      }
+
+      .breadcrumb {
+        padding: 12px 18px 0 22px
+      }
+
+      .post-share {
+        padding: 12px 18px 20px 22px
+      }
+
+      .ad-unit-wrap {
+        padding: 12px 18px 8px 22px !important;
+      }
+    }
+
+    @media(max-width:380px) {
+      .more-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
     /* Bottom dock */
     .bottom-dock {
       display: none;
       position: fixed;
-      bottom: 0; left: 0; right: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
       height: 62px;
       background: linear-gradient(180deg, #1a1008 0%, #0e0804 100%);
-      border-top: 1px solid rgba(212,160,32,0.15);
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.6), 0 -1px 0 rgba(212,160,32,0.08);
+      border-top: 1px solid rgba(212, 160, 32, 0.15);
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.6), 0 -1px 0 rgba(212, 160, 32, 0.08);
     }
+
     .bottom-dock::before {
       content: '';
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 62' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
     }
+
     .bottom-dock::after {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(212,160,32,0.3) 20%, rgba(232,104,26,0.4) 50%, rgba(212,160,32,0.3) 80%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, rgba(212, 160, 32, 0.3) 20%, rgba(232, 104, 26, 0.4) 50%, rgba(212, 160, 32, 0.3) 80%, transparent 100%);
     }
+
     .dock-inner {
-      display: flex; align-items: center;
+      display: flex;
+      align-items: center;
       justify-content: space-around;
-      height: 100%; padding: 0 8px;
-      position: relative; z-index: 1;
-    }
-    .dock-item {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 3px; flex: 1; height: 100%;
-      text-decoration: none; cursor: pointer;
-      background: none; border: none; padding: 0;
+      height: 100%;
+      padding: 0 8px;
       position: relative;
-      transition: transform 0.18s cubic-bezier(0.34,1.4,0.64,1);
+      z-index: 1;
+    }
+
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      flex: 1;
+      height: 100%;
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      position: relative;
+      transition: transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1);
       -webkit-tap-highlight-color: transparent;
     }
-    .dock-item:active { transform: scale(0.88); }
+
+    .dock-item:active {
+      transform: scale(0.88);
+    }
+
     .dock-icon {
-      width: 22px; height: 22px;
-      display: flex; align-items: center; justify-content: center;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.22s ease;
     }
+
     .dock-icon svg {
-      width: 100%; height: 100%;
-      stroke: rgba(255,255,255,0.32); fill: none;
-      stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+      width: 100%;
+      height: 100%;
+      stroke: rgba(255, 255, 255, 0.32);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       transition: stroke 0.22s ease, filter 0.22s ease;
     }
+
     .dock-label {
       font-family: 'Press Start 2P', monospace;
-      font-size: 0.18rem; letter-spacing: 0.5px;
-      color: rgba(255,255,255,0.25);
-      transition: color 0.22s ease; white-space: nowrap;
+      font-size: 0.18rem;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.25);
+      transition: color 0.22s ease;
+      white-space: nowrap;
     }
+
     .dock-item.active .dock-icon svg {
       stroke: #e8681a;
-      filter: drop-shadow(0 0 5px rgba(232,104,26,0.7));
+      filter: drop-shadow(0 0 5px rgba(232, 104, 26, 0.7));
     }
-    .dock-item.active .dock-label { color: #e8681a; }
+
+    .dock-item.active .dock-label {
+      color: #e8681a;
+    }
+
     .dock-item.active::after {
       content: '';
-      position: absolute; bottom: 6px; left: 50%;
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
       transform: translateX(-50%);
-      width: 3px; height: 3px; border-radius: 50%;
-      background: #e8681a; box-shadow: 0 0 6px #e8681a;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #e8681a;
+      box-shadow: 0 0 6px #e8681a;
     }
-    .dock-item.dock-write .dock-icon svg { stroke: rgba(232,104,26,0.6); }
-    .dock-item.dock-write .dock-icon { width: 26px; height: 26px; }
+
+    .dock-item.dock-write .dock-icon svg {
+      stroke: rgba(232, 104, 26, 0.6);
+    }
+
+    .dock-item.dock-write .dock-icon {
+      width: 26px;
+      height: 26px;
+    }
+
     .dock-avatar {
-      width: 24px; height: 24px; border-radius: 50%;
-      object-fit: cover; border: 1.5px solid rgba(255,255,255,0.25);
-      display: block; transition: border-color 0.2s;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      display: block;
+      transition: border-color 0.2s;
     }
+
     .dock-item.active .dock-avatar {
-      border-color: #e8681a; box-shadow: 0 0 8px rgba(232,104,26,0.5);
+      border-color: #e8681a;
+      box-shadow: 0 0 8px rgba(232, 104, 26, 0.5);
     }
+
     .dock-avatar-placeholder {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: rgba(232,104,26,0.3);
-      border: 1.5px solid rgba(255,255,255,0.2);
-      display: flex; align-items: center; justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(232, 104, 26, 0.3);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Caveat', cursive;
-      font-size: 0.75rem; color: rgba(255,255,255,0.7); font-weight: 700;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 700;
     }
+
     @media (max-width: 640px) {
-      .bottom-dock { display: block; }
-      body { padding-bottom: 62px; }
+      .bottom-dock {
+        display: block;
+      }
+
+      body {
+        padding-bottom: 62px;
+      }
     }
   </style>
 </head>
+
 <body>
   <!-- ✅ Skip Link -->
   <a href="#postBody" class="skip-link">Skip to post content</a>
-  
+
   <div id="progress-bar" aria-hidden="true"></div>
 
   <nav class="nav" role="navigation" aria-label="Main">
@@ -536,27 +2272,47 @@
               <span aria-hidden="true">/</span>
               <span id="breadcrumbTitle" aria-current="page"></span>
             </nav>
-            
+
             <div class="post-header" id="postHeader"></div>
+
+            <!--Adsense-->
             <div class="post-cover" id="postCover" style="display:none"></div>
+
+            <div class="ad-unit-wrap">
+              <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4255364002792942"
+                data-ad-slot="7608327622" data-ad-format="auto" data-full-width-responsive="true"></ins>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
             <div class="post-body" id="postBody" role="article" aria-label="Post content"></div>
 
             <!-- Edit hint -->
-            <div class="edit-hint" id="editHint" role="status" aria-live="polite">✏ editing — click title, desc or body to change text</div>
+            <div class="edit-hint" id="editHint" role="status" aria-live="polite">✏ editing — click title, desc or body
+              to change text</div>
 
             <div class="post-reactions" id="postReactions" aria-label="Reactions"></div>
-            
+
+            <!--adsense 2nd-->
+            <div class="ad-unit-wrap">
+              <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4255364002792942"
+                data-ad-slot="7608327622" data-ad-format="auto" data-full-width-responsive="true"></ins>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+
+
+
             <!-- ✅ Share Buttons -->
             <!-- ✅ Share Buttons -->
-<div class="post-share" aria-label="Share this post">
-  <span style="font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px">SHARE</span>
-  <button class="share-btn" id="shareTwitter" aria-label="Share on Twitter">🐦</button>
-  <button class="share-btn" id="shareWhatsApp" aria-label="Share on WhatsApp">💬</button>
-  <button class="share-btn" id="shareInstagramStory" aria-label="Share to Instagram Story">📸</button>
-  <button class="share-btn" id="shareInstagramChat" aria-label="Share via Instagram Chat">💌</button>
-  <button class="share-btn" id="copyLinkBtn" aria-label="Copy link to clipboard">🔗</button>
-  <button class="share-btn" id="savePostBtn" aria-label="Save for later" aria-pressed="false">🔖</button>
-</div>
+            <div class="post-share" aria-label="Share this post">
+              <span style="font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px">SHARE</span>
+              <button class="share-btn" id="shareTwitter" aria-label="Share on Twitter">🐦</button>
+              <button class="share-btn" id="shareWhatsApp" aria-label="Share on WhatsApp">💬</button>
+              <button class="share-btn" id="shareInstagramStory" aria-label="Share to Instagram Story">📸</button>
+              <button class="share-btn" id="shareInstagramChat" aria-label="Share via Instagram Chat">💌</button>
+              <button class="share-btn" id="copyLinkBtn" aria-label="Copy link to clipboard">🔗</button>
+              <button class="share-btn" id="savePostBtn" aria-label="Save for later" aria-pressed="false">🔖</button>
+            </div>
 
             <!-- Author toolbar -->
             <div class="author-toolbar" id="authorToolbar" aria-label="Post actions">
@@ -580,13 +2336,17 @@
                   </div>
                   <div class="comment-input-wrap">
                     <label class="comment-input-label" for="commentMood">YOUR VIBE (optional)</label>
-                    <input class="comment-input" id="commentMood" placeholder="one emoji..." maxlength="4" aria-label="Optional mood emoji">
+                    <input class="comment-input" id="commentMood" placeholder="one emoji..." maxlength="4"
+                      aria-label="Optional mood emoji">
                   </div>
                 </div>
-                <label class="comment-input-label" for="commentText" style="display:block;margin-bottom:4px">YOUR NOTE</label>
+                <label class="comment-input-label" for="commentText" style="display:block;margin-bottom:4px">YOUR
+                  NOTE</label>
                 <textarea class="comment-textarea" id="commentText"
-                  placeholder="write something... a reaction, a thought, a feeling." rows="3" aria-required="true" maxlength="500"></textarea>
-                <div style="font-family:var(--sans);font-size:0.7rem;color:var(--ink4);margin-bottom:8px" id="charCount">0/500 characters</div>
+                  placeholder="write something... a reaction, a thought, a feeling." rows="3" aria-required="true"
+                  maxlength="500"></textarea>
+                <div style="font-family:var(--sans);font-size:0.7rem;color:var(--ink4);margin-bottom:8px"
+                  id="charCount">0/500 characters</div>
                 <button class="comment-submit" id="commentSubmit" aria-label="Submit your note">Pin this note ✦</button>
                 <div class="comment-status" id="commentStatus" role="status" aria-live="polite"></div>
               </div>
@@ -638,7 +2398,7 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+    const db = getFirestore(app);
 
     // ── Auth nav ──
     injectAuthNav(document.getElementById('authSlot'), {
@@ -671,13 +2431,13 @@
     // ── Slug from URL (normalized) ──
     const rawSlug = new URLSearchParams(window.location.search).get('slug');
     const slug = rawSlug?.toLowerCase().trim();
-    
+
     console.log("🔍 Loading post for slug:", slug); // Debug log
-    
-    if (!slug) { 
-      showNotFound("No post specified."); 
-    } else { 
-      loadPost(slug); 
+
+    if (!slug) {
+      showNotFound("No post specified.");
+    } else {
+      loadPost(slug);
     }
 
     let currentPostData = null;
@@ -688,25 +2448,25 @@
     async function loadPost(slug) {
       try {
         const q = query(
-          collection(db,'posts'),
-          where('slug','==',slug),
-          where('status','==','published'),
+          collection(db, 'posts'),
+          where('slug', '==', slug),
+          where('status', '==', 'published'),
           limit(1)
         );
         const snap = await getDocs(q);
-        
+
         console.log("✅ Found docs:", snap.size); // Debug log
-        
-        if (snap.empty) { 
-          showNotFound(`No post found with slug "${slug}". It may have been removed.`); 
-          return; 
+
+        if (snap.empty) {
+          showNotFound(`No post found with slug "${slug}". It may have been removed.`);
+          return;
         }
-        
+
         currentPostData = { id: snap.docs[0].id, ...snap.docs[0].data() };
         renderPost(currentPostData);
         loadComments(currentPostData.id, currentPostData.slug, currentPostData.title, currentPostData.authorUid);
         loadMoreByAuthor(currentPostData.author, currentPostData.slug);
-      } catch(err) {
+      } catch (err) {
         console.error("❌ Load post error:", err);
         showNotFound("An error occurred while loading this post.");
       }
@@ -716,9 +2476,9 @@
     function renderPost(post) {
       // ✅ Dynamic SEO tags
       document.title = `${post.title} — HlyWor`;
-      
+
       const updateMeta = (name, content, property = false) => {
-        let el = document.querySelector(`meta[${property?'property':'name'}="${name}"]`);
+        let el = document.querySelector(`meta[${property ? 'property' : 'name'}="${name}"]`);
         if (!el) {
           el = document.createElement('meta');
           if (property) el.setAttribute('property', name);
@@ -729,7 +2489,7 @@
       };
 
       const excerpt = post.desc || (post.content?.replace(/<[^>]+>/g, '').slice(0, 150) + '...') || 'A story on HlyWor';
-      
+
       updateMeta('description', excerpt);
       updateMeta('og:title', `${post.title} — HlyWor`, true);
       updateMeta('og:description', excerpt, true);
@@ -739,7 +2499,7 @@
       updateMeta('twitter:card', 'summary_large_image');
       updateMeta('twitter:title', post.title);
       updateMeta('twitter:description', excerpt);
-      
+
       // ✅ Canonical URL
       let canonical = document.querySelector('link[rel="canonical"]');
       if (!canonical) {
@@ -748,19 +2508,19 @@
         document.head.appendChild(canonical);
       }
       canonical.setAttribute('href', `https://hlywor.fun/post.html?slug=${post.slug}`);
-      
+
       // ✅ Breadcrumb title
       const breadcrumbTitle = document.getElementById('breadcrumbTitle');
       if (breadcrumbTitle) breadcrumbTitle.textContent = post.title;
 
       const dateStr = post.date
-        ? new Date(post.date).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})
+        ? new Date(post.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
         : '';
-      const catClass = {story:'cat-story',movies:'cat-movies',books:'cat-books',thoughts:'cat-thoughts',college:'cat-college',news:'cat-news'}[post.category] || 'cat-default';
-      const tagsHtml = (post.tags||[]).length
-        ? `<div class="post-tags">${post.tags.map(t=>`<span class="post-tag">#${t}</span>`).join('')}</div>`
+      const catClass = { story: 'cat-story', movies: 'cat-movies', books: 'cat-books', thoughts: 'cat-thoughts', college: 'cat-college', news: 'cat-news' }[post.category] || 'cat-default';
+      const tagsHtml = (post.tags || []).length
+        ? `<div class="post-tags">${post.tags.map(t => `<span class="post-tag">#${t}</span>`).join('')}</div>`
         : '';
-      const readtime = post.readtime || calcReadTime(post.content||'');
+      const readtime = post.readtime || calcReadTime(post.content || '');
 
       // Template styling
       if (post.template && post.template !== 'diary') {
@@ -787,9 +2547,9 @@
         ${post.desc ? `<p class="post-desc">${escHtml(post.desc)}</p>` : ''}
         <div class="post-meta">
           ${post.author ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val" id="authorName" style="cursor:pointer;text-decoration:underline dotted;color:var(--fire)" tabindex="0" role="button" aria-label="View ${post.author}'s profile">${escHtml(post.author)}</span></div>` : ''}
-          ${readtime   ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
-          <span class="post-cat-tape ${catClass}" aria-label="Category: ${(post.category||'post').toUpperCase()}">${(post.category||'post').toUpperCase()}</span>
-          ${post.authorUid ? `<button class="card-stick-btn" id="postPageStickBtn" data-touid="${post.authorUid}" data-toname="${escHtml(post.author||'')}" aria-label="Follow ${post.author||'author'}">📌 Stick</button>` : ''}
+          ${readtime ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
+          <span class="post-cat-tape ${catClass}" aria-label="Category: ${(post.category || 'post').toUpperCase()}">${(post.category || 'post').toUpperCase()}</span>
+          ${post.authorUid ? `<button class="card-stick-btn" id="postPageStickBtn" data-touid="${post.authorUid}" data-toname="${escHtml(post.author || '')}" aria-label="Follow ${post.author || 'author'}">📌 Stick</button>` : ''}
         </div>
         ${tagsHtml}`;
 
@@ -804,22 +2564,22 @@
       const rawContent = post.content || '<p>No content.</p>';
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = rawContent;
-      
+
       // Remove contenteditable and data-sticky attrs
       tempDiv.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
       tempDiv.querySelectorAll('[data-sticky]').forEach(el => el.removeAttribute('data-sticky'));
-      
+
       // Lazy-load images + alt fallback
       tempDiv.querySelectorAll('img').forEach(img => {
         if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
         if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
         if (!img.alt) img.alt = `${post.title} - image`;
       });
-      
+
       postBodyEl.innerHTML = tempDiv.innerHTML;
 
       // ✅ Reactions
-      const EMOJIS = ['🔥','❤️','😭'];
+      const EMOJIS = ['🔥', '❤️', '😭'];
       const postSlug = post.slug || post.id;
       const rEl = document.getElementById('postReactions');
 
@@ -829,7 +2589,7 @@
 
       async function loadPostReactions() {
         try {
-          const snap = await getDocs(query(collection(db,'reactions'), where('postSlug','==', postSlug)));
+          const snap = await getDocs(query(collection(db, 'reactions'), where('postSlug', '==', postSlug)));
           const counts = {};
           const userReacted = {};
           EMOJIS.forEach(e => { counts[e] = 0; userReacted[e] = false; });
@@ -847,7 +2607,7 @@
             btn.classList.toggle('reacted', userReacted[emoji]);
             btn.setAttribute('aria-pressed', userReacted[emoji] ? 'true' : 'false');
           });
-        } catch(e) { console.error('Reactions:', e); }
+        } catch (e) { console.error('Reactions:', e); }
       }
       loadPostReactions();
 
@@ -870,21 +2630,21 @@
           try {
             if (isReacted) {
               const snap = await getDocs(query(
-                collection(db,'reactions'),
-                where('postSlug','==', postSlug),
-                where('emoji','==', emoji),
-                where('uid','==', currentUser.uid),
+                collection(db, 'reactions'),
+                where('postSlug', '==', postSlug),
+                where('emoji', '==', emoji),
+                where('uid', '==', currentUser.uid),
                 limit(1)
               ));
-              if (!snap.empty) await deleteDoc(doc(db,'reactions', snap.docs[0].id));
+              if (!snap.empty) await deleteDoc(doc(db, 'reactions', snap.docs[0].id));
             } else {
-              await addDoc(collection(db,'reactions'), {
+              await addDoc(collection(db, 'reactions'), {
                 postSlug, emoji,
                 uid: currentUser.uid,
                 createdAt: serverTimestamp()
               });
             }
-          } catch(e) {
+          } catch (e) {
             // Revert on failure
             btn.classList.toggle('reacted', isReacted);
             btn.setAttribute('aria-pressed', isReacted ? 'true' : 'false');
@@ -892,7 +2652,7 @@
             console.error(e);
           }
         });
-        
+
         // Keyboard support
         btn.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -917,131 +2677,131 @@
       // ✅ Share buttons
       const postUrl = encodeURIComponent(window.location.href);
       const postTitle = encodeURIComponent(post.title);
-      
+
       document.getElementById('shareTwitter')?.addEventListener('click', () => {
         window.open(`https://twitter.com/intent/tweet?text=${postTitle}&url=${postUrl}`, '_blank', 'width=550,height=420');
       });
-      
+
       document.getElementById('shareWhatsApp')?.addEventListener('click', () => {
         window.open(`https://wa.me/?text=${postTitle}%20${postUrl}`, '_blank');
       });
       // Instagram Story Share
-document.getElementById('shareInstagramStory')?.addEventListener('click', async () => {
-  const postUrl = window.location.href;
-  const postTitle = post.title;
-  
-  // Try to open Instagram story creation
-  const instagramUrl = `https://www.instagram.com/stories/create/`;
-  
-  // For mobile, try to open Instagram app
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  
-  if (isMobile) {
-    // On mobile, copy link first then open Instagram
-    try {
-      await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
-      
-      const btn = document.getElementById('shareInstagramStory');
-      const original = btn.innerHTML;
-      btn.innerHTML = '✓';
-      btn.setAttribute('aria-label', 'Link copied! Open Instagram');
-      
-      // Try to open Instagram app
-      window.location.href = 'instagram://story';
-      
-      // Fallback to web after 2 seconds
-      setTimeout(() => {
-        window.open(instagramUrl, '_blank');
-      }, 2000);
-      
-      setTimeout(() => {
-        btn.innerHTML = original;
-        btn.setAttribute('aria-label', 'Share to Instagram Story');
-      }, 2000);
-    } catch(e) {
-      // Fallback: just open Instagram
-      window.open(instagramUrl, '_blank');
-    }
-  } else {
-    // On desktop, open Instagram web and show instructions
-    const confirmed = confirm(
-      'To share to Instagram Story:\n\n' +
-      '1. We\'ll copy the link to your clipboard\n' +
-      '2. Instagram will open in a new tab\n' +
-      '3. Create a story and paste the link\n\n' +
-      'Continue?'
-    );
-    
-    if (confirmed) {
-      try {
-        await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
-        
-        const btn = document.getElementById('shareInstagramStory');
-        const original = btn.innerHTML;
-        btn.innerHTML = '✓';
-        
-        window.open(instagramUrl, '_blank');
-        
-        setTimeout(() => {
-          btn.innerHTML = original;
-        }, 2000);
-      } catch(e) {
-        window.open(instagramUrl, '_blank');
-      }
-    }
-  }
-});
+      document.getElementById('shareInstagramStory')?.addEventListener('click', async () => {
+        const postUrl = window.location.href;
+        const postTitle = post.title;
 
-// Instagram Chat/Direct Share
-document.getElementById('shareInstagramChat')?.addEventListener('click', async () => {
-  const postUrl = window.location.href;
-  const postTitle = post.title;
-  
-  // Instagram doesn't have a direct share URL, so we copy the link
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  
-  try {
-    await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
-    
-    const btn = document.getElementById('shareInstagramChat');
-    const original = btn.innerHTML;
-    btn.innerHTML = '✓';
-    btn.setAttribute('aria-label', 'Link copied! Open Instagram');
-    
-    if (isMobile) {
-      // Try to open Instagram app to direct messages
-      window.location.href = 'instagram://direct/inbox';
-      
-      // Fallback to web
-      setTimeout(() => {
-        window.open('https://www.instagram.com/direct/inbox/', '_blank');
-      }, 2000);
-    } else {
-      // Desktop: show instructions
-      alert(
-        'Link copied to clipboard! 📋\n\n' +
-        'To share via Instagram Chat:\n' +
-        '1. Open Instagram\n' +
-        '2. Go to Direct Messages (💌)\n' +
-        '3. Select a conversation\n' +
-        '4. Paste the link (Ctrl+V or Cmd+V)\n\n' +
-        'The link is ready to paste!'
-      );
-      
-      // Open Instagram web
-      window.open('https://www.instagram.com/direct/inbox/', '_blank');
-    }
-    
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.setAttribute('aria-label', 'Share via Instagram Chat');
-    }, 2000);
-    
-  } catch(e) {
-    // Fallback: just open Instagram
-    window.open('https://www.instagram.com/direct/inbox/', '_blank');
-  }
-});
+        // Try to open Instagram story creation
+        const instagramUrl = `https://www.instagram.com/stories/create/`;
+
+        // For mobile, try to open Instagram app
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+          // On mobile, copy link first then open Instagram
+          try {
+            await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
+
+            const btn = document.getElementById('shareInstagramStory');
+            const original = btn.innerHTML;
+            btn.innerHTML = '✓';
+            btn.setAttribute('aria-label', 'Link copied! Open Instagram');
+
+            // Try to open Instagram app
+            window.location.href = 'instagram://story';
+
+            // Fallback to web after 2 seconds
+            setTimeout(() => {
+              window.open(instagramUrl, '_blank');
+            }, 2000);
+
+            setTimeout(() => {
+              btn.innerHTML = original;
+              btn.setAttribute('aria-label', 'Share to Instagram Story');
+            }, 2000);
+          } catch (e) {
+            // Fallback: just open Instagram
+            window.open(instagramUrl, '_blank');
+          }
+        } else {
+          // On desktop, open Instagram web and show instructions
+          const confirmed = confirm(
+            'To share to Instagram Story:\n\n' +
+            '1. We\'ll copy the link to your clipboard\n' +
+            '2. Instagram will open in a new tab\n' +
+            '3. Create a story and paste the link\n\n' +
+            'Continue?'
+          );
+
+          if (confirmed) {
+            try {
+              await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
+
+              const btn = document.getElementById('shareInstagramStory');
+              const original = btn.innerHTML;
+              btn.innerHTML = '✓';
+
+              window.open(instagramUrl, '_blank');
+
+              setTimeout(() => {
+                btn.innerHTML = original;
+              }, 2000);
+            } catch (e) {
+              window.open(instagramUrl, '_blank');
+            }
+          }
+        }
+      });
+
+      // Instagram Chat/Direct Share
+      document.getElementById('shareInstagramChat')?.addEventListener('click', async () => {
+        const postUrl = window.location.href;
+        const postTitle = post.title;
+
+        // Instagram doesn't have a direct share URL, so we copy the link
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        try {
+          await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
+
+          const btn = document.getElementById('shareInstagramChat');
+          const original = btn.innerHTML;
+          btn.innerHTML = '✓';
+          btn.setAttribute('aria-label', 'Link copied! Open Instagram');
+
+          if (isMobile) {
+            // Try to open Instagram app to direct messages
+            window.location.href = 'instagram://direct/inbox';
+
+            // Fallback to web
+            setTimeout(() => {
+              window.open('https://www.instagram.com/direct/inbox/', '_blank');
+            }, 2000);
+          } else {
+            // Desktop: show instructions
+            alert(
+              'Link copied to clipboard! 📋\n\n' +
+              'To share via Instagram Chat:\n' +
+              '1. Open Instagram\n' +
+              '2. Go to Direct Messages (💌)\n' +
+              '3. Select a conversation\n' +
+              '4. Paste the link (Ctrl+V or Cmd+V)\n\n' +
+              'The link is ready to paste!'
+            );
+
+            // Open Instagram web
+            window.open('https://www.instagram.com/direct/inbox/', '_blank');
+          }
+
+          setTimeout(() => {
+            btn.innerHTML = original;
+            btn.setAttribute('aria-label', 'Share via Instagram Chat');
+          }, 2000);
+
+        } catch (e) {
+          // Fallback: just open Instagram
+          window.open('https://www.instagram.com/direct/inbox/', '_blank');
+        }
+      });
       document.getElementById('copyLinkBtn')?.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(window.location.href);
@@ -1053,11 +2813,11 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
             btn.innerHTML = original;
             btn.setAttribute('aria-label', 'Copy link to clipboard');
           }, 1500);
-        } catch(e) {
+        } catch (e) {
           prompt('Copy this link:', window.location.href);
         }
       });
-      
+
       // ✅ Save for later
       const saveBtn = document.getElementById('savePostBtn');
       if (saveBtn && currentUser) {
@@ -1066,7 +2826,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
         saveBtn.classList.toggle('reacted', isSaved);
         saveBtn.setAttribute('aria-pressed', isSaved ? 'true' : 'false');
         saveBtn.setAttribute('aria-label', isSaved ? 'Remove from saved' : 'Save for later');
-        
+
         saveBtn.addEventListener('click', () => {
           const saved = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
           const isSaved = saved.includes(post.id);
@@ -1090,11 +2850,11 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
       // Show content
       document.getElementById('loadingState').style.display = 'none';
       document.getElementById('postWrap').style.display = 'block';
-      
+
       setupCommentForm(post.id, post.slug, post.title, post.authorUid);
       maybeShowToolbar(post);
       wirePostStickBtn(post);
-      
+
       // ✅ Preserve scroll position on back nav
       document.getElementById('navBack')?.addEventListener('click', (e) => {
         sessionStorage.setItem('hlywor_scrollY', window.scrollY);
@@ -1121,7 +2881,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
             <div class="popup-inner" id="authorPopupInner"><div class="popup-loading">Looking them up...</div></div>
           </div>`;
         document.body.appendChild(overlay);
-        
+
         if (!document.getElementById('authorPopupStyle')) {
           const s = document.createElement('style');
           s.id = 'authorPopupStyle';
@@ -1161,12 +2921,12 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
       inner.innerHTML = `<div class="popup-loading">Looking them up...</div>`;
       overlay.classList.add('open');
       overlay.onclick = e => { if (e.target === overlay) { overlay.classList.remove('open'); document.getElementById('authorName')?.focus(); } };
-      document.addEventListener('keydown', function escHandler(e) { 
-        if (e.key === 'Escape') { 
-          overlay.classList.remove('open'); 
+      document.addEventListener('keydown', function escHandler(e) {
+        if (e.key === 'Escape') {
+          overlay.classList.remove('open');
           document.getElementById('authorName')?.focus();
           document.removeEventListener('keydown', escHandler);
-        } 
+        }
       });
       fetchAndRenderAuthorPopup(authorName, authorUid, inner);
     }
@@ -1178,19 +2938,19 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
       if (person === undefined) {
         try {
           let snap;
-          if (authorUid) snap = await getDocs(query(collection(db,'people'), where('authorUid','==',authorUid), limit(1)));
-          if (!snap || snap.empty) snap = await getDocs(query(collection(db,'people'), where('nameLower','==',authorName.toLowerCase()), limit(1)));
+          if (authorUid) snap = await getDocs(query(collection(db, 'people'), where('authorUid', '==', authorUid), limit(1)));
+          if (!snap || snap.empty) snap = await getDocs(query(collection(db, 'people'), where('nameLower', '==', authorName.toLowerCase()), limit(1)));
           if (!snap || snap.empty) {
             const firstName = authorName.split(/[\s.]/)[0].toLowerCase();
             if (firstName.length >= 3) {
-              const allPeople = await getDocs(collection(db,'people'));
+              const allPeople = await getDocs(collection(db, 'people'));
               const match = allPeople.docs.find(d => (d.data().nameLower || '').split(' ')[0] === firstName);
               if (match) snap = { empty: false, docs: [match] };
             }
           }
           person = (!snap || snap.empty) ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
           _popupCache[cacheKey] = person;
-        } catch(e) { console.error(e); person = null; }
+        } catch (e) { console.error(e); person = null; }
       }
 
       const acc = person?.accent || '#e8681a';
@@ -1199,25 +2959,25 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
 
       if (toUid) {
         try {
-          const sc = await getDocs(query(collection(db,'sticks'), where('toUid','==',toUid)));
+          const sc = await getDocs(query(collection(db, 'sticks'), where('toUid', '==', toUid)));
           stickCount = sc.size;
           if (currentUser && currentUser.uid !== toUid) {
             const ex = sc.docs.find(d => d.data().fromUid === currentUser.uid);
             if (ex) stickDocId = ex.id;
           }
-        } catch(e) {}
+        } catch (e) { }
       }
 
       const isOwnProfile = currentUser && toUid && currentUser.uid === toUid;
       const canStick = !!toUid && !isOwnProfile;
-      const isStuck  = !!stickDocId;
+      const isStuck = !!stickDocId;
 
       const avatarHtml = person?.photos?.[0]
-        ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${escHtml(person.name||authorName)}" loading="lazy">`
-        : `<div class="popup-avatar-placeholder" aria-hidden="true">${(person?.name||authorName)[0].toUpperCase()}</div>`;
+        ? `<img class="popup-avatar" src="${person.photos[0]}" alt="${escHtml(person.name || authorName)}" loading="lazy">`
+        : `<div class="popup-avatar-placeholder" aria-hidden="true">${(person?.name || authorName)[0].toUpperCase()}</div>`;
 
       const stickBtn = canStick ? `
-        <button class="popup-stick-btn ${isStuck?'stuck-state':'unstuck'}" id="popupStickBtn" aria-pressed="${isStuck}">
+        <button class="popup-stick-btn ${isStuck ? 'stuck-state' : 'unstuck'}" id="popupStickBtn" aria-pressed="${isStuck}">
           ${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}
         </button>
         ${stickCount > 0 ? `<span class="popup-stick-count" aria-label="${stickCount} people stuck">${stickCount} stuck</span>` : ''}` : '';
@@ -1230,11 +2990,11 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
         <div class="popup-header">
           ${avatarHtml}
           <div>
-            <div class="popup-name" id="authorPopupTitle">${escHtml(person?.name||authorName)}</div>
-            ${person?.role?`<div class="popup-role">${person.role.toUpperCase()}</div>`:''}
+            <div class="popup-name" id="authorPopupTitle">${escHtml(person?.name || authorName)}</div>
+            ${person?.role ? `<div class="popup-role">${person.role.toUpperCase()}</div>` : ''}
           </div>
         </div>
-        ${person?.bio?`<p class="popup-bio">${escHtml(person.bio)}</p>`:person===null?`<p class="popup-no-profile">No profile card yet.</p>`:''}
+        ${person?.bio ? `<p class="popup-bio">${escHtml(person.bio)}</p>` : person === null ? `<p class="popup-no-profile">No profile card yet.</p>` : ''}
         <div class="popup-actions">${stickBtn}${profileLink}</div>`;
 
       const stickBtnEl = inner.querySelector('#popupStickBtn');
@@ -1244,18 +3004,18 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
           stickBtnEl.disabled = true;
           try {
             if (stickDocId) {
-              await deleteDoc(doc(db,'sticks',stickDocId));
+              await deleteDoc(doc(db, 'sticks', stickDocId));
               stickDocId = null;
               stickBtnEl.textContent = '📌 Stick them';
               stickBtnEl.className = 'popup-stick-btn unstuck';
               stickBtnEl.setAttribute('aria-pressed', 'false');
             } else {
               const fromName = getDisplayName(currentUser);
-              const fromSnap = await getDocs(query(collection(db,'people'),where('authorUid','==',currentUser.uid),limit(1)));
-              const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug||'';
-              const ref = await addDoc(collection(db,'sticks'), {
+              const fromSnap = await getDocs(query(collection(db, 'people'), where('authorUid', '==', currentUser.uid), limit(1)));
+              const fromSlug = fromSnap.empty ? '' : fromSnap.docs[0].data().slug || '';
+              const ref = await addDoc(collection(db, 'sticks'), {
                 fromUid: currentUser.uid, fromName, fromSlug,
-                toUid, toSlug: person?.slug||'', toName: person?.name||authorName,
+                toUid, toSlug: person?.slug || '', toName: person?.name || authorName,
                 createdAt: serverTimestamp()
               });
               stickDocId = ref.id;
@@ -1264,11 +3024,11 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
               stickBtnEl.setAttribute('aria-pressed', 'true');
             }
             _popupCache = {};
-          } catch(e) { console.error(e); }
+          } catch (e) { console.error(e); }
           stickBtnEl.disabled = false;
         });
       }
-      
+
       // Focus management
       setTimeout(() => {
         const popup = document.getElementById('authorPopup');
@@ -1280,20 +3040,20 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
     function wirePostStickBtn(post) {
       const btn = document.getElementById('postPageStickBtn');
       if (!btn || !post.authorUid) return;
-      const toUid  = post.authorUid;
+      const toUid = post.authorUid;
       const toName = post.author || '';
 
-      if (currentUser && currentUser.uid === toUid) { btn.style.display='none'; return; }
-      if (!currentUser) { btn.style.display='none'; }
+      if (currentUser && currentUser.uid === toUid) { btn.style.display = 'none'; return; }
+      if (!currentUser) { btn.style.display = 'none'; }
 
       onAuthChange(async user => {
-        if (!user || user.uid === toUid) { btn.style.display='none'; return; }
-        btn.style.display='';
+        if (!user || user.uid === toUid) { btn.style.display = 'none'; return; }
+        btn.style.display = '';
         try {
           const snap = await getDocs(query(
-            collection(db,'sticks'),
-            where('fromUid','==',user.uid),
-            where('toUid','==',toUid),
+            collection(db, 'sticks'),
+            where('fromUid', '==', user.uid),
+            where('toUid', '==', toUid),
             limit(1)
           ));
           if (!snap.empty) {
@@ -1305,7 +3065,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
             btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
             btn.setAttribute('aria-pressed', 'false');
           }
-        } catch(e) {}
+        } catch (e) { }
       });
 
       btn.addEventListener('click', async e => {
@@ -1316,7 +3076,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
         const isStuck = btn.classList.contains('is-stuck');
         try {
           if (isStuck) {
-            if (btn.dataset.stickid) await deleteDoc(doc(db,'sticks',btn.dataset.stickid));
+            if (btn.dataset.stickid) await deleteDoc(doc(db, 'sticks', btn.dataset.stickid));
             btn.classList.remove('is-stuck');
             btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
             btn.dataset.stickid = '';
@@ -1325,11 +3085,11 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
             const fromName = getDisplayName(currentUser);
             let toSlug = '';
             try {
-              const ps = await getDocs(query(collection(db,'people'),where('authorUid','==',toUid),limit(1)));
-              if (!ps.empty) toSlug = ps.docs[0].data().slug||'';
-            } catch(e) {}
-            const ref = await addDoc(collection(db,'sticks'),{
-              fromUid: currentUser.uid, fromName, fromSlug:'',
+              const ps = await getDocs(query(collection(db, 'people'), where('authorUid', '==', toUid), limit(1)));
+              if (!ps.empty) toSlug = ps.docs[0].data().slug || '';
+            } catch (e) { }
+            const ref = await addDoc(collection(db, 'sticks'), {
+              fromUid: currentUser.uid, fromName, fromSlug: '',
               toUid, toName, toSlug,
               createdAt: serverTimestamp()
             });
@@ -1338,7 +3098,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
             btn.textContent = '📌 Stuck ✦';
             btn.setAttribute('aria-pressed', 'true');
           }
-        } catch(err) { console.error(err); }
+        } catch (err) { console.error(err); }
         btn.disabled = false;
       });
     }
@@ -1412,11 +3172,11 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
       if (!currentUser || !currentPostData) return;
 
       const titleEl = document.querySelector('.post-title');
-      const descEl  = document.querySelector('.post-desc');
-      const bodyEl  = document.getElementById('postBody');
+      const descEl = document.querySelector('.post-desc');
+      const bodyEl = document.getElementById('postBody');
 
-      const newTitle   = titleEl?.innerText.trim() || currentPostData.title;
-      const newDesc    = descEl?.innerText.trim()  || currentPostData.desc;
+      const newTitle = titleEl?.innerText.trim() || currentPostData.title;
+      const newDesc = descEl?.innerText.trim() || currentPostData.desc;
 
       const bodyClone = bodyEl.cloneNode(true);
       bodyClone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
@@ -1428,14 +3188,14 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
 
       try {
         await updateDoc(doc(db, 'posts', currentPostData.id), {
-          title:   newTitle,
-          desc:    newDesc,
+          title: newTitle,
+          desc: newDesc,
           content: newContent,
           updatedAt: serverTimestamp()
         });
 
-        currentPostData.title   = newTitle;
-        currentPostData.desc    = newDesc;
+        currentPostData.title = newTitle;
+        currentPostData.desc = newDesc;
         currentPostData.content = newContent;
 
         isEditMode = false;
@@ -1446,8 +3206,8 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
         statusEl.style.color = '#2a8a2a';
 
         if (titleEl) titleEl.contentEditable = 'false';
-        if (descEl)  descEl.contentEditable  = 'false';
-        if (bodyEl)  bodyEl.contentEditable  = 'false';
+        if (descEl) descEl.contentEditable = 'false';
+        if (bodyEl) bodyEl.contentEditable = 'false';
 
         restoreToolbar();
         setTimeout(() => {
@@ -1459,7 +3219,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
           if (s) s.textContent = '';
         }, 3000);
 
-      } catch(err) {
+      } catch (err) {
         console.error(err);
         statusEl.textContent = '✕ Failed: ' + err.message;
         statusEl.style.color = '#c0392b';
@@ -1476,7 +3236,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
       try {
         await deleteDoc(doc(db, 'posts', currentPostData.id));
         window.location.href = 'index.html';
-      } catch(err) {
+      } catch (err) {
         console.error(err);
         const s = document.getElementById('toolbarSaveStatus');
         if (s) { s.textContent = '✕ Delete failed'; s.style.color = '#c0392b'; }
@@ -1484,7 +3244,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
     }
 
     document.getElementById('authorToolbar').addEventListener('click', e => {
-      if (e.target.id === 'toolbarEditBtn')   enterEditMode();
+      if (e.target.id === 'toolbarEditBtn') enterEditMode();
       if (e.target.id === 'toolbarDeleteBtn') deletePost();
     });
 
@@ -1492,21 +3252,21 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
     function loadComments(postId, postSlug, postTitle, postAuthorUid) {
       // ✅ Unsubscribe from previous if exists
       if (commentsUnsub) commentsUnsub();
-      
+
       const q = query(
-        collection(db,'comments'),
-        where('postId','==',postId),
-        orderBy('createdAt','asc')
+        collection(db, 'comments'),
+        where('postId', '==', postId),
+        orderBy('createdAt', 'asc')
       );
-      
+
       commentsUnsub = onSnapshot(q, snap => {
-        const all = snap.docs.map(d => ({id:d.id,...d.data()}));
-        const list    = document.getElementById('commentsList');
+        const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const list = document.getElementById('commentsList');
         const countEl = document.getElementById('commentsCount');
         const topLevel = all.filter(c => !c.parentId);
-        const replies  = all.filter(c => !!c.parentId);
-        const total    = all.length;
-        countEl.textContent = `${total} note${total!==1?'s':''}`;
+        const replies = all.filter(c => !!c.parentId);
+        const total = all.length;
+        countEl.textContent = `${total} note${total !== 1 ? 's' : ''}`;
         if (!topLevel.length) {
           list.innerHTML = `<div class="comment-empty">No notes yet — be the first to leave one.</div>`;
           return;
@@ -1522,16 +3282,16 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
           if (threadReplies.length) {
             const toggle = document.createElement('button');
             toggle.className = 'toggle-replies-btn';
-            toggle.textContent = `${threadReplies.length} repl${threadReplies.length!==1?'ies':'y'}`;
+            toggle.textContent = `${threadReplies.length} repl${threadReplies.length !== 1 ? 'ies' : 'y'}`;
             toggle.setAttribute('aria-expanded', 'true');
             toggle.setAttribute('aria-controls', `replies-${c.id}`);
-            
+
             const repliesWrap = document.createElement('div');
             repliesWrap.className = 'replies-wrap';
             repliesWrap.id = `replies-${c.id}`;
             repliesWrap.setAttribute('role', 'list');
-            threadReplies.forEach((r,j) => { repliesWrap.innerHTML += renderComment(r, j, postAuthorUid, true); });
-            
+            threadReplies.forEach((r, j) => { repliesWrap.innerHTML += renderComment(r, j, postAuthorUid, true); });
+
             toggle.addEventListener('click', () => {
               const hidden = repliesWrap.style.display === 'none';
               repliesWrap.style.display = hidden ? 'block' : 'none';
@@ -1546,7 +3306,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
           replyForm.className = 'reply-form';
           replyForm.id = `reply-form-${c.id}`;
           replyForm.setAttribute('role', 'form');
-          replyForm.setAttribute('aria-label', `Reply to ${escHtml(c.name||'Anonymous')}`);
+          replyForm.setAttribute('aria-label', `Reply to ${escHtml(c.name || 'Anonymous')}`);
           replyForm.innerHTML = `
             <textarea class="reply-input" placeholder="Write a reply..." rows="2" aria-label="Your reply"></textarea>
             <div class="reply-form-actions">
@@ -1577,22 +3337,24 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
             const submitBtn = replyForm.querySelector('.reply-submit-btn');
             submitBtn.disabled = true; submitBtn.textContent = 'Replying...';
             try {
-              await addDoc(collection(db,'comments'), {
-                postId, postSlug: postSlug||'', postTitle: postTitle||'',
+              await addDoc(collection(db, 'comments'), {
+                postId, postSlug: postSlug || '', postTitle: postTitle || '',
                 parentId: c.id, text,
                 name: getDisplayName(currentUser),
                 authorUid: currentUser.uid,
-                authorEmail: currentUser.email||'',
+                authorEmail: currentUser.email || '',
                 createdAt: serverTimestamp()
               });
               if (c.authorUid && c.authorUid !== currentUser.uid) {
-                await addNotification({ toUid: c.authorUid, type: 'reply',
+                await addNotification({
+                  toUid: c.authorUid, type: 'reply',
                   fromName: getDisplayName(currentUser), fromUid: currentUser.uid,
-                  postSlug: postSlug||'', postTitle: postTitle||'', preview: text.slice(0,80) });
+                  postSlug: postSlug || '', postTitle: postTitle || '', preview: text.slice(0, 80)
+                });
               }
               replyForm.querySelector('.reply-input').value = '';
               replyForm.classList.remove('open');
-            } catch(e) { console.error(e); status.textContent = '✕ Failed'; }
+            } catch (e) { console.error(e); status.textContent = '✕ Failed'; }
             submitBtn.disabled = false; submitBtn.textContent = 'Reply ✦';
           });
 
@@ -1600,7 +3362,7 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
             btn.addEventListener('click', async () => {
               const confirmed = await showConfirmDelete('Delete this note?');
               if (!confirmed) return;
-              try { await deleteDoc(doc(db,'comments', btn.dataset.id)); } catch(e) { console.error(e); }
+              try { await deleteDoc(doc(db, 'comments', btn.dataset.id)); } catch (e) { console.error(e); }
             });
           });
         });
@@ -1612,29 +3374,29 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
 
     function renderComment(c, i, postAuthorUid, isReply) {
       const ds = c.createdAt?.toDate
-        ? c.createdAt.toDate().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
-      const isOP   = c.authorUid && c.authorUid === postAuthorUid;
+        ? c.createdAt.toDate().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+      const isOP = c.authorUid && c.authorUid === postAuthorUid;
       const canDel = (currentUser && c.authorUid && currentUser.uid === c.authorUid)
-                  || (currentUser && currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
-      return `<div class="comment-item" style="animation-delay:${i*40}ms" role="listitem">
+        || (currentUser && currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
+      return `<div class="comment-item" style="animation-delay:${i * 40}ms" role="listitem">
         <div class="comment-header">
-          <span class="comment-author${isOP?' is-op':''}">${escHtml(c.mood||'')} ${escHtml(c.name||'Anonymous')}</span>
-          ${ds?`<span class="comment-date">${ds}</span>`:''}
+          <span class="comment-author${isOP ? ' is-op' : ''}">${escHtml(c.mood || '')} ${escHtml(c.name || 'Anonymous')}</span>
+          ${ds ? `<span class="comment-date">${ds}</span>` : ''}
         </div>
         <div class="comment-text">${escHtml(c.text)}</div>
         <div class="comment-actions">
-          ${!isReply?`<button class="comment-reply-btn" aria-label="Reply to ${escHtml(c.name||'Anonymous')}">↩ Reply</button>`:''}
-          ${canDel?`<button class="comment-delete-btn" data-id="${c.id}" aria-label="Delete this note">✕ delete</button>`:''}
+          ${!isReply ? `<button class="comment-reply-btn" aria-label="Reply to ${escHtml(c.name || 'Anonymous')}">↩ Reply</button>` : ''}
+          ${canDel ? `<button class="comment-delete-btn" data-id="${c.id}" aria-label="Delete this note">✕ delete</button>` : ''}
         </div>
       </div>`;
     }
 
     function setupCommentForm(postId, postSlug, postTitle, postAuthorUid) {
-      const btn    = document.getElementById('commentSubmit');
+      const btn = document.getElementById('commentSubmit');
       const status = document.getElementById('commentStatus');
       const textInput = document.getElementById('commentText');
       const charCount = document.getElementById('charCount');
-      
+
       // Character counter
       textInput?.addEventListener('input', () => {
         const max = 500;
@@ -1647,42 +3409,44 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
         }
         btn.disabled = textInput.value.trim().length === 0 || remaining < 0;
       });
-      
+
       onAuthChange(user => {
         const nameEl = document.getElementById('commentName');
         if (user && nameEl && !nameEl.value) nameEl.value = getDisplayName(user);
       });
-      
+
       btn.addEventListener('click', async () => {
         if (!currentUser) { showLoginModal({ prompt: 'Sign in to leave a note.' }); return; }
         const name = document.getElementById('commentName').value.trim() || getDisplayName(currentUser);
         const mood = document.getElementById('commentMood').value.trim();
         const text = textInput.value.trim();
-        if (!text) { status.textContent='⚠ Write something first!'; status.className='comment-status'; return; }
-        btn.disabled=true; btn.textContent='Pinning...'; status.textContent=''; status.className='comment-status';
+        if (!text) { status.textContent = '⚠ Write something first!'; status.className = 'comment-status'; return; }
+        btn.disabled = true; btn.textContent = 'Pinning...'; status.textContent = ''; status.className = 'comment-status';
         try {
-          await addDoc(collection(db,'comments'),{
-            postId, postSlug: postSlug||'', postTitle: postTitle||'',
+          await addDoc(collection(db, 'comments'), {
+            postId, postSlug: postSlug || '', postTitle: postTitle || '',
             parentId: null, name, mood, text,
-            authorUid: currentUser.uid, authorEmail: currentUser.email||'',
+            authorUid: currentUser.uid, authorEmail: currentUser.email || '',
             createdAt: serverTimestamp()
           });
           if (postAuthorUid && postAuthorUid !== currentUser.uid) {
-            await addNotification({ toUid: postAuthorUid, type: 'comment',
+            await addNotification({
+              toUid: postAuthorUid, type: 'comment',
               fromName: getDisplayName(currentUser), fromUid: currentUser.uid,
-              postSlug: postSlug||'', postTitle: postTitle||'', preview: text.slice(0,80) });
+              postSlug: postSlug || '', postTitle: postTitle || '', preview: text.slice(0, 80)
+            });
           }
-          document.getElementById('commentMood').value='';
-          textInput.value='';
+          document.getElementById('commentMood').value = '';
+          textInput.value = '';
           charCount.textContent = '0/500 characters';
-          status.textContent='✓ Note pinned!'; status.className='comment-status ok';
-          setTimeout(()=>{ status.textContent=''; status.className='comment-status'; },3000);
-        } catch(err) {
+          status.textContent = '✓ Note pinned!'; status.className = 'comment-status ok';
+          setTimeout(() => { status.textContent = ''; status.className = 'comment-status'; }, 3000);
+        } catch (err) {
           console.error(err);
-          status.textContent='✕ Failed — check Firebase config';
-          status.className='comment-status';
+          status.textContent = '✕ Failed — check Firebase config';
+          status.className = 'comment-status';
         }
-        btn.disabled=false; btn.textContent='Pin this note ✦';
+        btn.disabled = false; btn.textContent = 'Pin this note ✦';
       });
     }
 
@@ -1690,45 +3454,45 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
     async function addNotification({ toUid, type, fromName, fromUid, postSlug, postTitle, preview }) {
       if (!toUid || toUid === fromUid) return;
       try {
-        await addDoc(collection(db,'notifications'), {
+        await addDoc(collection(db, 'notifications'), {
           toUid, type, fromName, fromUid,
-          postSlug: postSlug||'', postTitle: postTitle||'',
-          preview: preview||'', read: false,
+          postSlug: postSlug || '', postTitle: postTitle || '',
+          preview: preview || '', read: false,
           createdAt: serverTimestamp()
         });
-      } catch(e) { console.error('Notification write:', e); }
+      } catch (e) { console.error('Notification write:', e); }
     }
 
     async function loadMoreByAuthor(author, currentSlug) {
       if (!author) return;
       try {
         const snap = await getDocs(query(
-          collection(db,'posts'),
-          where('author','==',author),
-          where('status','==','published'),
-          orderBy('createdAt','desc'),
+          collection(db, 'posts'),
+          where('author', '==', author),
+          where('status', '==', 'published'),
+          orderBy('createdAt', 'desc'),
           limit(4)
         ));
-        const others = snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.slug!==currentSlug);
+        const others = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(p => p.slug !== currentSlug);
         if (!others.length) return;
         document.getElementById('moreSubheading').textContent = `More by ${escHtml(author)}`;
         const grid = document.getElementById('moreGrid');
-        grid.innerHTML = others.map((p,i) => {
-          const cat = (p.category||'post').toUpperCase();
-          const ds = p.date ? new Date(p.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
+        grid.innerHTML = others.map((p, i) => {
+          const cat = (p.category || 'post').toUpperCase();
+          const ds = p.date ? new Date(p.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
           const thumb = p.thumbnail
             ? `<img class="more-card-img" src="${p.thumbnail}" alt="${escHtml(p.title)}" loading="lazy" decoding="async">`
-            : `<div class="more-card-noimg"><span class="more-card-noimg-num">${String(i+1).padStart(2,'0')}</span></div>`;
+            : `<div class="more-card-noimg"><span class="more-card-noimg-num">${String(i + 1).padStart(2, '0')}</span></div>`;
           return `<a href="post.html?slug=${p.slug}" class="more-card" role="listitem">
             <div class="more-card-pin" aria-hidden="true"></div>${thumb}
             <div class="more-card-body">
               <div class="more-card-cat" aria-label="Category: ${cat}">${cat}</div>
               <div class="more-card-title">${escHtml(p.title)}</div>
-              ${ds?`<div class="more-card-date">${ds}</div>`:''}
+              ${ds ? `<div class="more-card-date">${ds}</div>` : ''}
             </div></a>`;
         }).join('');
         document.getElementById('moreByAuthor').style.display = 'block';
-      } catch(err) { console.error('More by author:',err); }
+      } catch (err) { console.error('More by author:', err); }
     }
 
     function showNotFound(msg = "This post doesn't exist or was removed.") {
@@ -1737,14 +3501,14 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
       document.getElementById('notFound').style.display = 'block';
       document.title = "Page not found — HlyWor";
     }
-    
+
     function calcReadTime(html) {
-      const words = html.replace(/<[^>]+>/g,'').trim().split(/\s+/).filter(Boolean).length;
-      return words>0 ? `~${Math.max(1,Math.ceil(words/200))} min` : '';
+      const words = html.replace(/<[^>]+>/g, '').trim().split(/\s+/).filter(Boolean).length;
+      return words > 0 ? `~${Math.max(1, Math.ceil(words / 200))} min` : '';
     }
-    
+
     function escHtml(str) {
-      return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     // ✅ Cleanup on page unload
@@ -1763,26 +3527,26 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
 
     /* ── Bottom dock ── */
     document.getElementById('dockSearchBtn')?.addEventListener('click', () => {
-      if(typeof openSearch==='function')openSearch(); else document.getElementById('searchOverlay')?.classList.add('open');
+      if (typeof openSearch === 'function') openSearch(); else document.getElementById('searchOverlay')?.classList.add('open');
     });
     document.getElementById('dockWriteBtn')?.addEventListener('click', async e => {
       e.preventDefault();
-      if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to write.');if(u)window.location.href='submit.html';}else window.location.href='submit.html';
+      if (typeof requireLogin === 'function') { const u = await requireLogin('Sign in to write.'); if (u) window.location.href = 'submit.html'; } else window.location.href = 'submit.html';
     });
     document.getElementById('dockMeBtn')?.addEventListener('click', async () => {
-      if(typeof currentUser!=='undefined'&&currentUser){window.location.href='dashboard.html';}else if(typeof requireLogin==='function'){const u=await requireLogin('Sign in to access your board.');if(u)window.location.href='dashboard.html';}else window.location.href='dashboard.html';
+      if (typeof currentUser !== 'undefined' && currentUser) { window.location.href = 'dashboard.html'; } else if (typeof requireLogin === 'function') { const u = await requireLogin('Sign in to access your board.'); if (u) window.location.href = 'dashboard.html'; } else window.location.href = 'dashboard.html';
     });
-    
+
     if (typeof onAuthChange === 'function') {
       onAuthChange(user => {
         const icon = document.getElementById('dockMeIcon');
-        const lbl  = document.getElementById('dockMeLabel');
+        const lbl = document.getElementById('dockMeLabel');
         if (!icon) return;
         if (user) {
           icon.innerHTML = user.photoURL
             ? `<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer" loading="lazy">`
-            : `<div class="dock-avatar-placeholder" aria-hidden="true">${(user.displayName||'U')[0].toUpperCase()}</div>`;
-          if (lbl) lbl.textContent = (user.displayName||'').split(' ')[0].slice(0,5)||'ME';
+            : `<div class="dock-avatar-placeholder" aria-hidden="true">${(user.displayName || 'U')[0].toUpperCase()}</div>`;
+          if (lbl) lbl.textContent = (user.displayName || '').split(' ')[0].slice(0, 5) || 'ME';
         } else {
           icon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
           if (lbl) lbl.textContent = 'ME';
@@ -1795,26 +3559,42 @@ document.getElementById('shareInstagramChat')?.addEventListener('click', async (
   <div class="bottom-dock" role="navigation" aria-label="Mobile">
     <div class="dock-inner">
       <a href="index.html" class="dock-item" aria-label="Home">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z" />
+            <path d="M9 21V12h6v9" />
+          </svg></div>
         <span class="dock-label">HOME</span>
       </a>
       <a href="posts.html" class="dock-item active" aria-label="All posts">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <path d="M3 9h18M9 21V9" />
+          </svg></div>
         <span class="dock-label">POSTS</span>
       </a>
       <a href="submit.html" class="dock-item dock-write" id="dockWriteBtn" aria-label="Write a story">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z"/></svg></div>
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <path d="M12 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-7" />
+            <path d="M18.375 2.625a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.375-9.375z" />
+          </svg></div>
         <span class="dock-label">WRITE</span>
       </a>
       <button class="dock-item dock-search" id="dockSearchBtn" aria-label="Search">
-        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg></div>
         <span class="dock-label">SEARCH</span>
       </button>
       <button class="dock-item dock-me" id="dockMeBtn" aria-label="My profile">
-        <div class="dock-icon" id="dockMeIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+        <div class="dock-icon" id="dockMeIcon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+          </svg></div>
         <span class="dock-label" id="dockMeLabel">ME</span>
       </button>
     </div>
   </div>
 </body>
+
 </html>
