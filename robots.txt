@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Block admin/private pages
+Disallow: /dashboard.html
+Disallow: /submit.html
+
+# Allow important pages
+Allow: /index.html
+Allow: /post.html
+Allow: /about.html
+Allow: /character.html
+Allow: /profile.html
+
+Allow: /gallery.html
+
+# Sitemap location
+Sitemap: https://hlywor.fun/sitemap.xml
