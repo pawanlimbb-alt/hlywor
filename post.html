@@ -163,6 +163,32 @@
       }
     }
 
+    /* ── A-ADS ad units ── */
+    .ad-unit-wrap {
+      margin: 20px 0;
+      padding: 10px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      text-align: center;
+    }
+
+    .ad-unit-wrap::before {
+      content: 'AD';
+      display: block;
+      font-family: var(--pixel);
+      font-size: 0.2rem;
+      color: var(--ink4);
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 640px) {
+      .ad-unit-wrap iframe {
+        width: 100% !important;
+      }
+    }
+
     ::-webkit-scrollbar {
       width: 4px
     }
@@ -2273,14 +2299,17 @@
 
             <div class="post-header" id="postHeader"></div>
 
-            <!--Adsense-->
-            <div class="post-cover" id="postCover" style="display:none"></div>
-
-            <div class="ad-unit-wrap">
-              <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4255364002792942"
-                data-ad-slot="7608327622" data-ad-format="auto" data-full-width-responsive="true"></ins>
-              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <!-- BEGIN AADS AD UNIT 2446799 — Below header -->
+            <div class="ad-unit-wrap" aria-label="Advertisement" style="margin: 16px 0;">
+              <div id="aads-top" style="width:100%; margin:auto; position:relative; z-index:99998;">
+                <iframe data-aa='2446799' src='//acceptable.a-ads.com/2446799/?size=Adaptive'
+                  style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display:block; margin:auto'
+                  title="Advertisement" loading="lazy"></iframe>
+              </div>
             </div>
+            <!-- END AADS AD UNIT 2446799 — Below header -->
+
+            <div class="post-cover" id="postCover" style="display:none"></div>
 
             <div class="post-body" id="postBody" role="article" aria-label="Post content"></div>
 
@@ -2290,12 +2319,15 @@
 
             <div class="post-reactions" id="postReactions" aria-label="Reactions"></div>
 
-            <!--adsense 2nd-->
-            <div class="ad-unit-wrap">
-              <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4255364002792942"
-                data-ad-slot="7608327622" data-ad-format="auto" data-full-width-responsive="true"></ins>
-              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <!-- BEGIN AADS AD UNIT 2446799 — Mid-post -->
+            <div class="ad-unit-wrap" aria-label="Advertisement" style="margin: 24px 0;">
+              <div id="aads-mid" style="width:100%; margin:auto; position:relative; z-index:99998;">
+                <iframe data-aa='2446799' src='//acceptable.a-ads.com/2446799/?size=Adaptive'
+                  style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display:block; margin:auto'
+                  title="Advertisement" loading="lazy"></iframe>
+              </div>
             </div>
+            <!-- END AADS AD UNIT 2446799 —Mid-post -->
 
 
 
