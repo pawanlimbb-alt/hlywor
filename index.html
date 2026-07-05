@@ -349,6 +349,14 @@
     }
     #scrollNudge.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 
+    /* ✅ Sponsored ad card — blends with pinboard cards */
+    .ad-card{cursor:default;}
+    .ad-card:hover,.ad-card:focus{transform:rotate(var(--rot,0deg)) !important;box-shadow:var(--pin-shadow) !important;z-index:1 !important;}
+    .ad-card-inner{padding:18px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:220px;justify-content:center;}
+    .ad-card .post-cat-tape{align-self:flex-start;background:var(--ink3);opacity:0.7;}
+    .ad-frame-wrap{width:100%;}
+    .ad-disclosure{font-family:var(--sans);font-size:0.6rem;color:var(--ink3);opacity:0.55;letter-spacing:0.5px;align-self:flex-start;}
+
     @media(max-width:860px){.board-bottom{grid-template-columns:1fr 1fr;}.cta-note{grid-column:span 2;}.title-sheet{grid-template-columns:1fr;}.sheet-photo-col{min-height:200px;margin-top:24px;}.pasted-photo:nth-child(1){top:0;left:0;width:110px;}.pasted-photo:nth-child(2){top:70px;left:80px;width:100px;}.pasted-photo:nth-child(3){top:140px;left:10px;width:115px;}.hero-pulse{width:240px;height:240px;}}
     @media(max-width:640px){
       .nav-strip{display:none;}.board{margin-left:0;padding:0 0 90px;}.board-footer{margin-left:0;padding:16px 20px;grid-template-columns:1fr;gap:12px;}.footer-right{justify-content:flex-start;}.footer-location{text-align:left;}#progress-bar{left:0;}.board-header{flex-direction:column;gap:0;margin-bottom:24px;}.title-sheet{transform:rotate(0);max-width:100%;grid-template-columns:1fr;grid-template-rows:auto auto auto;padding:24px 20px 20px;box-shadow:0 4px 24px rgba(0,0,0,0.5);min-width:0;border-radius:0;}.sheet-text-col{grid-column:1;grid-row:1;}.sheet-eyebrow{font-size:0.26rem;letter-spacing:2px;margin-bottom:8px;}.sheet-title{font-size:clamp(1.8rem,8vw,2.6rem);margin-bottom:10px;}.sheet-sub{font-size:0.8rem;line-height:1.7;}.sheet-ctas{margin-top:16px;gap:8px;}.btn-sticky{font-size:0.9rem;padding:7px 14px;transform:none;}.btn-sticky:hover,.btn-sticky:focus{transform:translateY(-1px);}.btn-sticky.fire{transform:none;}.crew-btn{font-size:0.88rem;padding:7px 12px;margin-top:12px;}.sheet-photo-col{grid-column:1;grid-row:2;min-height:0;padding:16px 20px 8px;margin:20px -20px 0;display:flex !important;flex-direction:row;gap:12px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;position:relative;}.sheet-photo-col::-webkit-scrollbar{display:none;}.sheet-photo-col::after{content:'↔';position:absolute;bottom:4px;right:8px;font-family:var(--pixel);font-size:0.2rem;color:var(--ink3);opacity:0.6;pointer-events:none;z-index:2;}.sheet-photo-col .pasted-photo{position:relative !important;top:auto !important;left:auto !important;transform:none !important;width:130px !important;flex-shrink:0;scroll-snap-align:start;}.sheet-photo-col .pasted-photo:hover{transform:translateY(-4px) scale(1.04) !important;z-index:5;}.tape-filter{position:sticky;top:var(--topbar-h);z-index:400;background:rgba(18,12,8,0.95);backdrop-filter:blur(10px);padding:8px 14px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:6px;}.tape-filter::-webkit-scrollbar{display:none;}.tape-tab{font-size:0.26rem;padding:5px 12px;}.pinboard{grid-template-columns:1fr;gap:20px;padding:0 14px;}.pinned-post{transform:rotate(0deg) !important;}.post-note-body{padding:10px 12px 14px;}.post-note-title{font-size:0.95rem;}.post-note-desc{font-size:0.7rem;line-height:1.6;}.post-author-hand{font-size:0.78rem;}.post-read-hand{font-size:0.75rem;}.post-stickers{padding:6px 12px 10px;gap:3px;}.sticker-btn{font-size:0.72rem;padding:2px 6px;}.board-bottom{grid-template-columns:1fr;padding:0 14px;gap:20px;margin-top:32px;}.cta-note{grid-column:span 1;}.about-note,.cta-note,.team-sticky{transform:rotate(0deg) !important;}.cta-title{font-size:1.5rem;}.cta-text{font-size:0.78rem;}.note-text{font-size:0.88rem;}.light-blob{display:none;}.what-we-make{padding:0 14px;margin-bottom:16px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;}.what-we-make::-webkit-scrollbar{display:none;}.post-photo img{aspect-ratio:3/2;}.post-noimg{aspect-ratio:3/2;}.hero-pulse{width:200px;height:200px;}.reader-stat{bottom:70px;right:12px;}}
@@ -704,6 +712,24 @@
     let cachedUser=currentUser;
     onAuthChange(u=>{cachedUser=u;});
 
+    // ✅ Sponsored ad card — built to look like a pinned post, inserted at a random spot
+    function buildAdCard(){
+      const card=document.createElement('div');
+      card.className='pinned-post ad-card reveal';
+      card.setAttribute('role','listitem');
+      card.setAttribute('aria-label','Advertisement');
+      const iframeId='aadsFrame_'+Math.random().toString(36).slice(2,9);
+      card.innerHTML=`<div class="post-pin" aria-hidden="true"></div>
+        <div class="ad-card-inner">
+          <span class="post-cat-tape cat-default">SPONSORED</span>
+          <div class="ad-frame-wrap" id="${iframeId}">
+            <iframe data-aa='2446799' src='//acceptable.a-ads.com/2446799/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' title="Advertisement" loading="lazy"></iframe>
+          </div>
+          <span class="ad-disclosure">ads keep the lights on</span>
+        </div>`;
+      return card;
+    }
+
     function renderPosts(){
       const grid=document.getElementById('postsGrid');
       if(!grid)return;
@@ -744,6 +770,8 @@
         }
       }
 
+      // Build all post cards first (without appending), so we can splice the ad in randomly
+      const cardEls=[];
       filtered.forEach((post,i)=>{
         const rot=rots[i%rots.length],cat=(post.category||post.type||'post').toLowerCase(),slug=post.slug||post.id;
         const card=document.createElement('div');card.className='pinned-post reveal';card.style.cssText=`--rot:${rot}deg;`;card.style.transitionDelay=`${i*55}ms`;card.setAttribute('role','listitem');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`${post.title} by ${post.author||'anonymous'}`);
@@ -767,10 +795,22 @@
           rsb();
           sb.addEventListener('click',async e=>{e.stopPropagation();if(!cachedUser){showLoginModal({prompt:'Sign in to follow.'});return;}if(cachedUser.uid===tu)return;sb.disabled=true;const is=sb.classList.contains('is-stuck');try{if(is){const id=sb.dataset.stickid;if(id)await deleteDoc(doc(db,'sticks',id));sb.classList.remove('is-stuck');sb.textContent='📌 follow';sb.dataset.stickid='';sb.setAttribute('aria-pressed','false');}else{const fn=getDisplayName(cachedUser);let ts='';try{const ps=await getDocs(query(collection(db,'people'),where('authorUid','==',tu),limit(1)));if(!ps.empty)ts=ps.docs[0].data().slug||'';}catch(e){}const ref=await addDoc(collection(db,'sticks'),{fromUid:cachedUser.uid,fromName:fn,fromSlug:'',toUid:tu,toName:tn,toSlug:ts,createdAt:serverTimestamp()});sb.dataset.stickid=ref.id;sb.classList.add('is-stuck');sb.textContent='📌 following';sb.setAttribute('aria-pressed','true');}}catch(err){}sb.disabled=false;});
         }
-        grid.appendChild(card);
-        requestAnimationFrame(()=>ro.observe(card));
+        cardEls.push(card);
         loadReactions(slug).then(data=>{card.querySelectorAll('.sticker-btn').forEach(b=>{const e=b.dataset.emoji;if(data[e]){b.querySelector('.sticker-count').textContent=data[e].count;b.classList.toggle('reacted',data[e].userReacted);b.setAttribute('aria-pressed',data[e].userReacted?'true':'false');}});});
       });
+
+      // Splice the ad card into a random slot among the posts (only if there's enough content to blend into)
+      if(cardEls.length>=2){
+        const adCard=buildAdCard();
+        const insertAt=1+Math.floor(Math.random()*cardEls.length); // never first slot
+        cardEls.splice(insertAt,0,adCard);
+      }
+
+      cardEls.forEach(card=>{
+        grid.appendChild(card);
+        requestAnimationFrame(()=>ro.observe(card));
+      });
+
       updateFreshness();
     }
 
