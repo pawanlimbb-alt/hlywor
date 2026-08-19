@@ -699,6 +699,10 @@
           </select>
         </div>
         <div class="modal-check">
+          <input type="checkbox" id="anonCheck" aria-label="Post anonymously">
+          <label for="anonCheck">Post this anonymously — hide my name, no follow button, keeps my account private.</label>
+        </div>
+        <div class="modal-check">
           <input type="checkbox" id="agreeCheck" aria-label="Confirm original content">
           <label for="agreeCheck">This is my original content and I'm okay with it going live on HlyWor right now.</label>
         </div>
@@ -1469,6 +1473,21 @@
       }
     });
 
+    // ── Anonymous toggle: visually grey out the author name field ──
+    document.getElementById("anonCheck").addEventListener("change", e => {
+      const authorEl = document.getElementById("authorInput");
+      if (e.target.checked) {
+        authorEl.dataset.prevValue = authorEl.value;
+        authorEl.value = "Anonymous";
+        authorEl.disabled = true;
+        authorEl.style.opacity = "0.55";
+      } else {
+        authorEl.disabled = false;
+        authorEl.style.opacity = "1";
+        authorEl.value = authorEl.dataset.prevValue || "";
+      }
+    });
+
     // ── Tags handling ──
     const tagsWrap = document.getElementById("tagsWrap");
     const tagInput = document.getElementById("tagInput");
@@ -1757,8 +1776,9 @@
         return;
       }
 
-      const name = document.getElementById("authorInput").value.trim() || getDisplayName(currentUser),
-            email = document.getElementById("emailInput").value.trim() || currentUser.email || "",
+      const isAnonymous = document.getElementById("anonCheck").checked,
+            name = isAnonymous ? "Anonymous" : (document.getElementById("authorInput").value.trim() || getDisplayName(currentUser)),
+            email = isAnonymous ? "" : (document.getElementById("emailInput").value.trim() || currentUser.email || ""),
             title = document.getElementById("titleInput").value.trim(),
             desc = document.getElementById("descInput").value.trim(),
             readtime = document.getElementById("readtimeInput").value.trim() || document.getElementById("readTimeCalc").textContent,
@@ -1835,11 +1855,15 @@
           slug,
           status: status,
           author: name,
+          isAnonymous: isAnonymous,
           date: new Date().toISOString(),
-          // auth fields
+          // auth fields — authorUid is kept (even when anonymous) so the
+          // writer can still see/manage this post from their own dashboard.
+          // Public pages must check isAnonymous before showing a follow
+          // button or linking this post to the writer's profile.
           authorUid: currentUser.uid,
-          authorEmail: currentUser.email || "",
-          authorPhoto: currentUser.photoURL || "",
+          authorEmail: isAnonymous ? "" : (currentUser.email || ""),
+          authorPhoto: isAnonymous ? "" : (currentUser.photoURL || ""),
           publishedAt: status === "published" ? serverTimestamp() : null,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp()

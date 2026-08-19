@@ -2505,7 +2505,12 @@
         currentPostData = { id: snap.docs[0].id, ...snap.docs[0].data() };
         renderPost(currentPostData);
         loadComments(currentPostData.id, currentPostData.slug, currentPostData.title, currentPostData.authorUid);
-        loadMoreByAuthor(currentPostData.author, currentPostData.slug);
+        // Skip "more by this author" for anonymous posts — grouping by the
+        // literal string "Anonymous" would incorrectly cluster unrelated
+        // writers together under one identity.
+        if (!currentPostData.isAnonymous) {
+          loadMoreByAuthor(currentPostData.author, currentPostData.slug);
+        }
       } catch (err) {
         console.error("❌ Load post error:", err);
         showNotFound("An error occurred while loading this post.");
@@ -2586,10 +2591,13 @@
         <h1 class="post-title" tabindex="-1">${escHtml(post.title)}</h1>
         ${post.desc ? `<p class="post-desc">${escHtml(post.desc)}</p>` : ''}
         <div class="post-meta">
-          ${post.author ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val" id="authorName" style="cursor:pointer;text-decoration:underline dotted;color:var(--fire)" tabindex="0" role="button" aria-label="View ${post.author}'s profile">${escHtml(post.author)}</span></div>` : ''}
+          ${post.author ? (post.isAnonymous
+            ? `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val">${escHtml(post.author)}</span></div>`
+            : `<div class="post-meta-item"><span class="post-meta-label">BY</span><span class="post-meta-val" id="authorName" style="cursor:pointer;text-decoration:underline dotted;color:var(--fire)" tabindex="0" role="button" aria-label="View ${post.author}'s profile">${escHtml(post.author)}</span></div>`
+          ) : ''}
           ${readtime ? `<div class="post-meta-item"><span class="post-meta-label">READ</span><span class="post-meta-val">${readtime}</span></div>` : ''}
           <span class="post-cat-tape ${catClass}" aria-label="Category: ${(post.category || 'post').toUpperCase()}">${(post.category || 'post').toUpperCase()}</span>
-          ${post.authorUid ? `<button class="card-stick-btn" id="postPageStickBtn" data-touid="${post.authorUid}" data-toname="${escHtml(post.author || '')}" aria-label="Follow ${post.author || 'author'}">📌 Stick</button>` : ''}
+          ${(post.authorUid && !post.isAnonymous) ? `<button class="card-stick-btn" id="postPageStickBtn" data-touid="${post.authorUid}" data-toname="${escHtml(post.author || '')}" aria-label="Follow ${post.author || 'author'}">📌 Stick</button>` : ''}
         </div>
         ${tagsHtml}`;
 
