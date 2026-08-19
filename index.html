@@ -160,6 +160,12 @@
     .tape-tab[data-tag="thoughts"]{background:var(--tape-p);}
     .tape-tab[data-tag="college"]{background:var(--tape-o);}
     .tape-tab[data-tag="news"]{background:var(--tape-y);color:var(--ink);}
+
+    .sort-bar{display:flex;gap:8px;padding:0 4px 14px;flex-wrap:wrap;}
+    .sort-tab{font-family:var(--sans);font-size:0.78rem;font-weight:500;letter-spacing:0.3px;padding:6px 14px;border-radius:20px;border:1px solid rgba(245,237,216,0.15);background:transparent;color:rgba(245,237,216,0.55);cursor:pointer;transition:all 0.2s;}
+    .sort-tab:hover{color:var(--paper);border-color:rgba(245,237,216,0.35);}
+    .sort-tab:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px;}
+    .sort-tab.active{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600;}
     .pinboard{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:32px 28px;align-items:start;}
     .pinned-post{position:relative;background:var(--paper);box-shadow:var(--pin-shadow);transition:transform 0.25s,box-shadow 0.25s;cursor:pointer;}
     .pinned-post:nth-child(3n+1){transform:rotate(-1.2deg);}
@@ -550,6 +556,11 @@
       <button class="tape-tab" data-tag="news" role="tab" aria-selected="false" aria-controls="postsGrid">NEWS</button>
     </div>
 
+    <div class="sort-bar reveal" id="sortBar" role="group" aria-label="Sort stories">
+      <button class="sort-tab active" data-sort="latest" aria-pressed="true" aria-controls="postsGrid">🕐 Latest</button>
+      <button class="sort-tab" data-sort="random" aria-pressed="false" aria-controls="postsGrid">🎲 Random</button>
+    </div>
+
     <div id="posts" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-left:4px">
       <span style="font-family:var(--pixel);font-size:0.28rem;color:rgba(245,237,216,0.25);letter-spacing:3px" aria-hidden="true">// RECENTLY PINNED</span>
       <span id="recentlyPinnedDot" style="width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire);display:inline-block;opacity:0;transition:opacity 0.4s" aria-hidden="true"></span>
@@ -653,7 +664,8 @@
     const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;const siblings=[...e.target.parentElement.querySelectorAll('.reveal')];setTimeout(()=>e.target.classList.add('in'),siblings.indexOf(e.target)*70);ro.unobserve(e.target);});},{threshold:0.06});
     document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-    let allPosts=[],activeTag='all';
+    let allPosts=[],activeTag='all',sortMode='latest';
+    function shuffleArr(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
     const catMap={story:'cat-story',movies:'cat-movies',books:'cat-books',thoughts:'cat-thoughts',college:'cat-college',news:'cat-news'};
     function catClass(c){return catMap[c]||'cat-default';}
 
@@ -736,7 +748,9 @@
       const grid=document.getElementById('postsGrid');
       if(!grid)return;
       const rots=[-1.2,0.8,-0.4,1.5,-0.9,1.1,-1.6,0.5,-0.7,1.3,-0.3,0.9];
-      const filtered=(activeTag==='all'?allPosts:allPosts.filter(p=>(p.category||p.type||'').toLowerCase()===activeTag)).slice(0,9);
+      let filtered=activeTag==='all'?allPosts:allPosts.filter(p=>(p.category||p.type||'').toLowerCase()===activeTag);
+      if(sortMode==='random')filtered=shuffleArr(filtered);
+      filtered=filtered.slice(0,9);
       if(!filtered.length){
         grid.innerHTML=`<div class="no-posts">Nothing pinned yet.<br>Be the first — share your story!</div>`;
         updateFreshness();
@@ -817,6 +831,8 @@
     }
 
     document.querySelectorAll('.tape-tab').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.tape-tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});b.classList.add('active');b.setAttribute('aria-selected','true');activeTag=b.dataset.tag;renderPosts();});b.addEventListener('keydown',(e)=>{const tabs=Array.from(document.querySelectorAll('.tape-tab'));const idx=tabs.indexOf(b);if(e.key==='ArrowRight'){e.preventDefault();tabs[(idx+1)%tabs.length].focus();}else if(e.key==='ArrowLeft'){e.preventDefault();tabs[(idx-1+tabs.length)%tabs.length].focus();}else if(e.key==='Enter'||e.key===' '){e.preventDefault();b.click();}});});
+
+    document.querySelectorAll('.sort-tab').forEach(b=>{b.addEventListener('click',()=>{if(b.classList.contains('active'))return;document.querySelectorAll('.sort-tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');});b.classList.add('active');b.setAttribute('aria-pressed','true');sortMode=b.dataset.sort;renderPosts();});});
     document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAuthorPopup();closeSearch();}});
 
     const so=document.getElementById('searchOverlay'),si=document.getElementById('searchInput'),sr=document.getElementById('searchResults');
