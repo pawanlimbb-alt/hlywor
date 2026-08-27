@@ -357,6 +357,15 @@
     #scrollNudge {
       position: fixed; bottom: 130px; left: 50%; transform: translateX(-50%) translateY(12px);
       background: rgba(26,18,8,0.88); color: var(--paper);
+      padding: 10px 20px; border-radius: 22px;
+      font-family: var(--hand); font-size: 0.95rem;
+      backdrop-filter: blur(10px); border: 1px solid rgba(232,104,26,0.2);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 800; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    #scrollNudge.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
     /* ══════════════════════════════════════════════════════
        ✨ HOMEPAGE ENGAGEMENT & ATMOSPHERE ENHANCEMENTS
        ══════════════════════════════════════════════════════ */
@@ -992,14 +1001,24 @@
     if (quoteInterval) clearInterval(quoteInterval);
     quoteInterval = setInterval(refreshHeroQuote, 9000);
 
-    if(db){onSnapshot(query(collection(db,'posts'),where('status','==','published'),orderBy('createdAt','desc')),snap=>{
-      allPosts=snap.docs.map(d=>({id:d.id,...d.data()}));
-      renderPosts();
-      renderFeaturedBanner();
-      loadHeroLive();
-      refreshHeroQuote(); // Show first quote immediately
-    },err=>{document.getElementById('postsGrid').innerHTML=`<div class="no-posts">Couldn't load posts.<br>Try refreshing or check your connection.</div>`;});}
-    else{allPosts=[];renderPosts();renderFeaturedBanner();loadHeroLive();}
+    if(db){
+      onSnapshot(query(collection(db,'posts'),where('status','==','published')),snap=>{
+        allPosts=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>{
+          const da=a.createdAt?.toDate?a.createdAt.toDate():(a.date?new Date(a.date):new Date(0));
+          const db_=b.createdAt?.toDate?b.createdAt.toDate():(b.date?new Date(b.date):new Date(0));
+          return db_-da;
+        });
+        renderPosts();
+        renderFeaturedBanner();
+        loadHeroLive();
+        refreshHeroQuote(); // Show first quote immediately
+      },err=>{
+        console.error('Error fetching posts:', err);
+        document.getElementById('postsGrid').innerHTML=`<div class="no-posts">Couldn't load posts.<br>Try refreshing or check your connection.</div>`;
+      });
+    } else {
+      allPosts=[];renderPosts();renderFeaturedBanner();loadHeroLive();
+    }
 
     async function loadHeroLive(){
       try{
@@ -1041,10 +1060,21 @@
       const grid=document.getElementById('postsGrid');
       if(!grid)return;
       const rots=[-1.2,0.8,-0.4,1.5,-0.9,1.1,-1.6,0.5,-0.7,1.3,-0.3,0.9];
-      let filtered=activeTag==='all'?allPosts:allPosts.filter(p=>(p.category||p.type||'').toLowerCase()===activeTag);
+      let filtered=activeTag==='all'?allPosts:allPosts.filter(p=>{
+        const cat=(p.category||p.type||'').toLowerCase();
+        const mood=(p.mood||'').toLowerCase();
+        const tags=(p.tags||[]).map(t=>(t||'').toLowerCase());
+        const title=(p.title||'').toLowerCase();
+        const desc=(p.desc||'').toLowerCase();
+        if(cat===activeTag||cat.includes(activeTag))return true;
+        if(mood===activeTag||mood.includes(activeTag))return true;
+        if(tags.some(t=>t.includes(activeTag)))return true;
+        if(title.includes(activeTag)||desc.includes(activeTag))return true;
+        return false;
+      });
       if(sortMode==='random')filtered=shuffleArr(filtered);
       if(!filtered.length){
-        grid.innerHTML=`<div class="no-posts">Nothing pinned yet.<br>Be the first — share your story!</div>`;
+        grid.innerHTML=`<div class="no-posts">Nothing pinned in this category yet.<br>Be the first — share your story!</div>`;
         updateFreshness();
         return;
       }
