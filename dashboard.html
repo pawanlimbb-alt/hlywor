@@ -322,6 +322,7 @@
       </div>
       <div class="dash-stats-row" id="dashStatsRow">
         <div class="dash-stat" data-tab="posts"><span class="dash-stat-n" id="statPosts">—</span><span class="dash-stat-l">posts</span></div>
+        <div class="dash-stat" data-tab="saved"><span class="dash-stat-n" id="statSaved">—</span><span class="dash-stat-l">saved</span></div>
         <div class="dash-stat" data-tab="photos"><span class="dash-stat-n" id="statPhotos">—</span><span class="dash-stat-l">photos</span></div>
         <!-- Changed text: Sticking -> Following -->
         <div class="dash-stat" data-tab="sticking"><span class="dash-stat-n" id="statSticking">—</span><span class="dash-stat-l">Following</span></div>
@@ -334,11 +335,11 @@
   <div class="tabs-wrap">
     <div class="tabs">
       <button class="tab active" data-tab="posts">MY POSTS <span class="tab-badge" id="tabBadgePosts"></span></button>
+      <button class="tab" data-tab="feed">FEED <span class="tab-badge" id="tabBadgeFeed"></span></button>
+      <button class="tab" data-tab="saved">SAVED <span class="tab-badge" id="tabBadgeSaved"></span></button>
       <button class="tab" data-tab="photos">MY PHOTOS <span class="tab-badge" id="tabBadgePhotos"></span></button>
       <button class="tab" data-tab="card">MY CARD</button>
-      <!-- Changed text: Sticking -> Following -->
       <button class="tab" data-tab="sticking">FOLLOWING <span class="tab-badge" id="tabBadgeSticking"></span></button>
-      <!-- Changed text: Stuck you -> Followers -->
       <button class="tab" data-tab="stuck">FOLLOWERS <span class="tab-badge" id="tabBadgeStuck"></span></button>
       <button class="tab" data-tab="notes">MY NOTES <span class="tab-badge" id="tabBadgeNotes"></span></button>
     </div>
@@ -358,6 +359,26 @@
         <div class="skel-card"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
         <div class="skel-card"><div class="skel-img shimmer"></div><div class="skel-body"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:75%"></div></div></div>
       </div>
+    </div>
+
+    <!-- FEED TAB (Stories from people you follow) -->
+    <div class="tab-panel" id="panel-feed">
+      <div class="section-heading">
+        <span class="sh-text">STORIES FROM CREATORS YOU FOLLOW</span>
+        <div class="sh-line"></div>
+        <span class="sh-count" id="feedCountLabel"></span>
+      </div>
+      <div class="posts-grid" id="feedGrid"></div>
+    </div>
+
+    <!-- SAVED TAB -->
+    <div class="tab-panel" id="panel-saved">
+      <div class="section-heading">
+        <span class="sh-text">YOUR SAVED STORIES</span>
+        <div class="sh-line"></div>
+        <span class="sh-count" id="savedCountLabel"></span>
+      </div>
+      <div class="posts-grid" id="savedGrid"></div>
     </div>
 
     <!-- PHOTOS TAB -->
@@ -506,6 +527,8 @@ async function loadDashboard(user) {
 
   // Load all sections in parallel
   loadPosts(user);
+  loadFeed(user);
+  loadSaved(user);
   loadPhotos(user);
   loadCard(user);
   loadSticking(user); // Renamed to "Following" in UI
@@ -568,6 +591,129 @@ async function loadPosts(user) {
     console.error('Posts:', err);
     document.getElementById('postsGrid').innerHTML =
       `<div class="empty-state" style="grid-column:1/-1">Could not load posts.</div>`;
+  }
+}
+
+// ── FEED (Stories from creators you follow) ───────────
+async function loadFeed(user) {
+  const grid = document.getElementById('feedGrid');
+  if (!grid) return;
+  try {
+    const snap = await getDocs(query(
+      collection(db, 'sticks'),
+      where('fromUid', '==', user.uid)
+    ));
+    const followingUids = snap.docs.map(d => d.data().toUid).filter(Boolean);
+    if (!followingUids.length) {
+      document.getElementById('tabBadgeFeed').textContent = '';
+      document.getElementById('feedCountLabel').textContent = '0 STORIES';
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">You are not following any creators yet.<br><a href="index.html">Explore stories on the pinboard →</a></div>`;
+      return;
+    }
+    const postSnap = await getDocs(query(
+      collection(db, 'posts'),
+      where('status', '==', 'published'),
+      orderBy('createdAt', 'desc'),
+      limit(30)
+    ));
+    const feedPosts = postSnap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(p => followingUids.includes(p.authorUid));
+
+    document.getElementById('tabBadgeFeed').textContent = feedPosts.length || '';
+    document.getElementById('feedCountLabel').textContent = `${feedPosts.length} STOR${feedPosts.length !== 1 ? 'IES' : 'Y'}`;
+
+    if (!feedPosts.length) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">No recent stories from people you follow yet.</div>`;
+      return;
+    }
+    grid.innerHTML = '';
+    feedPosts.forEach((post, i) => {
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      const thumb = post.thumbnail
+        ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
+        : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
+      const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) : '';
+      card.innerHTML = `
+        ${thumb}
+        <div class="post-card-body">
+          <div class="post-card-cat">${(post.category||post.type||'story').toUpperCase()} · by ${post.author||'Someone'}</div>
+          <div class="post-card-title">${post.title}</div>
+          <p class="post-card-desc">${post.desc||''}</p>
+          <div class="post-card-meta">
+            <span class="post-card-date">${dateStr}</span>
+            <a class="post-card-edit" href="post.html?slug=${post.slug}">READ →</a>
+          </div>
+        </div>`;
+      card.addEventListener('click', e => {
+        if (e.target.closest('.post-card-edit')) return;
+        window.location.href = `post.html?slug=${post.slug}`;
+      });
+      card.style.cursor = 'pointer';
+      grid.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">Could not load following feed.</div>`;
+  }
+}
+
+// ── SAVED STORIES ──────────────────────────────────────
+async function loadSaved(user) {
+  const grid = document.getElementById('savedGrid');
+  if (!grid) return;
+  try {
+    const savedKeys = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+    document.getElementById('statSaved').textContent = savedKeys.length;
+    document.getElementById('tabBadgeSaved').textContent = savedKeys.length || '';
+    document.getElementById('savedCountLabel').textContent = `${savedKeys.length} SAVED`;
+
+    if (!savedKeys.length) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">No saved stories yet.<br><a href="index.html">Discover and bookmark stories on the board →</a></div>`;
+      return;
+    }
+    let allPosts = [];
+    const res = await fetch('posts.json');
+    if (res.ok) allPosts = await res.json();
+    if (db) {
+      try {
+        const snap = await getDocs(query(collection(db, 'posts'), where('status', '==', 'published')));
+        if (!snap.empty) {
+          const fb = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          allPosts = [...fb, ...allPosts];
+        }
+      } catch (e) {}
+    }
+    const matched = allPosts.filter(p => savedKeys.includes(p.slug) || savedKeys.includes(p.id));
+    grid.innerHTML = '';
+    matched.forEach((post, i) => {
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      const thumb = post.thumbnail
+        ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
+        : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
+      const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) : '';
+      card.innerHTML = `
+        ${thumb}
+        <div class="post-card-body">
+          <div class="post-card-cat">${(post.category||post.type||'story').toUpperCase()} · by ${post.author||'HlyWor'}</div>
+          <div class="post-card-title">${post.title}</div>
+          <p class="post-card-desc">${post.desc||''}</p>
+          <div class="post-card-meta">
+            <span class="post-card-date">${dateStr}</span>
+            <a class="post-card-edit" href="post.html?slug=${post.slug}">READ →</a>
+          </div>
+        </div>`;
+      card.addEventListener('click', e => {
+        if (e.target.closest('.post-card-edit')) return;
+        window.location.href = `post.html?slug=${post.slug}`;
+      });
+      card.style.cursor = 'pointer';
+      grid.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
   }
 }
 

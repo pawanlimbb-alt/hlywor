@@ -506,13 +506,17 @@ function render() {
     a.style.setProperty('--tape-col', tape);
     a.style.setProperty('--tape-w', tapeW + 'px');
     a.style.animationDelay = (i * 28) + 'ms';
+    const readTimeStr = post.readtime || (Math.max(2, Math.ceil((post.desc||'').split(/\s+/).length / 25 + 2)) + ' min read');
+    const savedArr = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+    const isSaved = savedArr.includes(slug) || (post.id && savedArr.includes(post.id));
+
     a.innerHTML =
       '<div class="card-inner">' +
         moodHtml +
         thumbHtml +
         '<div class="card-body">' +
           dateline +
-          '<span class="card-cat">' + cat + '</span>' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;"><span class="card-cat">' + cat + '</span><span class="card-read" style="font-size:0.65rem;background:rgba(26,18,8,0.06);padding:2px 6px;border-radius:2px;">⏱ ' + readTimeStr + '</span></div>' +
           starsHtml +
           '<div class="card-title">' + (post.title || 'Untitled') + '</div>' +
           (post.desc ? '<div class="card-desc">' + post.desc + '</div>' : '') +
@@ -520,12 +524,34 @@ function render() {
             '<span class="card-author" data-author="' + (post.author||'') + '" data-uid="' + (post.authorUid||'') + '">' + (post.author || 'HlyWor') + '</span>' +
             techTag +
             (dateStr ? '<span class="card-date">' + dateStr + '</span>' : '') +
-            (post.readtime ? '<span class="card-read">' + post.readtime + '</span>' : '') +
+            '<button class="card-save-btn ' + (isSaved ? 'is-saved' : '') + '" data-slug="' + slug + '" title="' + (isSaved ? 'Saved to your list' : 'Save story') + '" aria-label="Save story" style="margin-left:auto;background:none;border:1px solid rgba(26,18,8,0.15);padding:2px 6px;cursor:pointer;font-size:0.75rem;border-radius:2px;">🔖</button>' +
             (post.authorUid ? '<button class="card-stick-btn" data-touid="' + post.authorUid + '" data-toname="' + (post.author||'') + '">📌</button>' : '') +
           '</div>' +
         '</div>' +
       '</div>';
     cols.appendChild(a);
+
+    // Wire save button
+    const saveBtn = a.querySelector('.card-save-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        let cur = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+        const idKey = slug || post.id;
+        if (cur.includes(idKey)) {
+          cur = cur.filter(x => x !== idKey);
+          saveBtn.classList.remove('is-saved');
+          saveBtn.style.background = 'none';
+          saveBtn.title = 'Save story';
+        } else {
+          cur.push(idKey);
+          saveBtn.classList.add('is-saved');
+          saveBtn.style.background = '#fef9e7';
+          saveBtn.title = 'Saved to your list';
+        }
+        localStorage.setItem('hlywor_saved', JSON.stringify(cur));
+      });
+    }
 
     // Wire stick button
     const stickBtn = a.querySelector('.card-stick-btn');
@@ -539,7 +565,6 @@ function render() {
         if (typeof openAuthorPopup === 'function') {
           openAuthorPopup(post.author || '', post.authorUid || '');
         } else if (post.authorUid) {
-          // fallback — navigate to profile
           window.location.href = 'profile.html?slug=' + (post.author||'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
         }
       });

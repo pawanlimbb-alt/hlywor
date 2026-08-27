@@ -572,6 +572,7 @@
       <button class="tool-btn" data-highlight="hl-line-y" title="Line highlight" aria-label="Line highlight"><span style="background:rgba(255,230,0,.25);padding:0 5px;font-size:.75rem;color:#1a1208">≡</span></button>
       <div class="t-sep full"></div>
       <div class="tg-label">INSERT</div>
+      <button class="tool-btn" id="promptSparkBtn" title="3 AM Sparks / Story Prompts" aria-label="Story Prompts" style="color:var(--gold);font-size:1rem;">✨</button>
       <button class="tool-btn" id="insertStickerBtn" title="Sticker" aria-label="Insert sticker">&#10024;</button>
       <button class="tool-btn" id="insertImgBtn" title="Photo" aria-label="Insert photo">&#128247;</button>
       <button class="tool-btn" id="insertImgRowBtn" title="Photo row" aria-label="Insert photo row">&#128248;</button>
@@ -620,6 +621,16 @@
                 <span class="mood-opt" data-mood="&#128524;" role="radio" aria-checked="false" tabindex="0" aria-label="Calm">&#128524;</span>
                 <span class="mood-opt" data-mood="&#129321;" role="radio" aria-checked="false" tabindex="0" aria-label="Funny">&#129321;</span>
                 <span class="mood-opt" data-mood="&#128514;" role="radio" aria-checked="false" tabindex="0" aria-label="Laughing">&#128514;</span>
+              </div>
+            </div>
+            <!-- ✨ 3 AM Sparks Prompt Drawer -->
+            <div class="prompt-spark-card" id="promptSparkCard" style="display:none;background:var(--t-paper2);border:1px dashed rgba(232,104,26,0.5);padding:10px 14px;border-radius:4px;margin-bottom:12px;">
+              <span style="font-family:var(--pixel);font-size:0.22rem;color:var(--fire);letter-spacing:1px;">✨ 3 AM SPARK PROMPT</span>
+              <p id="promptSparkText" style="font-family:var(--t-font);font-size:0.98rem;font-style:italic;color:var(--t-ink2);margin:6px 0 8px;"></p>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <button type="button" id="nextSparkBtn" style="background:none;border:none;color:var(--fire);font-family:var(--sans);font-size:0.75rem;cursor:pointer;padding:0;font-weight:500;">Next prompt ⟳</button>
+                <button type="button" id="useSparkBtn" style="background:none;border:none;color:var(--t-ink3);font-family:var(--sans);font-size:0.75rem;cursor:pointer;padding:0;">Use as title →</button>
+                <button type="button" id="closeSparkBtn" style="margin-left:auto;background:none;border:none;color:var(--t-ink4);font-family:var(--sans);font-size:0.75rem;cursor:pointer;">✕ Close</button>
               </div>
             </div>
             <textarea class="diary-title-input" id="titleInput" placeholder="Title..." rows="1" maxlength="160" aria-label="Post title"></textarea>
@@ -825,6 +836,45 @@
 
     function autoGrow(el){el.style.height="auto";el.style.height=el.scrollHeight+"px";}
     ["titleInput","descInput"].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener("input",()=>autoGrow(el));autoGrow(el);}});
+
+    // ── 3 AM Sparks Prompt Generator ──
+    const SPARKS = [
+      "The conversation you keep having in your head that never happened in real life.",
+      "A place that no longer exists the way you remember it.",
+      "The exact moment you realized childhood was quietly over.",
+      "A secret promise you made to yourself that you haven't broken yet.",
+      "Someone you used to know everything about, who is now just a stranger.",
+      "The smell or sound that instantly pulls you back ten years.",
+      "A time you pretended not to care when you actually cared too much.",
+      "The unsent message sitting in your drafts folder.",
+      "A quiet kindness from a stranger that stayed with you forever.",
+      "The hardest goodbye that was never spoken out loud."
+    ];
+    let sparkIdx = Math.floor(Math.random() * SPARKS.length);
+    const sparkCard = document.getElementById("promptSparkCard");
+    const sparkText = document.getElementById("promptSparkText");
+    function showSpark(idx) {
+      sparkIdx = idx % SPARKS.length;
+      if (sparkText) sparkText.textContent = `"${SPARKS[sparkIdx]}"`;
+      if (sparkCard) sparkCard.style.display = "block";
+    }
+    document.getElementById("promptSparkBtn")?.addEventListener("click", () => {
+      showSpark(sparkIdx);
+    });
+    document.getElementById("nextSparkBtn")?.addEventListener("click", () => {
+      showSpark(sparkIdx + 1);
+    });
+    document.getElementById("useSparkBtn")?.addEventListener("click", () => {
+      const titleEl = document.getElementById("titleInput");
+      if (titleEl) {
+        titleEl.value = SPARKS[sparkIdx];
+        autoGrow(titleEl);
+        titleEl.focus();
+      }
+    });
+    document.getElementById("closeSparkBtn")?.addEventListener("click", () => {
+      if (sparkCard) sparkCard.style.display = "none";
+    });
 
     // ── Mood selector ──
     document.querySelectorAll(".mood-opt").forEach(el=>{

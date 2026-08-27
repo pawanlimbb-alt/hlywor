@@ -187,9 +187,13 @@
     .post-noimg-num{font-family:var(--pixel);font-size:clamp(1.5rem,4vw,2.8rem);color:rgba(26,18,8,0.08);line-height:1;}
     .post-noimg-label{font-family:var(--hand);font-size:0.85rem;color:var(--ink3);margin-top:8px;}
     .post-note-body{padding:14px 16px 18px;}
-    .post-cat-tape{display:inline-block;font-family:var(--pixel);font-size:0.26rem;letter-spacing:2px;padding:3px 10px;color:#fff;margin-bottom:10px;opacity:0.85;transform:rotate(-0.5deg);}
+    .post-badge-row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+    .post-cat-tape{display:inline-block;font-family:var(--pixel);font-size:0.26rem;letter-spacing:2px;padding:3px 10px;color:#fff;opacity:0.85;transform:rotate(-0.5deg);}
+    .post-badge-meta{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:0.68rem;color:var(--ink3);}
+    .post-read-badge{background:var(--paper2);border:1px solid rgba(26,18,8,0.1);padding:2px 6px;border-radius:2px;font-size:0.65rem;}
+    .post-mood-badge{background:rgba(232,104,26,0.1);color:var(--fire);border:1px solid rgba(232,104,26,0.25);padding:2px 6px;border-radius:2px;font-size:0.65rem;font-weight:500;}
     .cat-story{background:var(--tape-r);}.cat-movies{background:var(--tape-b);}.cat-books{background:var(--tape-g);}.cat-thoughts{background:var(--tape-p);}.cat-college{background:var(--tape-o);}.cat-news{background:var(--tape-y);color:var(--ink);}.cat-default{background:var(--ink2);}
-    .post-note-title{font-family:var(--serif);font-size:1.1rem;font-weight:400;font-style:italic;color:var(--ink);line-height:1.45;margin-bottom:8px;}
+    .post-note-title{font-family:var(--serif);font-size:1.15rem;font-weight:600;font-style:italic;color:var(--ink);line-height:1.4;margin-bottom:8px;}
     .post-note-desc{font-family:var(--sans);font-size:0.75rem;color:var(--ink3);line-height:1.7;margin-bottom:12px;}
     .post-note-meta{display:flex;align-items:center;justify-content:space-between;border-top:1px dashed rgba(26,18,8,0.15);padding-top:10px;margin-top:4px;}
     .post-author-chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--hand);font-size:0.88rem;color:var(--ink3);cursor:pointer;padding:2px 6px 2px 2px;border-radius:2px;transition:all 0.15s;-webkit-tap-highlight-color:transparent;background:none;border:none;}
@@ -198,8 +202,12 @@
     .post-author-chip-dot{width:6px;height:6px;border-radius:50%;background:var(--fire);opacity:0.6;flex-shrink:0;}
     .post-read-hand{font-family:var(--hand);font-size:0.85rem;color:var(--fire);transition:letter-spacing 0.2s;}
     .pinned-post:hover .post-read-hand{letter-spacing:1px;}
-    .post-stickers{display:flex;gap:4px;padding:8px 16px 14px;align-items:center;}
-    .card-stick-btn{margin-left:auto;font-family:var(--pixel);font-size:0.22rem;letter-spacing:0.5px;padding:3px 8px;background:transparent;border:1px solid rgba(26,18,8,0.15);color:var(--ink3);cursor:pointer;transition:all 0.18s;white-space:nowrap;border-radius:1px;display:flex;align-items:center;gap:4px;}
+    .post-stickers{display:flex;gap:4px;padding:8px 16px 14px;align-items:center;flex-wrap:wrap;}
+    .card-actions-right{margin-left:auto;display:inline-flex;align-items:center;gap:4px;}
+    .card-save-btn{font-size:0.75rem;padding:3px 7px;background:var(--paper2);border:1px solid rgba(26,18,8,0.12);color:var(--ink3);cursor:pointer;transition:all 0.18s;border-radius:1px;display:inline-flex;align-items:center;gap:3px;font-family:var(--sans);}
+    .card-save-btn:hover{background:var(--paper3);border-color:var(--gold);color:var(--ink);}
+    .card-save-btn.is-saved{background:#fef9e7;border-color:var(--gold);color:#966f00;}
+    .card-stick-btn{font-family:var(--pixel);font-size:0.22rem;letter-spacing:0.5px;padding:3px 8px;background:transparent;border:1px solid rgba(26,18,8,0.15);color:var(--ink3);cursor:pointer;transition:all 0.18s;white-space:nowrap;border-radius:1px;display:flex;align-items:center;gap:4px;}
     .card-stick-btn:hover,.card-stick-btn:focus{border-color:var(--fire);color:var(--fire);background:rgba(232,104,26,0.06);outline:none;}
     .card-stick-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px;}
     .card-stick-btn.is-stuck{background:rgba(232,104,26,0.1);border-color:rgba(232,104,26,0.4);color:var(--fire);}
@@ -770,15 +778,39 @@
         const ds=post.date?new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}):'';
         const an=post.author||'HlyWor';
         const isAnon=!!post.isAnonymous;
+        const readTime = post.readtime || (Math.max(2, Math.ceil((post.desc||'').split(/\s+/).length / 25 + 2)) + ' min read');
+        const moodBadge = post.mood ? `<span class="post-mood-badge">${post.mood}</span>` : '';
+        const savedArr = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+        const isSaved = savedArr.includes(slug) || (post.id && savedArr.includes(post.id));
         const rh=EMOJIS.map(e=>`<button class="sticker-btn" data-slug="${slug}" data-emoji="${e}" aria-label="React with ${e}">${e}<span class="sticker-count" aria-live="polite">…</span></button>`).join('');
         const authorMeta=isAnon
           ? `<span class="post-author-chip" style="cursor:default;"><span class="post-author-chip-dot" aria-hidden="true"></span>${an}${ds?' · '+ds:''}</span>`
           : `<button class="post-author-chip" data-author="${an}" data-uid="${post.authorUid||''}" aria-label="View ${an}'s profile"><span class="post-author-chip-dot" aria-hidden="true"></span>${an}${ds?' · '+ds:''}</button>`;
-        card.innerHTML=`<div class="post-pin" style="left:${pl}%;background:${pcs[i%4]}" aria-hidden="true"></div>${thumb}<div class="post-note-body"><span class="post-cat-tape ${catClass(cat)}" aria-label="Category: ${cat}">${cat.toUpperCase()}</span><div class="post-note-title">${post.title}</div><p class="post-note-desc">${post.desc||''}</p><div class="post-note-meta">${authorMeta}<span class="post-read-hand" aria-hidden="true">read →</span></div></div><div class="post-stickers">${rh}${(post.authorUid&&!isAnon)?`<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${an}" aria-label="Follow ${an}">📌</button>`:''}</div>`;
-        card.addEventListener('click',e=>{if(e.target.closest('.sticker-btn')||e.target.closest('.post-author-chip')||e.target.closest('.card-stick-btn'))return;window.location.href=`post.html?slug=${slug}`;});
-        card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!e.target.closest('.sticker-btn')&&!e.target.closest('.post-author-chip')&&!e.target.closest('.card-stick-btn'))window.location.href=`post.html?slug=${slug}`;}});
+        card.innerHTML=`<div class="post-pin" style="left:${pl}%;background:${pcs[i%4]}" aria-hidden="true"></div>${thumb}<div class="post-note-body"><div class="post-badge-row"><span class="post-cat-tape ${catClass(cat)}" aria-label="Category: ${cat}">${cat.toUpperCase()}</span><div class="post-badge-meta">${moodBadge}<span class="post-read-badge">⏱ ${readTime}</span></div></div><div class="post-note-title">${post.title}</div><p class="post-note-desc">${post.desc||''}</p><div class="post-note-meta">${authorMeta}<span class="post-read-hand" aria-hidden="true">read →</span></div></div><div class="post-stickers">${rh}<div class="card-actions-right"><button class="card-save-btn ${isSaved?'is-saved':''}" data-slug="${slug}" title="${isSaved?'Saved to your list':'Save story'}" aria-label="Save story">🔖</button>${(post.authorUid&&!isAnon)?`<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${an}" aria-label="Follow ${an}">📌</button>`:''}</div></div>`;
+        card.addEventListener('click',e=>{if(e.target.closest('.sticker-btn')||e.target.closest('.post-author-chip')||e.target.closest('.card-stick-btn')||e.target.closest('.card-save-btn'))return;window.location.href=`post.html?slug=${slug}`;});
+        card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!e.target.closest('.sticker-btn')&&!e.target.closest('.post-author-chip')&&!e.target.closest('.card-stick-btn')&&!e.target.closest('.card-save-btn'))window.location.href=`post.html?slug=${slug}`;}});
         card.querySelector('.post-author-chip:not(span)')?.addEventListener('click',e=>{e.stopPropagation();openAuthorPopup(e.currentTarget.dataset.author,e.currentTarget.dataset.uid);});
         card.querySelectorAll('.sticker-btn').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();await toggleReaction(slug,b.dataset.emoji,b);}));
+        
+        // Save story toggle
+        const saveBtn = card.querySelector('.card-save-btn');
+        if (saveBtn) {
+          saveBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            let cur = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+            const idKey = slug || post.id;
+            if (cur.includes(idKey)) {
+              cur = cur.filter(x => x !== idKey);
+              saveBtn.classList.remove('is-saved');
+              saveBtn.title = 'Save story';
+            } else {
+              cur.push(idKey);
+              saveBtn.classList.add('is-saved');
+              saveBtn.title = 'Saved to your list';
+            }
+            localStorage.setItem('hlywor_saved', JSON.stringify(cur));
+          });
+        }
         
         viewObserver.observe(card);
         

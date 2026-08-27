@@ -58,6 +58,41 @@
       --focus-ring: rgba(212, 160, 32, 0.6);
     }
 
+    body[data-reading-theme="midnight"] {
+      --board: #0e0c0a;
+      --paper: #191512;
+      --paper2: #221c17;
+      --paper3: #2c251e;
+      --ink: #f3ebd8;
+      --ink2: #dacba7;
+      --ink3: #aa987e;
+      --ink4: #756650;
+      --rule: rgba(218, 203, 167, 0.12);
+    }
+    body[data-reading-theme="rainy"] {
+      --board: #12181c;
+      --paper: #edf2f5;
+      --paper2: #e0e8ec;
+      --paper3: #cfdbe0;
+      --ink: #111d24;
+      --ink2: #253d4c;
+      --ink3: #4b6b7e;
+      --ink4: #7d96a5;
+      --rule: rgba(75, 107, 126, 0.15);
+    }
+
+    .reader-top-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+    .reading-theme-picker{display:inline-flex;gap:4px;background:var(--paper2);padding:2px 4px;border-radius:4px;border:1px solid rgba(26,18,8,0.12);}
+    .theme-pill{background:none;border:none;cursor:pointer;padding:3px 7px;font-size:0.75rem;border-radius:3px;transition:background 0.15s;opacity:0.65;}
+    .theme-pill:hover{opacity:1;}
+    .theme-pill.active{background:var(--paper);opacity:1;box-shadow:0 1px 4px rgba(0,0,0,0.12);}
+    
+    .read-next-card{background:var(--paper2);border:1px solid var(--rule);padding:14px 16px;border-radius:3px;text-decoration:none;display:block;transition:all 0.2s;}
+    .read-next-card:hover{transform:translateY(-2px);background:var(--paper3);box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+    .read-next-tag{font-family:var(--pixel);font-size:0.2rem;color:var(--fire);letter-spacing:1px;display:block;margin-bottom:4px;}
+    .read-next-title{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);line-height:1.35;margin-bottom:4px;}
+    .read-next-author{font-family:var(--hand);font-size:0.82rem;color:var(--ink3);}
+
     @media (prefers-reduced-motion: reduce) {
 
       *,
@@ -2265,13 +2300,19 @@
         <div class="book-pin" id="bookPin" aria-hidden="true"></div>
         <div class="diary-book" id="postBook">
           <div class="diary-spine" aria-hidden="true"></div>
-          <div class="diary-page">
-            <!-- ✅ Breadcrumb -->
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-              <a href="index.html">Board</a>
-              <span aria-hidden="true">/</span>
-              <span id="breadcrumbTitle" aria-current="page"></span>
-            </nav>
+            <!-- ✅ Reader Top Bar with Breadcrumb and Atmosphere Picker -->
+            <div class="reader-top-bar">
+              <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="index.html">Board</a>
+                <span aria-hidden="true">/</span>
+                <span id="breadcrumbTitle" aria-current="page"></span>
+              </nav>
+              <div class="reading-theme-picker" aria-label="Reading Atmosphere">
+                <button class="theme-pill active" data-theme="parchment" title="Parchment (Warm)">📜</button>
+                <button class="theme-pill" data-theme="midnight" title="Midnight Ink (OLED Dark)">🌙</button>
+                <button class="theme-pill" data-theme="rainy" title="Rainy Slate (Cool)">🌧️</button>
+              </div>
+            </div>
 
             <div class="post-header" id="postHeader"></div>
 
@@ -2285,10 +2326,6 @@
 
             <div class="post-reactions" id="postReactions" aria-label="Reactions"></div>
 
-
-
-
-            <!-- ✅ Share Buttons -->
             <!-- ✅ Share Buttons -->
             <div class="post-share" aria-label="Share this post">
               <span style="font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px">SHARE</span>
@@ -2298,6 +2335,12 @@
               <button class="share-btn" id="shareInstagramChat" aria-label="Share via Instagram Chat">💌</button>
               <button class="share-btn" id="copyLinkBtn" aria-label="Copy link to clipboard">🔗</button>
               <button class="share-btn" id="savePostBtn" aria-label="Save for later" aria-pressed="false">🔖</button>
+            </div>
+
+            <!-- ✅ Read Next Recommendations -->
+            <div class="read-next-section" id="readNextSection" style="margin: 28px 0 20px;">
+              <div style="font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:2px;margin-bottom:12px;">READ NEXT FROM THE PINBOARD</div>
+              <div class="read-next-grid" id="readNextGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;"></div>
             </div>
 
             <!-- Author toolbar -->
@@ -2848,6 +2891,25 @@
       setupCommentForm(post.id, post.slug, post.title, post.authorUid);
       maybeShowToolbar(post);
       wirePostStickBtn(post);
+      loadReadNext(post.slug || post.id);
+
+      // Reading Theme Controller
+      const savedTheme = localStorage.getItem('hlywor_reader_theme') || 'parchment';
+      function applyTheme(theme) {
+        if (theme === 'parchment') {
+          document.body.removeAttribute('data-reading-theme');
+        } else {
+          document.body.setAttribute('data-reading-theme', theme);
+        }
+        document.querySelectorAll('.theme-pill').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.theme === theme);
+        });
+        localStorage.setItem('hlywor_reader_theme', theme);
+      }
+      applyTheme(savedTheme);
+      document.querySelectorAll('.theme-pill').forEach(btn => {
+        btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+      });
 
       // ✅ Preserve scroll position on back nav
       document.getElementById('navBack')?.addEventListener('click', (e) => {
@@ -2856,6 +2918,39 @@
       document.getElementById('backLinkBottom')?.addEventListener('click', (e) => {
         sessionStorage.setItem('hlywor_scrollY', window.scrollY);
       });
+    }
+
+    async function loadReadNext(currentSlug) {
+      const container = document.getElementById('readNextGrid');
+      if (!container) return;
+      try {
+        let posts = [];
+        const res = await fetch('posts.json');
+        if (res.ok) posts = await res.json();
+        if (db) {
+          try {
+            const snap = await getDocs(query(collection(db, 'posts'), where('status', '==', 'published'), limit(6)));
+            if (!snap.empty) {
+              const fbPosts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+              if (fbPosts.length) posts = fbPosts;
+            }
+          } catch (e) {}
+        }
+        const filtered = posts.filter(p => (p.slug || p.id) !== currentSlug).slice(0, 3);
+        if (!filtered.length) {
+          document.getElementById('readNextSection')?.remove();
+          return;
+        }
+        container.innerHTML = filtered.map(p => `
+          <a href="post.html?slug=${p.slug || p.id}" class="read-next-card">
+            <span class="read-next-tag">${(p.category || p.type || 'STORY').toUpperCase()}</span>
+            <div class="read-next-title">${p.title}</div>
+            <div class="read-next-author">by ${p.author || 'HlyWor'}</div>
+          </a>
+        `).join('');
+      } catch (e) {
+        document.getElementById('readNextSection')?.remove();
+      }
     }
 
     // ── Author popup (unchanged but with accessibility fixes) ──
