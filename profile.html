@@ -868,7 +868,7 @@ async function loadProfile(slug) {
     const person = { id: snap.docs[0].id, ...snap.docs[0].data() };
     currentPersonData = person;
     renderProfile(person);
-    loadPosts(person.name);
+    loadPosts(person);
   } catch(err) {
     console.error(err); showNotFound();
   }
@@ -1016,59 +1016,93 @@ function renderProfile(p) {
 }
 
 /* ── Load their posts ── */
-async function loadPosts(authorName) {
+async function loadPosts(personOrName) {
+  const person = typeof personOrName === 'object' && personOrName !== null ? personOrName : { name: personOrName || '' };
+  const authorName = person.name || 'Author';
+  const personUid = person.authorUid || person.uid || '';
+  const nameLower = (person.name || '').toLowerCase().trim();
+  const slugLower = (person.slug || '').toLowerCase().trim();
+
+  const section  = document.getElementById('postsSection');
+  const grid     = document.getElementById('postsGrid');
+  const countEl  = document.getElementById('postsCount');
+  const labelEl  = document.getElementById('postsLabel');
+
+  if (labelEl) labelEl.textContent = `${authorName.split(' ')[0].toUpperCase()}'S POSTS`;
+  if (section) section.style.display = 'block';
+
   try {
     const snap = await getDocs(query(
-      collection(db,'posts'),
-      where('author','==',authorName),
-      where('status','==','published'),
-      orderBy('createdAt','desc')
+      collection(db, 'posts'),
+      where('status', '==', 'published')
     ));
-    const posts = snap.docs.map(d => ({id:d.id,...d.data()}));
 
-    const section  = document.getElementById('postsSection');
-    const grid     = document.getElementById('postsGrid');
-    const countEl  = document.getElementById('postsCount');
-    const labelEl  = document.getElementById('postsLabel');
+    const posts = snap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(post => {
+        // If anonymous, don't show on public profile unless viewer is the author
+        if (post.isAnonymous && (!currentUser || currentUser.uid !== post.authorUid)) return false;
 
-    labelEl.textContent = `${authorName.split(' ')[0].toUpperCase()}'S POSTS`;
-    countEl.textContent = `${posts.length} POST${posts.length!==1?'S':''}`;
-    section.style.display = 'block';
+        // Match by UID if present
+        if (personUid && post.authorUid && post.authorUid === personUid) return true;
+
+        // Match by Name
+        const postAuthor = (post.author || post.name || '').toLowerCase().trim();
+        if (postAuthor && nameLower && (postAuthor === nameLower || postAuthor.includes(nameLower) || nameLower.includes(postAuthor))) return true;
+
+        // Match by Slug
+        const postSlug = (post.slug || '').toLowerCase();
+        if (slugLower && postSlug.includes(slugLower)) return true;
+
+        return false;
+      })
+      .sort((a, b) => {
+        const da = a.createdAt?.toDate ? a.createdAt.toDate() : (a.date ? new Date(a.date) : new Date(0));
+        const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : (b.date ? new Date(b.date) : new Date(0));
+        return db_ - da;
+      });
+
+    if (countEl) countEl.textContent = `${posts.length} ${posts.length === 1 ? 'POST' : 'POSTS'}`;
 
     if (!posts.length) {
-      grid.innerHTML = `<div class="no-posts">No posts yet — watch this space.</div>`;
+      if (grid) grid.innerHTML = `<div class="no-posts">No posts yet — watch this space.</div>`;
       return;
     }
 
-    grid.innerHTML = '';
-    posts.forEach((post, i) => {
-      const card = document.createElement('a');
-      card.className = 'post-card';
-      card.href = `post.html?slug=${post.slug}`;
-      card.style.animationDelay = `${i*55}ms`;
+    if (grid) {
+      grid.innerHTML = '';
+      posts.forEach((post, i) => {
+        const card = document.createElement('a');
+        card.className = 'post-card';
+        card.href = `post.html?slug=${post.slug}`;
+        card.style.animationDelay = `${i*55}ms`;
 
-      const thumb = post.thumbnail
-        ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
-        : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
+        const thumb = post.thumbnail
+          ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
+          : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
 
-      const dateStr = post.date
-        ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
-        : '';
+        const dateStr = post.date
+          ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+          : '';
 
-      card.innerHTML = `
-        ${thumb}
-        <div class="post-body">
-          <div class="post-cat">${(post.category||post.type||'post').toUpperCase()}</div>
-          <div class="post-title">${post.title}</div>
-          <p class="post-desc">${post.desc||''}</p>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto">
-            ${dateStr?`<span class="post-date">${dateStr}</span>`:'<span></span>'}
-            <span class="post-read-link">READ →</span>
-          </div>
-        </div>`;
-      grid.appendChild(card);
-    });
-  } catch(err) { console.error('Posts:', err); }
+        card.innerHTML = `
+          ${thumb}
+          <div class="post-body">
+            <div class="post-cat">${(post.category||post.type||'post').toUpperCase()}</div>
+            <div class="post-title">${post.title}</div>
+            <p class="post-desc">${post.desc||''}</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto">
+              ${dateStr?`<span class="post-date">${dateStr}</span>`:'<span></span>'}
+              <span class="post-read-link">READ →</span>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+  } catch(err) {
+    console.error('Posts loading error:', err);
+    if (grid) grid.innerHTML = `<div class="no-posts">Unable to load posts right now.</div>`;
+  }
 }
 
 /* ── Follow count ── */

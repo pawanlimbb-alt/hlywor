@@ -292,15 +292,20 @@
     try {
       const q = query(
         collection(db, 'posts'),
-        where('status', '==', 'published'),
-        orderBy('createdAt', 'desc')
+        where('status', '==', 'published')
       );
       const snap = await getDocs(q);
       const posts = snap.docs
         .map(d => ({ id: d.id, ...d.data() }))
         .filter(p => {
-          const a = (p.author || '').toLowerCase();
+          if (p.isAnonymous) return false;
+          const a = (p.author || p.name || '').toLowerCase();
           return a.includes('morak') || a.includes('koushik') || a.includes('ezaf');
+        })
+        .sort((a, b) => {
+          const da = a.createdAt?.toDate ? a.createdAt.toDate() : (a.date ? new Date(a.date) : new Date(0));
+          const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : (b.date ? new Date(b.date) : new Date(0));
+          return db_ - da;
         });
 
       if (countEl) countEl.textContent = `${posts.length} ${posts.length === 1 ? 'STORY' : 'STORIES'}`;
