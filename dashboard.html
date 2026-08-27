@@ -141,23 +141,23 @@
     .person-card-pin{position:absolute;top:-9px;left:40%;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9999,#cc3333);box-shadow:0 2px 4px rgba(0,0,0,0.45);z-index:2}
     .person-card-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:8px;background:linear-gradient(to bottom,#777,#333)}
     .person-card-body{padding:14px 14px 16px}
-    .person-card-name{font-family:var(--hand);font-size:1.1rem;color:var(--ink);font-weight:600;margin-bottom:3px}
-    .person-card-role{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:1px;margin-bottom:6px}
-    .person-card-bio{font-family:var(--sans);font-size:0.7rem;color:var(--ink3);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    /* Button style kept but text changed via JS */
-    .unstick-btn{font-family:var(--pixel);font-size:0.22rem;letter-spacing:1px;padding:4px 10px;background:transparent;border:1px solid rgba(192,57,43,0.3);color:rgba(192,57,43,0.7);cursor:pointer;transition:all .15s;margin-top:10px;display:block}
-    .unstick-btn:hover{background:rgba(192,57,43,0.08);border-color:#c0392b;color:#c0392b}
+    .person-card-name{font-family:var(--hand);font-size:1.2rem;color:var(--ink);font-weight:700;margin-bottom:3px}
+    .person-card-role{font-family:var(--pixel);font-size:0.55rem;color:var(--ink4);letter-spacing:1px;margin-bottom:6px}
+    .person-card-bio{font-family:var(--sans);font-size:0.75rem;color:var(--ink3);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    /* Button style for unfollow */
+    .unstick-btn{font-family:var(--sans);font-size:0.78rem;font-weight:600;padding:5px 12px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.4);color:#c0392b;cursor:pointer;transition:all .18s;margin-top:10px;display:inline-block;border-radius:12px;}
+    .unstick-btn:hover{background:#c0392b;color:#fff;border-color:#c0392b;transform:translateY(-1px);box-shadow:0 2px 8px rgba(192,57,43,0.35);}
 
     /* ── COMMENTS ── */
     .comments-list-dash{display:flex;flex-direction:column;gap:0}
     .comment-dash-item{padding:16px 0;border-bottom:1px dashed var(--rule);display:flex;flex-direction:column;gap:6px;animation:fadeIn .4s ease both}
     @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     .comment-dash-item:last-child{border-bottom:none}
-    .comment-dash-on{font-family:var(--pixel);font-size:0.24rem;color:var(--ink4);letter-spacing:1px}
+    .comment-dash-on{font-family:var(--pixel);font-size:0.55rem;color:var(--ink4);letter-spacing:1px}
     .comment-dash-on a{color:var(--fire);text-decoration:none}
     .comment-dash-on a:hover{text-decoration:underline}
-    .comment-dash-text{font-family:var(--hand);font-size:1rem;color:var(--ink2);line-height:1.6}
-    .comment-dash-date{font-family:var(--sans);font-size:0.62rem;color:var(--ink4)}
+    .comment-dash-text{font-family:var(--hand);font-size:1.05rem;color:var(--ink2);line-height:1.6}
+    .comment-dash-date{font-family:var(--sans);font-size:0.72rem;color:var(--ink4)}
 
     /* ── EMPTY STATES ── */
     .empty-state{padding:60px 0;text-align:center;font-family:var(--hand);font-size:1.1rem;color:rgba(245,230,200,0.3);font-style:italic;line-height:2}

@@ -257,13 +257,12 @@ export function injectAuthNav(navEl, options = {}) {
       }
       .auth-modal-close {
         position: absolute; top: 12px; right: 14px;
-        font-family: 'Press Start 2P', monospace; font-size: 0.26rem;
+        font-family: 'DM Sans', system-ui, sans-serif; font-size: 0.9rem; font-weight: 700;
         color: #a09078; cursor: pointer; background: none; border: none;
-        letter-spacing: 1px;
       }
       .auth-modal-eyebrow {
-        font-family: 'Press Start 2P', monospace; font-size: 0.3rem;
-        color: #e8681a; letter-spacing: 3px; margin-bottom: 10px;
+        font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
+        color: #e8681a; letter-spacing: 2px; margin-bottom: 10px;
       }
       .auth-modal-title {
         font-family: 'Caveat', cursive; font-size: 1.8rem;
@@ -364,13 +363,13 @@ export function injectAuthNav(navEl, options = {}) {
         flex-shrink: 0;
       }
       .notif-panel-title {
-        font-family: 'Press Start 2P', monospace; font-size: 0.28rem;
-        color: var(--gold,#d4a020); letter-spacing: 2px;
+        font-family: 'Press Start 2P', monospace; font-size: 0.55rem;
+        color: var(--gold,#d4a020); letter-spacing: 1.5px;
       }
       .notif-mark-all {
-        font-family: 'Press Start 2P', monospace; font-size: 0.2rem;
-        color: rgba(255,255,255,0.3); background: none; border: none;
-        cursor: pointer; letter-spacing: 1px; transition: color .15s;
+        font-family: 'DM Sans', system-ui, sans-serif; font-size: 0.75rem; font-weight: 500;
+        color: rgba(255,255,255,0.5); background: none; border: none;
+        cursor: pointer; transition: color .15s;
       }
       .notif-mark-all:hover { color: var(--fire,#e8681a); }
       .notif-list { overflow-y: auto; flex: 1; scrollbar-width: thin; }
