@@ -729,9 +729,9 @@
           <div class="profile-top" id="profileTop"></div>
 
 
-    <!-- Stick button — shown when logged in and not own profile -->
+    <!-- Follow button — shown when logged in and not own profile -->
     <div class="stick-btn-wrap" id="stickBtnWrap" style="display:none">
-      <button class="stick-btn unstuck" id="stickBtn">📌 Stick them</button>
+      <button class="stick-btn unstuck" id="stickBtn">📌 Follow</button>
       <span class="stick-count" id="stickCount"></span>
     </div>
           <!-- About sections (rendered dynamically) -->
@@ -1058,17 +1058,17 @@ async function loadPosts(authorName) {
   } catch(err) { console.error('Posts:', err); }
 }
 
-/* ── Stick count ── */
+/* ── Follow count ── */
 async function loadStickCount(toUid) {
   try {
     const snap = await getDocs(query(collection(db,'sticks'), where('toUid','==',toUid)));
     const count = snap.size;
     const countEl = document.getElementById('stickCount');
-    if (countEl) countEl.textContent = count > 0 ? `${count} stuck` : '';
+    if (countEl) countEl.textContent = count > 0 ? `${count} ${count === 1 ? 'follower' : 'followers'}` : '';
   } catch(e) {}
 }
 
-/* ── Stick button setup ── */
+/* ── Follow button setup ── */
 async function setupStickButton(person, user) {
   const wrap = document.getElementById('stickBtnWrap');
   const btn  = document.getElementById('stickBtn');
@@ -1082,7 +1082,7 @@ async function setupStickButton(person, user) {
   wrap.style.display = 'flex';
   loadStickCount(person.authorUid);
 
-  // Check if already stuck
+  // Check if already followed
   let stickDocId = null;
   try {
     const existing = await getDocs(query(
@@ -1105,13 +1105,13 @@ async function setupStickButton(person, user) {
 
   newBtn.addEventListener('click', async () => {
     if (!currentUser) {
-      showLoginModal({ prompt: 'Sign in to stick someone to your board.' });
+      showLoginModal({ prompt: 'Sign in to follow.' });
       return;
     }
     newBtn.disabled = true;
 
     if (stickDocId) {
-      // Unstick
+      // Unfollow
       try {
         await deleteDoc(doc(db,'sticks',stickDocId));
         stickDocId = null;
@@ -1119,7 +1119,7 @@ async function setupStickButton(person, user) {
         loadStickCount(person.authorUid);
       } catch(e) { console.error(e); }
     } else {
-      // Stick
+      // Follow
       try {
         const fromName = getDisplayName(currentUser);
         const fromSnap = await getDocs(query(
@@ -1147,13 +1147,13 @@ async function setupStickButton(person, user) {
 
 function setStuckState(btn, isStuck) {
   if (isStuck) {
-    btn.textContent = '📌 Stuck ✦';
+    btn.textContent = '📌 Following ✦';
     btn.className = 'stick-btn stuck-state';
-    btn.title = 'Click to unstick';
+    btn.title = 'Click to unfollow';
   } else {
-    btn.textContent = '📌 Stick them';
+    btn.textContent = '📌 Follow';
     btn.className = 'stick-btn unstuck';
-    btn.title = 'Add to your board';
+    btn.title = 'Follow this creator';
   }
 }
 

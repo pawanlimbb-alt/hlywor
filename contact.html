@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — HlyWor</title>
+  <meta name="description" content="Reach out to the HlyWor crew in Guwahati. Send a thought, question, or story pitch.">
+  <meta name="theme-color" content="#2a1f14">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --board: #2a1f14;
+      --paper: #faf6ee;
+      --paper2: #f5edd8;
+      --paper3: #ede3c8;
+      --ink: #1a1208;
+      --ink2: #3d3020;
+      --ink3: #6a5840;
+      --fire: #e8681a;
+      --gold: #d4a020;
+      --tape-y: #f0c030;
+      --pixel: 'Press Start 2P', monospace;
+      --serif: 'Crimson Pro', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --hand: 'Caveat', cursive;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100vh; }
+    body {
+      background: var(--board);
+      font-family: var(--serif);
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Cork texture background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(100,70,30,0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(70,45,15,0.3) 0%, transparent 45%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: auto, auto, 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .top-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      align-items: center;
+    }
+    .top-nav a {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .top-nav a:hover { color: var(--gold); }
+    .top-nav a.active { color: #fff; font-weight: 500; }
+
+    .contact-sheet {
+      position: relative;
+      z-index: 2;
+      background: var(--paper);
+      max-width: 640px;
+      width: 100%;
+      padding: 44px 38px 40px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
+      border-radius: 2px;
+      transform: rotate(0.4deg);
+    }
+
+    .pin {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2222);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .pin::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 12px;
+      background: linear-gradient(to bottom, #888, #444);
+    }
+
+    .eyebrow {
+      font-family: var(--pixel);
+      font-size: 0.35rem;
+      color: var(--fire);
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .contact-title {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .contact-desc {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--ink3);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .info-card {
+      background: var(--paper2);
+      padding: 16px 18px;
+      border: 1px dashed rgba(26,18,8,0.15);
+      border-radius: 2px;
+    }
+    .info-label {
+      font-family: var(--pixel);
+      font-size: 0.3rem;
+      color: var(--fire);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    .info-val {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .info-val a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--fire);
+    }
+    .info-val a:hover {
+      color: var(--fire);
+    }
+
+    .note-box {
+      background: var(--paper3);
+      padding: 20px;
+      border-left: 3px solid var(--fire);
+      margin-bottom: 28px;
+    }
+    .note-box p {
+      font-family: var(--hand);
+      font-size: 1.15rem;
+      color: var(--ink2);
+      line-height: 1.5;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-sticky {
+      font-family: var(--hand);
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      background: var(--tape-y);
+      color: var(--ink);
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-sticky:hover {
+      transform: translateY(-2px);
+      box-shadow: 3px 6px 14px rgba(0,0,0,0.25);
+    }
+    .btn-sticky.fire {
+      background: var(--fire);
+      color: #fff;
+    }
+
+    .footer-stamp {
+      margin-top: 36px;
+      text-align: center;
+      font-family: var(--pixel);
+      font-size: 0.4rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a href="index.html">Home</a>
+    <a href="posts.html">Stories</a>
+    <a href="about.html">About</a>
+    <a href="goal.html">Goals</a>
+    <a href="character.html">The Crew</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+
+  <div class="contact-sheet">
+    <div class="pin" aria-hidden="true"></div>
+    <div class="eyebrow">// GET IN TOUCH</div>
+    <h1 class="contact-title">Say hello to the crew.</h1>
+    <p class="contact-desc">
+      Have a question, feedback, or a story you'd like to share privately? Leave a note or connect with us directly.
+    </p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-label">DIRECT EMAIL</div>
+        <div class="info-val"><a href="mailto:hlywor@gmail.com">hlywor@gmail.com</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">LOCATION</div>
+        <div class="info-val">Guwahati, Assam, India</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">INSTAGRAM</div>
+        <div class="info-val"><a href="https://instagram.com/limbupaw" target="_blank" rel="noopener">@limbupaw</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">SUBMISSIONS</div>
+        <div class="info-val"><a href="submit.html">Open Writing Pad →</a></div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <p>
+        "Some things don't fit in a normal conversation. That's why we're here. No pressure, just honest thoughts."
+      </p>
+    </div>
+
+    <div class="action-row">
+      <a href="mailto:hlywor@gmail.com?subject=Hello%20HlyWor" class="btn-sticky fire">✉ Send an Email</a>
+      <a href="submit.html" class="btn-sticky">Pin a Story</a>
+      <a href="index.html" class="btn-sticky">Back to Board</a>
+    </div>
+
+    <div class="footer-stamp">
+      HlYWoR · GUWAHATI · EST. 2025
+    </div>
+  </div>
+
+</body>
+</html>

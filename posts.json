@@ -1,79 +1,79 @@
 [
   {
-    "title": "Social Network",
+    "title": "The Social Network",
     "date": "2025-10-25",
-    "desc": "This movie inspired me to start this website",
-    "thumbnail": "/post/style/image/The_Social_Network.webp",
+    "desc": "This movie inspired me to start this website — a look at ambition, isolation, and creation.",
+    "thumbnail": "/style/images/The_Social_Network.webp",
+    "url": "/post/socialnetwork.html"
+  },
+  {
+    "title": "Fight Club",
+    "date": "2025-10-25",
+    "desc": "A psychological masterpiece on modern alienation, consumerism, and chaos.",
+    "thumbnail": "/style/images/Fight Club.webp",
     "url": "/post/fight_club.html"
   },
   {
     "title": "Inception",
     "date": "2025-10-25",
-    "desc": "This movie showed us about lucid dreaming in more detail",
-    "thumbnail": "/post/style/image/POSTER INCEPTION.webp",
+    "desc": "Exploring the depths of lucid dreaming, subconscious architecture, and regret.",
+    "thumbnail": "/style/images/POSTER INCEPTION.webp",
     "url": "/post/inception.html"
   },
   {
-    "title": "Social Network",
-    "date": "2025-10-25",
-    "desc": "This movie inspired me to start this website",
-    "thumbnail": "/post/style/image/The_Social_Network.webp",
-    "url": "/post/socialnetwork.html"
-  },
-  {
-    "title": "3I / ATLAS: The Third Interstellar Visitor and What It Reveals About the Universe | HlyWor",
-    "date": "2000-01-01",
-    "desc": "",
+    "title": "3I / ATLAS: The Third Interstellar Visitor",
+    "date": "2025-11-10",
+    "desc": "What the third interstellar visitor reveals about our solar system and the universe beyond.",
     "thumbnail": "/style/images/3i1.webp",
     "url": "/post/3I-atlas.html"
   },
   {
-    "title": "Charu / maya",
-    "date": "2000-01-01",
-    "desc": "",
-    "thumbnail": "/style/images/charu2.webp",
-    "url": "/post/charu.html"
-  },
-  {
-    "title": "Some Lessons I’ve Learned Till Now 🧠 | HlyWor",
-    "date": "2000-01-01",
-    "desc": "",
+    "title": "Some Lessons I've Learned Till Now",
+    "date": "2025-11-15",
+    "desc": "Thoughts on maturity, perspective, and navigating growing up in an uncertain world.",
     "thumbnail": "/style/images/growing up (5).webp",
     "url": "/post/growing-up-lessons-on-maturity.html"
   },
   {
-    "title": "The High School — A Personal Story by Pawan | HlyWor",
-    "date": "2000-01-01",
-    "desc": "",
+    "title": "The High School — A Personal Story by Pawan",
+    "date": "2025-11-20",
+    "desc": "A nostalgic and honest reflection on high school days, friendship, and unsaid things.",
     "thumbnail": "/style/images/paw.webp",
     "url": "/post/highschool.html"
   },
   {
-    "title": "The Real Difference Between Liking and Loving Someone (No Sugarcoating) | HlyWor",
-    "date": "2000-01-01",
-    "desc": "",
+    "title": "The Real Difference Between Liking and Loving Someone",
+    "date": "2025-11-25",
+    "desc": "No sugarcoating — the subtle emotional boundary between liking someone and true love.",
     "thumbnail": "/style/images/lovevslike.webp",
     "url": "/post/like-love.html"
   },
   {
-    "title": "My First Love — A Story by Charu Limbu | HlyWor",
-    "date": "2000-01-01",
-    "desc": "",
+    "title": "My First Love — A Story by Charu Limbu",
+    "date": "2025-12-01",
+    "desc": "A tender, heartfelt personal story about the innocence and lingering memory of first love.",
     "thumbnail": "/style/images/charu11.webp",
     "url": "/post/my-first-love.html"
   },
   {
-    "title": "Watching a Family Break Quietly | HlyWor",
-    "date": "2000-01-01",
-    "desc": "",
+    "title": "Watching a Family Break Quietly",
+    "date": "2025-12-05",
+    "desc": "A quiet observation on resilience, quiet heartbreaks, and healing when things fall apart.",
     "thumbnail": "/style/images/r1.webp",
     "url": "/post/resilience.html"
   },
   {
-    "title": "What It Feels Like to Be a Wreck — A Personal Reflection by Pawan | HlyWor",
-    "date": "2000-01-01",
-    "desc": "",
+    "title": "What It Feels Like to Be a Wreck",
+    "date": "2025-12-10",
+    "desc": "A personal reflection by Pawan on feeling lost, picking up the pieces, and moving forward.",
     "thumbnail": "/style/images/paw3.webp",
     "url": "/post/wreck.html"
+  },
+  {
+    "title": "Charu / Maya",
+    "date": "2025-12-15",
+    "desc": "Thoughts and reflections from Charu on art, feeling deeply, and staying soft.",
+    "thumbnail": "/style/images/charu2.webp",
+    "url": "/post/charu.html"
   }
 ]

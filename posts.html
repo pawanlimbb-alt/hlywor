@@ -547,7 +547,7 @@ function render() {
   });
 }
 
-/* ── Stick button wiring ── */
+/* ── Follow button wiring ── */
 function wireStickBtn(btn, toUid, toName) {
   if (!toUid) { btn.style.display='none'; return; }
 
@@ -564,16 +564,16 @@ function wireStickBtn(btn, toUid, toName) {
       if (!snap.empty) {
         btn.dataset.stickid = snap.docs[0].id;
         btn.classList.add('is-stuck');
-        btn.textContent = '📌 Stuck';
+        btn.textContent = '📌 Following';
       } else {
-        btn.textContent = '📌 Stick';
+        btn.textContent = '📌 Follow';
       }
     } catch(e) {}
   });
 
   btn.addEventListener('click', async e => {
     e.preventDefault(); e.stopPropagation();
-    if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+    if (!currentUser) { showLoginModal({ prompt: 'Sign in to follow.' }); return; }
     if (currentUser.uid === toUid) return;
     btn.disabled = true;
     const isStuck = btn.classList.contains('is-stuck');
@@ -581,7 +581,7 @@ function wireStickBtn(btn, toUid, toName) {
       if (isStuck) {
         if (btn.dataset.stickid) await deleteDoc(doc(db,'sticks',btn.dataset.stickid));
         btn.classList.remove('is-stuck');
-        btn.textContent = '📌 Stick';
+        btn.textContent = '📌 Follow';
         btn.dataset.stickid = '';
       } else {
         const fromName = getDisplayName(currentUser);
@@ -597,7 +597,7 @@ function wireStickBtn(btn, toUid, toName) {
         });
         btn.dataset.stickid = ref.id;
         btn.classList.add('is-stuck');
-        btn.textContent = '📌 Stuck';
+        btn.textContent = '📌 Following';
       }
     } catch(err) { console.error(err); }
     btn.disabled = false;

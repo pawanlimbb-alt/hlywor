@@ -554,7 +554,7 @@ export function injectAuthNav(navEl, options = {}) {
       const labels = {
         comment: n => `<strong>${n.fromName}</strong> left a note on <strong>${n.postTitle||"your post"}</strong>`,
         reply:   n => `<strong>${n.fromName}</strong> replied to your comment on <strong>${n.postTitle||"a post"}</strong>`,
-        stick:   n => `<strong>${n.fromName}</strong> stuck you to their board`,
+        stick:   n => `<strong>${n.fromName}</strong> started following you`,
         post:    n => `<strong>${n.fromName}</strong> posted <strong>${n.postTitle||"something new"}</strong>`,
       };
       notifList.innerHTML = notifDocs.map(n => {

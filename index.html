@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6854046253471048"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -357,13 +355,7 @@
     }
     #scrollNudge.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 
-    /* ✅ Sponsored ad card — blends with pinboard cards */
-    .ad-card{cursor:default;}
-    .ad-card:hover,.ad-card:focus{transform:rotate(var(--rot,0deg)) !important;box-shadow:var(--pin-shadow) !important;z-index:1 !important;}
-    .ad-card-inner{padding:18px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:220px;justify-content:center;}
-    .ad-card .post-cat-tape{align-self:flex-start;background:var(--ink3);opacity:0.7;}
-    .ad-frame-wrap{width:100%;}
-    .ad-disclosure{font-family:var(--sans);font-size:0.6rem;color:var(--ink3);opacity:0.55;letter-spacing:0.5px;align-self:flex-start;}
+
 
     @media(max-width:860px){.board-bottom{grid-template-columns:1fr 1fr;}.cta-note{grid-column:span 2;}.title-sheet{grid-template-columns:1fr;}.sheet-photo-col{min-height:200px;margin-top:24px;}.pasted-photo:nth-child(1){top:0;left:0;width:110px;}.pasted-photo:nth-child(2){top:70px;left:80px;width:100px;}.pasted-photo:nth-child(3){top:140px;left:10px;width:115px;}.hero-pulse{width:240px;height:240px;}}
     @media(max-width:640px){
@@ -721,28 +713,10 @@
     let popupCache={};
     function openAuthorPopup(name,uid){const ov=document.getElementById('authorPopupOverlay'),inn=document.getElementById('authorPopupInner');if(!ov||!inn)return;inn.innerHTML='<div class="popup-loading">Looking them up...</div>';ov.classList.add('open');ov.onclick=e=>{if(e.target===ov)closeAuthorPopup();};setTimeout(()=>{const popup=document.getElementById('authorPopup');if(popup)popup.focus();},300);fetchAuthor(name,uid,inn);}
     function closeAuthorPopup(){const ov=document.getElementById('authorPopupOverlay');if(ov)ov.classList.remove('open');if(document.activeElement?.closest('.author-popup'))document.querySelector('.post-author-chip')?.focus();}
-    async function fetchAuthor(name,uid,inn){const key=uid||name;let p=popupCache[key];if(p===undefined&&db){try{let s;if(uid)s=await getDocs(query(collection(db,'people'),where('authorUid','==',uid),limit(1)));if(!s||s.empty)s=await getDocs(query(collection(db,'people'),where('nameLower','==',name.toLowerCase()),limit(1)));if(s.empty){const fn=name.split(/[\s.]/)[0].toLowerCase();if(fn.length>=3){const all=await getDocs(collection(db,'people'));const m=all.docs.find(d=>(d.data().nameLower||'').split(' ')[0]===fn);if(m)s={empty:false,docs:[m]};}}p=(!s||s.empty)?null:{id:s.docs[0].id,...s.docs[0].data()};popupCache[key]=p;}catch(e){p=null;}}const acc=p?.accent||'#e8681a';let sdId=null,sc=0;const toUid=p?.authorUid;if(toUid&&db){try{const ss=await getDocs(query(collection(db,'sticks'),where('toUid','==',toUid)));sc=ss.size;if(currentUser&&currentUser.uid!==toUid){const ex=ss.docs.find(d=>d.data().fromUid===currentUser.uid);if(ex)sdId=ex.id;}}catch(e){}}const own=currentUser&&toUid&&currentUser.uid===toUid,canS=!!toUid&&!own,isS=!!sdId;const av=p?.photos?.[0]?`<img class="popup-avatar" src="${p.photos[0]}" alt="${p?.name||name}" loading="lazy">`:`<div class="popup-avatar-placeholder" aria-hidden="true">${(p?.name||name)[0].toUpperCase()}</div>`;const sb=canS?`<button class="popup-stick-btn ${isS?'stuck-state':'unstuck'}" id="popupStickBtn" aria-pressed="${isS}">${isS?'📌 following ✦':'📌 follow'}</button>${sc>0?`<span class="popup-stick-count" aria-label="${sc} people following">${sc} following</span>`:''}`:'';const pl=p?.slug?`<a class="popup-profile-link" href="profile.html?slug=${p.slug}">View full profile →</a>`:'';inn.innerHTML=`<div class="popup-spine-accent" style="background:${acc}" aria-hidden="true"></div><div class="popup-header">${av}<div><div class="popup-name" id="authorPopupTitle">${p?.name||name}</div>${p?.role?`<div class="popup-role">${p.role.toUpperCase()}</div>`:''}</div></div>${p?.bio?`<p class="popup-bio">${p.bio}</p>`:p===null?`<p class="popup-no-profile">No profile card yet.</p>`:''}<div class="popup-actions">${sb}${pl}</div>`;const sbEl=inn.querySelector('#popupStickBtn');if(sbEl&&db){sbEl.addEventListener('click',async()=>{if(!currentUser){showLoginModal({prompt:'Sign in to follow.'});return;}sbEl.disabled=true;try{if(sdId){await deleteDoc(doc(db,'sticks',sdId));sdId=null;sbEl.textContent='📌 follow';sbEl.className='popup-stick-btn unstuck';sbEl.setAttribute('aria-pressed','false');}else{const fn=getDisplayName(currentUser);const fs=await getDocs(query(collection(db,'people'),where('authorUid','==',currentUser.uid),limit(1)));const fsl=fs.empty?'':fs.docs[0].data().slug||'';const ref=await addDoc(collection(db,'sticks'),{fromUid:currentUser.uid,fromName:fn,fromSlug:fsl,toUid,toSlug:p?.slug||'',toName:p?.name||name,createdAt:serverTimestamp()});sdId=ref.id;sbEl.textContent='📌 following ✦';sbEl.className='popup-stick-btn stuck-state';sbEl.setAttribute('aria-pressed','true');}popupCache={};}catch(e){}sbEl.disabled=false;});}}
+    async function fetchAuthor(name,uid,inn){const key=uid||name;let p=popupCache[key];if(p===undefined&&db){try{let s;if(uid)s=await getDocs(query(collection(db,'people'),where('authorUid','==',uid),limit(1)));if(!s||s.empty)s=await getDocs(query(collection(db,'people'),where('nameLower','==',name.toLowerCase()),limit(1)));if(s.empty){const fn=name.split(/[\s.]/)[0].toLowerCase();if(fn.length>=3){const all=await getDocs(collection(db,'people'));const m=all.docs.find(d=>(d.data().nameLower||'').split(' ')[0]===fn);if(m)s={empty:false,docs:[m]};}}p=(!s||s.empty)?null:{id:s.docs[0].id,...s.docs[0].data()};popupCache[key]=p;}catch(e){p=null;}}const acc=p?.accent||'#e8681a';let sdId=null,sc=0;const toUid=p?.authorUid;if(toUid&&db){try{const ss=await getDocs(query(collection(db,'sticks'),where('toUid','==',toUid)));sc=ss.size;if(currentUser&&currentUser.uid!==toUid){const ex=ss.docs.find(d=>d.data().fromUid===currentUser.uid);if(ex)sdId=ex.id;}}catch(e){}}const own=currentUser&&toUid&&currentUser.uid===toUid,canS=!!toUid&&!own,isS=!!sdId;const av=p?.photos?.[0]?`<img class="popup-avatar" src="${p.photos[0]}" alt="${p?.name||name}" loading="lazy">`:`<div class="popup-avatar-placeholder" aria-hidden="true">${(p?.name||name)[0].toUpperCase()}</div>`;const sb=canS?`<button class="popup-stick-btn ${isS?'stuck-state':'unstuck'}" id="popupStickBtn" aria-pressed="${isS}">${isS?'📌 following ✦':'📌 follow'}</button>${sc>0?`<span class="popup-stick-count" aria-label="${sc} followers">${sc} ${sc===1?'follower':'followers'}</span>`:''}`:'';const pl=p?.slug?`<a class="popup-profile-link" href="profile.html?slug=${p.slug}">View full profile →</a>`:'';inn.innerHTML=`<div class="popup-spine-accent" style="background:${acc}" aria-hidden="true"></div><div class="popup-header">${av}<div><div class="popup-name" id="authorPopupTitle">${p?.name||name}</div>${p?.role?`<div class="popup-role">${p.role.toUpperCase()}</div>`:''}</div></div>${p?.bio?`<p class="popup-bio">${p.bio}</p>`:p===null?`<p class="popup-no-profile">No profile card yet.</p>`:''}<div class="popup-actions">${sb}${pl}</div>`;const sbEl=inn.querySelector('#popupStickBtn');if(sbEl&&db){sbEl.addEventListener('click',async()=>{if(!currentUser){showLoginModal({prompt:'Sign in to follow.'});return;}sbEl.disabled=true;try{if(sdId){await deleteDoc(doc(db,'sticks',sdId));sdId=null;sbEl.textContent='📌 follow';sbEl.className='popup-stick-btn unstuck';sbEl.setAttribute('aria-pressed','false');}else{const fn=getDisplayName(currentUser);const fs=await getDocs(query(collection(db,'people'),where('authorUid','==',currentUser.uid),limit(1)));const fsl=fs.empty?'':fs.docs[0].data().slug||'';const ref=await addDoc(collection(db,'sticks'),{fromUid:currentUser.uid,fromName:fn,fromSlug:fsl,toUid,toSlug:p?.slug||'',toName:p?.name||name,createdAt:serverTimestamp()});sdId=ref.id;sbEl.textContent='📌 following ✦';sbEl.className='popup-stick-btn stuck-state';sbEl.setAttribute('aria-pressed','true');}popupCache={};}catch(e){}sbEl.disabled=false;});}}
 
     let cachedUser=currentUser;
     onAuthChange(u=>{cachedUser=u;});
-
-    // ✅ Sponsored ad card — built to look like a pinned post, inserted at a random spot
-    function buildAdCard(){
-      const card=document.createElement('div');
-      card.className='pinned-post ad-card reveal';
-      card.setAttribute('role','listitem');
-      card.setAttribute('aria-label','Advertisement');
-      const iframeId='aadsFrame_'+Math.random().toString(36).slice(2,9);
-      card.innerHTML=`<div class="post-pin" aria-hidden="true"></div>
-        <div class="ad-card-inner">
-          <span class="post-cat-tape cat-default">SPONSORED</span>
-          <div class="ad-frame-wrap" id="${iframeId}">
-            <iframe data-aa='2446799' src='//acceptable.a-ads.com/2446799/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' title="Advertisement" loading="lazy"></iframe>
-          </div>
-          <span class="ad-disclosure">ads keep the lights on</span>
-        </div>`;
-      return card;
-    }
 
     function renderPosts(){
       const grid=document.getElementById('postsGrid');
@@ -786,7 +760,7 @@
         }
       }
 
-      // Build all post cards first (without appending), so we can splice the ad in randomly
+      // Build all post cards
       const cardEls=[];
       filtered.forEach((post,i)=>{
         const rot=rots[i%rots.length],cat=(post.category||post.type||'post').toLowerCase(),slug=post.slug||post.id;
@@ -818,13 +792,6 @@
         cardEls.push(card);
         loadReactions(slug).then(data=>{card.querySelectorAll('.sticker-btn').forEach(b=>{const e=b.dataset.emoji;if(data[e]){b.querySelector('.sticker-count').textContent=data[e].count;b.classList.toggle('reacted',data[e].userReacted);b.setAttribute('aria-pressed',data[e].userReacted?'true':'false');}});});
       });
-
-      // Splice the ad card into a random slot among the posts (only if there's enough content to blend into)
-      if(cardEls.length>=2){
-        const adCard=buildAdCard();
-        const insertAt=1+Math.floor(Math.random()*cardEls.length); // never first slot
-        cardEls.splice(insertAt,0,adCard);
-      }
 
       cardEls.forEach(card=>{
         grid.appendChild(card);

@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6854046253471048"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -165,31 +163,7 @@
       }
     }
 
-    /* ── A-ADS ad units ── */
-    .ad-unit-wrap {
-      margin: 20px 0;
-      padding: 10px 0;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      text-align: center;
-    }
 
-    .ad-unit-wrap::before {
-      content: 'AD';
-      display: block;
-      font-family: var(--pixel);
-      font-size: 0.2rem;
-      color: var(--ink4);
-      letter-spacing: 3px;
-      margin-bottom: 6px;
-      opacity: 0.5;
-    }
-
-    @media (max-width: 640px) {
-      .ad-unit-wrap iframe {
-        width: 100% !important;
-      }
-    }
 
     ::-webkit-scrollbar {
       width: 4px
@@ -2267,14 +2241,6 @@
   <!-- ✅ Skip Link -->
   <a href="#postBody" class="skip-link">Skip to post content</a>
 
-  <!-- BEGIN AADS AD UNIT 2446799 — Static bot-visible placement -->
-  <!-- Invisible to users; exists so the A-ADS crawler can verify the unit in raw HTML -->
-  <div aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0.01;pointer-events:none;left:-9999px;top:0;">
-    <iframe data-aa='2446799' src='//acceptable.a-ads.com/2446799/?size=Adaptive'
-      style='border:0;padding:0;width:1px;height:1px;' title="Advertisement"></iframe>
-  </div>
-  <!-- END AADS AD UNIT 2446799 — Static bot-visible placement -->
-
   <div id="progress-bar" aria-hidden="true"></div>
 
   <nav class="nav" role="navigation" aria-label="Main">
@@ -2309,16 +2275,6 @@
 
             <div class="post-header" id="postHeader"></div>
 
-            <!-- BEGIN AADS AD UNIT 2446799 — Below header -->
-            <div class="ad-unit-wrap" aria-label="Advertisement" style="margin: 16px 0;">
-              <div id="aads-top" style="width:100%; margin:auto; position:relative; z-index:99998;">
-                <iframe data-aa='2446799' src='//acceptable.a-ads.com/2446799/?size=Adaptive'
-                  style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display:block; margin:auto'
-                  title="Advertisement" loading="lazy"></iframe>
-              </div>
-            </div>
-            <!-- END AADS AD UNIT 2446799 — Below header -->
-
             <div class="post-cover" id="postCover" style="display:none"></div>
 
             <div class="post-body" id="postBody" role="article" aria-label="Post content"></div>
@@ -2328,16 +2284,6 @@
               to change text</div>
 
             <div class="post-reactions" id="postReactions" aria-label="Reactions"></div>
-
-            <!-- BEGIN AADS AD UNIT 2446799 — Mid-post -->
-            <div class="ad-unit-wrap" aria-label="Advertisement" style="margin: 24px 0;">
-              <div id="aads-mid" style="width:100%; margin:auto; position:relative; z-index:99998;">
-                <iframe data-aa='2446799' src='//acceptable.a-ads.com/2446799/?size=Adaptive'
-                  style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display:block; margin:auto'
-                  title="Advertisement" loading="lazy"></iframe>
-              </div>
-            </div>
-            <!-- END AADS AD UNIT 2446799 —Mid-post -->
 
 
 
@@ -3026,9 +2972,9 @@
 
       const stickBtn = canStick ? `
         <button class="popup-stick-btn ${isStuck ? 'stuck-state' : 'unstuck'}" id="popupStickBtn" aria-pressed="${isStuck}">
-          ${isStuck ? '📌 Stuck ✦' : '📌 Stick them'}
+          ${isStuck ? '📌 Following ✦' : '📌 Follow'}
         </button>
-        ${stickCount > 0 ? `<span class="popup-stick-count" aria-label="${stickCount} people stuck">${stickCount} stuck</span>` : ''}` : '';
+        ${stickCount > 0 ? `<span class="popup-stick-count" aria-label="${stickCount} followers">${stickCount} ${stickCount === 1 ? 'follower' : 'followers'}</span>` : ''}` : '';
 
       const profileLink = person?.slug
         ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>` : '';
@@ -3048,13 +2994,13 @@
       const stickBtnEl = inner.querySelector('#popupStickBtn');
       if (stickBtnEl) {
         stickBtnEl.addEventListener('click', async () => {
-          if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+          if (!currentUser) { showLoginModal({ prompt: 'Sign in to follow.' }); return; }
           stickBtnEl.disabled = true;
           try {
             if (stickDocId) {
               await deleteDoc(doc(db, 'sticks', stickDocId));
               stickDocId = null;
-              stickBtnEl.textContent = '📌 Stick them';
+              stickBtnEl.textContent = '📌 Follow';
               stickBtnEl.className = 'popup-stick-btn unstuck';
               stickBtnEl.setAttribute('aria-pressed', 'false');
             } else {
@@ -3067,7 +3013,7 @@
                 createdAt: serverTimestamp()
               });
               stickDocId = ref.id;
-              stickBtnEl.textContent = '📌 Stuck ✦';
+              stickBtnEl.textContent = '📌 Following ✦';
               stickBtnEl.className = 'popup-stick-btn stuck-state';
               stickBtnEl.setAttribute('aria-pressed', 'true');
             }
@@ -3107,10 +3053,10 @@
           if (!snap.empty) {
             btn.dataset.stickid = snap.docs[0].id;
             btn.classList.add('is-stuck');
-            btn.textContent = '📌 Stuck ✦';
+            btn.textContent = '📌 Following ✦';
             btn.setAttribute('aria-pressed', 'true');
           } else {
-            btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
+            btn.textContent = `📌 Follow ${toName.split(' ')[0]}`;
             btn.setAttribute('aria-pressed', 'false');
           }
         } catch (e) { }
@@ -3118,7 +3064,7 @@
 
       btn.addEventListener('click', async e => {
         e.stopPropagation();
-        if (!currentUser) { showLoginModal({ prompt: 'Sign in to stick someone.' }); return; }
+        if (!currentUser) { showLoginModal({ prompt: 'Sign in to follow.' }); return; }
         if (currentUser.uid === toUid) return;
         btn.disabled = true;
         const isStuck = btn.classList.contains('is-stuck');
@@ -3126,7 +3072,7 @@
           if (isStuck) {
             if (btn.dataset.stickid) await deleteDoc(doc(db, 'sticks', btn.dataset.stickid));
             btn.classList.remove('is-stuck');
-            btn.textContent = `📌 Stick ${toName.split(' ')[0]}`;
+            btn.textContent = `📌 Follow ${toName.split(' ')[0]}`;
             btn.dataset.stickid = '';
             btn.setAttribute('aria-pressed', 'false');
           } else {
@@ -3143,7 +3089,7 @@
             });
             btn.dataset.stickid = ref.id;
             btn.classList.add('is-stuck');
-            btn.textContent = '📌 Stuck ✦';
+            btn.textContent = '📌 Following ✦';
             btn.setAttribute('aria-pressed', 'true');
           }
         } catch (err) { console.error(err); }
