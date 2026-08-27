@@ -828,12 +828,25 @@ for (let i = 0; i < 14; i++) {
 
 /* Get identifier — supports ?slug=pawan or ?name=Pawan */
 const params = new URLSearchParams(window.location.search);
-const slug   = params.get('slug') || params.get('name');
+const slug   = (params.get('slug') || params.get('name') || '').trim();
 
 let currentPersonData = null;
 
-if (!slug) { showNotFound(); }
-else { loadProfile(slug); }
+// Founders check - redirect to their dedicated hardcoded pages
+const sl = slug.toLowerCase();
+if (sl.includes('pawan')) {
+  window.location.replace('pawan.html');
+} else if (sl.includes('charu') || sl === 'cml' || sl === 'cml.exe') {
+  window.location.replace('charu.html');
+} else if (sl.includes('suvam') || sl.includes('suv')) {
+  window.location.replace('suv.html');
+} else if (sl.includes('morak') || sl.includes('koushik') || sl === 'ezaf' || sl === 'ezaf.exe') {
+  window.location.replace('koushik.html');
+} else if (!slug) {
+  showNotFound();
+} else {
+  loadProfile(slug);
+}
 
 /* ── Load person ── */
 async function loadProfile(slug) {

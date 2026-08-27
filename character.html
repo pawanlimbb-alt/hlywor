@@ -742,6 +742,15 @@ document.querySelectorAll('.tape-btn').forEach(btn => {
 });
 
 /* ── Live Firestore feed ── */
+const FOUNDER_NAMES = ['pawan', 'pawan limbu', 'pawan.exe', 'suvam', 'suvam limbu', 'suvam.exe', 'charu', 'charu maya limbu', 'cml.exe', 'morak', 'koushik', 'ezaf.exe'];
+const FOUNDER_SLUGS = ['pawan', 'pawan-limbu', 'pawan-exe', 'suvam', 'suv', 'suvam-limbu', 'suvam-exe', 'charu', 'charu-maya-limbu', 'charu-limbu', 'cml', 'koushik', 'morak', 'ezaf'];
+
+function isFounderPerson(p) {
+  const n = (p.name || '').toLowerCase().trim();
+  const s = (p.slug || '').toLowerCase().trim();
+  return FOUNDER_NAMES.some(fn => n.includes(fn)) || FOUNDER_SLUGS.includes(s);
+}
+
 const q = query(
   collection(db, 'people'),
   where('status','==','published'),
@@ -749,7 +758,9 @@ const q = query(
 );
 
 onSnapshot(q, snap => {
-  allPeople = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  allPeople = snap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(p => !isFounderPerson(p));
   const countEl = document.getElementById('communityCount');
   countEl.textContent = `${allPeople.length} PINNED`;
   renderCommunity();

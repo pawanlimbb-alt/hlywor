@@ -201,14 +201,24 @@
     .f-logo{font-family:var(--pixel);font-size:.38rem;color:var(--gold);letter-spacing:2px}
 
     @media(max-width:640px){
-      .content-area{padding:20px 16px 60px}
-      .dash-header{padding:28px 16px 0}
-      .tabs{padding:0 16px}
+      .content-area{padding:20px 12px 60px}
+      .dash-header{padding:24px 12px 0}
+      .tabs{padding:0 12px}
       .dash-stats-row{margin-left:0;width:100%}
       .people-grid{grid-template-columns:1fr 1fr}
+      .posts-grid{grid-template-columns:repeat(2, 1fr) !important;gap:8px !important}
+      .post-card-body{padding:10px !important;gap:4px !important}
+      .post-card-title{font-size:0.95rem !important;line-height:1.25 !important}
+      .post-card-desc{font-size:0.72rem !important;-webkit-line-clamp:2 !important}
+      .post-card-cat{font-size:0.48rem !important}
+      .post-card-date{font-size:0.65rem !important}
+      .post-card-edit{padding:2px 6px !important;font-size:0.68rem !important}
     }
     @media(max-width:400px){
       .people-grid{grid-template-columns:1fr}
+      .posts-grid{gap:6px !important}
+      .post-card-body{padding:8px !important}
+      .post-card-title{font-size:0.88rem !important}
     }
   
     /* ══════════════════════════════════
@@ -598,15 +608,32 @@ async function loadDashboard(user) {
   // Load public profile metadata if exists
   try {
     const pSnap = await getDocs(query(collection(db, 'people'), where('authorUid', '==', user.uid), limit(1)));
+    let pSlug = '';
     if (!pSnap.empty) {
       const pData = pSnap.docs[0].data();
       if (pData.role) document.getElementById('dashRoleTag').textContent = pData.role.toUpperCase();
       if (pData.bio) document.getElementById('dashBio').textContent = pData.bio;
-      if (pData.slug) {
-        const pubLink = document.getElementById('dashPublicProfileLink');
-        pubLink.href = `profile.html?slug=${encodeURIComponent(pData.slug)}`;
-        pubLink.style.display = 'inline-block';
-      }
+      pSlug = pData.slug || '';
+    }
+    
+    // Check if founder or community profile
+    const n = (name || '').toLowerCase();
+    const e = (user.email || '').toLowerCase();
+    const s = (pSlug || '').toLowerCase();
+    let targetProfile = '';
+    if (n.includes('pawan') || e.includes('paw') || s.includes('pawan')) targetProfile = 'pawan.html';
+    else if (n.includes('charu') || s.includes('charu') || s === 'cml') targetProfile = 'charu.html';
+    else if (n.includes('suvam') || n.includes('suv') || s.includes('suvam') || s === 'suv') targetProfile = 'suv.html';
+    else if (n.includes('morak') || n.includes('koushik') || s.includes('koushik') || s === 'ezaf') targetProfile = 'koushik.html';
+    else if (pSlug) targetProfile = `profile.html?slug=${encodeURIComponent(pSlug)}`;
+
+    const pubLink = document.getElementById('dashPublicProfileLink');
+    if (targetProfile) {
+      pubLink.href = targetProfile;
+      pubLink.style.display = 'inline-block';
+    } else {
+      pubLink.href = 'character.html';
+      pubLink.style.display = 'inline-block';
     }
   } catch (e) {
     console.warn('Could not load profile details', e);

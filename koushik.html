@@ -251,10 +251,87 @@
       </section>
     </main>
 
+    <!-- STORIES BY MORAK -->
+    <div style="width:100%;margin-top:36px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <h2 style="font-size:1.1rem;color:#ff3b3b;letter-spacing:1px;margin:0;text-transform:uppercase">MORAK'S STORIES</h2>
+        <div style="flex:1;height:1px;background:rgba(255,255,255,0.15)"></div>
+        <span id="postsCount" style="font-size:0.8rem;color:#888">LOADING...</span>
+      </div>
+      <div id="postsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px">
+        <div style="background:#1a1a1a;border:1px solid #333;padding:16px;border-radius:12px;color:#666">Loading stories...</div>
+      </div>
+    </div>
+
     <footer>
       © 2025 HlyWor Blog. Crafted with ❤️ in our style.
     </footer>
   </div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+    authDomain: "hlywor.firebaseapp.com",
+    projectId: "hlywor",
+    storageBucket: "hlywor.firebasestorage.app",
+    messagingSenderId: "697637160825",
+    appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+    measurementId: "G-MQDXDWHLX8"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  async function loadMorakPosts() {
+    const grid = document.getElementById('postsGrid');
+    const countEl = document.getElementById('postsCount');
+    if (!grid) return;
+
+    try {
+      const q = query(
+        collection(db, 'posts'),
+        where('status', '==', 'published'),
+        orderBy('createdAt', 'desc')
+      );
+      const snap = await getDocs(q);
+      const posts = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .filter(p => {
+          const a = (p.author || '').toLowerCase();
+          return a.includes('morak') || a.includes('koushik') || a.includes('ezaf');
+        });
+
+      if (countEl) countEl.textContent = `${posts.length} ${posts.length === 1 ? 'STORY' : 'STORIES'}`;
+
+      if (!posts.length) {
+        grid.innerHTML = '<div style="color:#777;font-style:italic;grid-column:1/-1;padding:20px;text-align:center">No stories pinned yet — check back soon.</div>';
+        return;
+      }
+
+      grid.innerHTML = '';
+      posts.forEach(post => {
+        const card = document.createElement('a');
+        card.href = `post.html?slug=${post.slug}`;
+        card.style.cssText = 'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;text-decoration:none;color:#fff;display:flex;flex-direction:column;transition:all .2s';
+        card.onmouseover = () => { card.style.borderColor = '#ff3b3b'; card.style.transform = 'translateY(-3px)'; };
+        card.onmouseout = () => { card.style.borderColor = 'rgba(255,255,255,0.1)'; card.style.transform = 'none'; };
+        card.innerHTML = `
+          <span style="font-size:0.7rem;color:#ff3b3b;font-weight:700;letter-spacing:1px;margin-bottom:6px">${(post.category || post.type || 'STORY').toUpperCase()}</span>
+          <h3 style="font-size:1.1rem;margin:0 0 8px;line-height:1.3">${post.title}</h3>
+          <p style="font-size:0.8rem;color:#aaa;line-height:1.5;margin:0 0 12px;flex:1">${post.desc || ''}</p>
+          <span style="font-size:0.75rem;color:#ff3b3b;font-weight:600">READ →</span>
+        `;
+        grid.appendChild(card);
+      });
+    } catch (e) {
+      console.error(e);
+      if (grid) grid.innerHTML = '<div style="color:#777;grid-column:1/-1">Could not load stories.</div>';
+    }
+  }
+  loadMorakPosts();
+  </script>
 </body>
 </html>
 

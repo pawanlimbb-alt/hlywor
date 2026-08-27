@@ -3087,8 +3087,20 @@
         </button>
         ${stickCount > 0 ? `<span class="popup-stick-count" aria-label="${stickCount} followers">${stickCount} ${stickCount === 1 ? 'follower' : 'followers'}</span>` : ''}` : '';
 
-      const profileLink = person?.slug
-        ? `<a class="popup-profile-link" href="profile.html?slug=${person.slug}">View full profile →</a>` : '';
+      function getAuthorProfileLink(p, name) {
+        const an = (p?.name || name || '').toLowerCase();
+        const as = (p?.slug || '').toLowerCase();
+        if (an.includes('pawan') || as.includes('pawan')) return 'pawan.html';
+        if (an.includes('charu') || as.includes('charu') || as === 'cml') return 'charu.html';
+        if (an.includes('suvam') || an.includes('suv') || as.includes('suvam') || as === 'suv') return 'suv.html';
+        if (an.includes('morak') || an.includes('koushik') || as.includes('koushik') || as === 'ezaf') return 'koushik.html';
+        if (p?.slug) return `profile.html?slug=${encodeURIComponent(p.slug)}`;
+        return '';
+      }
+
+      const targetUrl = getAuthorProfileLink(person, authorName);
+      const profileLink = targetUrl
+        ? `<a class="popup-profile-link" href="${targetUrl}">View full profile →</a>` : '';
 
       inner.innerHTML = `
         <div class="popup-spine-accent" style="background:${acc}" aria-hidden="true"></div>
