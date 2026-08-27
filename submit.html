@@ -1994,6 +1994,30 @@
         saveDraftToFirestore();
       }
     });
+
+    // ── URL parameter handler (e.g. from homepage spark prompt) ──
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("title")) {
+      const t = urlParams.get("title");
+      const titleInput = document.getElementById("titleInput");
+      if (titleInput && !titleInput.value) {
+        titleInput.value = t;
+        if (typeof updateCounts === "function") updateCounts();
+      }
+    }
+    if (urlParams.get("prompt")) {
+      const pText = urlParams.get("prompt");
+      const spCard = document.getElementById("promptSparkCard");
+      const spText = document.getElementById("promptSparkText");
+      if (spCard && spText) {
+        spText.textContent = pText;
+        spCard.style.display = "block";
+      }
+    }
+    if (urlParams.get("cat")) {
+      const cPill = document.querySelector(`.cat-pill[data-cat="${urlParams.get("cat")}"]`);
+      if (cPill) cPill.click();
+    }
   </script>
 </body>
 </html>
