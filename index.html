@@ -430,13 +430,54 @@
     .micro-card-footer{display:flex;align-items:center;justify-content:space-between;font-family:var(--sans);font-size:0.68rem;color:var(--ink4);}
     .micro-card-react{cursor:pointer;background:none;border:none;color:var(--ink3);font-size:0.8rem;}
 
-    /* 5. Ambient Tape Sound Widget */
-    .ambient-widget{display:inline-flex;align-items:center;gap:8px;background:rgba(26,18,8,0.85);border:1px solid rgba(212,160,32,0.3);padding:6px 12px;border-radius:20px;backdrop-filter:blur(8px);cursor:pointer;transition:all 0.2s;}
+    /* 5. Midnight / Night Mode Widget */
+    .ambient-widget{display:inline-flex;align-items:center;gap:8px;background:rgba(26,18,8,0.85);border:1px solid rgba(212,160,32,0.3);padding:6px 12px;border-radius:20px;backdrop-filter:blur(8px);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
     .ambient-widget:hover{border-color:var(--gold);transform:scale(1.02);}
     .ambient-dot{width:8px;height:8px;border-radius:50%;background:#444;transition:all 0.3s;}
     .ambient-widget.active .ambient-dot{background:#2ecc71;box-shadow:0 0 8px #2ecc71;animation:ambientBlink 1.5s infinite;}
     @keyframes ambientBlink{0%,100%{opacity:1;}50%{opacity:0.4;}}
     .ambient-label{font-family:var(--pixel);font-size:0.52rem;color:var(--gold);letter-spacing:1px;}
+
+    /* ── Midnight Theme Overrides ── */
+    body.night-mode {
+      --cork: #080503;
+      --cork-dark: #040201;
+      --paper: #16100a;
+      --paper2: #120c08;
+      --paper3: #1e150e;
+      --ink: #fdf6e2;
+      --ink2: #e2d5bc;
+      --ink3: #b8a68a;
+      --ink4: #8a7860;
+      --rule: rgba(255,255,255,0.07);
+    }
+    body.night-mode .title-sheet {
+      background: #140e08;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    }
+    body.night-mode .pinned-post {
+      background: #16100a;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.65);
+    }
+    body.night-mode .pinned-post:hover {
+      background: #1c140e;
+    }
+    body.night-mode .midnight-prompt-sheet {
+      background: #1e160e;
+      border: 1px solid rgba(232,104,26,0.35);
+    }
+    body.night-mode .micro-card {
+      background: #1c130b;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    body.night-mode .micro-card-text {
+      color: #fdf6e2;
+    }
+    body.night-mode .prompt-question {
+      color: #fdf6e2;
+    }
 
 
 
@@ -557,10 +598,10 @@
     <div class="storytellers-strip reveal">
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
         <div class="storytellers-avatars">
-          <a href="pawan.html" title="Pawan Limbu"><img src="images/pawan.jpg" class="storyteller-avatar" alt="Pawan"></a>
-          <a href="charu.html" title="Charu Maya Limbu"><img src="images/charu.jpg" class="storyteller-avatar" alt="Charu"></a>
-          <a href="suv.html" title="Suvam Limbu"><img src="images/suvam.jpg" class="storyteller-avatar" alt="Suvam"></a>
-          <a href="koushik.html" title="Morak"><img src="images/koushik.webp" class="storyteller-avatar" alt="Morak"></a>
+          <a href="pawan.html" title="Pawan Limbu"><img src="img/paw.webp" class="storyteller-avatar" alt="Pawan"></a>
+          <a href="charu.html" title="Charu Maya Limbu"><img src="img/charu1.webp" class="storyteller-avatar" alt="Charu"></a>
+          <a href="suv.html" title="Suvam Limbu"><img src="img/suv.webp" class="storyteller-avatar" alt="Suvam"></a>
+          <a href="koushik.html" title="Morak"><img src="img/koushik.webp" class="storyteller-avatar" alt="Morak"></a>
           <span class="storyteller-avatar-placeholder">+</span>
         </div>
         <div class="storytellers-text">
@@ -570,11 +611,11 @@
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <div class="night-owls-badge">
           <span class="freshness-dot"></span>
-          <span><strong id="nightOwlsCount">18</strong> reading now</span>
+          <span><strong id="nightOwlsCount">1</strong> reading now</span>
         </div>
-        <button type="button" class="ambient-widget" id="ambientWidget" aria-label="Toggle cozy ambient sound" title="Toggle cozy midnight rain ambience">
+        <button type="button" class="ambient-widget" id="nightModeWidget" aria-label="Toggle midnight mode" title="Toggle midnight mode">
           <span class="ambient-dot"></span>
-          <span class="ambient-label" id="ambientLabel">🌧️ RAIN: OFF</span>
+          <span class="ambient-label" id="nightModeLabel">🌙 NIGHT: OFF</span>
         </button>
       </div>
     </div>
@@ -615,21 +656,21 @@
         <div class="sheet-photo-col" aria-label="Featured moments">
           <div class="pasted-photo">
             <div class="photo-inner">
-              <span class="photo-inner-label"><a href="gallery.html"><img src="img/view.webp" alt="Campus days at college" loading="lazy" decoding="async"></a></span>
+              <span class="photo-inner-label"><a href="gallery.html"><img src="img/view.webp" alt="The scenic horizon view" loading="lazy" decoding="async"></a></span>
             </div>
-            <span class="photo-caption">campus days ☀️</span>
+            <span class="photo-caption">the view 🌲</span>
           </div>
           <div class="pasted-photo">
             <div class="photo-inner" style="background:#e8e0cc;">
-              <span class="photo-inner-label"><a href="gallery.html"><img src="img/library.webp" alt="Late nights studying" loading="lazy" decoding="async"></a></span>
+              <span class="photo-inner-label"><a href="gallery.html"><img src="img/library.webp" alt="Old library and quiet study shelves" loading="lazy" decoding="async"></a></span>
             </div>
-            <span class="photo-caption">late nights 🌙</span>
+            <span class="photo-caption">the library 📚</span>
           </div>
           <div class="pasted-photo">
             <div class="photo-inner" style="background:#dde8d8;">
-              <span class="photo-inner-label"><a href="gallery.html"><img src="img/building.webp" alt="Good times with friends" loading="lazy" decoding="async"></a></span>
+              <span class="photo-inner-label"><a href="gallery.html"><img src="img/building.webp" alt="Campus building structure" loading="lazy" decoding="async"></a></span>
             </div>
-            <span class="photo-caption">good times 📸</span>
+            <span class="photo-caption">campus building 🏛️</span>
           </div>
         </div>
       </div>
@@ -785,7 +826,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, onSnapshot, where, getDocs, addDoc, deleteDoc, doc, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot, where, getDocs, addDoc, deleteDoc, doc, setDoc, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     import { injectAuthNav, requireLogin, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
     let app, db;
@@ -798,6 +839,74 @@
     injectAuthNav(document.getElementById('authSlotMobile'), { compact: true });
     document.getElementById('mtbSearchBtn')?.addEventListener('click', () => openSearch());
     document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // ── Night Mode (Midnight Theme) Toggle Logic ──
+    const nightBtn = document.getElementById('nightModeWidget');
+    const nightLabel = document.getElementById('nightModeLabel');
+
+    function applyNightMode(isNight) {
+      if (isNight) {
+        document.body.classList.add('night-mode');
+        nightBtn?.classList.add('active');
+        if (nightLabel) nightLabel.textContent = '🌙 NIGHT: ON';
+        localStorage.setItem('hlywor_night_mode', 'on');
+      } else {
+        document.body.classList.remove('night-mode');
+        nightBtn?.classList.remove('active');
+        if (nightLabel) nightLabel.textContent = '🌙 NIGHT: OFF';
+        localStorage.setItem('hlywor_night_mode', 'off');
+      }
+    }
+
+    const savedNight = localStorage.getItem('hlywor_night_mode');
+    if (savedNight === 'on') {
+      applyNightMode(true);
+    }
+
+    nightBtn?.addEventListener('click', () => {
+      const isNight = document.body.classList.contains('night-mode');
+      applyNightMode(!isNight);
+    });
+
+    // ── Real Live "Reading Now" Presence Tracking ──
+    const PRESENCE_TIMEOUT_MS = 2.5 * 60 * 1000; // 2.5 minutes
+    let presenceSid = sessionStorage.getItem('hlywor_sid');
+    if (!presenceSid) {
+      presenceSid = 'sid_' + Math.random().toString(36).slice(2, 10);
+      sessionStorage.setItem('hlywor_sid', presenceSid);
+    }
+
+    if (db) {
+      const myPresenceRef = doc(db, 'presence', presenceSid);
+      const updateMyPresence = () => {
+        setDoc(myPresenceRef, {
+          lastSeen: serverTimestamp(),
+          updatedAt: Date.now(),
+          page: 'home'
+        }, { merge: true }).catch(() => {});
+      };
+      updateMyPresence();
+      setInterval(updateMyPresence, 45000);
+
+      onSnapshot(collection(db, 'presence'), snap => {
+        const now = Date.now();
+        let realCount = 0;
+        snap.docs.forEach(d => {
+          const data = d.data();
+          const ts = data.lastSeen?.toDate ? data.lastSeen.toDate().getTime() : (data.updatedAt || 0);
+          if (now - ts < PRESENCE_TIMEOUT_MS) {
+            realCount++;
+          }
+        });
+        const el = document.getElementById('nightOwlsCount');
+        if (el) {
+          el.textContent = Math.max(1, realCount);
+        }
+      }, () => {
+        const el = document.getElementById('nightOwlsCount');
+        if (el) el.textContent = '1';
+      });
+    }
 
     const emberContainer = document.getElementById('embers');
     if(emberContainer) for(let i=0;i<22;i++){const e=document.createElement('div');e.className='ember';const sz=1+Math.random()*2.5;e.style.cssText=`left:${10+Math.random()*80}%;bottom:0;width:${sz}px;height:${sz}px;animation-duration:${7+Math.random()*12}s;animation-delay:${Math.random()*10}s;--edrift:${(Math.random()-0.5)*100}px;opacity:0;`;emberContainer.appendChild(e);}
@@ -873,57 +982,7 @@
       banner.style.display = 'block';
     }
 
-    // ── 3. COZY AMBIENT RAIN SYNTHESIZER (WEB AUDIO API) ──
-    let audioCtx = null, noiseNode = null, isPlayingAmbience = false;
-    function toggleAmbience() {
-      const btn = document.getElementById('ambientWidget');
-      const lbl = document.getElementById('ambientLabel');
-      if (isPlayingAmbience) {
-        if (noiseNode) { try { noiseNode.stop(); noiseNode.disconnect(); } catch(e){} }
-        isPlayingAmbience = false;
-        btn?.classList.remove('active');
-        if (lbl) lbl.textContent = '🌧️ RAIN: OFF';
-        return;
-      }
-      try {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const bufferSize = 2 * audioCtx.sampleRate;
-        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        let lastOut = 0.0;
-        for (let i = 0; i < bufferSize; i++) {
-          const white = Math.random() * 2 - 1;
-          output[i] = (lastOut + (0.02 * white)) / 1.02;
-          lastOut = output[i];
-          output[i] *= 3.5;
-        }
-        noiseNode = audioCtx.createBufferSource();
-        noiseNode.buffer = noiseBuffer;
-        noiseNode.loop = true;
-
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(750, audioCtx.currentTime);
-
-        const gainNode = audioCtx.createGain();
-        gainNode.gain.setValueAtTime(0.18, audioCtx.currentTime);
-
-        noiseNode.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        noiseNode.start(0);
-        isPlayingAmbience = true;
-        btn?.classList.add('active');
-        if (lbl) lbl.textContent = '🌧️ RAIN: PLAYING';
-      } catch (e) {
-        console.warn('Audio error:', e);
-      }
-    }
-    document.getElementById('ambientWidget')?.addEventListener('click', toggleAmbience);
-
-    // ── 4. QUICK MICRO-NOTE DROP PAD ──
+    // ── 3. QUICK MICRO-NOTE DROP PAD ──
     let selectedMicroEmoji = '🌙';
     document.querySelectorAll('.micro-emoji-btn').forEach(b => {
       b.addEventListener('click', () => {
@@ -966,17 +1025,6 @@
       renderMicroNotes();
     });
     renderMicroNotes();
-
-    // ── 5. NIGHT-OWLS LIVE PULSE SIMULATION ──
-    function updateNightOwls() {
-      const el = document.getElementById('nightOwlsCount');
-      if (el) {
-        const base = 16 + Math.floor(Math.sin(Date.now() / 60000) * 5 + Math.random() * 4);
-        el.textContent = Math.max(12, base);
-      }
-    }
-    setInterval(updateNightOwls, 45000);
-    updateNightOwls();
 
     // ✅ DYNAMIC QUOTE ROTATOR (pulls from live posts)
     const qEl = document.getElementById('randomQuote');
