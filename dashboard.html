@@ -50,29 +50,44 @@
     .lw-btn{font-family:var(--hand);font-size:1.1rem;font-weight:700;padding:10px 28px;background:var(--fire);color:#fff;border:none;cursor:pointer;transition:all .2s;margin-top:8px}
     .lw-btn:hover{background:#ff7a2a;transform:translateY(-2px)}
 
-    /* ── DASHBOARD HEADER ── */
-    .dash-header{position:relative;z-index:1;padding:40px 28px 0;max-width:1200px;margin:0 auto}
-    .dash-user-strip{display:flex;align-items:center;gap:18px;margin-bottom:32px;flex-wrap:wrap}
-    .dash-avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--fire);box-shadow:0 0 0 4px rgba(232,104,26,0.15)}
-    .dash-avatar-placeholder{width:64px;height:64px;border-radius:50%;background:var(--fire);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:1.8rem;color:#fff;font-weight:700;border:3px solid var(--fire);box-shadow:0 0 0 4px rgba(232,104,26,0.15)}
-    .dash-user-info{display:flex;flex-direction:column;gap:3px}
-    .dash-greeting{font-family:var(--pixel);font-size:0.32rem;color:var(--fire);letter-spacing:2px}
-    .dash-name{font-family:var(--hand);font-size:1.8rem;color:var(--paper);font-weight:700;line-height:1.1}
-    .dash-email{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.3)}
-    .dash-stats-row{display:flex;gap:20px;flex-wrap:wrap;margin-left:auto}
-    .dash-stat{text-align:center;padding:8px 18px;background:rgba(250,246,238,0.05);border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:all .2s}
-    .dash-stat:hover{background:rgba(250,246,238,0.08);border-color:rgba(232,104,26,0.3)}
-    .dash-stat-n{font-family:var(--pixel);font-size:0.6rem;color:var(--fire);display:block;margin-bottom:3px}
-    .dash-stat-l{font-family:var(--hand);font-size:0.85rem;color:rgba(255,255,255,0.45)}
+    /* ── DASHBOARD CREATOR PROFILE HEADER ── */
+    .dash-header{position:relative;z-index:1;padding:36px 24px 0;max-width:1200px;margin:0 auto}
+    .dash-profile-board{background:var(--paper);box-shadow:0 12px 40px rgba(0,0,0,0.55),0 2px 8px rgba(0,0,0,0.3);padding:28px 32px 24px;position:relative;border-radius:4px;border:1px solid rgba(26,18,8,0.12);background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(180,160,120,0.12) 31px,rgba(180,160,120,0.12) 32px);}
+    .dash-board-pin{position:absolute;top:-11px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8888,#cc2222);box-shadow:0 2px 5px rgba(0,0,0,0.5);z-index:2}
+    .dash-profile-main{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+    .dash-avatar-card{position:relative;flex-shrink:0;}
+    .dash-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--fire);box-shadow:0 4px 16px rgba(0,0,0,0.25);}
+    .dash-avatar-placeholder{width:80px;height:80px;border-radius:50%;background:var(--fire);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:2.2rem;color:#fff;font-weight:700;border:3px solid var(--fire);box-shadow:0 4px 16px rgba(0,0,0,0.25);}
+    .dash-status-dot{position:absolute;bottom:2px;right:4px;width:14px;height:14px;border-radius:50%;background:#2ecc71;border:2px solid #fff;box-shadow:0 0 8px rgba(46,204,113,0.8);}
+    .dash-profile-details{flex:1;min-width:260px;}
+    .dash-badge-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+    .dash-profile-role{font-family:var(--pixel);font-size:0.55rem;letter-spacing:1.5px;padding:3px 8px;background:var(--tape-r);color:#fff;border-radius:2px;}
+    .dash-mood-badge{font-family:var(--sans);font-size:0.75rem;font-weight:600;color:var(--fire);background:rgba(232,104,26,0.1);padding:2px 8px;border-radius:12px;border:1px solid rgba(232,104,26,0.25);}
+    .dash-name{font-family:var(--hand);font-size:2.2rem;color:var(--ink);font-weight:700;line-height:1.1;margin-bottom:4px;}
+    .dash-handle-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+    .dash-email{font-family:var(--sans);font-size:0.8rem;color:var(--ink3);}
+    .dash-public-link{font-family:var(--sans);font-size:0.78rem;font-weight:600;color:var(--fire);text-decoration:none;border-bottom:1px dashed var(--fire);transition:all 0.15s;}
+    .dash-public-link:hover{letter-spacing:0.5px;}
+    .dash-bio{font-family:var(--serif);font-size:0.95rem;font-style:italic;color:var(--ink2);line-height:1.6;max-width:600px;}
+    .dash-quick-actions{display:flex;gap:10px;margin:20px 0 16px;flex-wrap:wrap;}
+    .dash-action-btn{font-family:var(--sans);font-size:0.82rem;font-weight:600;padding:8px 16px;border-radius:4px;background:var(--paper2);border:1px solid rgba(26,18,8,0.15);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s;}
+    .dash-action-btn:hover{background:var(--paper3);transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+    .dash-action-btn.fire{background:var(--fire);color:#fff;border-color:var(--fire);box-shadow:0 2px 10px rgba(232,104,26,0.3);}
+    .dash-action-btn.fire:hover{background:#ff7a2a;}
+    .dash-stats-shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;border-top:1px dashed rgba(26,18,8,0.15);padding-top:18px;margin-top:8px;}
+    .dash-stat{text-align:center;padding:10px 8px;background:var(--paper2);border:1px solid rgba(26,18,8,0.08);border-radius:3px;cursor:pointer;transition:all 0.2s;}
+    .dash-stat:hover{background:var(--paper3);border-color:var(--fire);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+    .dash-stat-n{font-family:var(--sans);font-size:1.25rem;font-weight:700;color:var(--fire);display:block;line-height:1.2;}
+    .dash-stat-l{font-family:var(--sans);font-size:0.72rem;font-weight:500;color:var(--ink3);}
 
     /* ── TABS ── */
     .tabs-wrap{position:sticky;top:52px;z-index:200;background:rgba(18,12,8,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.06);max-width:100%;overflow-x:auto;scrollbar-width:none}
     .tabs-wrap::-webkit-scrollbar{display:none}
     .tabs{display:flex;padding:0 28px;max-width:1200px;margin:0 auto}
-    .tab{font-family:var(--pixel);font-size:0.28rem;letter-spacing:1px;padding:14px 18px;color:rgba(255,255,255,0.3);border:none;background:none;cursor:pointer;white-space:nowrap;transition:color .2s;position:relative;border-bottom:2px solid transparent}
-    .tab:hover{color:rgba(255,255,255,.7)}
+    .tab{font-family:var(--pixel);font-size:0.58rem;letter-spacing:1.5px;padding:14px 18px;color:rgba(255,255,255,0.45);border:none;background:none;cursor:pointer;white-space:nowrap;transition:color .2s;position:relative;border-bottom:2px solid transparent}
+    .tab:hover{color:rgba(255,255,255,.9)}
     .tab.active{color:var(--fire);border-bottom-color:var(--fire)}
-    .tab-badge{display:inline-block;font-family:var(--hand);font-size:0.75rem;color:var(--fire);margin-left:5px}
+    .tab-badge{display:inline-block;font-family:var(--sans);font-size:0.75rem;font-weight:700;color:var(--fire);margin-left:5px}
 
     /* ── CONTENT AREA ── */
     .content-area{max-width:1200px;margin:0 auto;padding:28px 28px 80px;position:relative;z-index:1}
@@ -81,14 +96,14 @@
 
     /* ── SECTION HEADING ── */
     .section-heading{display:flex;align-items:center;gap:14px;margin-bottom:24px}
-    .sh-text{font-family:var(--pixel);font-size:0.3rem;color:var(--fire);letter-spacing:3px}
+    .sh-text{font-family:var(--pixel);font-size:0.62rem;color:var(--fire);letter-spacing:2px}
     .sh-line{flex:1;height:1px;background:var(--rule)}
-    .sh-count{font-family:var(--pixel);font-size:0.26rem;color:var(--ink4);letter-spacing:1px}
+    .sh-count{font-family:var(--pixel);font-size:0.55rem;color:var(--ink4);letter-spacing:1px}
 
     /* ── MY POSTS GRID ── */
-    .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:rgba(245,230,200,0.06)}
-    .post-card{background:var(--paper);display:flex;flex-direction:column;text-decoration:none;color:var(--ink);transition:background .2s;position:relative}
-    .post-card:hover{background:var(--paper2)}
+    .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+    .post-card{background:var(--paper);display:flex;flex-direction:column;text-decoration:none;color:var(--ink);transition:all .2s;position:relative;box-shadow:0 4px 16px rgba(0,0,0,0.3);border-radius:2px;}
+    .post-card:hover{background:var(--paper2);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.45);}
     .post-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--fire);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
     .post-card:hover::before{transform:scaleY(1)}
     .post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:sepia(8%);transition:filter .4s}
@@ -96,13 +111,13 @@
     .post-noimg{width:100%;aspect-ratio:16/9;background:var(--paper3);display:flex;align-items:center;justify-content:center}
     .post-noimg-n{font-family:var(--pixel);font-size:2rem;color:transparent;-webkit-text-stroke:1px rgba(26,18,8,0.08)}
     .post-card-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:6px}
-    .post-card-cat{font-family:var(--pixel);font-size:0.24rem;color:var(--fire);letter-spacing:2px}
-    .post-card-title{font-family:var(--hand);font-size:1.05rem;color:var(--ink);font-weight:600;line-height:1.35}
-    .post-card-desc{font-family:var(--sans);font-size:0.72rem;color:var(--ink3);line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .post-card-cat{font-family:var(--pixel);font-size:0.55rem;color:var(--fire);letter-spacing:1.5px}
+    .post-card-title{font-family:var(--hand);font-size:1.15rem;color:var(--ink);font-weight:700;line-height:1.35}
+    .post-card-desc{font-family:var(--sans);font-size:0.78rem;color:var(--ink3);line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
     .post-card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-    .post-card-date{font-family:var(--sans);font-size:0.62rem;color:var(--ink4)}
-    .post-card-edit{font-family:var(--pixel);font-size:0.22rem;color:var(--fire);letter-spacing:1px;text-decoration:none;padding:3px 8px;border:1px solid rgba(232,104,26,0.3);transition:all .15s}
-    .post-card-edit:hover{background:rgba(232,104,26,0.08)}
+    .post-card-date{font-family:var(--sans);font-size:0.72rem;color:var(--ink4)}
+    .post-card-edit{font-family:var(--sans);font-size:0.75rem;font-weight:600;color:var(--fire);text-decoration:none;padding:4px 10px;border:1px solid rgba(232,104,26,0.3);border-radius:4px;transition:all .15s}
+    .post-card-edit:hover{background:rgba(232,104,26,0.08);border-color:var(--fire)}
 
     /* ── MY PHOTOS (masonry) ── */
     .photos-masonry{columns:4;column-gap:12px}
@@ -113,7 +128,7 @@
     .photo-print:hover{transform:translateY(-4px) scale(1.02);box-shadow:4px 12px 28px rgba(0,0,0,0.55)}
     .photo-print img{width:100%;display:block;filter:sepia(5%) brightness(0.97)}
     .photo-print-label{position:absolute;bottom:3px;left:0;right:0;font-family:var(--hand);font-size:0.72rem;color:var(--ink3);text-align:center;padding:0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .photo-del-btn{display:none;position:absolute;top:5px;right:5px;z-index:5;font-family:var(--pixel);font-size:0.2rem;padding:3px 7px;background:rgba(192,57,43,0.85);color:#fff;border:none;cursor:pointer;border-radius:2px}
+    .photo-del-btn{display:none;position:absolute;top:5px;right:5px;z-index:5;font-family:var(--pixel);font-size:0.55rem;padding:3px 7px;background:rgba(192,57,43,0.85);color:#fff;border:none;cursor:pointer;border-radius:2px}
     .photo-item:hover .photo-del-btn{display:block}
 
     /* ── MY CARD ── */
@@ -123,9 +138,9 @@
     .ppc-spine{width:18px;flex-shrink:0;background:linear-gradient(180deg,#3d2210 0%,#2a1608 20%,#4a2a12 40%,#2a1608 60%,#3d2210 80%,#2a1608 100%);border-right:2px solid rgba(0,0,0,0.4)}
     .ppc-page{flex:1;padding:20px 22px 24px;background:var(--paper);position:relative}
     .ppc-page::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--rule) 31px,var(--rule) 32px);background-position:0 60px;pointer-events:none;z-index:0}
-    .ppc-handle{font-family:var(--pixel);font-size:0.36rem;letter-spacing:1px;padding:3px 10px;color:#fff;display:inline-block;margin-bottom:8px;position:relative;z-index:1}
+    .ppc-handle{font-family:var(--pixel);font-size:0.55rem;letter-spacing:1px;padding:3px 10px;color:#fff;display:inline-block;margin-bottom:8px;position:relative;z-index:1}
     .ppc-name{font-family:var(--hand);font-size:1.6rem;color:var(--ink);font-weight:700;position:relative;z-index:1;line-height:1.1}
-    .ppc-role{font-family:var(--pixel);font-size:0.3rem;letter-spacing:1px;margin-top:4px;position:relative;z-index:1}
+    .ppc-role{font-family:var(--pixel);font-size:0.55rem;letter-spacing:1px;margin-top:4px;position:relative;z-index:1}
     .ppc-bio{font-family:var(--serif);font-size:0.92rem;font-style:italic;color:var(--ink2);line-height:1.7;margin-top:8px;position:relative;z-index:1}
     .ppc-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;position:relative;z-index:1}
     .ppc-chip{font-family:var(--hand);font-size:0.82rem;padding:2px 10px;color:#fff;border-radius:1px;opacity:.85}
@@ -251,8 +266,8 @@
     }
     .dock-label {
       font-family: 'Press Start 2P', monospace;
-      font-size: 0.18rem; letter-spacing: 0.5px;
-      color: rgba(255,255,255,0.25);
+      font-size: 0.64rem; letter-spacing: 0.5px;
+      color: rgba(255,255,255,0.45);
       transition: color 0.22s ease; white-space: nowrap;
     }
     .dock-item.active .dock-icon svg {
@@ -313,20 +328,39 @@
 <div id="dashWrap" style="display:none">
 
   <div class="dash-header">
-    <div class="dash-user-strip">
-      <div id="dashAvatarWrap"></div>
-      <div class="dash-user-info">
-        <span class="dash-greeting">// YOUR BOARD</span>
-        <span class="dash-name" id="dashName">—</span>
-        <span class="dash-email" id="dashEmail">—</span>
+    <div class="dash-profile-board">
+      <div class="dash-board-pin" aria-hidden="true"></div>
+      <div class="dash-profile-main">
+        <div class="dash-avatar-card">
+          <div id="dashAvatarWrap"></div>
+          <span class="dash-status-dot" title="Active on HlyWor"></span>
+        </div>
+        <div class="dash-profile-details">
+          <div class="dash-badge-row">
+            <span class="dash-profile-role" id="dashRoleTag">CREATOR</span>
+            <span class="dash-mood-badge" id="dashMoodBadge">✨ Writer & Storyteller</span>
+          </div>
+          <h1 class="dash-name" id="dashName">—</h1>
+          <div class="dash-handle-row">
+            <span class="dash-email" id="dashEmail">—</span>
+            <a href="#" class="dash-public-link" id="dashPublicProfileLink" style="display:none" target="_blank">View Public Profile ↗</a>
+          </div>
+          <p class="dash-bio" id="dashBio">Welcome to your studio. Pin your stories, save inspirations, and connect with other writers across the board.</p>
+        </div>
       </div>
-      <div class="dash-stats-row" id="dashStatsRow">
-        <div class="dash-stat" data-tab="posts"><span class="dash-stat-n" id="statPosts">—</span><span class="dash-stat-l">posts</span></div>
-        <div class="dash-stat" data-tab="saved"><span class="dash-stat-n" id="statSaved">—</span><span class="dash-stat-l">saved</span></div>
-        <div class="dash-stat" data-tab="photos"><span class="dash-stat-n" id="statPhotos">—</span><span class="dash-stat-l">photos</span></div>
-        <!-- Changed text: Sticking -> Following -->
+
+      <div class="dash-quick-actions">
+        <a href="submit.html" class="dash-action-btn fire">✍️ Write Story</a>
+        <a href="gallery.html" class="dash-action-btn">📸 Pin Photo</a>
+        <button class="dash-action-btn" id="dashCardTabBtn">📇 My Profile Card</button>
+      </div>
+
+      <div class="dash-stats-shelf" id="dashStatsRow">
+        <div class="dash-stat" data-tab="posts"><span class="dash-stat-n" id="statPosts">—</span><span class="dash-stat-l">Stories</span></div>
+        <div class="dash-stat" data-tab="feed"><span class="dash-stat-n" id="statFeed">—</span><span class="dash-stat-l">Feed</span></div>
+        <div class="dash-stat" data-tab="saved"><span class="dash-stat-n" id="statSaved">—</span><span class="dash-stat-l">Saved</span></div>
+        <div class="dash-stat" data-tab="photos"><span class="dash-stat-n" id="statPhotos">—</span><span class="dash-stat-l">Photos</span></div>
         <div class="dash-stat" data-tab="sticking"><span class="dash-stat-n" id="statSticking">—</span><span class="dash-stat-l">Following</span></div>
-        <!-- Changed text: Stuck you -> Followers -->
         <div class="dash-stat" data-tab="stuck"><span class="dash-stat-n" id="statStuck">—</span><span class="dash-stat-l">Followers</span></div>
       </div>
     </div>
@@ -441,8 +475,34 @@
   <img id="lbImg" src="" alt="">
 </div>
 
+<!-- Mobile Bottom Dock -->
+<div class="bottom-dock" id="bottomDock" role="navigation" aria-label="Mobile Navigation">
+  <div class="dock-inner">
+    <a href="index.html" class="dock-item" data-dock="board" aria-label="Board">
+      <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+      <span class="dock-label">BOARD</span>
+    </a>
+    <a href="posts.html" class="dock-item" data-dock="stories" aria-label="Stories">
+      <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <span class="dock-label">STORIES</span>
+    </a>
+    <a href="submit.html" class="dock-item dock-write" data-dock="write" aria-label="Write a story">
+      <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+      <span class="dock-label">WRITE</span>
+    </a>
+    <a href="gallery.html" class="dock-item" data-dock="photos" aria-label="Photos">
+      <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <span class="dock-label">PHOTOS</span>
+    </a>
+    <a href="dashboard.html" class="dock-item active" data-dock="me" aria-label="My profile">
+      <div class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+      <span class="dock-label">ME</span>
+    </a>
+  </div>
+</div>
+
 <footer>
-  <p>© 2025 HlyWor Blog — crafted with ❤️ in Guwahati</p>
+  <p>© 2025 HlyWor — a place to open up</p>
   <span class="f-logo">HlYWoR</span>
 </footer>
 
@@ -525,6 +585,33 @@ async function loadDashboard(user) {
     avatarWrap.innerHTML = `<div class="dash-avatar-placeholder">${name[0].toUpperCase()}</div>`;
   }
 
+  // Quick action card tab button
+  const cardBtn = document.getElementById('dashCardTabBtn');
+  if (cardBtn) {
+    cardBtn.onclick = () => {
+      const tab = document.querySelector('.tab[data-tab="card"]');
+      if (tab) tab.click();
+      window.scrollTo({ top: document.querySelector('.tabs-wrap').offsetTop - 60, behavior: 'smooth' });
+    };
+  }
+
+  // Load public profile metadata if exists
+  try {
+    const pSnap = await getDocs(query(collection(db, 'people'), where('authorUid', '==', user.uid), limit(1)));
+    if (!pSnap.empty) {
+      const pData = pSnap.docs[0].data();
+      if (pData.role) document.getElementById('dashRoleTag').textContent = pData.role.toUpperCase();
+      if (pData.bio) document.getElementById('dashBio').textContent = pData.bio;
+      if (pData.slug) {
+        const pubLink = document.getElementById('dashPublicProfileLink');
+        pubLink.href = `profile.html?slug=${encodeURIComponent(pData.slug)}`;
+        pubLink.style.display = 'inline-block';
+      }
+    }
+  } catch (e) {
+    console.warn('Could not load profile details', e);
+  }
+
   // Load all sections in parallel
   loadPosts(user);
   loadFeed(user);
@@ -605,6 +692,7 @@ async function loadFeed(user) {
     ));
     const followingUids = snap.docs.map(d => d.data().toUid).filter(Boolean);
     if (!followingUids.length) {
+      document.getElementById('statFeed').textContent = '0';
       document.getElementById('tabBadgeFeed').textContent = '';
       document.getElementById('feedCountLabel').textContent = '0 STORIES';
       grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">You are not following any creators yet.<br><a href="index.html">Explore stories on the pinboard →</a></div>`;
@@ -620,6 +708,7 @@ async function loadFeed(user) {
       .map(d => ({ id: d.id, ...d.data() }))
       .filter(p => followingUids.includes(p.authorUid));
 
+    document.getElementById('statFeed').textContent = feedPosts.length;
     document.getElementById('tabBadgeFeed').textContent = feedPosts.length || '';
     document.getElementById('feedCountLabel').textContent = `${feedPosts.length} STOR${feedPosts.length !== 1 ? 'IES' : 'Y'}`;
 
