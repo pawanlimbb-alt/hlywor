@@ -515,12 +515,14 @@ export function injectAuthNav(navEl, options = {}) {
     // Live notifications listener
     const notifQ = query(
       collection(db, "notifications"),
-      where("toUid", "==", user.uid),
-      orderBy("createdAt", "desc"),
-      limit(30)
+      where("toUid", "==", user.uid)
     );
     onSnapshot(notifQ, snap => {
-      notifDocs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      notifDocs = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => {
+        const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+        const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+        return db_ - da;
+      }).slice(0, 30);
       const unread = notifDocs.filter(n => !n.read).length;
 
       // Badge

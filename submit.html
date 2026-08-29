@@ -969,20 +969,31 @@
       const temp = document.createElement('div');
       temp.innerHTML = html;
       
-      // Remove dangerous attributes
+      // Remove dangerous tags entirely
+      const dangerousTags = ['script', 'iframe', 'object', 'embed', 'form', 'input', 'textarea', 'select', 'button', 'link', 'meta', 'base'];
+      dangerousTags.forEach(tag => {
+        temp.querySelectorAll(tag).forEach(el => el.remove());
+      });
+      
+      // Remove dangerous attributes from remaining elements
       temp.querySelectorAll('*').forEach(el => {
-        // Remove event handlers
+        // Remove all event handlers (onclick, onerror, onload, etc.)
         [...el.attributes].forEach(attr => {
-          if (attr.name.startsWith('on')) {
+          if (attr.name.startsWith('on') || attr.name === 'formaction') {
             el.removeAttribute(attr.name);
           }
         });
-        // Remove javascript: URLs
-        if (el.href && el.href.startsWith('javascript:')) {
-          el.removeAttribute('href');
-        }
-        if (el.src && el.src.startsWith('javascript:')) {
-          el.removeAttribute('src');
+        // Remove javascript: and data: URLs (case-insensitive)
+        ['href', 'src', 'action', 'xlink:href'].forEach(attrName => {
+          const val = (el.getAttribute(attrName) || '').trim().toLowerCase();
+          if (val.startsWith('javascript:') || val.startsWith('data:text/html') || val.startsWith('vbscript:')) {
+            el.removeAttribute(attrName);
+          }
+        });
+        // Remove style expressions (IE legacy but safe to strip)
+        const style = el.getAttribute('style') || '';
+        if (/expression\s*\(|url\s*\(\s*["']?\s*javascript:/i.test(style)) {
+          el.removeAttribute('style');
         }
       });
       
@@ -1583,7 +1594,8 @@
 
     // ── Draft auto-save (localStorage + Firestore) ──
     let autoSaveTimer = null;
-    const DRAFT_KEY = "hlywor_draft_" + (currentUser?.uid || "anon");
+    // Bug fix: currentUser is null at module init — must read at call time
+    function getDraftKey() { return "hlywor_draft_" + (currentUser?.uid || "anon"); }
     
     function saveDraftLocally() {
       const draft = {
@@ -1603,12 +1615,12 @@
         tags: [...tags],
         savedAt: new Date().toISOString()
       };
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      localStorage.setItem(getDraftKey(), JSON.stringify(draft));
       updateSaveStatus("draft");
     }
     
     function loadDraftLocally() {
-      const saved = localStorage.getItem(DRAFT_KEY);
+      const saved = localStorage.getItem(getDraftKey());
       if (saved) {
         try {
           const draft = JSON.parse(saved);
@@ -1920,8 +1932,8 @@
         };
         
         let docRef;
-        if (draftId && status === "draft") {
-          // Update existing draft
+        if (draftId) {
+          // Update existing draft (whether publishing or saving again)
           docRef = doc(db, "posts", draftId);
           await setDoc(docRef, postData, { merge: true });
         } else {
@@ -1934,7 +1946,7 @@
         
         // Clear local draft if published
         if (status === "published") {
-          localStorage.removeItem(DRAFT_KEY);
+          localStorage.removeItem(getDraftKey());
           draftId = null;
         }
         

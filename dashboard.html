@@ -656,10 +656,13 @@ async function loadPosts(user) {
     const snap = await getDocs(query(
       collection(db,'posts'),
       where('authorUid','==',user.uid),
-      where('status','==','published'),
-      orderBy('createdAt','desc')
+      where('status','==','published')
     ));
-    const posts = snap.docs.map(d => ({id:d.id,...d.data()}));
+    const posts = snap.docs.map(d => ({id:d.id,...d.data()})).sort((a,b) => {
+      const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.date||0);
+      const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.date||0);
+      return db_ - da;
+    });
 
     document.getElementById('statPosts').textContent = posts.length;
     document.getElementById('tabBadgePosts').textContent = posts.length || '';
@@ -727,13 +730,17 @@ async function loadFeed(user) {
     }
     const postSnap = await getDocs(query(
       collection(db, 'posts'),
-      where('status', '==', 'published'),
-      orderBy('createdAt', 'desc'),
-      limit(30)
+      where('status', '==', 'published')
     ));
     const feedPosts = postSnap.docs
       .map(d => ({ id: d.id, ...d.data() }))
-      .filter(p => followingUids.includes(p.authorUid));
+      .filter(p => followingUids.includes(p.authorUid))
+      .sort((a,b) => {
+        const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.date||0);
+        const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.date||0);
+        return db_ - da;
+      })
+      .slice(0, 30);
 
     document.getElementById('statFeed').textContent = feedPosts.length;
     document.getElementById('tabBadgeFeed').textContent = feedPosts.length || '';
@@ -838,10 +845,13 @@ async function loadPhotos(user) {
   try {
     const snap = await getDocs(query(
       collection(db,'gallery'),
-      where('authorUid','==',user.uid),
-      orderBy('createdAt','desc')
+      where('authorUid','==',user.uid)
     ));
-    const photos = snap.docs.map(d => ({id:d.id,...d.data()}));
+    const photos = snap.docs.map(d => ({id:d.id,...d.data()})).sort((a,b) => {
+      const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+      const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+      return db_ - da;
+    });
 
     document.getElementById('statPhotos').textContent = photos.length;
     document.getElementById('tabBadgePhotos').textContent = photos.length || '';
@@ -939,10 +949,13 @@ async function loadSticking(user) {
   try {
     const snap = await getDocs(query(
       collection(db,'sticks'),
-      where('fromUid','==',user.uid),
-      orderBy('createdAt','desc')
+      where('fromUid','==',user.uid)
     ));
-    const sticks = snap.docs.map(d => ({id:d.id,...d.data()}));
+    const sticks = snap.docs.map(d => ({id:d.id,...d.data()})).sort((a,b) => {
+      const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+      const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+      return db_ - da;
+    });
 
     // Update UI labels to "Following"
     document.getElementById('statSticking').textContent = sticks.length;
@@ -1011,10 +1024,13 @@ async function loadStuck(user) {
   try {
     const snap = await getDocs(query(
       collection(db,'sticks'),
-      where('toUid','==',user.uid),
-      orderBy('createdAt','desc')
+      where('toUid','==',user.uid)
     ));
-    const stucks = snap.docs.map(d => ({id:d.id,...d.data()}));
+    const stucks = snap.docs.map(d => ({id:d.id,...d.data()})).sort((a,b) => {
+      const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+      const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+      return db_ - da;
+    });
 
     // Update UI labels to "Followers"
     document.getElementById('statStuck').textContent = stucks.length;
@@ -1058,10 +1074,13 @@ async function loadNotes(user) {
   try {
     const snap = await getDocs(query(
       collection(db,'comments'),
-      where('authorUid','==',user.uid),
-      orderBy('createdAt','desc')
+      where('authorUid','==',user.uid)
     ));
-    const notes = snap.docs.map(d => ({id:d.id,...d.data()}));
+    const notes = snap.docs.map(d => ({id:d.id,...d.data()})).sort((a,b) => {
+      const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+      const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+      return db_ - da;
+    });
 
     document.getElementById('tabBadgeNotes').textContent = notes.length||'';
     document.getElementById('notesCountLabel').textContent = `${notes.length} NOTE${notes.length!==1?'S':''}`;

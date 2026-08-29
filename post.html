@@ -3372,12 +3372,15 @@
 
       const q = query(
         collection(db, 'comments'),
-        where('postId', '==', postId),
-        orderBy('createdAt', 'asc')
+        where('postId', '==', postId)
       );
 
       commentsUnsub = onSnapshot(q, snap => {
-        const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const all = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => {
+          const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+          const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+          return da - db_; // ascending for comments
+        });
         const list = document.getElementById('commentsList');
         const countEl = document.getElementById('commentsCount');
         const topLevel = all.filter(c => !c.parentId);
@@ -3586,11 +3589,16 @@
         const snap = await getDocs(query(
           collection(db, 'posts'),
           where('author', '==', author),
-          where('status', '==', 'published'),
-          orderBy('createdAt', 'desc'),
-          limit(4)
+          where('status', '==', 'published')
         ));
-        const others = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(p => p.slug !== currentSlug);
+        const others = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+          .filter(p => p.slug !== currentSlug)
+          .sort((a,b) => {
+            const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.date||0);
+            const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.date||0);
+            return db_ - da;
+          })
+          .slice(0, 3);
         if (!others.length) return;
         document.getElementById('moreSubheading').textContent = `More by ${escHtml(author)}`;
         const grid = document.getElementById('moreGrid');
