@@ -18,7 +18,7 @@
   <!-- ✅ Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -392,20 +392,67 @@
     
     /* ✅ Responsive */
     @media(max-width:768px){
-      .diary-area{padding:16px 10px 60px}
-      .writing-canvas,.page-header-area,.cover-zone{padding-left:18px;padding-right:18px}
+      .diary-layout{flex-direction:column}
+      .tools-panel{
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        width:100%;
+        height:56px;
+        background:rgba(18,14,10,0.96);
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        border-right:none;
+        border-top:1px solid rgba(255,255,255,0.12);
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        padding:4px 10px;
+        gap:6px;
+        overflow-x:auto;
+        overflow-y:hidden;
+        z-index:400;
+        scrollbar-width:none;
+      }
+      .tools-panel::-webkit-scrollbar{display:none}
+      .tools-panel .tg-label,
+      .tools-panel .t-sep{display:none}
+      .font-picker-wrap, .color-picker-wrap{
+        flex-direction:row;
+        flex-wrap:nowrap;
+        gap:4px;
+        padding:0 2px;
+      }
+      .text-color-swatch{width:22px;height:22px;flex-shrink:0}
+      .font-btn{width:34px;height:34px;font-size:0.75rem;flex-shrink:0}
+      .tool-btn{width:38px;height:38px;font-size:1rem;flex-shrink:0}
+      .tape-swatch{width:26px;height:16px;flex-shrink:0}
+      .diary-tools[role="radiogroup"]{flex-direction:row !important}
+      
+      .diary-area{padding:14px 8px 84px}
+      .diary-book{max-width:100%}
+      .writing-canvas,.page-header-area,.cover-zone{padding-left:14px;padding-right:14px}
       .diary-editor figure.img-left,.diary-editor figure.img-right{float:none;max-width:100%;margin:10px 0}
       .diary-editor .img-row-block{flex-direction:column}
       body[data-t="news"] .diary-editor{columns:1}
-      .tools-panel{width:52px}
-      .template-bar{padding:6px 14px}
-      .preview-content{padding:24px}
+      .count-strip{bottom:56px}
+      .template-bar{padding:6px 12px}
+      .preview-content{padding:20px}
+
+      /* Mobile popups centered */
+      .sticker-picker, .img-popup, .img-row-popup {
+        left:50% !important;
+        top:50% !important;
+        transform:translate(-50%, -50%) !important;
+        max-width:92vw !important;
+        position:fixed !important;
+      }
     }
     @media(max-width:480px){
-      .tools-panel{width:52px}
-      .template-bar{padding:6px 14px}
       .nav-right{gap:6px}
-      .publish-btn{padding:9px 12px;font-size:0.3rem}
+      .publish-btn{padding:8px 10px;font-size:0.32rem}
+      .template-bar .t-pill{padding:4px 10px;font-size:0.68rem}
     }
   </style>
 </head>
@@ -541,35 +588,32 @@
       <div class="t-sep full"></div>
       <div class="tg-label">FONT</div>
       <div class="font-picker-wrap" role="radiogroup" aria-label="Font family">
-        <button class="font-btn active" data-font="" title="Default" style="font-family:inherit" role="radio" aria-checked="true">Aa</button>
-        <button class="font-btn" data-font="'Lora',serif" title="Lora" style="font-family:'Lora',serif" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Libre Baskerville',serif" title="Baskerville" style="font-family:'Libre Baskerville',serif" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Cormorant Garamond',serif" title="Cormorant" style="font-family:'Cormorant Garamond',serif;font-style:italic" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Spectral',serif" title="Spectral" style="font-family:'Spectral',serif" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Kalam',cursive" title="Kalam" style="font-family:'Kalam',cursive" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Satisfy',cursive" title="Satisfy" style="font-family:'Satisfy',cursive" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Caveat',cursive" title="Caveat" style="font-family:'Caveat',cursive" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'IM Fell English',serif" title="IM Fell" style="font-family:'IM Fell English',serif" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn active" data-font="" title="Default (Crimson Pro)" style="font-family:inherit" role="radio" aria-checked="true">Aa</button>
+        <button class="font-btn" data-font="'Caveat',cursive" title="Caveat — handwritten" style="font-family:'Caveat',cursive" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'IM Fell English',serif" title="IM Fell — literary" style="font-family:'IM Fell English',serif" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Playfair Display',serif" title="Playfair — editorial" style="font-family:'Playfair Display',serif" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'Kalam',cursive" title="Kalam — casual" style="font-family:'Kalam',cursive" role="radio" aria-checked="false">Aa</button>
+        <button class="font-btn" data-font="'JetBrains Mono',monospace" title="JetBrains — code" style="font-family:'JetBrains Mono',monospace;font-size:.75rem" role="radio" aria-checked="false">Aa</button>
       </div>
       <div class="t-sep full"></div>
       <div class="tg-label">COLOR</div>
       <div class="color-picker-wrap" role="radiogroup" aria-label="Text color">
         <div class="text-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink black" role="radio" aria-checked="true" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#5a3a1a" style="background:#5a3a1a" title="Deep brown" role="radio" aria-checked="false" tabindex="0"></div>
         <div class="text-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Forest green" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson" role="radio" aria-checked="false" tabindex="0"></div>
+        <div class="text-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue" role="radio" aria-checked="false" tabindex="0"></div>
         <div class="text-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Violet" role="radio" aria-checked="false" tabindex="0"></div>
         <div class="text-color-swatch" data-color="#c0670a" style="background:#c0670a" title="Amber" role="radio" aria-checked="false" tabindex="0"></div>
         <button class="color-input-btn" id="customColorBtn" title="Custom color" aria-label="Choose custom color">+</button>
         <input type="color" id="customColorInput" value="#1a1208" aria-label="Custom color picker">
       </div>
       <div class="t-sep full"></div>
-      <div class="tg-label">MARK</div>
-      <button class="tool-btn" data-highlight="highlight-y" title="Yellow highlight" aria-label="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <button class="tool-btn" data-highlight="highlight-r" title="Red highlight" aria-label="Red highlight"><span style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <button class="tool-btn" data-highlight="highlight-b" title="Blue highlight" aria-label="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <button class="tool-btn" data-highlight="highlight-g" title="Green highlight" aria-label="Green highlight"><span style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <button class="tool-btn" data-highlight="hl-line-y" title="Line highlight" aria-label="Line highlight"><span style="background:rgba(255,230,0,.25);padding:0 5px;font-size:.75rem;color:#1a1208">≡</span></button>
+      <div class="tg-label" title="Select text first, then pick a highlight color">HIGHLIGHT</div>
+      <button class="tool-btn" data-highlight="highlight-y" title="Yellow highlight — select text first" aria-label="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-r" title="Red highlight — select text first" aria-label="Red highlight"><span style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-b" title="Blue highlight — select text first" aria-label="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
+      <button class="tool-btn" data-highlight="highlight-g" title="Green highlight — select text first" aria-label="Green highlight"><span style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
       <div class="t-sep full"></div>
       <div class="tg-label">INSERT</div>
       <button class="tool-btn" id="promptSparkBtn" title="3 AM Sparks / Story Prompts" aria-label="Story Prompts" style="color:var(--gold);font-size:1rem;">✨</button>
@@ -633,16 +677,10 @@
                 <button type="button" id="closeSparkBtn" style="margin-left:auto;background:none;border:none;color:var(--t-ink4);font-family:var(--sans);font-size:0.75rem;cursor:pointer;">✕ Close</button>
               </div>
             </div>
-            <textarea class="diary-title-input" id="titleInput" placeholder="Title..." rows="1" maxlength="160" aria-label="Post title"></textarea>
-            <textarea class="diary-desc-input" id="descInput" placeholder="One line for the homepage card..." rows="1" maxlength="220" aria-label="Short description for homepage"></textarea>
-            <div class="meta-row">
-              <div class="meta-group"><div class="meta-label">AUTHOR</div><input class="meta-input" id="authorInput" placeholder="your name" style="width:120px" aria-label="Author name"></div>
-              <div class="meta-group"><div class="meta-label">EMAIL</div><input class="meta-input" id="emailInput" type="email" placeholder="optional" style="width:140px" aria-label="Author email"></div>
-              <div class="meta-group"><div class="meta-label">READ TIME</div><input class="meta-input" id="readtimeInput" placeholder="5 min" style="width:70px" aria-label="Estimated read time"></div>
-              <div class="meta-group tech-tools"><div class="meta-label">TOPIC / LANG</div><input class="meta-input" id="techTagInput" placeholder="e.g. Python, AI" style="width:120px" aria-label="Tech topic or language"></div>
-            </div>
+            <textarea class="diary-title-input" id="titleInput" placeholder="What's your story called?" rows="1" maxlength="160" aria-label="Post title"></textarea>
+            <textarea class="diary-desc-input" id="descInput" placeholder="A one-liner for the homepage — make people curious..." rows="1" maxlength="220" aria-label="Short description for homepage"></textarea>
             <div class="cat-pills" id="catPills" role="radiogroup" aria-label="Category">
-              <button class="cat-pill" data-cat="story" role="radio" aria-checked="false" tabindex="0">Story</button>
+              <button class="cat-pill active" data-cat="story" role="radio" aria-checked="true" tabindex="0">Story</button>
               <button class="cat-pill" data-cat="movies" role="radio" aria-checked="false" tabindex="0">Movies</button>
               <button class="cat-pill" data-cat="books" role="radio" aria-checked="false" tabindex="0">Books</button>
               <button class="cat-pill" data-cat="thoughts" role="radio" aria-checked="false" tabindex="0">Thoughts</button>
@@ -650,6 +688,17 @@
               <button class="cat-pill" data-cat="news" role="radio" aria-checked="false" tabindex="0">News</button>
               <button class="cat-pill" data-cat="other" role="radio" aria-checked="false" tabindex="0">Other</button>
             </div>
+            <details class="meta-details-toggle" style="margin-top:10px;">
+              <summary style="cursor:pointer;font-family:var(--sans);font-size:0.75rem;color:var(--t-ink4);list-style:none;display:inline-flex;align-items:center;gap:4px;">
+                <span>✍️ Author & story info (optional)</span> <span style="font-size:0.65rem;opacity:0.6;">▼</span>
+              </summary>
+              <div class="meta-row">
+                <div class="meta-group"><div class="meta-label">AUTHOR</div><input class="meta-input" id="authorInput" placeholder="your name" style="width:120px" aria-label="Author name"></div>
+                <div class="meta-group"><div class="meta-label">EMAIL</div><input class="meta-input" id="emailInput" type="email" placeholder="optional" style="width:140px" aria-label="Author email"></div>
+                <div class="meta-group"><div class="meta-label">READ TIME</div><input class="meta-input" id="readtimeInput" placeholder="auto" style="width:70px" aria-label="Estimated read time"></div>
+                <div class="meta-group tech-tools"><div class="meta-label">TOPIC / LANG</div><input class="meta-input" id="techTagInput" placeholder="e.g. Python, AI" style="width:120px" aria-label="Tech topic or language"></div>
+              </div>
+            </details>
           </div>
           <div class="cover-zone">
             <div class="cover-drop" id="coverDrop" role="button" tabindex="0" aria-label="Upload cover image">
@@ -821,8 +870,7 @@
         });
         selectedCat=cat;
         
-        currentColor=t==="tech"?"#e6edf3":"#1a1208";
-        editor.style.color=currentColor;
+        currentColor = t === "tech" ? "#e6edf3" : "#1a1208";
         
         // Update preview if open
         if (isPreviewMode) updatePreview();
@@ -1013,46 +1061,98 @@
       updateSaveStatus("unsaved");
     }
 
-    // Save selection state before tool clicks
-    document.getElementById("toolsPanel").addEventListener("mousedown",()=>{
-      const sel=window.getSelection();
-      if(sel.rangeCount) savedRange=sel.getRangeAt(0).cloneRange();
+    // ── Track selection constantly so it never goes stale ──
+    document.addEventListener("selectionchange", () => {
+      const sel = window.getSelection();
+      if (sel.rangeCount && editor.contains(sel.anchorNode)) {
+        savedRange = sel.getRangeAt(0).cloneRange();
+      }
     });
 
-    // ── Formatting tools (with deprecation fallback) ──
-    document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn=>{
+    // Helper: Apply style to selection or prepare typing span for next typed text
+    function applyInlineStyle(styleObj) {
+      editor.focus();
+      const sel = window.getSelection();
+      let range = null;
+      if (sel.rangeCount && editor.contains(sel.anchorNode)) {
+        range = sel.getRangeAt(0);
+      } else if (savedRange) {
+        range = savedRange;
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+
+      if (!range) {
+        editor.focus();
+        const newRange = document.createRange();
+        newRange.selectNodeContents(editor);
+        newRange.collapse(false);
+        range = newRange;
+      }
+
+      if (sel.isCollapsed || !range || range.collapsed) {
+        // Insert a zero-width container span so typed characters inherit this style
+        const span = document.createElement("span");
+        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+        if (styleObj.color) span.style.color = styleObj.color;
+        span.appendChild(document.createTextNode("\u200B")); // Zero-width space
+        range.insertNode(span);
+        const nextRange = document.createRange();
+        nextRange.setStart(span.firstChild, 1);
+        nextRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(nextRange);
+        savedRange = nextRange.cloneRange();
+      } else {
+        // Apply to highlighted text only
+        const span = document.createElement("span");
+        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+        if (styleObj.color) span.style.color = styleObj.color;
+        try {
+          range.surroundContents(span);
+        } catch(e) {
+          const frag = range.extractContents();
+          span.appendChild(frag);
+          range.insertNode(span);
+        }
+        const newRange = document.createRange();
+        newRange.selectNodeContents(span);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+        savedRange = newRange.cloneRange();
+      }
+      updateSaveStatus("unsaved");
+    }
+
+    // ── Formatting tools ──
+    document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn => {
       btn.addEventListener("mousedown", e => {
         e.preventDefault();
         editor.focus();
         const cmd = btn.dataset.cmd;
-        
-        // ✅ Modern approach with fallback
         try {
-          if (cmd === "h2") {
-            document.execCommand("formatBlock", false, "h2");
-          } else if (cmd === "h3") {
-            document.execCommand("formatBlock", false, "h3");
-          } else if (cmd === "blockquote") {
-            document.execCommand("formatBlock", false, "blockquote");
-          } else if (cmd === "undo" || cmd === "redo") {
-            document.execCommand(cmd);
+          if (cmd === "h2" || cmd === "h3" || cmd === "blockquote") {
+            document.execCommand("formatBlock", false, cmd);
           } else {
-            document.execCommand(cmd);
+            document.execCommand(cmd, false, null);
           }
         } catch (err) {
-          console.warn("Formatting command failed:", cmd, err);
-          // Fallback: insert styled span
-          if (cmd === "bold") {
-            insertAtCursor("<strong>text</strong>");
-          } else if (cmd === "italic") {
-            insertAtCursor("<em>text</em>");
-          }
+          console.warn("Formatting failed:", cmd, err);
         }
         updateSaveStatus("unsaved");
       });
     });
 
+    // ── Tab key support in editor ──
+    editor.addEventListener("keydown", e => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        insertAtCursor("&emsp;");
+      }
+    });
+
     // ── Font picker ──
+    let activeFontFamily = "";
     document.querySelectorAll(".font-btn").forEach(btn => {
       btn.addEventListener("mousedown", e => {
         e.preventDefault();
@@ -1063,28 +1163,10 @@
         btn.classList.add("active");
         btn.setAttribute("aria-checked", "true");
         
-        const font = btn.dataset.font;
-        const sel = window.getSelection();
-        
-        if (sel && !sel.isCollapsed && sel.rangeCount) {
-          const range = sel.getRangeAt(0);
-          const span = document.createElement("span");
-          span.style.fontFamily = font || "inherit";
-          try { 
-            range.surroundContents(span); 
-          } catch(e) {
-            // Fallback
-            document.execCommand("insertHTML", false, `<span style="font-family:${font||'inherit'}">${sel.toString()}</span>`);
-          }
-          sel.removeAllRanges();
-        } else {
-          editor.style.fontFamily = font || "";
-        }
-        editor.focus();
-        updateSaveStatus("unsaved");
+        activeFontFamily = btn.dataset.font || "";
+        applyInlineStyle({ fontFamily: activeFontFamily });
       });
-      // Keyboard support
-      btn.addEventListener("keydown", (e) => {
+      btn.addEventListener("keydown", e => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           btn.click();
@@ -1103,16 +1185,9 @@
         sw.setAttribute("aria-checked", "true");
         
         currentColor = sw.dataset.color;
-        editor.focus();
-        const sel = window.getSelection();
-        if (sel && !sel.isCollapsed) {
-          document.execCommand("foreColor", false, currentColor);
-        }
-        editor.style.color = currentColor;
-        updateSaveStatus("unsaved");
+        applyInlineStyle({ color: currentColor });
       });
-      // Keyboard support
-      sw.addEventListener("keydown", (e) => {
+      sw.addEventListener("keydown", e => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           sw.click();
@@ -1128,13 +1203,7 @@
         s.classList.remove("active");
         s.setAttribute("aria-checked", "false");
       });
-      editor.focus();
-      const sel = window.getSelection();
-      if (sel && !sel.isCollapsed) {
-        document.execCommand("foreColor", false, currentColor);
-      }
-      editor.style.color = currentColor;
-      updateSaveStatus("unsaved");
+      applyInlineStyle({ color: currentColor });
     });
 
     // ── Highlights ──
@@ -1150,7 +1219,9 @@
         try { 
           range.surroundContents(span); 
         } catch(err) { 
-          document.execCommand("insertHTML", false, `<span class="${cls}">${sel.toString()}</span>`); 
+          const frag = range.extractContents();
+          span.appendChild(frag);
+          range.insertNode(span);
         }
         sel.removeAllRanges();
         editor.focus();
@@ -1158,15 +1229,25 @@
       });
     });
 
+    // ── Helper: position popups responsively ──
+    function positionPopup(popupEl, buttonEl) {
+      if (window.innerWidth <= 768) {
+        popupEl.style.left = "";
+        popupEl.style.top = "";
+      } else {
+        const r = buttonEl.getBoundingClientRect();
+        popupEl.style.left = (r.right + 8) + "px";
+        popupEl.style.top = Math.min(Math.max(10, r.top), window.innerHeight - 340) + "px";
+      }
+    }
+
     // ── Sticker picker ──
-    const sp=document.getElementById("stickerPicker");
+    const sp = document.getElementById("stickerPicker");
     document.getElementById("insertStickerBtn").addEventListener("click", e => {
-      const r=e.currentTarget.getBoundingClientRect();
-      sp.style.left=(r.right+8)+"px";
-      sp.style.top=r.top+"px";
+      positionPopup(sp, e.currentTarget);
       sp.classList.toggle("open");
       const sel=window.getSelection();
-      if(sel.rangeCount) savedRange=sel.getRangeAt(0).cloneRange();
+      if(sel.rangeCount && editor.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
     });
     
     document.querySelectorAll(".sticker-option").forEach(opt => {
@@ -1289,12 +1370,10 @@
     // ── Single image insert ──
     const imgPopup=document.getElementById("imgPopup");
     document.getElementById("insertImgBtn").addEventListener("click", e => {
-      const r=e.currentTarget.getBoundingClientRect();
-      imgPopup.style.left=(r.right+8)+"px";
-      imgPopup.style.top=Math.min(r.top,window.innerHeight-340)+"px";
+      positionPopup(imgPopup, e.currentTarget);
       imgPopup.classList.toggle("open");
       const sel=window.getSelection();
-      if(sel.rangeCount) savedRange=sel.getRangeAt(0).cloneRange();
+      if(sel.rangeCount && editor.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
     });
     
     document.getElementById("inlineImgUploadBtn").addEventListener("click", () => {
@@ -1374,9 +1453,7 @@
     // ── Image row ──
     const imgRowPopup = document.getElementById("imgRowPopup");
     document.getElementById("insertImgRowBtn").addEventListener("click", e => {
-      const r = e.currentTarget.getBoundingClientRect();
-      imgRowPopup.style.left = (r.right + 8) + "px";
-      imgRowPopup.style.top = Math.min(r.top, window.innerHeight - 300) + "px";
+      positionPopup(imgRowPopup, e.currentTarget);
       imgRowPopup.classList.toggle("open");
       const sel = window.getSelection();
       if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
