@@ -20,6 +20,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
   
+  <!-- ✅ Quill Rich Text Engine (Pure Client-side JS) -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
   <style>
     :root {
       --fire: #e8681a; --gold: #d4a020;
@@ -47,10 +51,10 @@
       .page-curl, .sticker-option, .tool-btn { transition: none !important; }
     }
     
-    /* ✅ Base reset */
+    /* ✅ Base reset & Anti-shift */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:var(--t-bg);min-height:100vh;font-family:var(--t-font);overflow-x:hidden;transition:background 0.4s;color:var(--t-ink)}
+    html{scroll-behavior:smooth;width:100%;max-width:100vw;overflow-x:hidden}
+    body{background:var(--t-bg);min-height:100vh;font-family:var(--t-font);width:100%;max-width:100vw;overflow-x:hidden;transition:background 0.4s;color:var(--t-ink);position:relative}
     
     /* ✅ Skip link */
     .skip-link {
@@ -77,17 +81,17 @@
     body:not([data-t="diary"])::before{opacity:0}
     ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--t-bg)}::-webkit-scrollbar-thumb{background:var(--t-acc);border-radius:2px}
     
-    /* ✅ Top nav */
-    .top-nav{position:sticky;top:0;z-index:200;background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px}
-    .nav-left{display:flex;align-items:center;gap:14px}
-    .nav-logo{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:2px;text-shadow:0 0 12px rgba(212,160,32,0.4);text-decoration:none}
-    .nav-sep{width:1px;height:20px;background:rgba(255,255,255,0.1)}
-    .nav-template-label{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.4);font-style:italic;transition:color 0.3s}
+    /* ✅ Clean Top Nav */
+    .top-nav{position:sticky;top:0;z-index:200;background:rgba(18,14,10,0.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;width:100%;max-width:100vw;box-sizing:border-box}
+    .nav-left{display:flex;align-items:center;gap:12px}
+    .nav-logo{font-family:var(--pixel);font-size:0.58rem;color:var(--gold);letter-spacing:2px;text-shadow:0 0 12px rgba(212,160,32,0.4);text-decoration:none}
+    .nav-sep{width:1px;height:18px;background:rgba(255,255,255,0.12)}
+    .nav-template-label{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.45);font-style:italic;transition:color 0.3s}
     .nav-right{display:flex;align-items:center;gap:10px}
-    .nav-save-status{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.3);transition:color 0.2s}
+    .nav-save-status{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.35);transition:color 0.2s}
     .nav-save-status.saved{color:#6abf6a}
     .nav-save-status.draft{color:var(--gold)}
-    .publish-btn{font-family:var(--pixel);font-size:0.34rem;letter-spacing:2px;padding:9px 18px;background:var(--t-acc);color:#fff;border:none;cursor:pointer;transition:all 0.2s}
+    .publish-btn{font-family:var(--pixel);font-size:0.34rem;letter-spacing:1.5px;padding:8px 16px;background:var(--t-acc);color:#fff;border:none;cursor:pointer;border-radius:3px;transition:all 0.2s}
     .publish-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
     .publish-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
     .nav-user-badge{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:0.74rem;color:rgba(255,255,255,0.6)}
@@ -95,10 +99,10 @@
     .nav-user-badge .nav-user-name{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     
     /* ✅ Template bar */
-    .template-bar{position:sticky;top:52px;z-index:190;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:4px;padding:8px 24px;overflow-x:auto;scrollbar-width:none}
+    .template-bar{position:sticky;top:52px;z-index:190;background:rgba(18,14,10,0.88);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:6px;padding:8px 20px;overflow-x:auto;scrollbar-width:none;width:100%;box-sizing:border-box}
     .template-bar::-webkit-scrollbar{display:none}
-    .t-pill{font-family:var(--sans);font-size:0.72rem;padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);background:transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:5px}
-    .t-pill:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8)}
+    .t-pill{font-family:var(--sans);font-size:0.72rem;padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);background:transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:5px}
+    .t-pill:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.85)}
     .t-pill.active{color:#fff;background:var(--t-acc);border-color:var(--t-acc)}
     .t-pill .t-icon{font-size:1rem}
     
@@ -112,7 +116,7 @@
       border: 1px solid rgba(255,255,255,0.2);
       color: rgba(255,255,255,0.7);
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 3px;
       transition: all 0.2s;
     }
     .preview-toggle:hover,
@@ -132,7 +136,7 @@
     }
     
     /* ✅ Layout */
-    .diary-layout{display:flex;min-height:calc(100vh - 96px);position:relative;z-index:1}
+    .diary-layout{display:flex;min-height:calc(100vh - 96px);position:relative;z-index:1;width:100%;max-width:100vw;box-sizing:border-box}
     
     /* ✅ Tools panel */
     .tools-panel{width:68px;background:rgba(0,0,0,0.75);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:3px;position:sticky;top:96px;height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:none;flex-shrink:0}
@@ -140,11 +144,11 @@
     .tg-label{font-family:var(--pixel);font-size:0.52rem;color:rgba(255,255,255,0.4);letter-spacing:1px;margin:6px 0 3px;text-align:center;width:100%}
     .t-sep{width:36px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);margin:5px 0}
     .t-sep.full{width:52px}
-    .tool-btn{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:1px solid transparent;transition:all 0.18s;color:rgba(255,255,255,0.4);font-size:1.2rem}
+    .tool-btn{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:1px solid transparent;transition:all 0.18s;color:rgba(255,255,255,0.45);font-size:1.2rem}
     .tool-btn:hover,
-    .tool-btn:focus{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);outline:none}
+    .tool-btn:focus{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.95);outline:none}
     .tool-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .tool-btn.active{background:rgba(255,255,255,0.08);border-color:var(--t-acc);color:var(--t-acc)}
+    .tool-btn.active{background:rgba(255,255,255,0.12);border-color:var(--t-acc);color:var(--t-acc)}
     body:not([data-t="diary"]):not([data-t="college"]) .diary-tools{display:none}
     .tech-tools{display:none}
     body[data-t="tech"] .tech-tools{display:flex}
@@ -154,10 +158,10 @@
     .tape-swatch:hover{transform:scale(1.05)}
     
     /* ✅ Diary area */
-    .diary-area{flex:1;padding:36px 28px 80px;display:flex;justify-content:center;align-items:flex-start}
-    .diary-book{width:100%;max-width:800px;display:flex;box-shadow:var(--shadow);transition:box-shadow 0.4s}
+    .diary-area{flex:1;padding:36px 20px 80px;display:flex;justify-content:center;align-items:flex-start;width:100%;box-sizing:border-box}
+    .diary-book{width:100%;max-width:820px;display:flex;box-shadow:var(--shadow);transition:box-shadow 0.4s;box-sizing:border-box}
     .diary-spine{display:none}
-    .diary-page{flex:1;background:var(--t-paper);position:relative;min-height:900px;overflow:hidden;transition:background 0.4s}
+    .diary-page{flex:1;background:var(--t-paper);position:relative;min-height:900px;overflow:hidden;transition:background 0.4s;box-sizing:border-box}
     .diary-page::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,var(--t-rule) 31px,var(--t-rule) 32px);background-position:0 56px;pointer-events:none;z-index:0;opacity:1;transition:opacity 0.4s}
     body[data-t="magazine"] .diary-page::before,body[data-t="tech"] .diary-page::before{opacity:0}
     body[data-t="news"] .diary-page::before{opacity:0.5}
@@ -165,7 +169,7 @@
     .page-curl{position:absolute;bottom:0;right:0;width:40px;height:40px;background:linear-gradient(225deg,var(--t-paper3) 45%,rgba(0,0,0,0.1) 50%,var(--t-paper2) 50%);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;z-index:10}
     
     /* ✅ Page header */
-    .page-header-area{padding:28px 40px 16px 40px;position:relative;z-index:2;transition:all 0.3s}
+    .page-header-area{padding:28px 36px 16px 36px;position:relative;z-index:2;transition:all 0.3s;box-sizing:border-box}
     .template-badge{display:none;font-family:var(--pixel);font-size:0.58rem;letter-spacing:1.5px;padding:3px 10px;color:#fff;margin-bottom:12px;width:fit-content}
     body[data-t="magazine"] .badge-review{display:block;background:#c0392b}
     body[data-t="news"] .badge-news{display:block;background:#0c0a08}
@@ -198,7 +202,7 @@
     body[data-t="tech"] .diary-desc-input{font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-style:normal;color:var(--t-ink3)}
     body[data-t="magazine"] .page-header-area{border-bottom:3px double rgba(0,0,0,0.2);padding-bottom:20px}
     body[data-t="news"] .page-header-area{border-top:4px solid var(--t-ink);border-bottom:2px solid var(--t-ink);padding-bottom:16px}
-    .meta-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;align-items:flex-start}
+    .meta-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;align-items:flex-start}
     .meta-group{display:flex;flex-direction:column;gap:3px}
     .meta-label{font-family:var(--pixel);font-size:0.55rem;color:var(--t-ink4);letter-spacing:1.5px}
     .meta-input{background:none;border:none;outline:none;border-bottom:1px dashed rgba(0,0,0,0.15);font-family:var(--t-font);font-size:0.9rem;color:var(--t-ink3);padding:2px 4px}
@@ -211,8 +215,8 @@
     .cat-pill.active{background:var(--t-acc);color:#fff;border-color:var(--t-acc)}
     
     /* ✅ Cover zone */
-    .cover-zone{padding:0 40px 20px 40px;position:relative;z-index:2}
-    .cover-drop{border:2px dashed rgba(0,0,0,0.12);background:rgba(0,0,0,0.02);padding:20px;text-align:center;cursor:pointer;transition:all 0.2s}
+    .cover-zone{padding:0 36px 16px 36px;position:relative;z-index:2;box-sizing:border-box}
+    .cover-drop{border:2px dashed rgba(0,0,0,0.12);background:rgba(0,0,0,0.02);padding:18px;text-align:center;cursor:pointer;transition:all 0.2s}
     body[data-t="tech"] .cover-drop{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02)}
     .cover-drop:hover{border-color:var(--t-acc)}
     .cover-drop input[type="file"]{display:none}
@@ -225,25 +229,40 @@
     body[data-t="tech"] .cover-preview img{max-height:240px;border:1px solid rgba(255,255,255,0.08)}
     .cover-clear{position:absolute;top:8px;right:8px;font-family:var(--pixel);font-size:0.55rem;color:#fff;background:rgba(0,0,0,0.55);padding:4px 8px;border:none;cursor:pointer}
     
-    /* ✅ Writing canvas */
-    .writing-canvas{padding:20px 40px 40px 40px;position:relative;min-height:600px;z-index:2}
-    .diary-editor{min-height:500px;outline:none;font-family:var(--t-font);font-size:1.05rem;color:var(--t-ink);line-height:32px;position:relative;z-index:2;word-break:break-word;caret-color:var(--t-acc);transition:all 0.3s}
-    .diary-editor:empty::before{content:attr(data-placeholder);color:var(--t-ink4);pointer-events:none;font-style:italic;white-space:pre-line}
-    body[data-t="magazine"] .diary-editor{font-size:1.05rem;line-height:1.8}
-    body[data-t="news"] .diary-editor{font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
-    body[data-t="tech"] .diary-editor{font-family:'DM Sans',sans-serif;font-size:0.95rem;line-height:1.8}
-    body[data-t="college"] .diary-editor{font-size:1.15rem;line-height:34px}
-    .diary-editor h2{font-family:var(--t-title);font-size:1.8rem;color:var(--t-ink);line-height:1.3;margin:16px 0 8px;font-weight:700}
-    .diary-editor h3{font-family:var(--t-title);font-size:1.3rem;color:var(--t-ink2);line-height:1.3;margin:12px 0 6px}
-    body[data-t="news"] .diary-editor h2{column-span:all;border-top:1px solid var(--t-ink);padding-top:8px}
-    .diary-editor blockquote{margin:16px 0;padding:10px 20px;border-left:3px solid var(--t-acc);background:rgba(0,0,0,0.03);font-style:italic;color:var(--t-ink2)}
-    body[data-t="tech"] .diary-editor blockquote{background:rgba(255,255,255,0.04);border-radius:0 4px 4px 0}
-    .diary-editor ul,.diary-editor ol{padding-left:24px;margin:8px 0}
-    .diary-editor li{line-height:32px}
-    .diary-editor pre{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:16px;margin:12px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.6;color:var(--t-ink);border-radius:6px;display:block}
-    .diary-editor code{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88rem;color:#79c0ff}
+    /* ✅ Writing canvas & Quill Theme */
+    .writing-canvas{padding:16px 36px 40px 36px;position:relative;min-height:600px;z-index:2;box-sizing:border-box}
     
-    /* ✅ Content elements */
+    .ql-toolbar.ql-snow { display: none !important; } /* We use our custom tools panel */
+    .ql-container.ql-snow { border: none !important; font-family: inherit !important; font-size: inherit !important; color: inherit !important; height: auto !important; }
+    .ql-editor {
+      min-height: 500px;
+      padding: 0 !important;
+      outline: none !important;
+      font-family: var(--t-font);
+      font-size: 1.06rem;
+      color: var(--t-ink);
+      line-height: 32px;
+      caret-color: var(--t-acc);
+      word-break: break-word;
+      overflow-y: visible !important;
+    }
+    .ql-editor.ql-blank::before {
+      color: var(--t-ink4) !important;
+      font-style: italic !important;
+      left: 0 !important;
+      right: 0 !important;
+      font-family: var(--t-font) !important;
+    }
+    .ql-editor p { margin-bottom: 8px; line-height: 32px; }
+    .ql-editor h2 { font-family: var(--t-title) !important; font-size: 1.8rem; color: var(--t-ink); line-height: 1.3; margin: 16px 0 8px; font-weight: 700; }
+    .ql-editor h3 { font-family: var(--t-title) !important; font-size: 1.3rem; color: var(--t-ink2); line-height: 1.3; margin: 12px 0 6px; }
+    .ql-editor blockquote { margin: 16px 0 !important; padding: 10px 20px !important; border-left: 3px solid var(--t-acc) !important; background: rgba(0,0,0,0.03); font-style: italic; color: var(--t-ink2); }
+    .ql-editor ul, .ql-editor ol { padding-left: 24px; margin: 8px 0; }
+    .ql-editor li { line-height: 32px; }
+    .ql-editor pre.ql-syntax { font-family: 'JetBrains Mono', monospace !important; background: rgba(0,0,0,0.85) !important; padding: 14px 18px !important; margin: 12px 0 !important; border: 1px solid rgba(255,255,255,0.08); overflow-x: auto; line-height: 1.6; color: #58a6ff !important; border-radius: 6px; }
+    .ql-editor code { font-family: 'JetBrains Mono', monospace !important; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; color: #79c0ff; }
+    
+    /* ✅ Custom Content elements inside Quill */
     .sticky-callout{display:block;background:#fef9c3;padding:12px 16px;margin:14px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.2);max-width:360px;font-family:'Caveat',cursive;font-size:1rem;color:#1a1208;line-height:1.6;position:relative;user-select:text;-webkit-user-select:text}
     .sticky-callout::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:48px;height:14px;background:rgba(240,190,40,0.65)}
     .sticky-callout:focus{outline:1px dashed rgba(0,0,0,0.2)}
@@ -257,26 +276,22 @@
     .polaroid.tilt-l{transform:rotate(-3deg)}.polaroid.tilt-r{transform:rotate(3deg)}
     .doodle-divider{display:block;margin:16px 0;width:100%;overflow:visible}
     .floating-sticker{display:inline-block;font-size:1.8rem;margin:0 4px;vertical-align:middle}
-    .washi-tape{display:block;height:22px;margin:10px -40px;position:relative;overflow:hidden}
+    .washi-tape{display:block;height:22px;margin:12px 0;width:100%;position:relative;overflow:hidden}
     .washi-tape::before{content:'';position:absolute;inset:0;background:var(--tape-color,rgba(240,190,40,0.65))}
     .pull-quote{display:block;font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;font-weight:700;color:var(--t-acc);border-top:2px solid var(--t-acc);border-bottom:2px solid var(--t-acc);padding:14px 0;margin:20px 0;line-height:1.4;column-span:all}
     .highlight-y{background:rgba(255,220,50,0.4);padding:0 2px}
     .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
     .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
     .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
-    .hl-line-y{background:rgba(255,230,0,0.25);display:block;padding:2px 4px}
-    .hl-line-r{background:rgba(255,100,100,0.2);display:block;padding:2px 4px}
-    .hl-line-b{background:rgba(100,160,255,0.2);display:block;padding:2px 4px}
-    .hl-line-g{background:rgba(80,220,120,0.2);display:block;padding:2px 4px}
-    .diary-editor figure.img-left{float:left;margin:8px 20px 8px 0;max-width:45%}
-    .diary-editor figure.img-right{float:right;margin:8px 0 8px 20px;max-width:45%}
-    .diary-editor figure.img-center{clear:both;margin:12px auto;text-align:center;max-width:80%}
-    .diary-editor figure.img-full{clear:both;margin:12px 0}
-    .diary-editor figure img{width:100%;display:block}
-    .diary-editor figure figcaption{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--t-ink3);text-align:center;padding-top:4px}
-    .diary-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
-    .diary-editor .img-row-block figure{flex:1;margin:0}
-    .diary-editor .img-row-block figure img{width:100%;display:block}
+    .ql-editor figure.img-left{float:left;margin:8px 20px 8px 0;max-width:45%}
+    .ql-editor figure.img-right{float:right;margin:8px 0 8px 20px;max-width:45%}
+    .ql-editor figure.img-center{clear:both;margin:12px auto;text-align:center;max-width:80%}
+    .ql-editor figure.img-full{clear:both;margin:12px 0}
+    .ql-editor figure img{width:100%;display:block}
+    .ql-editor figure figcaption{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--t-ink3);text-align:center;padding-top:4px}
+    .ql-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
+    .ql-editor .img-row-block figure{flex:1;margin:0}
+    .ql-editor .img-row-block figure img{width:100%;display:block}
     
     /* ✅ Count strip */
     .count-strip{position:sticky;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(4px);border-top:1px solid rgba(255,255,255,0.06);padding:6px 24px;display:flex;gap:20px;align-items:center;z-index:10}
@@ -433,9 +448,9 @@
       .diary-area{padding:14px 8px 84px}
       .diary-book{max-width:100%}
       .writing-canvas,.page-header-area,.cover-zone{padding-left:14px;padding-right:14px}
-      .diary-editor figure.img-left,.diary-editor figure.img-right{float:none;max-width:100%;margin:10px 0}
-      .diary-editor .img-row-block{flex-direction:column}
-      body[data-t="news"] .diary-editor{columns:1}
+      .ql-editor figure.img-left,.ql-editor figure.img-right{float:none;max-width:100%;margin:10px 0}
+      .ql-editor .img-row-block{flex-direction:column}
+      body[data-t="news"] .ql-editor{columns:1}
       .count-strip{bottom:56px}
       .template-bar{padding:6px 12px}
       .preview-content{padding:20px}
@@ -459,7 +474,7 @@
 <body data-t="diary">
 
   <!-- ✅ Skip Link -->
-  <a href="#editor" class="skip-link">Skip to editor</a>
+  <a href="#quillContainer" class="skip-link">Skip to editor</a>
 
   <nav class="top-nav">
     <div class="nav-left">
@@ -714,7 +729,7 @@
             <input type="text" id="coverAlt" placeholder="Alt text for cover image" style="margin-top:8px;font-family:var(--sans);font-size:0.75rem;padding:4px 8px;border:1px dashed rgba(0,0,0,0.1);border-radius:4px;background:var(--t-paper2)" aria-label="Alt text for cover image">
           </div>
           <div class="writing-canvas">
-            <div class="diary-editor" id="editor" contenteditable="true" data-placeholder="Start writing..." role="textbox" aria-label="Post content" aria-multiline="true"></div>
+            <div id="quillContainer"></div>
           </div>
           <div class="count-strip">
             <div class="count-item">words <span id="wordCount">0</span></div>
@@ -845,9 +860,6 @@
       college: { label:"college life",  ph:"What happened today? What are you thinking about?\n\nAdd stickers, doodles, anything — this is your journal." },
     };
 
-    let activeTemplate="diary", selectedCat="story", selectedMood="", starRating=0, currentColor="#1a1208", savedRange=null, uploadingCount=0, isPreviewMode=false, draftId=null;
-    const body=document.body, editor=document.getElementById("editor");
-
     // ── Template picker ──
     document.querySelectorAll(".t-pill").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -858,18 +870,20 @@
         btn.classList.add("active");
         btn.setAttribute("aria-pressed", "true");
         
-        const t=btn.dataset.t, cat=btn.dataset.cat;
-        activeTemplate=t; body.setAttribute("data-t",t);
-        document.getElementById("navTemplateLabel").textContent=TEMPLATES[t].label;
-        editor.setAttribute("data-placeholder",TEMPLATES[t].ph);
+        const t = btn.dataset.t, cat = btn.dataset.cat;
+        activeTemplate = t; 
+        body.setAttribute("data-t", t);
+        document.getElementById("navTemplateLabel").textContent = TEMPLATES[t].label;
+        if (quill && quill.root) {
+          quill.root.dataset.placeholder = TEMPLATES[t].ph;
+        }
         
         document.querySelectorAll(".cat-pill").forEach(p => {
-          const isActive = p.dataset.cat===cat;
+          const isActive = p.dataset.cat === cat;
           p.classList.toggle("active", isActive);
           p.setAttribute("aria-checked", isActive ? "true" : "false");
         });
-        selectedCat=cat;
-        
+        selectedCat = cat;
         currentColor = t === "tech" ? "#e6edf3" : "#1a1208";
         
         // Update preview if open
@@ -995,21 +1009,12 @@
       });
     });
 
-    // ── Word/char count ──
-    function updateCounts(){
-      const text=editor.innerText.trim();
-      const words=text?text.split(/\s+/).filter(Boolean).length:0;
-      document.getElementById("wordCount").textContent=words;
-      document.getElementById("charCount").textContent=text.replace(/\s/g,"").length;
-      document.getElementById("readTimeCalc").textContent="~"+Math.max(1,Math.ceil(words/200))+" min read";
-      updateSaveStatus("unsaved");
-    }
-    editor.addEventListener("input", updateCounts);
-
     function updateSaveStatus(s){
       const el=document.getElementById("saveStatus");
-      el.textContent=s;
-      el.className="nav-save-status"+(s==="saved"?" saved":s==="draft"?" draft":"");
+      if (el) {
+        el.textContent=s;
+        el.className="nav-save-status"+(s==="saved"?" saved":s==="draft"?" draft":"");
+      }
     }
 
     // ── Safe content insertion (XSS prevention) ──
@@ -1048,113 +1053,86 @@
       return temp.innerHTML;
     }
 
-    function insertAtCursor(html){
-      editor.focus();
-      if(savedRange){
-        const sel=window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(savedRange);
-      }
-      // ✅ Sanitize before inserting
-      const safeHTML = sanitizeHTML(html);
-      document.execCommand("insertHTML", false, safeHTML);
-      updateSaveStatus("unsaved");
-    }
+    // ── Register Custom Font Attributor to use inline styles ──
+    const FontAttributor = Quill.import('attributors/style/font');
+    FontAttributor.whitelist = [
+      'Crimson Pro',
+      'Caveat',
+      'IM Fell English',
+      'Playfair Display',
+      'Kalam',
+      'JetBrains Mono'
+    ];
+    Quill.register(FontAttributor, true);
 
-    // ── Track selection constantly so it never goes stale ──
-    document.addEventListener("selectionchange", () => {
-      const sel = window.getSelection();
-      if (sel.rangeCount && editor.contains(sel.anchorNode)) {
-        savedRange = sel.getRangeAt(0).cloneRange();
+    let activeTemplate = "diary", selectedCat = "story", selectedMood = "", starRating = 0, currentColor = "#1a1208", uploadingCount = 0, isPreviewMode = false, draftId = null;
+    const body = document.body;
+
+    // ── Initialize Quill ──
+    const quill = new Quill('#quillContainer', {
+      theme: 'snow',
+      placeholder: TEMPLATES.diary.ph,
+      modules: {
+        toolbar: false, // Driven by our custom HlyWor toolbar
+        history: { delay: 500, maxStack: 100, userOnly: true }
       }
     });
 
-    // Helper: Apply style to selection or prepare typing span for next typed text
-    function applyInlineStyle(styleObj) {
-      editor.focus();
-      const sel = window.getSelection();
-      let range = null;
-      if (sel.rangeCount && editor.contains(sel.anchorNode)) {
-        range = sel.getRangeAt(0);
-      } else if (savedRange) {
-        range = savedRange;
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-
-      if (!range) {
-        editor.focus();
-        const newRange = document.createRange();
-        newRange.selectNodeContents(editor);
-        newRange.collapse(false);
-        range = newRange;
-      }
-
-      if (sel.isCollapsed || !range || range.collapsed) {
-        // Insert a zero-width container span so typed characters inherit this style
-        const span = document.createElement("span");
-        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
-        if (styleObj.color) span.style.color = styleObj.color;
-        span.appendChild(document.createTextNode("\u200B")); // Zero-width space
-        range.insertNode(span);
-        const nextRange = document.createRange();
-        nextRange.setStart(span.firstChild, 1);
-        nextRange.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(nextRange);
-        savedRange = nextRange.cloneRange();
-      } else {
-        // Apply to highlighted text only
-        const span = document.createElement("span");
-        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
-        if (styleObj.color) span.style.color = styleObj.color;
-        try {
-          range.surroundContents(span);
-        } catch(e) {
-          const frag = range.extractContents();
-          span.appendChild(frag);
-          range.insertNode(span);
-        }
-        const newRange = document.createRange();
-        newRange.selectNodeContents(span);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
-        savedRange = newRange.cloneRange();
-      }
+    // Helper: Insert custom HTML at current cursor position
+    function insertAtCursor(html) {
+      const range = quill.getSelection(true);
+      const index = range ? range.index : quill.getLength();
+      quill.clipboard.dangerouslyPasteHTML(index, sanitizeHTML(html));
+      quill.setSelection(index + 1);
+      quill.focus();
+      updateCounts();
       updateSaveStatus("unsaved");
     }
 
-    // ── Formatting tools ──
+    // ── Word & Character Count ──
+    function updateCounts() {
+      const text = quill.getText().trim();
+      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      const chars = text.replace(/\s/g, "").length;
+      document.getElementById("wordCount").textContent = words;
+      document.getElementById("charCount").textContent = chars;
+      document.getElementById("readTimeCalc").textContent = "~" + Math.max(1, Math.ceil(words / 200)) + " min read";
+    }
+    quill.on("text-change", () => {
+      updateCounts();
+      updateSaveStatus("unsaved");
+    });
+
+    // ── Formatting Toolbar Binding ──
     document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn => {
-      btn.addEventListener("mousedown", e => {
+      btn.addEventListener("click", e => {
         e.preventDefault();
-        editor.focus();
         const cmd = btn.dataset.cmd;
-        try {
-          if (cmd === "h2" || cmd === "h3" || cmd === "blockquote") {
-            document.execCommand("formatBlock", false, cmd);
-          } else {
-            document.execCommand(cmd, false, null);
-          }
-        } catch (err) {
-          console.warn("Formatting failed:", cmd, err);
+        const format = quill.getFormat();
+        if (cmd === "bold") {
+          quill.format("bold", !format.bold);
+        } else if (cmd === "italic") {
+          quill.format("italic", !format.italic);
+        } else if (cmd === "h2") {
+          quill.format("header", format.header === 2 ? false : 2);
+        } else if (cmd === "h3") {
+          quill.format("header", format.header === 3 ? false : 3);
+        } else if (cmd === "blockquote") {
+          quill.format("blockquote", !format.blockquote);
+        } else if (cmd === "insertUnorderedList") {
+          quill.format("list", format.list === "bullet" ? false : "bullet");
+        } else if (cmd === "undo") {
+          quill.history.undo();
+        } else if (cmd === "redo") {
+          quill.history.redo();
         }
         updateSaveStatus("unsaved");
       });
     });
 
-    // ── Tab key support in editor ──
-    editor.addEventListener("keydown", e => {
-      if (e.key === "Tab") {
-        e.preventDefault();
-        insertAtCursor("&emsp;");
-      }
-    });
-
     // ── Font picker ──
-    let activeFontFamily = "";
     document.querySelectorAll(".font-btn").forEach(btn => {
-      btn.addEventListener("mousedown", e => {
+      btn.addEventListener("click", e => {
         e.preventDefault();
         document.querySelectorAll(".font-btn").forEach(b => {
           b.classList.remove("active");
@@ -1163,14 +1141,10 @@
         btn.classList.add("active");
         btn.setAttribute("aria-checked", "true");
         
-        activeFontFamily = btn.dataset.font || "";
-        applyInlineStyle({ fontFamily: activeFontFamily });
-      });
-      btn.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          btn.click();
-        }
+        const font = btn.dataset.font;
+        const cleanedFont = font ? font.replace(/['",]/g, '').trim() : false;
+        quill.format("font", cleanedFont);
+        updateSaveStatus("unsaved");
       });
     });
 
@@ -1185,13 +1159,8 @@
         sw.setAttribute("aria-checked", "true");
         
         currentColor = sw.dataset.color;
-        applyInlineStyle({ color: currentColor });
-      });
-      sw.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          sw.click();
-        }
+        quill.format("color", currentColor);
+        updateSaveStatus("unsaved");
       });
     });
 
@@ -1203,28 +1172,24 @@
         s.classList.remove("active");
         s.setAttribute("aria-checked", "false");
       });
-      applyInlineStyle({ color: currentColor });
+      quill.format("color", currentColor);
+      updateSaveStatus("unsaved");
     });
 
     // ── Highlights ──
+    const HL_COLORS = {
+      "highlight-y": "rgba(255,220,50,0.4)",
+      "highlight-r": "rgba(255,100,100,0.35)",
+      "highlight-b": "rgba(100,150,255,0.35)",
+      "highlight-g": "rgba(100,220,100,0.35)"
+    };
     document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn => {
-      btn.addEventListener("mousedown", e => {
+      btn.addEventListener("click", e => {
         e.preventDefault();
-        const sel = window.getSelection();
-        if (!sel.rangeCount || sel.isCollapsed) return;
         const cls = btn.dataset.highlight;
-        const range = sel.getRangeAt(0);
-        const span = document.createElement("span");
-        span.className = cls;
-        try { 
-          range.surroundContents(span); 
-        } catch(err) { 
-          const frag = range.extractContents();
-          span.appendChild(frag);
-          range.insertNode(span);
-        }
-        sel.removeAllRanges();
-        editor.focus();
+        const color = HL_COLORS[cls] || "rgba(255,220,50,0.4)";
+        const currentBg = quill.getFormat().background;
+        quill.format("background", currentBg === color ? false : color);
         updateSaveStatus("unsaved");
       });
     });
@@ -1247,7 +1212,7 @@
       positionPopup(sp, e.currentTarget);
       sp.classList.toggle("open");
       const sel=window.getSelection();
-      if(sel.rangeCount && editor.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
+      if(sel.rangeCount && quill.root.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
     });
     
     document.querySelectorAll(".sticker-option").forEach(opt => {
@@ -1291,7 +1256,7 @@
       },50);
     });
     
-    editor.addEventListener("click", e => {
+    quill.root.addEventListener("click", e => {
       if (e.target.closest("[data-sticky]")) e.stopPropagation();
     });
 
@@ -1324,7 +1289,7 @@
     document.querySelectorAll(".tape-swatch").forEach(sw => {
       sw.addEventListener("click", () => {
         insertAtCursor(`<div class='washi-tape' style='--tape-color:${sw.dataset.tape}'></div><p><br></p>`);
-        editor.focus();
+        quill.focus();
       });
       // Keyboard support
       sw.addEventListener("keydown", (e) => {
@@ -1373,7 +1338,7 @@
       positionPopup(imgPopup, e.currentTarget);
       imgPopup.classList.toggle("open");
       const sel=window.getSelection();
-      if(sel.rangeCount && editor.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
+      if(sel.rangeCount && quill.root.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
     });
     
     document.getElementById("inlineImgUploadBtn").addEventListener("click", () => {
@@ -1662,23 +1627,24 @@
 
     // ── Content serialization (safe) ──
     function serializeContent() {
-      const clone = editor.cloneNode(true);
+      const rawHtml = quill.getSemanticHTML ? quill.getSemanticHTML() : quill.root.innerHTML;
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = rawHtml;
       // Remove contenteditable and data attrs for published content
-      clone.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
-      clone.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
-      return clone.innerHTML;
+      tempDiv.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
+      tempDiv.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
+      return sanitizeHTML(tempDiv.innerHTML);
     }
 
     // ── Draft auto-save (localStorage + Firestore) ──
     let autoSaveTimer = null;
-    // Bug fix: currentUser is null at module init — must read at call time
     function getDraftKey() { return "hlywor_draft_" + (currentUser?.uid || "anon"); }
     
     function saveDraftLocally() {
       const draft = {
         title: document.getElementById("titleInput").value,
         desc: document.getElementById("descInput").value,
-        content: editor.innerHTML,
+        content: serializeContent(),
         template: activeTemplate,
         category: selectedCat,
         mood: selectedMood,
@@ -1703,12 +1669,16 @@
           const draft = JSON.parse(saved);
           document.getElementById("titleInput").value = draft.title || "";
           document.getElementById("descInput").value = draft.desc || "";
-          editor.innerHTML = draft.content || "";
+          if (draft.content) {
+            quill.clipboard.dangerouslyPasteHTML(draft.content);
+          }
           if (draft.template) {
             activeTemplate = draft.template;
             body.setAttribute("data-t", draft.template);
             document.getElementById("navTemplateLabel").textContent = TEMPLATES[draft.template].label;
-            editor.setAttribute("data-placeholder", TEMPLATES[draft.template].ph);
+            if (quill && quill.root) {
+              quill.root.dataset.placeholder = TEMPLATES[draft.template].ph;
+            }
           }
           if (draft.category) {
             selectedCat = draft.category;
@@ -1820,7 +1790,7 @@
     }
     
     // Auto-save on input (debounced)
-    editor.addEventListener("input", () => {
+    function triggerAutoSave() {
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
       autoSaveTimer = setTimeout(() => {
         saveDraftLocally();
@@ -1829,6 +1799,11 @@
           saveDraftToFirestore();
         }
       }, 2000);
+    }
+    quill.on("text-change", triggerAutoSave);
+    ["titleInput", "descInput", "authorInput"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", triggerAutoSave);
     });
     
     // Load draft on page load
@@ -1841,7 +1816,7 @@
     
     // Warn before leaving with unsaved changes
     window.addEventListener("beforeunload", (e) => {
-      const status = document.getElementById("saveStatus").textContent;
+      const status = document.getElementById("saveStatus")?.textContent;
       if (status === "unsaved") {
         e.preventDefault();
         e.returnValue = "";
@@ -1924,7 +1899,7 @@
             coverUrl = document.getElementById("coverUrl").value,
             coverAlt = document.getElementById("coverAlt").value.trim(),
             content = serializeContent(),
-            plainText = editor.innerText.trim(),
+            plainText = quill.getText().trim(),
             type = document.getElementById("typeSelect").value,
             agree = document.getElementById("agreeCheck").checked,
             agreeImg = document.getElementById("agreeImgCheck").checked,
