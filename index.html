@@ -1120,35 +1120,27 @@
       </div>
     </div>
 
+    <!-- 2. Clean Focused Hero Sheet -->
     <div class="board-header">
       <div class="title-sheet reveal">
         <div class="pin" aria-hidden="true"></div>
-        <div class="hero-pulse" aria-hidden="true"></div>
         <span class="tape-label" aria-hidden="true">EST. 2025</span>
 
         <div class="sheet-text-col">
           <div>
-            <div class="sheet-eyebrow" style="font-family:var(--pixel);font-size:0.58rem;color:var(--ink3);letter-spacing:2px;margin-bottom:8px;">// A PINBOARD OF STORIES &amp; MOMENTS</div>
+            <div class="sheet-eyebrow" style="font-family:var(--pixel);font-size:0.58rem;color:var(--fire);letter-spacing:2px;margin-bottom:8px;">// A PINBOARD OF STORIES &amp; MOMENTS</div>
             <h1 class="sheet-title">A place to<br><em>open up.</em></h1>
             <p class="sheet-sub">Some things don't fit in a conversation. This is where they go.<br>Read ours. Write yours.</p>
 
-            <div id="heroLiveBar" style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
-              <div style="font-family:var(--sans);font-size:0.92rem;font-weight:700;color:var(--fire);letter-spacing:0.5px" id="storyCount" aria-live="polite"></div>
-              <div id="freshnessBadge" style="display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:0.82rem;font-weight:600;color:var(--gold);opacity:0;transition:opacity 0.5s;">
-                <span class="freshness-dot" aria-hidden="true"></span>
-                <span>new story pinned <span id="minutesAgo">just now</span></span>
-              </div>
-              <div style="font-family:var(--serif);font-size:0.98rem;font-style:italic;color:var(--ink2);line-height:1.6;max-width:340px" id="randomQuote" aria-live="polite"></div>
+            <div id="heroLiveBar" style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
+              <div style="font-family:var(--sans);font-size:0.92rem;font-weight:700;color:var(--fire);" id="storyCount" aria-live="polite"></div>
+              <div style="font-family:var(--serif);font-size:0.95rem;font-style:italic;color:var(--ink2);line-height:1.5;max-width:340px" id="randomQuote" aria-live="polite"></div>
             </div>
-
-            <a href="character.html" class="crew-btn" aria-label="Meet the crew behind HlyWor">
-              👥 <span>meet the crew →</span>
-            </a>
           </div>
 
           <div class="sheet-ctas">
             <a href="submit.html" class="btn-sticky fire" id="primaryCta">Share your story →</a>
-            <a href="#posts" class="btn-sticky">Start reading</a>
+            <a href="#posts" class="btn-sticky">Browse Stories ↓</a>
           </div>
           <div class="cta-helper">Not ready to write? Just read. No signup needed. ✨</div>
         </div>
@@ -1176,83 +1168,7 @@
       </div>
     </div>
 
-    <!-- 2. Compact Desk Strip (3 AM Prompt + Editor's Pick + Micro Note) -->
-    <div class="desk-tray" id="deskTray" style="margin-bottom:28px">
-      <!-- Side by Side Prompt & Editor's Pick -->
-      <div class="desk-row desk-row-top">
-        <div class="midnight-prompt-sheet reveal" id="midnightPromptSheet">
-          <div class="midnight-pin"></div>
-          <div class="prompt-header">
-            <span class="prompt-label">✨ 3 AM PROMPT</span>
-            <button type="button" class="prompt-shuffle-btn" id="promptShuffleBtn">⟳ shuffle</button>
-          </div>
-          <p class="prompt-question" id="promptQuestion">"What is a conversation you rehearsed 100 times in your head, but never actually had?"</p>
-          <div class="prompt-actions">
-            <a href="submit.html?prompt=The%20conversation%20I%20rehearsed%20100%20times&title=The%20Conversation%20I%20Never%20Had" class="prompt-write-btn" id="promptWriteCta">Write this ✍️</a>
-          </div>
-        </div>
-
-        <!-- Editor's Pick -->
-        <div class="featured-banner reveal" id="featuredBanner" style="display:none">
-          <div class="gold-pin"></div>
-          <span class="featured-badge">✦ EDITOR'S PICK</span>
-          <a href="#" class="featured-title" id="featuredTitle">Loading featured story...</a>
-          <p class="featured-desc" id="featuredDesc"></p>
-          <div class="featured-footer">
-            <div style="display:flex;align-items:center;gap:8px">
-              <span style="font-family:var(--pixel);font-size:0.52rem;color:var(--fire);letter-spacing:1px" id="featuredCat">STORY</span>
-              <span style="font-family:var(--hand);font-size:0.95rem;color:var(--ink2)" id="featuredAuthor">by Author</span>
-            </div>
-            <a href="#" class="featured-btn" id="featuredReadBtn">Read →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Micro Notes pad (Collapsible) -->
-      <div class="micro-notes-box reveal" id="microNotesBox">
-        <div class="micro-head" id="microHead">
-          <button class="micro-head-toggle" id="microToggleBtn" aria-expanded="false" aria-controls="microBody">
-            <span class="micro-head-title">📌 DROP A NOTE</span>
-            <span class="micro-head-sub">Raw · 1-2 lines · 48h expire</span>
-            <span class="micro-head-chevron">▸</span>
-          </button>
-          <div class="micro-view-tabs" role="tablist">
-            <button class="micro-view-toggle-btn active" data-view="global" role="tab">🌍 Global</button>
-            <button class="micro-view-toggle-btn" data-view="following" role="tab">👥 Following</button>
-          </div>
-        </div>
-
-        <div class="micro-body" id="microBody" hidden>
-          <div class="micro-compose">
-            <div class="micro-compose-row">
-              <textarea class="micro-textarea" id="microTextarea" maxlength="180" placeholder="Type a midnight thought, confession, or feeling…" rows="2"></textarea>
-            </div>
-            <div class="micro-actions">
-              <div class="micro-emojis" id="microEmojis">
-                <button type="button" class="micro-emoji-btn selected" data-emoji="🌙">🌙</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="❤️">❤️</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="😭">😭</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="🔥">🔥</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="🫂">🫂</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="✨">✨</button>
-              </div>
-              <div class="micro-post-controls">
-                <div class="micro-vis-select">
-                  <label><input type="radio" name="visibility" value="global" checked> 🌍 Global</label>
-                  <label><input type="radio" name="visibility" value="following"> 👥 Followers</label>
-                </div>
-                <button type="button" class="micro-pin-btn" id="microPinBtn">Pin Note 📌</button>
-              </div>
-            </div>
-          </div>
-          <div class="micro-feed" id="microFeed">
-            <p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">Loading notes…</p>
-          </div>
-        </div>
-      </div>
-    </div><!-- end desk-tray -->
-
-    <!-- 3. PINBOARD STORIES FEED & ATTACHED CATEGORY FILTER RIBBON -->
+    <!-- 3. STORIES FEED & ATTACHED CATEGORY FILTER RIBBON (RIGHT UPFRONT!) -->
     <section class="pinboard-section" id="posts">
       <div class="pinboard-header-bar reveal">
         <div class="pinboard-title-group">
@@ -1294,6 +1210,82 @@
         <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:50%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:45%"></div></div></div>
       </div>
     </section>
+
+    <!-- 4. INTERACTIVE DESK WIDGETS (3 AM Prompt, Editor's Pick & Micro Notes) -->
+    <div class="desk-tray" id="deskTray" style="margin-top:40px;margin-bottom:28px">
+      <!-- Side by Side Prompt & Editor's Pick -->
+      <div class="desk-row desk-row-top">
+        <div class="midnight-prompt-sheet reveal" id="midnightPromptSheet">
+          <div class="midnight-pin"></div>
+          <div class="prompt-header">
+            <span class="prompt-label">✨ 3 AM PROMPT</span>
+            <button type="button" class="prompt-shuffle-btn" id="promptShuffleBtn">⟳ shuffle</button>
+          </div>
+          <p class="prompt-question" id="promptQuestion">"What is a conversation you rehearsed 100 times in your head, but never actually had?"</p>
+          <div class="prompt-actions">
+            <a href="submit.html?prompt=The%20conversation%20I%20rehearsed%20100%20times&title=The%20Conversation%20I%20Never%20Had" class="prompt-write-btn" id="promptWriteCta">Write this ✍️</a>
+          </div>
+        </div>
+
+        <!-- Editor's Pick -->
+        <div class="featured-banner reveal" id="featuredBanner" style="display:none">
+          <div class="gold-pin"></div>
+          <span class="featured-badge">✦ EDITOR'S PICK</span>
+          <a href="#" class="featured-title" id="featuredTitle">Loading featured story...</a>
+          <p class="featured-desc" id="featuredDesc"></p>
+          <div class="featured-footer">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:var(--pixel);font-size:0.52rem;color:var(--fire);letter-spacing:1px" id="featuredCat">STORY</span>
+              <span style="font-family:var(--hand);font-size:0.95rem;color:var(--ink2)" id="featuredAuthor">by Author</span>
+            </div>
+            <a href="#" class="featured-btn" id="featuredReadBtn">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Micro Notes pad (Collapsible) -->
+      <div class="micro-notes-box reveal" id="microNotesBox">
+        <div class="micro-head" id="microHead">
+          <button class="micro-head-toggle" id="microToggleBtn" aria-expanded="false" aria-controls="microBody">
+            <span class="micro-head-title">📌 DROP A QUICK NOTE</span>
+            <span class="micro-head-sub">Raw · 1-2 lines · 48h expire</span>
+            <span class="micro-head-chevron">▸</span>
+          </button>
+          <div class="micro-view-tabs" role="tablist">
+            <button class="micro-view-toggle-btn active" data-view="global" role="tab">🌍 Global</button>
+            <button class="micro-view-toggle-btn" data-view="following" role="tab">👥 Following</button>
+          </div>
+        </div>
+
+        <div class="micro-body" id="microBody" hidden>
+          <div class="micro-compose">
+            <div class="micro-compose-row">
+              <textarea class="micro-textarea" id="microTextarea" maxlength="180" placeholder="Type a midnight thought, confession, or feeling…" rows="2"></textarea>
+            </div>
+            <div class="micro-actions">
+              <div class="micro-emojis" id="microEmojis">
+                <button type="button" class="micro-emoji-btn selected" data-emoji="🌙">🌙</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="❤️">❤️</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="😭">😭</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="🔥">🔥</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="🫂">🫂</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="✨">✨</button>
+              </div>
+              <div class="micro-post-controls">
+                <div class="micro-vis-select">
+                  <label><input type="radio" name="visibility" value="global" checked> 🌍 Global</label>
+                  <label><input type="radio" name="visibility" value="following"> 👥 Followers</label>
+                </div>
+                <button type="button" class="micro-pin-btn" id="microPinBtn">Pin Note 📌</button>
+              </div>
+            </div>
+          </div>
+          <div class="micro-feed" id="microFeed">
+            <p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">Loading notes…</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- end deskTray -->
 
     <div class="board-bottom" style="margin-top:56px">
       <div class="about-note reveal">
