@@ -853,6 +853,9 @@
       db = getFirestore(app);
     } catch(e) { console.warn("Firebase init skipped (offline/demo mode)"); }
 
+    // Initialize Firestore-backed micro-notes
+    if (db) { initMicroNotes(db); }
+
     injectAuthNav(document.getElementById('authSlot'));
     injectAuthNav(document.getElementById('authSlotMobile'), { compact: true });
     document.getElementById('mtbSearchBtn')?.addEventListener('click', () => openSearch());
