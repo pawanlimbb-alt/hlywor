@@ -135,29 +135,236 @@
     }
     
     /* ✅ Layout */
-    .diary-layout{display:flex;min-height:calc(100vh - 96px);position:relative;z-index:1;width:100%;max-width:100vw;box-sizing:border-box}
+    .diary-layout{display:flex;justify-content:center;min-height:calc(100vh - 96px);position:relative;z-index:1;width:100%;max-width:100vw;box-sizing:border-box}
     
-    /* ✅ Tools panel */
-    .tools-panel{width:68px;background:rgba(0,0,0,0.75);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:3px;position:sticky;top:96px;height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;scrollbar-width:none;flex-shrink:0}
-    .tools-panel::-webkit-scrollbar{display:none}
-    .tg-label{font-family:var(--pixel);font-size:0.52rem;color:rgba(255,255,255,0.4);letter-spacing:1px;margin:6px 0 3px;text-align:center;width:100%}
-    .t-sep{width:36px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);margin:5px 0}
-    .t-sep.full{width:52px}
-    .tool-btn{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:1px solid transparent;transition:all 0.18s;color:rgba(255,255,255,0.45);font-size:1.2rem}
-    .tool-btn:hover,
-    .tool-btn:focus{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.95);outline:none}
-    .tool-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px}
-    .tool-btn.active{background:rgba(255,255,255,0.12);border-color:var(--t-acc);color:var(--t-acc)}
+    /* ✅ Sticky Desk Ribbon Toolbar */
+    .desk-toolbar {
+      position: sticky;
+      top: 48px;
+      z-index: 80;
+      background: rgba(20, 14, 8, 0.95);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .desk-toolbar::-webkit-scrollbar { display: none; }
+    .desk-grp {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+    .desk-sep {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.12);
+      margin: 0 4px;
+      flex-shrink: 0;
+    }
+    .desk-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.65);
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      transition: all 0.15s;
+      flex-shrink: 0;
+      padding: 0;
+      user-select: none;
+    }
+    .desk-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+    .desk-btn.active {
+      background: rgba(232, 104, 26, 0.2);
+      border-color: var(--t-acc);
+      color: var(--t-acc);
+    }
+    .font-select-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .font-select-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      height: 32px;
+      box-sizing: border-box;
+    }
+    .font-select-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+    .font-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 4px;
+      background: #140e08;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 6px;
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+      width: 175px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      z-index: 120;
+    }
+    .font-menu.open { display: flex; }
+    .font-option {
+      padding: 6px 10px;
+      border-radius: 4px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.75);
+      text-align: left;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .font-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .font-option.active {
+      background: rgba(232, 104, 26, 0.2);
+      color: var(--t-acc);
+    }
+    .desk-color-swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .desk-color-swatch:hover {
+      transform: scale(1.2);
+    }
+    .desk-color-swatch.active {
+      border-color: #fff;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+    }
+    .tape-swatch {
+      width: 26px;
+      height: 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .tape-swatch:hover { transform: scale(1.1); }
     body:not([data-t="diary"]):not([data-t="college"]) .diary-tools{display:none}
     .tech-tools{display:none}
     body[data-t="tech"] .tech-tools{display:flex}
     .mag-tools{display:none}
     body[data-t="magazine"] .mag-tools{display:flex}
-    .tape-swatch{width:44px;height:14px;cursor:pointer;border:1px solid transparent;transition:all 0.15s;border-radius:2px}
-    .tape-swatch:hover{transform:scale(1.05)}
+
+    /* ✅ Embed Interactive Controls Bar */
+    .polaroid, .sticky-callout, .img-row-block, .washi-tape, .doodle-divider, .pull-quote, pre, figure {
+      position: relative !important;
+    }
+    .embed-ctrls {
+      position: absolute;
+      top: -12px;
+      right: 4px;
+      display: none;
+      align-items: center;
+      gap: 4px;
+      background: rgba(14, 10, 6, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.18);
+      z-index: 30;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      user-select: none;
+    }
+    .polaroid:hover > .embed-ctrls,
+    .sticky-callout:hover > .embed-ctrls,
+    .img-row-block:hover > .embed-ctrls,
+    .washi-tape:hover > .embed-ctrls,
+    .doodle-divider-wrap:hover > .embed-ctrls,
+    .pull-quote:hover > .embed-ctrls,
+    pre:hover > .embed-ctrls,
+    figure:hover > .embed-ctrls,
+    .embed-active > .embed-ctrls {
+      display: flex !important;
+    }
+    .ctrl-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.75);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: all 0.15s;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .ctrl-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+    .ctrl-btn.del-btn {
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+    .ctrl-btn.del-btn:hover {
+      background: rgba(232,92,92,0.25);
+      color: #ff9999;
+    }
+    .ctrl-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.2);
+    }
     
     /* ✅ Diary area */
-    .diary-area{flex:1;padding:36px 20px 80px;display:flex;justify-content:center;align-items:flex-start;width:100%;box-sizing:border-box}
+    .diary-area{flex:1;padding:24px 20px 80px;display:flex;justify-content:center;align-items:flex-start;width:100%;box-sizing:border-box}
     .diary-book{width:100%;max-width:820px;display:flex;box-shadow:var(--shadow);transition:box-shadow 0.4s;box-sizing:border-box}
     .diary-spine{display:none}
     .diary-page{flex:1;background:var(--t-paper);position:relative;min-height:900px;overflow:hidden;transition:background 0.4s;box-sizing:border-box}
@@ -422,43 +629,29 @@
     
     /* ✅ Responsive */
     @media(max-width:768px){
-      .diary-layout{flex-direction:column}
-      .tools-panel{
-        position:fixed;
-        bottom:0;
-        left:0;
-        right:0;
-        width:100%;
-        height:56px;
-        background:rgba(18,14,10,0.96);
-        backdrop-filter:blur(14px);
-        -webkit-backdrop-filter:blur(14px);
-        border-right:none;
-        border-top:1px solid rgba(255,255,255,0.12);
-        display:flex;
-        flex-direction:row;
-        align-items:center;
-        padding:4px 10px;
-        gap:6px;
-        overflow-x:auto;
-        overflow-y:hidden;
-        z-index:400;
-        scrollbar-width:none;
+      .desk-toolbar{
+        top:48px;
+        padding:5px 8px;
+        gap:5px;
       }
-      .tools-panel::-webkit-scrollbar{display:none}
-      .tools-panel .tg-label,
-      .tools-panel .t-sep{display:none}
-      .font-picker-wrap, .color-picker-wrap{
-        flex-direction:row;
-        flex-wrap:nowrap;
-        gap:4px;
-        padding:0 2px;
+      .desk-btn{
+        width:28px;
+        height:28px;
+        font-size:0.82rem;
       }
-      .text-color-swatch{width:22px;height:22px;flex-shrink:0}
-      .font-btn{width:34px;height:34px;font-size:0.75rem;flex-shrink:0}
-      .tool-btn{width:38px;height:38px;font-size:1rem;flex-shrink:0}
-      .tape-swatch{width:26px;height:16px;flex-shrink:0}
-      .diary-tools[role="radiogroup"]{flex-direction:row !important}
+      .font-select-btn{
+        font-size:0.7rem;
+        padding:2px 6px;
+        height:28px;
+      }
+      .desk-color-swatch{
+        width:16px;
+        height:16px;
+      }
+      .tape-swatch{
+        width:20px;
+        height:12px;
+      }
       
       /* Mobile top nav: ensure Publish button is always 100% visible */
       .top-nav{padding:0 10px;height:48px;gap:6px}
@@ -471,22 +664,20 @@
       .preview-toggle{padding:5px 8px;font-size:0.65rem;letter-spacing:0}
       .publish-btn{padding:6px 12px;font-size:0.68rem;letter-spacing:0.5px;flex-shrink:0}
       
-      .diary-area{padding:14px 8px 84px}
-      .diary-book{max-width:100%}
+      .diary-area{padding:10px 4px 60px}
       .writing-canvas,.page-header-area,.cover-zone{padding-left:14px;padding-right:14px}
-      .ql-editor figure.img-left,.ql-editor figure.img-right{float:none;max-width:100%;margin:10px 0}
-      .ql-editor .img-row-block{flex-direction:column}
-      body[data-t="news"] .ql-editor{columns:1}
-      .count-strip{bottom:56px}
-      .template-bar{padding:6px 12px}
-      .preview-content{padding:20px}
+      .ql-editor figure.img-left,.ql-editor figure.img-right,.diary-editor figure.img-left,.diary-editor figure.img-right{float:none;max-width:100%;margin:10px 0}
+      .ql-editor .img-row-block,.diary-editor .img-row-block{flex-direction:column}
+      body[data-t="news"] .ql-editor,body[data-t="news"] .diary-editor{columns:1}
+      .count-strip{bottom:0}
+      .template-bar{padding:6px 10px;overflow-x:auto}
+      .preview-content{padding:16px}
 
       /* Mobile popups centered */
       .sticker-picker, .img-popup, .img-row-popup {
         left:50% !important;
         top:50% !important;
         transform:translate(-50%, -50%) !important;
-        max-width:92vw !important;
         position:fixed !important;
       }
     }
@@ -618,66 +809,6 @@
   </div>
 
   <div class="diary-layout">
-    <div class="tools-panel" id="toolsPanel" role="toolbar" aria-label="Formatting tools">
-      <div class="tg-label">TEXT</div>
-      <button class="tool-btn" data-cmd="bold" title="Bold (Ctrl+B)" aria-label="Bold"><strong>B</strong></button>
-      <button class="tool-btn" data-cmd="italic" title="Italic (Ctrl+I)" aria-label="Italic"><em style="font-family:Georgia">I</em></button>
-      <button class="tool-btn" data-cmd="h2" title="Heading 1" aria-label="Heading 1"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
-      <button class="tool-btn" data-cmd="h3" title="Heading 2" aria-label="Heading 2"><span style="font-family:'Caveat',cursive;font-size:.9rem">H2</span></button>
-      <button class="tool-btn" data-cmd="blockquote" title="Quote" aria-label="Quote">&#10077;</button>
-      <button class="tool-btn" data-cmd="insertUnorderedList" title="List" aria-label="Bullet list">&bull;&#8801;</button>
-      <div class="t-sep full"></div>
-      <div class="tg-label">FONT</div>
-      <div class="font-picker-wrap" role="radiogroup" aria-label="Font family">
-        <button class="font-btn active" data-font="" title="Default (Crimson Pro)" style="font-family:inherit" role="radio" aria-checked="true">Aa</button>
-        <button class="font-btn" data-font="'Caveat',cursive" title="Caveat — handwritten" style="font-family:'Caveat',cursive" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'IM Fell English',serif" title="IM Fell — literary" style="font-family:'IM Fell English',serif" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Playfair Display',serif" title="Playfair — editorial" style="font-family:'Playfair Display',serif" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'Kalam',cursive" title="Kalam — casual" style="font-family:'Kalam',cursive" role="radio" aria-checked="false">Aa</button>
-        <button class="font-btn" data-font="'JetBrains Mono',monospace" title="JetBrains — code" style="font-family:'JetBrains Mono',monospace;font-size:.75rem" role="radio" aria-checked="false">Aa</button>
-      </div>
-      <div class="t-sep full"></div>
-      <div class="tg-label">COLOR</div>
-      <div class="color-picker-wrap" role="radiogroup" aria-label="Text color">
-        <div class="text-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink black" role="radio" aria-checked="true" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#5a3a1a" style="background:#5a3a1a" title="Deep brown" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Forest green" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Violet" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="text-color-swatch" data-color="#c0670a" style="background:#c0670a" title="Amber" role="radio" aria-checked="false" tabindex="0"></div>
-        <button class="color-input-btn" id="customColorBtn" title="Custom color" aria-label="Choose custom color">+</button>
-        <input type="color" id="customColorInput" value="#1a1208" aria-label="Custom color picker">
-      </div>
-      <div class="t-sep full"></div>
-      <div class="tg-label" title="Select text first, then pick a highlight color">HIGHLIGHT</div>
-      <button class="tool-btn" data-highlight="highlight-y" title="Yellow highlight — select text first" aria-label="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <button class="tool-btn" data-highlight="highlight-r" title="Red highlight — select text first" aria-label="Red highlight"><span style="background:rgba(255,100,100,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <button class="tool-btn" data-highlight="highlight-b" title="Blue highlight — select text first" aria-label="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <button class="tool-btn" data-highlight="highlight-g" title="Green highlight — select text first" aria-label="Green highlight"><span style="background:rgba(100,220,100,.35);padding:0 5px;font-size:.85rem;color:#1a1208">ab</span></button>
-      <div class="t-sep full"></div>
-      <div class="tg-label">INSERT</div>
-      <button class="tool-btn" id="promptSparkBtn" title="3 AM Sparks / Story Prompts" aria-label="Story Prompts" style="color:var(--gold);font-size:1rem;">✨</button>
-      <button class="tool-btn" id="insertStickerBtn" title="Sticker" aria-label="Insert sticker">&#10024;</button>
-      <button class="tool-btn" id="insertImgBtn" title="Photo" aria-label="Insert photo">&#128247;</button>
-      <button class="tool-btn" id="insertImgRowBtn" title="Photo row" aria-label="Insert photo row">&#128248;</button>
-      <button class="tool-btn diary-tools" id="insertStickyBtn" title="Sticky note" aria-label="Insert sticky note">&#128221;</button>
-      <button class="tool-btn diary-tools" id="insertDoodleBtn" title="Doodle divider" aria-label="Insert doodle divider"><span style="font-size:.75rem">&#12316;</span></button>
-      <button class="tool-btn mag-tools" id="insertPullBtn" title="Pull quote" aria-label="Insert pull quote">&#10078;</button>
-      <button class="tool-btn tech-tools" id="insertCodeBtn" title="Code block" aria-label="Insert code block"><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem">&lt;/&gt;</span></button>
-      <div class="t-sep diary-tools full"></div>
-      <div class="tg-label diary-tools">TAPE</div>
-      <div class="diary-tools" style="display:flex;flex-direction:column;gap:5px;padding:4px" role="radiogroup" aria-label="Washi tape color">
-        <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)" role="radio" aria-checked="true" tabindex="0"></div>
-        <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)" style="background:rgba(220,80,80,.55)" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)" role="radio" aria-checked="false" tabindex="0"></div>
-        <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)" role="radio" aria-checked="false" tabindex="0"></div>
-      </div>
-      <div class="t-sep full"></div>
-      <button class="tool-btn" data-cmd="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8617;</button>
-      <button class="tool-btn" data-cmd="redo" title="Redo (Ctrl+Y)" aria-label="Redo">&#8618;</button>
-    </div>
-
     <div class="diary-area">
       <div class="diary-book">
         <div class="diary-spine"></div>
@@ -754,6 +885,88 @@
             <input type="hidden" id="coverUrl">
             <input type="text" id="coverAlt" placeholder="Alt text for cover image" style="margin-top:8px;font-family:var(--sans);font-size:0.75rem;padding:4px 8px;border:1px dashed rgba(0,0,0,0.1);border-radius:4px;background:var(--t-paper2)" aria-label="Alt text for cover image">
           </div>
+
+          <!-- ✅ Sticky Desk Ribbon Toolbar -->
+          <div class="desk-toolbar" id="deskToolbar" role="toolbar" aria-label="Editor formatting tools">
+            <!-- Typography Group -->
+            <div class="desk-grp">
+              <div class="font-select-wrap">
+                <button type="button" class="font-select-btn" id="fontSelectBtn" title="Choose font" aria-haspopup="true" aria-expanded="false">
+                  <span id="fontCurrentLabel">Crimson Pro</span> <span style="font-size:0.6rem;opacity:0.6">▼</span>
+                </button>
+                <div class="font-menu" id="fontMenu" role="menu">
+                  <button type="button" class="font-option active" data-font="" style="font-family:'Crimson Pro',serif" role="menuitem">Crimson Pro <span>Default</span></button>
+                  <button type="button" class="font-option" data-font="'Caveat',cursive" style="font-family:'Caveat',cursive" role="menuitem">Caveat <span>Hand</span></button>
+                  <button type="button" class="font-option" data-font="'IM Fell English',serif" style="font-family:'IM Fell English',serif" role="menuitem">IM Fell <span>Literary</span></button>
+                  <button type="button" class="font-option" data-font="'Playfair Display',serif" style="font-family:'Playfair Display',serif" role="menuitem">Playfair <span>Editorial</span></button>
+                  <button type="button" class="font-option" data-font="'Kalam',cursive" style="font-family:'Kalam',cursive" role="menuitem">Kalam <span>Casual</span></button>
+                  <button type="button" class="font-option" data-font="'JetBrains Mono',monospace" style="font-family:'JetBrains Mono',monospace;font-size:0.75rem" role="menuitem">JetBrains <span>Code</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="desk-sep"></div>
+
+            <!-- Formatting Group -->
+            <div class="desk-grp">
+              <button type="button" class="desk-btn" data-cmd="bold" title="Bold (Ctrl+B)" aria-label="Bold"><strong>B</strong></button>
+              <button type="button" class="desk-btn" data-cmd="italic" title="Italic (Ctrl+I)" aria-label="Italic"><em style="font-family:Georgia">I</em></button>
+              <button type="button" class="desk-btn" data-cmd="h2" title="Heading 1" aria-label="Heading 1"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
+              <button type="button" class="desk-btn" data-cmd="h3" title="Heading 2" aria-label="Heading 2"><span style="font-family:'Caveat',cursive;font-size:0.85rem">H2</span></button>
+              <button type="button" class="desk-btn" data-cmd="blockquote" title="Quote" aria-label="Quote">&#10077;</button>
+              <button type="button" class="desk-btn" data-cmd="insertUnorderedList" title="Bullet list" aria-label="Bullet list">&bull;&#8801;</button>
+            </div>
+            <div class="desk-sep"></div>
+
+            <!-- Inks & Color Swatches -->
+            <div class="desk-grp" role="radiogroup" aria-label="Ink color">
+              <div class="desk-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink black" role="radio" aria-checked="true" tabindex="0"></div>
+              <div class="desk-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson" role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="desk-color-swatch" data-color="#d4a020" style="background:#d4a020" title="Quill gold" role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="desk-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Forest green" role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="desk-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue" role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="desk-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Violet" role="radio" aria-checked="false" tabindex="0"></div>
+              <button type="button" class="desk-btn" id="customColorBtn" title="Custom color" aria-label="Custom color" style="font-size:0.85rem">+</button>
+              <input type="color" id="customColorInput" value="#1a1208" style="position:absolute;opacity:0;width:0;height:0" aria-label="Custom color picker">
+            </div>
+            <div class="desk-sep"></div>
+
+            <!-- Highlighters -->
+            <div class="desk-grp">
+              <button type="button" class="desk-btn" data-highlight="highlight-y" title="Yellow highlight" aria-label="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
+              <button type="button" class="desk-btn" data-highlight="highlight-r" title="Pink highlight" aria-label="Pink highlight"><span style="background:rgba(255,100,100,.4);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
+              <button type="button" class="desk-btn" data-highlight="highlight-g" title="Green highlight" aria-label="Green highlight"><span style="background:rgba(100,220,100,.35);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
+              <button type="button" class="desk-btn" data-highlight="highlight-b" title="Blue highlight" aria-label="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
+            </div>
+            <div class="desk-sep"></div>
+
+            <!-- Embeds & Elements -->
+            <div class="desk-grp">
+              <button type="button" class="desk-btn" id="insertImgBtn" title="Insert Polaroid / Photo" aria-label="Insert photo">&#128247;</button>
+              <button type="button" class="desk-btn" id="insertImgRowBtn" title="Insert Photo Row" aria-label="Insert photo row">&#128248;</button>
+              <button type="button" class="desk-btn" id="insertStickyBtn" title="Insert Sticky Note" aria-label="Insert sticky note">&#128221;</button>
+              <button type="button" class="desk-btn" id="insertStickerBtn" title="Insert Sticker" aria-label="Insert sticker">&#10024;</button>
+              <button type="button" class="desk-btn" id="insertDoodleBtn" title="Insert Doodle Divider" aria-label="Insert doodle divider"><span style="font-size:0.8rem">&#12316;</span></button>
+              <button type="button" class="desk-btn" id="insertPullBtn" title="Insert Pull Quote" aria-label="Insert pull quote">&#10078;</button>
+              <button type="button" class="desk-btn" id="insertCodeBtn" title="Insert Code Block" aria-label="Insert code block"><span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem">&lt;/&gt;</span></button>
+            </div>
+            <div class="desk-sep"></div>
+
+            <!-- Tape Swatches -->
+            <div class="desk-grp diary-tools" role="radiogroup" aria-label="Washi tape color">
+              <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)" title="Yellow tape" role="radio" aria-checked="true" tabindex="0"></div>
+              <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)" style="background:rgba(220,80,80,.55)" title="Red tape" role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)" title="Blue tape" role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)" title="Green tape" role="radio" aria-checked="false" tabindex="0"></div>
+            </div>
+            <div class="desk-sep"></div>
+
+            <!-- History -->
+            <div class="desk-grp">
+              <button type="button" class="desk-btn" data-cmd="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8617;</button>
+              <button type="button" class="desk-btn" data-cmd="redo" title="Redo (Ctrl+Y)" aria-label="Redo">&#8618;</button>
+            </div>
+          </div>
+
           <div class="writing-canvas" id="canvasWrap">
             <div class="diary-editor" id="editor" contenteditable="true" data-placeholder="Start writing..." role="textbox" aria-label="Post content" aria-multiline="true"></div>
           </div>
@@ -1287,8 +1500,95 @@
       return temp.innerHTML;
     }
 
+    // ── Helper: Attach interactive controls to embeds ──
+    function createEmbedControlsHTML(type) {
+      let extra = "";
+      if (type === "sticky") {
+        extra = `
+          <span class="ctrl-dot" data-set-color="" style="background:#fef9c3" title="Yellow"></span>
+          <span class="ctrl-dot" data-set-color="sticky-callout-blue" style="background:#e8f0ff" title="Blue"></span>
+          <span class="ctrl-dot" data-set-color="sticky-callout-green" style="background:#e8f5e8" title="Green"></span>
+          <span class="ctrl-dot" data-set-color="sticky-callout-pink" style="background:#ffe8f0" title="Pink"></span>
+        `;
+      } else if (type === "polaroid") {
+        extra = `
+          <button type="button" class="ctrl-btn" data-tilt="tilt-l" title="Tilt left">⤹</button>
+          <button type="button" class="ctrl-btn" data-tilt="" title="Straight">|</button>
+          <button type="button" class="ctrl-btn" data-tilt="tilt-r" title="Tilt right">⤸</button>
+        `;
+      }
+      return `<div class="embed-ctrls" contenteditable="false">${extra}<button type="button" class="ctrl-btn del-btn" title="Delete block">✕</button></div>`;
+    }
+
+    function restoreEmbedControls() {
+      const root = quill ? quill.root : editor;
+      if (!root) return;
+      root.querySelectorAll(".sticky-callout").forEach(el => {
+        if (!el.querySelector(".embed-ctrls")) {
+          el.insertAdjacentHTML("afterbegin", createEmbedControlsHTML("sticky"));
+        }
+      });
+      root.querySelectorAll(".polaroid").forEach(el => {
+        const fig = el.closest("figure") || el;
+        if (!fig.querySelector(".embed-ctrls")) {
+          fig.insertAdjacentHTML("afterbegin", createEmbedControlsHTML("polaroid"));
+        }
+      });
+      root.querySelectorAll(".img-row-block, .washi-tape, .doodle-divider-wrap, .pull-quote, pre").forEach(el => {
+        if (!el.querySelector(".embed-ctrls")) {
+          el.insertAdjacentHTML("afterbegin", createEmbedControlsHTML("generic"));
+        }
+      });
+    }
+
+    // ── Global click delegation for embed controls ──
+    function handleEmbedAction(e) {
+      const delBtn = e.target.closest(".del-btn");
+      if (delBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const block = delBtn.closest("figure") || delBtn.closest(".sticky-callout") || delBtn.closest(".img-row-block") || delBtn.closest(".washi-tape") || delBtn.closest(".doodle-divider-wrap") || delBtn.closest(".pull-quote") || delBtn.closest("pre");
+        if (block) {
+          block.remove();
+          updateCounts();
+          updateSaveStatus("unsaved");
+        }
+        return;
+      }
+
+      const colorDot = e.target.closest(".ctrl-dot");
+      if (colorDot) {
+        e.preventDefault();
+        e.stopPropagation();
+        const sticky = colorDot.closest(".sticky-callout");
+        if (sticky) {
+          const cls = colorDot.dataset.setColor;
+          sticky.classList.remove("sticky-callout-blue", "sticky-callout-green", "sticky-callout-pink");
+          if (cls) sticky.classList.add(cls);
+          updateSaveStatus("unsaved");
+        }
+        return;
+      }
+
+      const tiltBtn = e.target.closest("[data-tilt]");
+      if (tiltBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const pol = tiltBtn.closest(".polaroid");
+        if (pol) {
+          const tilt = tiltBtn.dataset.tilt;
+          pol.classList.remove("tilt-l", "tilt-r");
+          if (tilt) pol.classList.add(tilt);
+          updateSaveStatus("unsaved");
+        }
+        return;
+      }
+    }
+
+    if (editor) editor.addEventListener("click", handleEmbedAction);
+
     // ── Formatting toolbar binding ──
-    document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn => {
+    document.querySelectorAll(".desk-btn[data-cmd]").forEach(btn => {
       btn.addEventListener("mousedown", e => {
         e.preventDefault();
         const cmd = btn.dataset.cmd;
@@ -1339,32 +1639,46 @@
       });
     }
 
-    // ── Font picker ──
-    document.querySelectorAll(".font-btn").forEach(btn => {
+    // ── Font selector dropdown ──
+    const fontSelectBtn = document.getElementById("fontSelectBtn");
+    const fontMenu = document.getElementById("fontMenu");
+    const fontCurrentLabel = document.getElementById("fontCurrentLabel");
+
+    fontSelectBtn?.addEventListener("mousedown", e => {
+      e.preventDefault();
+      fontMenu?.classList.toggle("open");
+    });
+
+    document.querySelectorAll(".font-option").forEach(btn => {
       btn.addEventListener("mousedown", e => {
         e.preventDefault();
-        document.querySelectorAll(".font-btn").forEach(b => {
+        document.querySelectorAll(".font-option").forEach(b => {
           b.classList.remove("active");
           b.setAttribute("aria-checked", "false");
         });
         btn.classList.add("active");
         btn.setAttribute("aria-checked", "true");
+        if (fontCurrentLabel) {
+          fontCurrentLabel.textContent = btn.textContent.split(" ")[0];
+        }
+        fontMenu?.classList.remove("open");
         
         const font = btn.dataset.font || "";
         applyInlineStyle({ fontFamily: font });
       });
-      btn.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          btn.click();
-        }
-      });
+    });
+
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".font-select-wrap")) {
+        fontMenu?.classList.remove("open");
+      }
     });
 
     // ── Text color picker ──
-    document.querySelectorAll(".text-color-swatch").forEach(sw => {
-      sw.addEventListener("click", () => {
-        document.querySelectorAll(".text-color-swatch").forEach(s => {
+    document.querySelectorAll(".desk-color-swatch").forEach(sw => {
+      sw.addEventListener("mousedown", e => {
+        e.preventDefault();
+        document.querySelectorAll(".desk-color-swatch").forEach(s => {
           s.classList.remove("active");
           s.setAttribute("aria-checked", "false");
         });
@@ -1374,19 +1688,16 @@
         currentColor = sw.dataset.color;
         applyInlineStyle({ color: currentColor });
       });
-      sw.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          sw.click();
-        }
-      });
     });
 
     const customColorInput = document.getElementById("customColorInput");
-    document.getElementById("customColorBtn")?.addEventListener("click", () => customColorInput?.click());
+    document.getElementById("customColorBtn")?.addEventListener("mousedown", e => {
+      e.preventDefault();
+      customColorInput?.click();
+    });
     customColorInput?.addEventListener("input", () => {
       currentColor = customColorInput.value;
-      document.querySelectorAll(".text-color-swatch").forEach(s => {
+      document.querySelectorAll(".desk-color-swatch").forEach(s => {
         s.classList.remove("active");
         s.setAttribute("aria-checked", "false");
       });
@@ -1400,7 +1711,7 @@
       "highlight-b": "rgba(100,150,255,0.35)",
       "highlight-g": "rgba(100,220,100,0.35)"
     };
-    document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn => {
+    document.querySelectorAll(".desk-btn[data-highlight]").forEach(btn => {
       btn.addEventListener("mousedown", e => {
         e.preventDefault();
         const cls = btn.dataset.highlight;
@@ -1417,8 +1728,8 @@
         popupEl.style.top = "";
       } else {
         const r = buttonEl.getBoundingClientRect();
-        popupEl.style.left = (r.right + 8) + "px";
-        popupEl.style.top = Math.min(Math.max(10, r.top), window.innerHeight - 340) + "px";
+        popupEl.style.left = Math.max(10, Math.min(r.left, window.innerWidth - 300)) + "px";
+        popupEl.style.top = (r.bottom + 8) + "px";
       }
     }
 
@@ -1428,19 +1739,13 @@
       positionPopup(sp, e.currentTarget);
       sp?.classList.toggle("open");
       const sel = window.getSelection();
-      if (sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
+      if (sel && sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
     });
     
     document.querySelectorAll(".sticker-option").forEach(opt => {
       opt.addEventListener("click", () => {
         insertAtCursor(`<span class='floating-sticker'>${opt.textContent}</span>`);
         sp?.classList.remove("open");
-      });
-      opt.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          opt.click();
-        }
       });
     });
     
@@ -1463,16 +1768,12 @@
       const variants = ["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"];
       const v = variants[Math.floor(Math.random()*variants.length)];
       const id = "sticky-" + Date.now();
-      insertAtCursor(`<div id="${id}" class="sticky-callout${v?" "+v:""}" contenteditable="true" data-sticky="1">Write your note here...</div><p><br></p>`);
+      const ctrls = createEmbedControlsHTML("sticky");
+      insertAtCursor(`<div id="${id}" class="sticky-callout${v?" "+v:""}" contenteditable="true" data-sticky="1">${ctrls}Write your note here...</div><p><br></p>`);
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) {
           el.focus();
-          const r = document.createRange();
-          r.selectNodeContents(el);
-          const s = window.getSelection();
-          s.removeAllRanges();
-          s.addRange(r);
         }
       }, 50);
     });
@@ -1487,9 +1788,10 @@
     const doodleBtn = document.getElementById("insertDoodleBtn");
     if (doodleBtn) doodleBtn.addEventListener("mousedown", e => {
       e.preventDefault();
+      const ctrls = createEmbedControlsHTML("generic");
       const w = [
-        `<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='${currentColor}' stroke-width='1.5' opacity='0.4'/></svg>`,
-        `<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><line x1='0' y1='10' x2='400' y2='10' stroke='${currentColor}' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg>`
+        `<div class='doodle-divider-wrap' style='position:relative;margin:16px 0;'>${ctrls}<svg class='doodle-divider' viewBox='0 0 400 20' height='20' style='width:100%'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='${currentColor}' stroke-width='1.5' opacity='0.4'/></svg></div>`,
+        `<div class='doodle-divider-wrap' style='position:relative;margin:16px 0;'>${ctrls}<svg class='doodle-divider' viewBox='0 0 400 20' height='20' style='width:100%'><line x1='0' y1='10' x2='400' y2='10' stroke='${currentColor}' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg></div>`
       ];
       insertAtCursor(w[Math.floor(Math.random()*2)] + "<p><br></p>");
     });
@@ -1498,27 +1800,25 @@
     const pullBtn = document.getElementById("insertPullBtn");
     if (pullBtn) pullBtn.addEventListener("mousedown", e => {
       e.preventDefault();
-      insertAtCursor("<div class='pull-quote' contenteditable='true'>Your pull quote here...</div><p><br></p>");
+      const ctrls = createEmbedControlsHTML("generic");
+      insertAtCursor(`<div class='pull-quote' contenteditable='true'>${ctrls}Your pull quote here...</div><p><br></p>`);
     });
 
     // ── Code block ──
     const codeBtn = document.getElementById("insertCodeBtn");
     if (codeBtn) codeBtn.addEventListener("mousedown", e => {
       e.preventDefault();
-      insertAtCursor("<pre contenteditable='true'>// paste your code here</pre><p><br></p>");
+      const ctrls = createEmbedControlsHTML("generic");
+      insertAtCursor(`<pre contenteditable='true'>${ctrls}// paste your code here</pre><p><br></p>`);
     });
 
     // ── Washi tape ──
     document.querySelectorAll(".tape-swatch").forEach(sw => {
-      sw.addEventListener("click", () => {
-        insertAtCursor(`<div class='washi-tape' style='--tape-color:${sw.dataset.tape}'></div><p><br></p>`);
+      sw.addEventListener("mousedown", e => {
+        e.preventDefault();
+        const ctrls = createEmbedControlsHTML("generic");
+        insertAtCursor(`<div class='washi-tape' style='--tape-color:${sw.dataset.tape};position:relative;'>${ctrls}</div><p><br></p>`);
         editor?.focus();
-      });
-      sw.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          sw.click();
-        }
       });
     });
 
@@ -1560,7 +1860,7 @@
       positionPopup(imgPopup, e.currentTarget);
       imgPopup?.classList.toggle("open");
       const sel = window.getSelection();
-      if (sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
+      if (sel && sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
     });
     
     document.getElementById("inlineImgUploadBtn")?.addEventListener("click", () => {
@@ -1577,12 +1877,6 @@
         btn.classList.add("active");
         btn.setAttribute("aria-checked", "true");
         selectedImgAlign = btn.dataset.align;
-      });
-      btn.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          btn.click();
-        }
       });
     });
 
@@ -1602,9 +1896,11 @@
       let html;
       if (frameStyle === "tilt-l" || frameStyle === "tilt-r" || frameStyle === "straight") {
         const tiltClass = frameStyle === "tilt-l" ? "tilt-l" : frameStyle === "tilt-r" ? "tilt-r" : "";
-        html = `<figure id="${imgId}" class="${alignClass}" style="display:inline-block;max-width:${selectedImgAlign==='full'?'100%':'220px'}"><div class="polaroid ${tiltClass}"><img src="${localUrl}" alt="${caption}" style="width:100%;display:block;height:160px;object-fit:cover">${caption ? `<span class='polaroid-caption'>${caption}</span>` : ""}</div></figure><p><br></p>`;
+        const ctrls = createEmbedControlsHTML("polaroid");
+        html = `<figure id="${imgId}" class="${alignClass}" style="display:inline-block;max-width:${selectedImgAlign==='full'?'100%':'240px'};position:relative">${ctrls}<div class="polaroid ${tiltClass}"><img src="${localUrl}" alt="${caption}" style="width:100%;display:block;height:160px;object-fit:cover">${caption ? `<span class='polaroid-caption'>${caption}</span>` : ""}</div></figure><p><br></p>`;
       } else {
-        html = `<figure id="${imgId}" class="${alignClass}"><img src="${localUrl}" alt="${caption}" style="display:block">${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure><p><br></p>`;
+        const ctrls = createEmbedControlsHTML("generic");
+        html = `<figure id="${imgId}" class="${alignClass}" style="position:relative">${ctrls}<img src="${localUrl}" alt="${caption}" style="display:block">${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure><p><br></p>`;
       }
       
       insertAtCursor(html);
@@ -1632,7 +1928,7 @@
       positionPopup(imgRowPopup, e.currentTarget);
       imgRowPopup?.classList.toggle("open");
       const sel = window.getSelection();
-      if (sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
+      if (sel && sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
     });
 
     const rowUrls = [null, null, null];
@@ -1675,9 +1971,10 @@
       const style = document.getElementById("imgRowStyle").value;
       const tilts = ["tilt-l", "", "tilt-r"];
       
+      const ctrls = createEmbedControlsHTML("generic");
       const html = style === "polaroid"
-        ? `<div class="img-row-block">${validUrls.map((u, i) => `<figure><div class="polaroid ${tilts[i % 3]}"><img src="${u}" style="width:100%;display:block;height:120px;object-fit:cover"></div></figure>`).join("")}</div><p><br></p>`
-        : `<div class="img-row-block">${validUrls.map(u => `<figure><img src="${u}"></figure>`).join("")}</div><p><br></p>`;
+        ? `<div class="img-row-block" style="position:relative">${ctrls}${validUrls.map((u, i) => `<figure><div class="polaroid ${tilts[i % 3]}"><img src="${u}" style="width:100%;display:block;height:120px;object-fit:cover"></div></figure>`).join("")}</div><p><br></p>`
+        : `<div class="img-row-block" style="position:relative">${ctrls}${validUrls.map(u => `<figure><img src="${u}"></figure>`).join("")}</div><p><br></p>`;
       
       insertAtCursor(html);
       imgRowPopup?.classList.remove("open");
@@ -1844,6 +2141,7 @@
       const rawHtml = quill ? quill.root.innerHTML : (editor ? editor.innerHTML : "");
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = rawHtml;
+      tempDiv.querySelectorAll(".embed-ctrls").forEach(el => el.remove());
       tempDiv.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
       tempDiv.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
       return sanitizeHTML(tempDiv.innerHTML);
@@ -1887,6 +2185,7 @@
           } else if (editor && draft.content) {
             editor.innerHTML = draft.content;
           }
+          restoreEmbedControls();
           if (draft.template) {
             activeTemplate = draft.template;
             body.setAttribute("data-t", draft.template);
