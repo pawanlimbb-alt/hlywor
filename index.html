@@ -512,6 +512,73 @@
     @media(max-width:640px){.mobile-topbar{display:flex;}#authSlotMobile .auth-nav-btn{font-size:0;padding:3px;border-radius:50%;width:34px;height:34px;justify-content:center;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);}#authSlotMobile .auth-nav-btn svg{margin:0;}#authSlotMobile .auth-user-btn{padding:2px;border-radius:50%;border:1.5px solid rgba(232,104,26,0.5);background:none;}#authSlotMobile .auth-user-btn img{width:28px;height:28px;border-radius:50%;}#authSlotMobile .auth-user-name,#authSlotMobile .auth-chevron{display:none;}#authSlotMobile .auth-dropdown{right:0;left:auto;top:38px;position:fixed;z-index:9999;}.board{padding-top:0;}}
   </style>
 <style>
+  /* Mobile topbar Night Mode button */
+  .mtb-night-btn {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mtb-night-btn:active {
+    background: rgba(212,160,32,0.2);
+    transform: scale(0.95);
+  }
+
+  /* Pinboard Section & Attached Filter Bar */
+  .pinboard-section {
+    margin-top: 12px;
+  }
+  .pinboard-header-bar {
+    background: var(--paper);
+    border: 1px solid rgba(26,18,8,0.12);
+    border-radius: 4px;
+    padding: 16px 18px 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  body.night-mode .pinboard-header-bar {
+    background: #140e08;
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .pinboard-title-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(26,18,8,0.15);
+  }
+  body.night-mode .pinboard-title-group {
+    border-bottom-color: rgba(255,255,255,0.08);
+  }
+  .pinboard-main-title {
+    font-family: var(--pixel);
+    font-size: 0.64rem;
+    color: var(--fire);
+    letter-spacing: 2px;
+  }
+  body.night-mode .pinboard-main-title {
+    color: var(--gold);
+  }
+  .pinboard-filters-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
   /* ── Desk Tray: compact wrapper ── */
   .desk-tray {
     background: var(--paper);
@@ -952,6 +1019,7 @@
   <div class="mobile-topbar" role="banner">
     <a href="index.html" class="mtb-logo" aria-label="HlyWor Home">HlYWoR</a>
     <div class="mtb-right">
+      <button type="button" class="mtb-night-btn" id="nightModeWidgetMobile" aria-label="Toggle Night Mode" title="Toggle Night Mode">🌙 Theme</button>
       <div id="authSlotMobile" aria-label="Account"></div>
       <button class="mtb-search-btn" id="mtbSearchBtn" aria-label="Open search">⌕</button>
     </div>
@@ -1108,121 +1176,124 @@
       </div>
     </div>
 
-    <!-- 2. Compact Desk Strip (Prompt + Editor's Pick + Micro Note) -->
-<div class="desk-tray" id="deskTray">
-
-  <!-- Row 1: Prompt pill + Editor's pick pill -->
-  <div class="desk-row desk-row-top">
-    <div class="midnight-prompt-sheet reveal" id="midnightPromptSheet">
-      <div class="midnight-pin"></div>
-      <div class="prompt-header">
-        <span class="prompt-label">✨ 3 AM PROMPT</span>
-        <button type="button" class="prompt-shuffle-btn" id="promptShuffleBtn">⟳ shuffle</button>
-      </div>
-      <p class="prompt-question" id="promptQuestion">"What is a conversation you rehearsed 100 times in your head, but never actually had?"</p>
-      <div class="prompt-actions">
-        <a href="submit.html?prompt=The%20conversation%20I%20rehearsed%20100%20times&title=The%20Conversation%20I%20Never%20Had" class="prompt-write-btn" id="promptWriteCta">Write this ✍️</a>
-        <span class="prompt-helper">Post anonymously or under your name.</span>
-      </div>
-    </div>
-
-    <!-- Editor's Pick -->
-    <div class="featured-banner reveal" id="featuredBanner" style="display:none">
-      <div class="gold-pin"></div>
-      <span class="featured-badge">✦ EDITOR'S PICK</span>
-      <a href="#" class="featured-title" id="featuredTitle">Loading featured story...</a>
-      <p class="featured-desc" id="featuredDesc"></p>
-      <div class="featured-footer">
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-family:var(--pixel);font-size:0.52rem;color:var(--fire);letter-spacing:1px" id="featuredCat">STORY</span>
-          <span style="font-family:var(--hand);font-size:0.95rem;color:var(--ink2)" id="featuredAuthor">by Author</span>
-        </div>
-        <a href="#" class="featured-btn" id="featuredReadBtn">Read →</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Row 2: Category ribbon + Sort -->
-  <div class="tape-filter reveal" id="tagBar" role="tablist" aria-label="Filter stories">
-    <button class="tape-tab active" data-tag="all" role="tab" aria-selected="true" aria-controls="postsGrid">ALL</button>
-    <button class="tape-tab" data-tag="3am" role="tab" aria-selected="false" aria-controls="postsGrid">🌙 3 AM</button>
-    <button class="tape-tab" data-tag="unsaid" role="tab" aria-selected="false" aria-controls="postsGrid">💔 UNSAID</button>
-    <button class="tape-tab" data-tag="story" role="tab" aria-selected="false" aria-controls="postsGrid">📖 STORY</button>
-    <button class="tape-tab" data-tag="college" role="tab" aria-selected="false" aria-controls="postsGrid">☕ COLLEGE</button>
-    <button class="tape-tab" data-tag="thoughts" role="tab" aria-selected="false" aria-controls="postsGrid">💭 THOUGHTS</button>
-    <button class="tape-tab" data-tag="healing" role="tab" aria-selected="false" aria-controls="postsGrid">🌿 HEALING</button>
-    <button class="tape-tab" data-tag="movies" role="tab" aria-selected="false" aria-controls="postsGrid">🎬 MOVIES</button>
-    <button class="tape-tab" data-tag="books" role="tab" aria-selected="false" aria-controls="postsGrid">📚 BOOKS</button>
-  </div>
-
-  <div class="sort-bar reveal" id="sortBar" role="group" aria-label="Sort stories">
-    <button class="sort-tab active" data-sort="latest" aria-pressed="true" aria-controls="postsGrid">🕐 Latest</button>
-    <button class="sort-tab" data-sort="random" aria-pressed="false" aria-controls="postsGrid">🎲 Random</button>
-  </div>
-
-  <!-- Row 3: Micro-notes – compact collapsible row -->
-  <div class="micro-notes-box reveal" id="microNotesBox">
-    <!-- Header row with toggle to expand/collapse -->
-    <div class="micro-head" id="microHead">
-      <button class="micro-head-toggle" id="microToggleBtn" aria-expanded="false" aria-controls="microBody">
-        <span class="micro-head-title">📌 DROP A NOTE</span>
-        <span class="micro-head-sub">Raw · 1-2 lines · expires in 48h</span>
-        <span class="micro-head-chevron">▸</span>
-      </button>
-      <!-- Feed view toggle (always visible) -->
-      <div class="micro-view-tabs" role="tablist">
-        <button class="micro-view-toggle-btn active" data-view="global" role="tab">🌍 Global</button>
-        <button class="micro-view-toggle-btn" data-view="following" role="tab">👥 Following</button>
-      </div>
-    </div>
-
-    <!-- Collapsible body -->
-    <div class="micro-body" id="microBody" hidden>
-      <!-- Compose area -->
-      <div class="micro-compose">
-        <div class="micro-compose-row">
-          <textarea class="micro-textarea" id="microTextarea" maxlength="180" placeholder="Type a midnight thought, confession, or feeling…" rows="2"></textarea>
-        </div>
-        <div class="micro-actions">
-          <div class="micro-emojis" id="microEmojis">
-            <button type="button" class="micro-emoji-btn selected" data-emoji="🌙">🌙</button>
-            <button type="button" class="micro-emoji-btn" data-emoji="❤️">❤️</button>
-            <button type="button" class="micro-emoji-btn" data-emoji="😭">😭</button>
-            <button type="button" class="micro-emoji-btn" data-emoji="🔥">🔥</button>
-            <button type="button" class="micro-emoji-btn" data-emoji="🫂">🫂</button>
-            <button type="button" class="micro-emoji-btn" data-emoji="✨">✨</button>
+    <!-- 2. Compact Desk Strip (3 AM Prompt + Editor's Pick + Micro Note) -->
+    <div class="desk-tray" id="deskTray" style="margin-bottom:28px">
+      <!-- Side by Side Prompt & Editor's Pick -->
+      <div class="desk-row desk-row-top">
+        <div class="midnight-prompt-sheet reveal" id="midnightPromptSheet">
+          <div class="midnight-pin"></div>
+          <div class="prompt-header">
+            <span class="prompt-label">✨ 3 AM PROMPT</span>
+            <button type="button" class="prompt-shuffle-btn" id="promptShuffleBtn">⟳ shuffle</button>
           </div>
-          <div class="micro-post-controls">
-            <!-- Post visibility: who can see it -->
-            <div class="micro-vis-select">
-              <label><input type="radio" name="visibility" value="global" checked> 🌍 Global</label>
-              <label><input type="radio" name="visibility" value="following"> 👥 Followers</label>
+          <p class="prompt-question" id="promptQuestion">"What is a conversation you rehearsed 100 times in your head, but never actually had?"</p>
+          <div class="prompt-actions">
+            <a href="submit.html?prompt=The%20conversation%20I%20rehearsed%20100%20times&title=The%20Conversation%20I%20Never%20Had" class="prompt-write-btn" id="promptWriteCta">Write this ✍️</a>
+          </div>
+        </div>
+
+        <!-- Editor's Pick -->
+        <div class="featured-banner reveal" id="featuredBanner" style="display:none">
+          <div class="gold-pin"></div>
+          <span class="featured-badge">✦ EDITOR'S PICK</span>
+          <a href="#" class="featured-title" id="featuredTitle">Loading featured story...</a>
+          <p class="featured-desc" id="featuredDesc"></p>
+          <div class="featured-footer">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:var(--pixel);font-size:0.52rem;color:var(--fire);letter-spacing:1px" id="featuredCat">STORY</span>
+              <span style="font-family:var(--hand);font-size:0.95rem;color:var(--ink2)" id="featuredAuthor">by Author</span>
             </div>
-            <button type="button" class="micro-pin-btn" id="microPinBtn">Pin Note 📌</button>
+            <a href="#" class="featured-btn" id="featuredReadBtn">Read →</a>
           </div>
         </div>
       </div>
-      <!-- Live feed -->
-      <div class="micro-feed" id="microFeed">
-        <p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">Loading notes…</p>
+
+      <!-- Micro Notes pad (Collapsible) -->
+      <div class="micro-notes-box reveal" id="microNotesBox">
+        <div class="micro-head" id="microHead">
+          <button class="micro-head-toggle" id="microToggleBtn" aria-expanded="false" aria-controls="microBody">
+            <span class="micro-head-title">📌 DROP A NOTE</span>
+            <span class="micro-head-sub">Raw · 1-2 lines · 48h expire</span>
+            <span class="micro-head-chevron">▸</span>
+          </button>
+          <div class="micro-view-tabs" role="tablist">
+            <button class="micro-view-toggle-btn active" data-view="global" role="tab">🌍 Global</button>
+            <button class="micro-view-toggle-btn" data-view="following" role="tab">👥 Following</button>
+          </div>
+        </div>
+
+        <div class="micro-body" id="microBody" hidden>
+          <div class="micro-compose">
+            <div class="micro-compose-row">
+              <textarea class="micro-textarea" id="microTextarea" maxlength="180" placeholder="Type a midnight thought, confession, or feeling…" rows="2"></textarea>
+            </div>
+            <div class="micro-actions">
+              <div class="micro-emojis" id="microEmojis">
+                <button type="button" class="micro-emoji-btn selected" data-emoji="🌙">🌙</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="❤️">❤️</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="😭">😭</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="🔥">🔥</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="🫂">🫂</button>
+                <button type="button" class="micro-emoji-btn" data-emoji="✨">✨</button>
+              </div>
+              <div class="micro-post-controls">
+                <div class="micro-vis-select">
+                  <label><input type="radio" name="visibility" value="global" checked> 🌍 Global</label>
+                  <label><input type="radio" name="visibility" value="following"> 👥 Followers</label>
+                </div>
+                <button type="button" class="micro-pin-btn" id="microPinBtn">Pin Note 📌</button>
+              </div>
+            </div>
+          </div>
+          <div class="micro-feed" id="microFeed">
+            <p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">Loading notes…</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </div><!-- end desk-tray -->
 
-</div><!-- end desk-tray -->
+    <!-- 3. PINBOARD STORIES FEED & ATTACHED CATEGORY FILTER RIBBON -->
+    <section class="pinboard-section" id="posts">
+      <div class="pinboard-header-bar reveal">
+        <div class="pinboard-title-group">
+          <div style="display:flex;align-items:center;gap:10px">
+            <h2 class="pinboard-main-title">// 📌 PINBOARD STORIES</h2>
+            <div id="recentlyPinnedInfo" style="display:flex;align-items:center;gap:6px">
+              <span id="recentlyPinnedDot" style="width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire);display:inline-block;opacity:0;transition:opacity 0.4s" aria-hidden="true"></span>
+              <span id="recentlyPinnedTime" style="font-family:var(--hand);font-size:0.92rem;color:var(--ink3);font-style:italic" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
 
-    <div id="posts" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-left:4px">
-      <span style="font-family:var(--pixel);font-size:0.62rem;color:rgba(245,237,216,0.5);letter-spacing:2px" aria-hidden="true">// RECENTLY PINNED</span>
-      <span id="recentlyPinnedDot" style="width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire);display:inline-block;opacity:0;transition:opacity 0.4s" aria-hidden="true"></span>
-      <span id="recentlyPinnedTime" style="font-family:var(--hand);font-size:0.92rem;color:rgba(245,237,216,0.5);font-style:italic" aria-live="polite"></span>
-    </div>
+        <!-- CATEGORY FILTER RIBBON MOUNTED DIRECTLY ON TOP OF STORIES GRID -->
+        <div class="pinboard-filters-row">
+          <div class="tape-filter" id="tagBar" role="tablist" aria-label="Filter stories by category">
+            <button class="tape-tab active" data-tag="all" role="tab" aria-selected="true" aria-controls="postsGrid">ALL</button>
+            <button class="tape-tab" data-tag="3am" role="tab" aria-selected="false" aria-controls="postsGrid">🌙 3 AM</button>
+            <button class="tape-tab" data-tag="unsaid" role="tab" aria-selected="false" aria-controls="postsGrid">💔 UNSAID</button>
+            <button class="tape-tab" data-tag="story" role="tab" aria-selected="false" aria-controls="postsGrid">📖 STORY</button>
+            <button class="tape-tab" data-tag="college" role="tab" aria-selected="false" aria-controls="postsGrid">☕ COLLEGE</button>
+            <button class="tape-tab" data-tag="thoughts" role="tab" aria-selected="false" aria-controls="postsGrid">💭 THOUGHTS</button>
+            <button class="tape-tab" data-tag="healing" role="tab" aria-selected="false" aria-controls="postsGrid">🌿 HEALING</button>
+            <button class="tape-tab" data-tag="movies" role="tab" aria-selected="false" aria-controls="postsGrid">🎬 MOVIES</button>
+            <button class="tape-tab" data-tag="books" role="tab" aria-selected="false" aria-controls="postsGrid">📚 BOOKS</button>
+          </div>
 
-    <div class="pinboard" id="postsGrid" role="list" aria-label="Pinned stories">
-      <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:60%"></div></div></div>
-      <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:75%"></div><div class="skel-line shimmer" style="width:55%"></div></div></div>
-      <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:70%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
-      <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:50%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:45%"></div></div></div>
-    </div>
+          <div class="sort-bar" id="sortBar" role="group" aria-label="Sort stories">
+            <button class="sort-tab active" data-sort="latest" aria-pressed="true" aria-controls="postsGrid">🕐 Latest</button>
+            <button class="sort-tab" data-sort="random" aria-pressed="false" aria-controls="postsGrid">🎲 Random</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE STORIES GRID -->
+      <div class="pinboard" id="postsGrid" role="list" aria-label="Pinned stories">
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:60%"></div></div></div>
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:75%"></div><div class="skel-line shimmer" style="width:55%"></div></div></div>
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:70%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:50%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:45%"></div></div></div>
+      </div>
+    </section>
 
     <div class="board-bottom" style="margin-top:56px">
       <div class="about-note reveal">
@@ -1304,17 +1375,20 @@
     // ── Night Mode (Midnight Theme) Toggle Logic ──
     const nightBtn = document.getElementById('nightModeWidget');
     const nightLabel = document.getElementById('nightModeLabel');
+    const nightBtnMobile = document.getElementById('nightModeWidgetMobile');
 
     function applyNightMode(isNight) {
       if (isNight) {
         document.body.classList.add('night-mode');
         nightBtn?.classList.add('active');
         if (nightLabel) nightLabel.textContent = '🌙 NIGHT: ON';
+        if (nightBtnMobile) nightBtnMobile.innerHTML = '☀️ Day';
         localStorage.setItem('hlywor_night_mode', 'on');
       } else {
         document.body.classList.remove('night-mode');
         nightBtn?.classList.remove('active');
         if (nightLabel) nightLabel.textContent = '🌙 NIGHT: OFF';
+        if (nightBtnMobile) nightBtnMobile.innerHTML = '🌙 Theme';
         localStorage.setItem('hlywor_night_mode', 'off');
       }
     }
@@ -1324,10 +1398,13 @@
       applyNightMode(true);
     }
 
-    nightBtn?.addEventListener('click', () => {
+    const toggleNightMode = () => {
       const isNight = document.body.classList.contains('night-mode');
       applyNightMode(!isNight);
-    });
+    };
+
+    nightBtn?.addEventListener('click', toggleNightMode);
+    nightBtnMobile?.addEventListener('click', toggleNightMode);
 
     // ── Real Live "Reading Now" Presence Tracking ──
     const PRESENCE_TIMEOUT_MS = 2.5 * 60 * 1000; // 2.5 minutes
