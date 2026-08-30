@@ -746,6 +746,10 @@
       <div class="micro-head">
         <span class="micro-head-title">📌 DROP A 5-SECOND NOTE</span>
         <span style="font-family:var(--sans);font-size:0.75rem;color:rgba(255,255,255,0.4)">Anonymous. Raw. 1-2 lines.</span>
+<div class="micro-visibility-toggle" style="margin-top:8px;display:flex;gap:8px;align-items:center;">
+  <label><input type="radio" name="visibility" value="following" checked> Following</label>
+  <label><input type="radio" name="visibility" value="global"> Global</label>
+</div>
       </div>
       <div class="micro-input-wrap">
         <textarea class="micro-textarea" id="microTextarea" maxlength="180" placeholder="Type a midnight thought, confession, or feeling here..."></textarea>
@@ -840,6 +844,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, query, orderBy, onSnapshot, where, getDocs, addDoc, deleteDoc, doc, setDoc, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initMicroNotes } from "./microNotes.js";
     import { injectAuthNav, requireLogin, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
     let app, db;
@@ -1011,33 +1016,7 @@
       { text: "To whoever is reading this at midnight: breathe. It gets better.", emoji: "🌙", time: "3h ago" }
     ];
 
-    function renderMicroNotes() {
-      const feed = document.getElementById('microFeed');
-      if (!feed) return;
-      const stored = JSON.parse(localStorage.getItem('hlywor_micro_notes') || '[]');
-      const allNotes = [...stored, ...sampleNotes].slice(0, 6);
-      feed.innerHTML = allNotes.map((n, i) => `
-        <div class="micro-card" style="transform:rotate(${(i%2===0?-1:1)*1.2}deg)">
-          <div class="micro-card-text">${n.text}</div>
-          <div class="micro-card-footer">
-            <span>${n.emoji} · ${n.time || 'just now'}</span>
-            <button class="micro-card-react" onclick="this.textContent = (parseInt(this.textContent)||1) + 1 + ' ❤️'">1 ❤️</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    document.getElementById('microPinBtn')?.addEventListener('click', () => {
-      const ta = document.getElementById('microTextarea');
-      const text = ta?.value.trim();
-      if (!text) return;
-      const stored = JSON.parse(localStorage.getItem('hlywor_micro_notes') || '[]');
-      stored.unshift({ text, emoji: selectedMicroEmoji, time: 'just now' });
-      localStorage.setItem('hlywor_micro_notes', JSON.stringify(stored.slice(0, 10)));
-      ta.value = '';
-      renderMicroNotes();
-    });
-    renderMicroNotes();
+  // Micro‑notes rendering now handled by Firestore‑backed microNotes.js module.
 
     // ✅ DYNAMIC QUOTE ROTATOR (pulls from live posts)
     const qEl = document.getElementById('randomQuote');
