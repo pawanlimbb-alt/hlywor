@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Emergency Diagnostic</title>
+  <style>
+    body { background: #1a1208; color: #faf6ee; font-family: monospace; padding: 20px; }
+    .test { padding: 10px; margin: 5px 0; background: #2a1f14; border-left: 3px solid #e8681a; }
+    .pass { border-color: #2ecc71; }
+    .fail { border-color: #e74c3c; }
+  </style>
+</head>
+<body>
+  <h1>🚨 Emergency Diagnostic</h1>
+  <div id="tests"></div>
+
+  <script>
+    const tests = document.getElementById('tests');
+
+    function test(name, fn) {
+      const div = document.createElement('div');
+      div.className = 'test';
+      try {
+        fn();
+        div.className += ' pass';
+        div.innerHTML = `✅ ${name}`;
+      } catch(e) {
+        div.className += ' fail';
+        div.innerHTML = `❌ ${name}<br><small>${e.message}</small>`;
+      }
+      tests.appendChild(div);
+    }
+
+    test('Basic JavaScript works', () => {
+      if (typeof document === 'undefined') throw new Error('No document');
+    });
+
+    test('Can query DOM', () => {
+      const el = document.getElementById('tests');
+      if (!el) throw new Error('Cannot find element');
+    });
+
+    test('ES6 modules supported', () => {
+      if (typeof Symbol === 'undefined') throw new Error('ES6 not supported');
+    });
+  </script>
+
+  <script type="module">
+    const tests = document.getElementById('tests');
+
+    function test(name, fn) {
+      const div = document.createElement('div');
+      div.className = 'test';
+      return fn().then(() => {
+        div.className += ' pass';
+        div.innerHTML = `✅ ${name}`;
+        tests.appendChild(div);
+      }).catch(e => {
+        div.className += ' fail';
+        div.innerHTML = `❌ ${name}<br><small>${e.message}</small>`;
+        tests.appendChild(div);
+      });
+    }
+
+    await test('Can import Firebase', async () => {
+      const module = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+      if (!module.initializeApp) throw new Error('Firebase not loaded');
+    });
+
+    await test('Can import auth.js', async () => {
+      try {
+        const module = await import("./auth.js");
+        if (!module.currentUser) throw new Error('auth.js missing exports');
+      } catch(e) {
+        throw new Error(`auth.js failed: ${e.message}`);
+      }
+    });
+
+    await test('Can import microNotes.js', async () => {
+      try {
+        const module = await import("./microNotes.js");
+        if (!module.initMicroNotes) throw new Error('microNotes.js missing exports');
+      } catch(e) {
+        throw new Error(`microNotes.js failed: ${e.message}`);
+      }
+    });
+
+    await test('Firebase connects', async () => {
+      const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+      const { getFirestore, collection, getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+
+      const app = initializeApp({
+        apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+        authDomain: "hlywor.firebaseapp.com",
+        projectId: "hlywor",
+        storageBucket: "hlywor.firebasestorage.app",
+        messagingSenderId: "697637160825",
+        appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+        measurementId: "G-MQDXDWHLX8"
+      });
+
+      const db = getFirestore(app);
+      const snap = await getDocs(collection(db, 'posts'));
+
+      const div = document.createElement('div');
+      div.className = 'test pass';
+      div.innerHTML = `✅ Found ${snap.size} posts in database`;
+      tests.appendChild(div);
+    });
+
+  </script>
+</body>
+</html>
