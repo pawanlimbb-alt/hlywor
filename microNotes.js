@@ -63,6 +63,7 @@ export function initMicroNotes(db) {
       textarea.value = "";
     } catch (e) {
       console.error("Failed to add micro-note", e);
+      alert("Error posting note: " + e.message);
     }
   };
 
@@ -101,14 +102,15 @@ export function initMicroNotes(db) {
 
     // Filter by current viewMode
     const filtered = allNotes.filter((note) => {
+      const isGlobal = !note.visibility || note.visibility === "global";
       if (viewMode === "global") {
         // Show all global notes + own notes regardless
-        return note.visibility === "global" || (user && note.authorUid === user.uid);
+        return isGlobal || (user && note.authorUid === user.uid);
       } else {
         // "following" mode: show notes from people you follow (+ own notes)
         return (
           (user && note.authorUid === user.uid) ||
-          followedUids.has(note.authorUid)
+          (note.authorUid && followedUids.has(note.authorUid))
         );
       }
     });
@@ -117,7 +119,7 @@ export function initMicroNotes(db) {
       const msg = viewMode === "following"
         ? "No notes from people you follow yet."
         : "No notes yet. Drop the first one!";
-      feed.innerHTML = '<p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">' + msg + "</p>";
+      feed.innerHTML = '<p style="opacity:0.5;font-size:0.85rem;text-align:center;padding:12px 0;">' + msg + "</p>";
       return;
     }
 
@@ -125,7 +127,8 @@ export function initMicroNotes(db) {
       .map((note, i) => {
         const isOwner = user && user.uid === note.authorUid;
         const timeAgo = note.createdAt ? timeSince(note.createdAt.toDate()) : "just now";
-        const visBadge = note.visibility === "global"
+        const isGlobal = !note.visibility || note.visibility === "global";
+        const visBadge = isGlobal
           ? '<span class="micro-vis-badge global">🌍 Global</span>'
           : '<span class="micro-vis-badge following">👥 Following</span>';
         const deleteBtn = isOwner
@@ -164,7 +167,14 @@ export function initMicroNotes(db) {
       snap.forEach((docSnap) => allNotes.push({ id: docSnap.id, ...docSnap.data() }));
       render();
     },
-    (err) => console.error("Micro-notes listener error:", err)
+    (err) => {
+      console.error("Micro-notes listener error:", err);
+      if (err.code === "permission-denied") {
+        if (feed) {
+          feed.innerHTML = '<p style="opacity:0.5;font-size:0.8rem;text-align:center;padding:12px 0;color:var(--fire);">Firestore security rule is blocking reads. Please update rules in Firebase Console to allow global reads.</p>';
+        }
+      }
+    }
   );
 
   // Wire view-mode toggle buttons (Following / Global tabs on the feed)
