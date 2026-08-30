@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Firebase Test</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #2a1f14; color: #faf6ee; }
+    .post { background: #faf6ee; color: #1a1208; padding: 15px; margin: 10px 0; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>HlyWor Posts - Simple Test</h1>
+  <div id="posts">Loading...</div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+      authDomain: "hlywor.firebaseapp.com",
+      projectId: "hlywor",
+      storageBucket: "hlywor.firebasestorage.app",
+      messagingSenderId: "697637160825",
+      appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+      measurementId: "G-MQDXDWHLX8"
+    });
+
+    const db = getFirestore(app);
+    const postsDiv = document.getElementById('posts');
+
+    onSnapshot(query(collection(db, 'posts'), where('status', '==', 'published')), snap => {
+      if (snap.empty) {
+        postsDiv.innerHTML = '<p>No posts found</p>';
+        return;
+      }
+
+      postsDiv.innerHTML = '';
+      snap.docs.forEach(doc => {
+        const post = doc.data();
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.innerHTML = `
+          <h3>${post.title || 'Untitled'}</h3>
+          <p>${post.desc || ''}</p>
+          <small>By ${post.author || 'Anonymous'} | ${post.category || 'uncategorized'}</small>
+        `;
+        postsDiv.appendChild(div);
+      });
+    }, err => {
+      postsDiv.innerHTML = `<p style="color: red;">Error: ${err.message}</p>`;
+    });
+  </script>
+</body>
+</html>
