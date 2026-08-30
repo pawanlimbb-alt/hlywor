@@ -18,11 +18,9 @@
   <!-- ✅ Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-  
   <!-- ✅ Quill Rich Text Engine (Pure Client-side JS) -->
-  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 
   <style>
     :root {
@@ -232,7 +230,7 @@
     /* ✅ Writing canvas & Quill Theme */
     .writing-canvas{padding:16px 36px 40px 36px;position:relative;min-height:600px;z-index:2;box-sizing:border-box}
     
-    .ql-toolbar.ql-snow { display: none !important; } /* We use our custom tools panel */
+    .ql-toolbar.ql-snow { display: none !important; }
     .ql-container.ql-snow { border: none !important; font-family: inherit !important; font-size: inherit !important; color: inherit !important; height: auto !important; }
     .ql-editor {
       min-height: 500px;
@@ -242,9 +240,13 @@
       font-size: 1.06rem;
       color: var(--t-ink);
       line-height: 32px;
-      caret-color: var(--t-acc);
+      position: relative;
+      z-index: 2;
       word-break: break-word;
+      caret-color: var(--t-acc);
       overflow-y: visible !important;
+      transition: all 0.3s;
+      cursor: text;
     }
     .ql-editor.ql-blank::before {
       color: var(--t-ink4) !important;
@@ -253,16 +255,21 @@
       right: 0 !important;
       font-family: var(--t-font) !important;
     }
-    .ql-editor p { margin-bottom: 8px; line-height: 32px; }
-    .ql-editor h2 { font-family: var(--t-title) !important; font-size: 1.8rem; color: var(--t-ink); line-height: 1.3; margin: 16px 0 8px; font-weight: 700; }
-    .ql-editor h3 { font-family: var(--t-title) !important; font-size: 1.3rem; color: var(--t-ink2); line-height: 1.3; margin: 12px 0 6px; }
-    .ql-editor blockquote { margin: 16px 0 !important; padding: 10px 20px !important; border-left: 3px solid var(--t-acc) !important; background: rgba(0,0,0,0.03); font-style: italic; color: var(--t-ink2); }
-    .ql-editor ul, .ql-editor ol { padding-left: 24px; margin: 8px 0; }
-    .ql-editor li { line-height: 32px; }
-    .ql-editor pre.ql-syntax { font-family: 'JetBrains Mono', monospace !important; background: rgba(0,0,0,0.85) !important; padding: 14px 18px !important; margin: 12px 0 !important; border: 1px solid rgba(255,255,255,0.08); overflow-x: auto; line-height: 1.6; color: #58a6ff !important; border-radius: 6px; }
-    .ql-editor code { font-family: 'JetBrains Mono', monospace !important; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; color: #79c0ff; }
+    body[data-t="magazine"] .ql-editor{font-size:1.05rem;line-height:1.8}
+    body[data-t="news"] .ql-editor{font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
+    body[data-t="tech"] .ql-editor{font-family:'DM Sans',sans-serif;font-size:0.95rem;line-height:1.8}
+    body[data-t="college"] .ql-editor{font-size:1.15rem;line-height:34px}
+    .ql-editor h2{font-family:var(--t-title) !important;font-size:1.8rem;color:var(--t-ink);line-height:1.3;margin:16px 0 8px;font-weight:700}
+    .ql-editor h3{font-family:var(--t-title) !important;font-size:1.3rem;color:var(--t-ink2);line-height:1.3;margin:12px 0 6px}
+    body[data-t="news"] .ql-editor h2{column-span:all;border-top:1px solid var(--t-ink);padding-top:8px}
+    .ql-editor blockquote{margin:16px 0 !important;padding:10px 20px !important;border-left:3px solid var(--t-acc) !important;background:rgba(0,0,0,0.03);font-style:italic;color:var(--t-ink2)}
+    body[data-t="tech"] .ql-editor blockquote{background:rgba(255,255,255,0.04);border-radius:0 4px 4px 0}
+    .ql-editor ul,.ql-editor ol{padding-left:24px;margin:8px 0}
+    .ql-editor li{line-height:32px}
+    .ql-editor pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.85);padding:14px 18px;margin:12px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.6;color:#58a6ff;border-radius:6px;display:block}
+    .ql-editor code{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88rem;color:#79c0ff}
     
-    /* ✅ Custom Content elements inside Quill */
+    /* ✅ Custom Content elements */
     .sticky-callout{display:block;background:#fef9c3;padding:12px 16px;margin:14px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.2);max-width:360px;font-family:'Caveat',cursive;font-size:1rem;color:#1a1208;line-height:1.6;position:relative;user-select:text;-webkit-user-select:text}
     .sticky-callout::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:48px;height:14px;background:rgba(240,190,40,0.65)}
     .sticky-callout:focus{outline:1px dashed rgba(0,0,0,0.2)}
@@ -445,6 +452,17 @@
       .tape-swatch{width:26px;height:16px;flex-shrink:0}
       .diary-tools[role="radiogroup"]{flex-direction:row !important}
       
+      /* Mobile top nav: ensure Publish button is always 100% visible */
+      .top-nav{padding:0 10px;height:48px;gap:6px}
+      .nav-left{gap:6px;flex-shrink:0}
+      .nav-sep,.nav-template-label{display:none}
+      .nav-right{gap:6px;flex-shrink:0;margin-left:auto}
+      .nav-save-status{display:none}
+      .nav-user-badge .nav-user-name{display:none}
+      .nav-user-badge img{width:22px;height:22px}
+      .preview-toggle{padding:5px 8px;font-size:0.65rem;letter-spacing:0}
+      .publish-btn{padding:6px 12px;font-size:0.68rem;letter-spacing:0.5px;flex-shrink:0}
+      
       .diary-area{padding:14px 8px 84px}
       .diary-book{max-width:100%}
       .writing-canvas,.page-header-area,.cover-zone{padding-left:14px;padding-right:14px}
@@ -465,8 +483,8 @@
       }
     }
     @media(max-width:480px){
-      .nav-right{gap:6px}
-      .publish-btn{padding:8px 10px;font-size:0.32rem}
+      .nav-right{gap:5px}
+      .publish-btn{padding:6px 10px;font-size:0.65rem}
       .template-bar .t-pill{padding:4px 10px;font-size:0.68rem}
     }
   </style>
@@ -860,6 +878,41 @@
       college: { label:"college life",  ph:"What happened today? What are you thinking about?\n\nAdd stickers, doodles, anything — this is your journal." },
     };
 
+    // ── Register Style Attributors for pure inline CSS styles ──
+    const FontStyle = Quill.import('attributors/style/font');
+    FontStyle.whitelist = ['Crimson Pro', 'Caveat', 'IM Fell English', 'Playfair Display', 'Kalam', 'JetBrains Mono'];
+    Quill.register(FontStyle, true);
+
+    const ColorStyle = Quill.import('attributors/style/color');
+    Quill.register(ColorStyle, true);
+
+    const BackgroundStyle = Quill.import('attributors/style/background');
+    Quill.register(BackgroundStyle, true);
+
+    let activeTemplate = "diary", selectedCat = "story", selectedMood = "", starRating = 0, currentColor = "#1a1208", uploadingCount = 0, isPreviewMode = false, draftId = null;
+    const body = document.body;
+
+    // ── Initialize Quill ──
+    const quill = new Quill('#quillContainer', {
+      theme: 'snow',
+      placeholder: TEMPLATES.diary.ph,
+      modules: {
+        toolbar: false,
+        history: { delay: 500, maxStack: 100, userOnly: true }
+      }
+    });
+
+    // Helper: Insert custom HTML at current cursor position
+    function insertAtCursor(html) {
+      const range = quill.getSelection(true);
+      const index = range ? range.index : quill.getLength();
+      quill.clipboard.dangerouslyPasteHTML(index, sanitizeHTML(html));
+      quill.setSelection(index + 1);
+      quill.focus();
+      updateCounts();
+      updateSaveStatus("unsaved");
+    }
+
     // ── Template picker ──
     document.querySelectorAll(".t-pill").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -892,9 +945,9 @@
     });
 
     // ── Date & UI init ──
-    const d=new Date();
-    document.getElementById("todayDate").textContent=d.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-    document.getElementById("newsDateline").textContent=d.toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric"}).toUpperCase()+" — HLYWOR NEWS";
+    const d = new Date();
+    document.getElementById("todayDate").textContent = d.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    document.getElementById("newsDateline").textContent = d.toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric"}).toUpperCase()+" — HLYWOR NEWS";
 
     function autoGrow(el){el.style.height="auto";el.style.height=el.scrollHeight+"px";}
     ["titleInput","descInput"].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener("input",()=>autoGrow(el));autoGrow(el);}});
@@ -949,7 +1002,6 @@
         el.setAttribute("aria-checked", "true");
         selectedMood=el.dataset.mood;
       });
-      // Keyboard support
       el.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -980,7 +1032,6 @@
           st.style.opacity=parseInt(st.dataset.v)<=starRating?"1":"0.3";
         });
       });
-      // Keyboard support
       s.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -1000,13 +1051,27 @@
         btn.setAttribute("aria-checked", "true");
         selectedCat=btn.dataset.cat;
       });
-      // Keyboard support
       btn.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           btn.click();
         }
       });
+    });
+
+    // ── Word/char count ──
+    function updateCounts() {
+      const text = quill ? quill.getText().trim() : "";
+      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      const chars = text.replace(/\s/g, "").length;
+      document.getElementById("wordCount").textContent = words;
+      document.getElementById("charCount").textContent = chars;
+      document.getElementById("readTimeCalc").textContent = "~" + Math.max(1, Math.ceil(words / 200)) + " min read";
+    }
+
+    quill.on("text-change", () => {
+      updateCounts();
+      updateSaveStatus("unsaved");
     });
 
     function updateSaveStatus(s){
@@ -1022,28 +1087,23 @@
       const temp = document.createElement('div');
       temp.innerHTML = html;
       
-      // Remove dangerous tags entirely
       const dangerousTags = ['script', 'iframe', 'object', 'embed', 'form', 'input', 'textarea', 'select', 'button', 'link', 'meta', 'base'];
       dangerousTags.forEach(tag => {
         temp.querySelectorAll(tag).forEach(el => el.remove());
       });
       
-      // Remove dangerous attributes from remaining elements
       temp.querySelectorAll('*').forEach(el => {
-        // Remove all event handlers (onclick, onerror, onload, etc.)
         [...el.attributes].forEach(attr => {
           if (attr.name.startsWith('on') || attr.name === 'formaction') {
             el.removeAttribute(attr.name);
           }
         });
-        // Remove javascript: and data: URLs (case-insensitive)
         ['href', 'src', 'action', 'xlink:href'].forEach(attrName => {
           const val = (el.getAttribute(attrName) || '').trim().toLowerCase();
           if (val.startsWith('javascript:') || val.startsWith('data:text/html') || val.startsWith('vbscript:')) {
             el.removeAttribute(attrName);
           }
         });
-        // Remove style expressions (IE legacy but safe to strip)
         const style = el.getAttribute('style') || '';
         if (/expression\s*\(|url\s*\(\s*["']?\s*javascript:/i.test(style)) {
           el.removeAttribute('style');
@@ -1053,57 +1113,7 @@
       return temp.innerHTML;
     }
 
-    // ── Register Custom Font Attributor to use inline styles ──
-    const FontAttributor = Quill.import('attributors/style/font');
-    FontAttributor.whitelist = [
-      'Crimson Pro',
-      'Caveat',
-      'IM Fell English',
-      'Playfair Display',
-      'Kalam',
-      'JetBrains Mono'
-    ];
-    Quill.register(FontAttributor, true);
-
-    let activeTemplate = "diary", selectedCat = "story", selectedMood = "", starRating = 0, currentColor = "#1a1208", uploadingCount = 0, isPreviewMode = false, draftId = null;
-    const body = document.body;
-
-    // ── Initialize Quill ──
-    const quill = new Quill('#quillContainer', {
-      theme: 'snow',
-      placeholder: TEMPLATES.diary.ph,
-      modules: {
-        toolbar: false, // Driven by our custom HlyWor toolbar
-        history: { delay: 500, maxStack: 100, userOnly: true }
-      }
-    });
-
-    // Helper: Insert custom HTML at current cursor position
-    function insertAtCursor(html) {
-      const range = quill.getSelection(true);
-      const index = range ? range.index : quill.getLength();
-      quill.clipboard.dangerouslyPasteHTML(index, sanitizeHTML(html));
-      quill.setSelection(index + 1);
-      quill.focus();
-      updateCounts();
-      updateSaveStatus("unsaved");
-    }
-
-    // ── Word & Character Count ──
-    function updateCounts() {
-      const text = quill.getText().trim();
-      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
-      const chars = text.replace(/\s/g, "").length;
-      document.getElementById("wordCount").textContent = words;
-      document.getElementById("charCount").textContent = chars;
-      document.getElementById("readTimeCalc").textContent = "~" + Math.max(1, Math.ceil(words / 200)) + " min read";
-    }
-    quill.on("text-change", () => {
-      updateCounts();
-      updateSaveStatus("unsaved");
-    });
-
-    // ── Formatting Toolbar Binding ──
+    // ── Formatting toolbar binding ──
     document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn => {
       btn.addEventListener("click", e => {
         e.preventDefault();
@@ -1165,8 +1175,8 @@
     });
 
     const customColorInput = document.getElementById("customColorInput");
-    document.getElementById("customColorBtn").addEventListener("click", () => customColorInput.click());
-    customColorInput.addEventListener("input", () => {
+    document.getElementById("customColorBtn")?.addEventListener("click", () => customColorInput.click());
+    customColorInput?.addEventListener("input", () => {
       currentColor = customColorInput.value;
       document.querySelectorAll(".text-color-swatch").forEach(s => {
         s.classList.remove("active");
@@ -1208,11 +1218,9 @@
 
     // ── Sticker picker ──
     const sp = document.getElementById("stickerPicker");
-    document.getElementById("insertStickerBtn").addEventListener("click", e => {
+    document.getElementById("insertStickerBtn")?.addEventListener("click", e => {
       positionPopup(sp, e.currentTarget);
       sp.classList.toggle("open");
-      const sel=window.getSelection();
-      if(sel.rangeCount && quill.root.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
     });
     
     document.querySelectorAll(".sticker-option").forEach(opt => {
@@ -1220,7 +1228,6 @@
         insertAtCursor(`<span class='floating-sticker'>${opt.textContent}</span>`);
         sp.classList.remove("open");
       });
-      // Keyboard support
       opt.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -1231,29 +1238,35 @@
     
     document.addEventListener("click", e => {
       if (!e.target.closest("#stickerPicker") && !e.target.closest("#insertStickerBtn")) {
-        sp.classList.remove("open");
+        sp?.classList.remove("open");
+      }
+      if (!e.target.closest("#imgPopup") && !e.target.closest("#insertImgBtn")) {
+        document.getElementById("imgPopup")?.classList.remove("open");
+      }
+      if (!e.target.closest("#imgRowPopup") && !e.target.closest("#insertImgRowBtn")) {
+        document.getElementById("imgRowPopup")?.classList.remove("open");
       }
     });
 
     // ── Sticky note ──
-    const stickyBtn=document.getElementById("insertStickyBtn");
-    if(stickyBtn) stickyBtn.addEventListener("mousedown", e => {
+    const stickyBtn = document.getElementById("insertStickyBtn");
+    if (stickyBtn) stickyBtn.addEventListener("mousedown", e => {
       e.preventDefault();
-      const variants=["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"];
-      const v=variants[Math.floor(Math.random()*variants.length)];
-      const id="sticky-"+Date.now();
+      const variants = ["","sticky-callout-blue","sticky-callout-green","sticky-callout-pink"];
+      const v = variants[Math.floor(Math.random()*variants.length)];
+      const id = "sticky-" + Date.now();
       insertAtCursor(`<div id="${id}" class="sticky-callout${v?" "+v:""}" contenteditable="true" data-sticky="1">Write your note here...</div><p><br></p>`);
-      setTimeout(()=>{
-        const el=document.getElementById(id);
-        if(el){
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
           el.focus();
-          const r=document.createRange();
+          const r = document.createRange();
           r.selectNodeContents(el);
-          const s=window.getSelection();
+          const s = window.getSelection();
           s.removeAllRanges();
           s.addRange(r);
         }
-      },50);
+      }, 50);
     });
     
     quill.root.addEventListener("click", e => {
@@ -1261,26 +1274,26 @@
     });
 
     // ── Doodle ──
-    const doodleBtn=document.getElementById("insertDoodleBtn");
-    if(doodleBtn) doodleBtn.addEventListener("mousedown", e => {
+    const doodleBtn = document.getElementById("insertDoodleBtn");
+    if (doodleBtn) doodleBtn.addEventListener("mousedown", e => {
       e.preventDefault();
-      const w=[
+      const w = [
         `<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><path d='M0 10 Q20 2 40 10 Q60 18 80 10 Q100 2 120 10 Q140 18 160 10 Q180 2 200 10 Q220 18 240 10 Q260 2 280 10 Q300 18 320 10 Q340 2 360 10 Q380 18 400 10' fill='none' stroke='${currentColor}' stroke-width='1.5' opacity='0.4'/></svg>`,
         `<svg class='doodle-divider' viewBox='0 0 400 20' height='20'><line x1='0' y1='10' x2='400' y2='10' stroke='${currentColor}' stroke-width='1' stroke-dasharray='8 4' opacity='0.35'/></svg>`
       ];
-      insertAtCursor(w[Math.floor(Math.random()*2)]+"<p><br></p>");
+      insertAtCursor(w[Math.floor(Math.random()*2)] + "<p><br></p>");
     });
 
     // ── Pull quote ──
-    const pullBtn=document.getElementById("insertPullBtn");
-    if(pullBtn) pullBtn.addEventListener("mousedown", e => {
+    const pullBtn = document.getElementById("insertPullBtn");
+    if (pullBtn) pullBtn.addEventListener("mousedown", e => {
       e.preventDefault();
       insertAtCursor("<div class='pull-quote' contenteditable='true'>Your pull quote here...</div><p><br></p>");
     });
 
     // ── Code block ──
-    const codeBtn=document.getElementById("insertCodeBtn");
-    if(codeBtn) codeBtn.addEventListener("mousedown", e => {
+    const codeBtn = document.getElementById("insertCodeBtn");
+    if (codeBtn) codeBtn.addEventListener("mousedown", e => {
       e.preventDefault();
       insertAtCursor("<pre contenteditable='true'>// paste your code here</pre><p><br></p>");
     });
@@ -1291,7 +1304,6 @@
         insertAtCursor(`<div class='washi-tape' style='--tape-color:${sw.dataset.tape}'></div><p><br></p>`);
         quill.focus();
       });
-      // Keyboard support
       sw.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -1333,19 +1345,17 @@
     }
 
     // ── Single image insert ──
-    const imgPopup=document.getElementById("imgPopup");
-    document.getElementById("insertImgBtn").addEventListener("click", e => {
+    const imgPopup = document.getElementById("imgPopup");
+    document.getElementById("insertImgBtn")?.addEventListener("click", e => {
       positionPopup(imgPopup, e.currentTarget);
       imgPopup.classList.toggle("open");
-      const sel=window.getSelection();
-      if(sel.rangeCount && quill.root.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
     });
     
-    document.getElementById("inlineImgUploadBtn").addEventListener("click", () => {
+    document.getElementById("inlineImgUploadBtn")?.addEventListener("click", () => {
       document.getElementById("inlineImgFile").click();
     });
 
-    let selectedImgAlign="center";
+    let selectedImgAlign = "center";
     document.querySelectorAll(".img-align-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".img-align-btn").forEach(b => {
@@ -1354,9 +1364,8 @@
         });
         btn.classList.add("active");
         btn.setAttribute("aria-checked", "true");
-        selectedImgAlign=btn.dataset.align;
+        selectedImgAlign = btn.dataset.align;
       });
-      // Keyboard support
       btn.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -1365,14 +1374,13 @@
       });
     });
 
-    document.getElementById("inlineImgFile").addEventListener("change", async () => {
+    document.getElementById("inlineImgFile")?.addEventListener("change", async () => {
       const file = document.getElementById("inlineImgFile").files[0];
-      if(!file) return;
+      if (!file) return;
       
       const frameStyle = document.getElementById("inlineImgStyle").value;
       const caption = document.getElementById("inlineImgCaption").value.trim();
       
-      // ✅ Compress image before upload
       const compressedFile = await compressImage(file);
       const localUrl = URL.createObjectURL(compressedFile);
       
@@ -1406,22 +1414,11 @@
       }
     });
 
-    document.addEventListener("click", e => {
-      if (!e.target.closest("#imgPopup") && !e.target.closest("#insertImgBtn")) {
-        imgPopup.classList.remove("open");
-      }
-      if (!e.target.closest("#imgRowPopup") && !e.target.closest("#insertImgRowBtn")) {
-        document.getElementById("imgRowPopup").classList.remove("open");
-      }
-    });
-
     // ── Image row ──
     const imgRowPopup = document.getElementById("imgRowPopup");
-    document.getElementById("insertImgRowBtn").addEventListener("click", e => {
+    document.getElementById("insertImgRowBtn")?.addEventListener("click", e => {
       positionPopup(imgRowPopup, e.currentTarget);
       imgRowPopup.classList.toggle("open");
-      const sel = window.getSelection();
-      if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
     });
 
     const rowUrls = [null, null, null];
@@ -1434,7 +1431,6 @@
         const file = input.files[0];
         if (!file) return;
         
-        // ✅ Compress
         const compressedFile = await compressImage(file);
         const localUrl = URL.createObjectURL(compressedFile);
         
@@ -1458,7 +1454,7 @@
     
     document.querySelectorAll(".img-row-slot").forEach((slot, i) => bindRowSlot(slot, i));
 
-    document.getElementById("imgRowInsert").addEventListener("click", () => {
+    document.getElementById("imgRowInsert")?.addEventListener("click", () => {
       const validUrls = rowUrls.filter(Boolean);
       if (!validUrls.length) return;
       
@@ -1486,22 +1482,22 @@
     const coverPreview = document.getElementById("coverPreview");
     const coverUrlEl = document.getElementById("coverUrl");
     
-    coverDrop.addEventListener("click", () => coverFile.click());
-    coverDrop.addEventListener("dragover", e => {
+    coverDrop?.addEventListener("click", () => coverFile.click());
+    coverDrop?.addEventListener("dragover", e => {
       e.preventDefault();
       coverDrop.style.borderColor = "var(--t-acc)";
     });
-    coverDrop.addEventListener("dragleave", () => coverDrop.style.borderColor = "");
-    coverDrop.addEventListener("drop", e => {
+    coverDrop?.addEventListener("dragleave", () => coverDrop.style.borderColor = "");
+    coverDrop?.addEventListener("drop", e => {
       e.preventDefault();
       coverDrop.style.borderColor = "";
       if (e.dataTransfer.files[0]) uploadCover(e.dataTransfer.files[0]);
     });
-    coverFile.addEventListener("change", () => {
+    coverFile?.addEventListener("change", () => {
       if (coverFile.files[0]) uploadCover(coverFile.files[0]);
     });
     
-    document.getElementById("coverClear").addEventListener("click", () => {
+    document.getElementById("coverClear")?.addEventListener("click", () => {
       coverPreview.style.display = "none";
       coverDrop.style.display = "block";
       coverUrlEl.value = "";
@@ -1510,7 +1506,6 @@
     });
 
     async function uploadCover(file) {
-      // ✅ Compress cover image
       const compressedFile = await compressImage(file, 1600, 0.85);
       const local = URL.createObjectURL(compressedFile);
       
@@ -1558,7 +1553,7 @@
     }
 
     // ── Publish modal ──
-    document.getElementById("publishOpenBtn").addEventListener("click", () => {
+    document.getElementById("publishOpenBtn")?.addEventListener("click", () => {
       if (!currentUser) {
         showLoginModal({ prompt: "Sign in to publish your post." });
         return;
@@ -1566,18 +1561,18 @@
       document.getElementById("publishModalBg").classList.add("open");
     });
     
-    document.getElementById("modalClose").addEventListener("click", () => {
+    document.getElementById("modalClose")?.addEventListener("click", () => {
       document.getElementById("publishModalBg").classList.remove("open");
     });
     
-    document.getElementById("publishModalBg").addEventListener("click", e => {
+    document.getElementById("publishModalBg")?.addEventListener("click", e => {
       if (e.target === document.getElementById("publishModalBg")) {
         document.getElementById("publishModalBg").classList.remove("open");
       }
     });
 
-    // ── Anonymous toggle: visually grey out the author name field ──
-    document.getElementById("anonCheck").addEventListener("change", e => {
+    // ── Anonymous toggle ──
+    document.getElementById("anonCheck")?.addEventListener("change", e => {
       const authorEl = document.getElementById("authorInput");
       if (e.target.checked) {
         authorEl.dataset.prevValue = authorEl.value;
@@ -1596,7 +1591,7 @@
     const tagInput = document.getElementById("tagInput");
     const tags = [];
     
-    tagInput.addEventListener("keydown", e => {
+    tagInput?.addEventListener("keydown", e => {
       if ((e.key === "Enter" || e.key === ",") && tagInput.value.trim()) {
         e.preventDefault();
         const t = tagInput.value.trim().replace(/,/g, "");
@@ -1610,7 +1605,6 @@
             tags.splice(tags.indexOf(t), 1);
             chip.remove();
           });
-          // Keyboard support for remove
           chip.querySelector(".rm").addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
@@ -1623,14 +1617,13 @@
       }
     });
     
-    tagsWrap.addEventListener("click", () => tagInput.focus());
+    tagsWrap?.addEventListener("click", () => tagInput?.focus());
 
     // ── Content serialization (safe) ──
     function serializeContent() {
-      const rawHtml = quill.getSemanticHTML ? quill.getSemanticHTML() : quill.root.innerHTML;
+      const rawHtml = quill ? quill.root.innerHTML : "";
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = rawHtml;
-      // Remove contenteditable and data attrs for published content
       tempDiv.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
       tempDiv.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
       return sanitizeHTML(tempDiv.innerHTML);
@@ -1644,7 +1637,7 @@
       const draft = {
         title: document.getElementById("titleInput").value,
         desc: document.getElementById("descInput").value,
-        content: serializeContent(),
+        content: quill ? quill.root.innerHTML : "",
         template: activeTemplate,
         category: selectedCat,
         mood: selectedMood,
@@ -1669,7 +1662,7 @@
           const draft = JSON.parse(saved);
           document.getElementById("titleInput").value = draft.title || "";
           document.getElementById("descInput").value = draft.desc || "";
-          if (draft.content) {
+          if (quill && draft.content) {
             quill.clipboard.dangerouslyPasteHTML(draft.content);
           }
           if (draft.template) {
@@ -1794,12 +1787,12 @@
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
       autoSaveTimer = setTimeout(() => {
         saveDraftLocally();
-        // Optional: sync to Firestore if online
         if (navigator.onLine && currentUser) {
           saveDraftToFirestore();
         }
       }, 2000);
     }
+    
     quill.on("text-change", triggerAutoSave);
     ["titleInput", "descInput", "authorInput"].forEach(id => {
       const el = document.getElementById(id);
@@ -1824,7 +1817,7 @@
     });
 
     // ── Preview mode ──
-    document.getElementById("previewToggle").addEventListener("click", () => {
+    document.getElementById("previewToggle")?.addEventListener("click", () => {
       isPreviewMode = !isPreviewMode;
       const toggle = document.getElementById("previewToggle");
       const overlay = document.getElementById("previewOverlay");
@@ -1843,7 +1836,7 @@
       }
     });
     
-    document.getElementById("previewClose").addEventListener("click", () => {
+    document.getElementById("previewClose")?.addEventListener("click", () => {
       isPreviewMode = false;
       document.getElementById("previewToggle").classList.remove("active");
       document.getElementById("previewToggle").setAttribute("aria-pressed", "false");
@@ -1855,7 +1848,6 @@
     function updatePreview() {
       const previewContent = document.getElementById("previewContent");
       
-      // Build preview HTML based on current template
       const title = document.getElementById("titleInput").value || "Untitled";
       const desc = document.getElementById("descInput").value || "";
       const coverUrl = document.getElementById("coverUrl").value;
@@ -1876,11 +1868,11 @@
     }
 
     // ── Submit / publish ──
-    document.getElementById("submitBtn").addEventListener("click", async () => {
+    document.getElementById("submitBtn")?.addEventListener("click", async () => {
       await publishPost("published");
     });
     
-    document.getElementById("draftBtn").addEventListener("click", async () => {
+    document.getElementById("draftBtn")?.addEventListener("click", async () => {
       await publishPost("draft");
     });
 
@@ -1899,7 +1891,7 @@
             coverUrl = document.getElementById("coverUrl").value,
             coverAlt = document.getElementById("coverAlt").value.trim(),
             content = serializeContent(),
-            plainText = quill.getText().trim(),
+            plainText = quill ? quill.getText().trim() : "",
             type = document.getElementById("typeSelect").value,
             agree = document.getElementById("agreeCheck").checked,
             agreeImg = document.getElementById("agreeImgCheck").checked,
@@ -1950,7 +1942,6 @@
       statusEl.textContent = "";
 
       try {
-        // ✅ Generate unique slug (client-side fallback)
         const baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
         const slug = baseSlug + "-" + Date.now().toString(36).slice(-4);
         
@@ -1971,10 +1962,6 @@
           author: name,
           isAnonymous: isAnonymous,
           date: new Date().toISOString(),
-          // auth fields — authorUid is kept (even when anonymous) so the
-          // writer can still see/manage this post from their own dashboard.
-          // Public pages must check isAnonymous before showing a follow
-          // button or linking this post to the writer's profile.
           authorUid: currentUser.uid,
           authorEmail: isAnonymous ? "" : (currentUser.email || ""),
           authorPhoto: isAnonymous ? "" : (currentUser.photoURL || ""),
@@ -1985,18 +1972,15 @@
         
         let docRef;
         if (draftId) {
-          // Update existing draft (whether publishing or saving again)
           docRef = doc(db, "posts", draftId);
           await setDoc(docRef, postData, { merge: true });
         } else {
-          // Create new post
           docRef = await addDoc(collection(db, "posts"), postData);
           if (status === "draft") {
             draftId = docRef.id;
           }
         }
         
-        // Clear local draft if published
         if (status === "published") {
           localStorage.removeItem(getDraftKey());
           draftId = null;
@@ -2009,7 +1993,6 @@
         statusEl.className = "modal-status ok";
         updateSaveStatus(status === "published" ? "saved" : "draft");
         
-        // Redirect after publish
         if (status === "published") {
           setTimeout(() => {
             window.location.href = "post.html?slug=" + slug;
