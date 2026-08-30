@@ -1,5 +1,5 @@
 // microNotes.js – Firestore backed micro-notes with expiration and visibility toggle
-import { collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc, Timestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 /**
@@ -7,19 +7,40 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-aut
  * Must be called AFTER initializeApp() has run so getAuth() can find the default app.
  */
 export function initMicroNotes(db) {
-  // Moved inside the function – runs after initializeApp()
   const auth = getAuth();
 
   const textarea = document.getElementById("microTextarea");
   const pinBtn = document.getElementById("microPinBtn");
   const feed = document.getElementById("microFeed");
   const visibilityInputs = document.getElementsByName("visibility");
+  const toggleBtns = document.querySelectorAll(".micro-view-toggle-btn");
+
+  // Which feed to view: "global" (everyone) or "following" (people you follow)
+  let viewMode = "global";
+
+  // Cache of followed UIDs for the current user
+  let followedUids = new Set();
 
   const getSelectedVisibility = () => {
     for (const inp of visibilityInputs) {
       if (inp.checked) return inp.value;
     }
-    return "following";
+    return "global";
+  };
+
+  // Load the set of UIDs the current user follows (from sticks collection)
+  const loadFollowedUids = async () => {
+    followedUids = new Set();
+    const user = auth.currentUser;
+    if (!user || !db) return;
+    try {
+      const snap = await getDocs(
+        query(collection(db, "sticks"), where("fromUid", "==", user.uid))
+      );
+      snap.forEach((d) => followedUids.add(d.data().toUid));
+    } catch (e) {
+      // sticks not available – leave followedUids empty
+    }
   };
 
   const createNote = async () => {
@@ -70,23 +91,53 @@ export function initMicroNotes(db) {
     return "just now";
   };
 
-  const render = (notes) => {
+  // All notes fetched from Firestore (client-side filtered by viewMode)
+  let allNotes = [];
+
+  const render = () => {
     if (!feed) return;
-    if (notes.length === 0) {
-      feed.innerHTML = '<p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px;">No notes yet. Be the first to drop one!</p>';
+
+    const user = auth.currentUser;
+
+    // Filter by current viewMode
+    const filtered = allNotes.filter((note) => {
+      if (viewMode === "global") {
+        // Show all global notes + own notes regardless
+        return note.visibility === "global" || (user && note.authorUid === user.uid);
+      } else {
+        // "following" mode: show notes from people you follow (+ own notes)
+        return (
+          (user && note.authorUid === user.uid) ||
+          followedUids.has(note.authorUid)
+        );
+      }
+    });
+
+    if (filtered.length === 0) {
+      const msg = viewMode === "following"
+        ? "No notes from people you follow yet."
+        : "No notes yet. Drop the first one!";
+      feed.innerHTML = '<p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">' + msg + "</p>";
       return;
     }
-    feed.innerHTML = notes
+
+    feed.innerHTML = filtered
       .map((note, i) => {
-        const isOwner = auth.currentUser && auth.currentUser.uid === note.authorUid;
+        const isOwner = user && user.uid === note.authorUid;
         const timeAgo = note.createdAt ? timeSince(note.createdAt.toDate()) : "just now";
+        const visBadge = note.visibility === "global"
+          ? '<span class="micro-vis-badge global">🌍 Global</span>'
+          : '<span class="micro-vis-badge following">👥 Following</span>';
         const deleteBtn = isOwner
-          ? '<button class="micro-card-delete" data-id="' + note.id + '" title="Delete">🗑️</button>'
+          ? '<button class="micro-card-delete" data-id="' + note.id + '" title="Delete note">✕</button>'
           : "";
         return '<div class="micro-card" style="transform:rotate(' + (i % 2 === 0 ? -1 : 1) + 'deg)">'
-          + '<div class="micro-card-text"><strong>' + note.emoji + "</strong> " + note.content + "</div>"
+          + '<div class="micro-card-emoji">' + note.emoji + "</div>"
+          + '<div class="micro-card-text">' + note.content + "</div>"
           + '<div class="micro-card-footer">'
-          + "<span>" + note.authorName + " • " + timeAgo + "</span>"
+          + '<span class="micro-card-author">' + note.authorName + "</span>"
+          + '<span class="micro-card-time">' + timeAgo + "</span>"
+          + visBadge
           + deleteBtn
           + "</div>"
           + "</div>";
@@ -98,9 +149,8 @@ export function initMicroNotes(db) {
     });
   };
 
-  // Use Firestore Timestamp for the cutoff – plain JS Date is not accepted
+  // Listen to all non-expired notes; client-side filter handles visibility
   const cutoff = Timestamp.fromDate(new Date(Date.now() - 48 * 60 * 60 * 1000));
-
   const notesQuery = query(
     collection(db, "microNotes"),
     where("createdAt", ">", cutoff),
@@ -110,17 +160,34 @@ export function initMicroNotes(db) {
   onSnapshot(
     notesQuery,
     (snap) => {
-      const notes = [];
-      snap.forEach((docSnap) => {
-        const data = docSnap.data();
-        if (data.visibility === "global" || data.visibility === "following") {
-          notes.push({ id: docSnap.id, ...data });
-        }
-      });
-      render(notes);
+      allNotes = [];
+      snap.forEach((docSnap) => allNotes.push({ id: docSnap.id, ...docSnap.data() }));
+      render();
     },
     (err) => console.error("Micro-notes listener error:", err)
   );
 
+  // Wire view-mode toggle buttons (Following / Global tabs on the feed)
+  toggleBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      viewMode = btn.dataset.view || "global";
+      toggleBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      render();
+    });
+  });
+
+  // Wire pin button
   pinBtn?.addEventListener("click", createNote);
+
+  // Load followed UIDs when auth state is known, then re-render
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      await loadFollowedUids();
+      render();
+    } else {
+      followedUids = new Set();
+      render();
+    }
+  });
 }
