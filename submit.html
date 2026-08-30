@@ -19,6 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- ✅ Quill Rich Text Engine CDN -->
+  <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.7/quill.snow.css">
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 
   <style>
     :root {
@@ -225,13 +228,15 @@
     body[data-t="tech"] .cover-preview img{max-height:240px;border:1px solid rgba(255,255,255,0.08)}
     .cover-clear{position:absolute;top:8px;right:8px;font-family:var(--pixel);font-size:0.55rem;color:#fff;background:rgba(0,0,0,0.55);padding:4px 8px;border:none;cursor:pointer}
     
-    /* ✅ Writing canvas & Diary Editor */
+    /* ✅ Writing canvas & Quill / Diary Editor */
     .writing-canvas{padding:16px 36px 40px 36px;position:relative;min-height:600px;z-index:2;box-sizing:border-box;cursor:text}
     
-    .diary-editor {
+    .ql-toolbar.ql-snow{display:none !important}
+    .ql-container.ql-snow{border:none !important;font-family:inherit !important;font-size:inherit !important;color:inherit !important;height:auto !important}
+    .ql-editor, .diary-editor {
       min-height: 500px;
-      padding: 0;
-      outline: none;
+      padding: 0 !important;
+      outline: none !important;
       font-family: var(--t-font);
       font-size: 1.06rem;
       color: var(--t-ink);
@@ -243,6 +248,13 @@
       transition: all 0.3s;
       cursor: text;
     }
+    .ql-editor.ql-blank::before {
+      color: var(--t-ink4) !important;
+      font-style: italic !important;
+      left: 0 !important;
+      right: 0 !important;
+      font-family: var(--t-font) !important;
+    }
     .diary-editor:empty::before {
       content: attr(data-placeholder);
       color: var(--t-ink4);
@@ -251,19 +263,19 @@
       white-space: pre-line;
       display: block;
     }
-    body[data-t="magazine"] .diary-editor{font-size:1.05rem;line-height:1.8}
-    body[data-t="news"] .diary-editor{font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
-    body[data-t="tech"] .diary-editor{font-family:'DM Sans',sans-serif;font-size:0.95rem;line-height:1.8}
-    body[data-t="college"] .diary-editor{font-size:1.15rem;line-height:34px}
-    .diary-editor h2{font-family:var(--t-title);font-size:1.8rem;color:var(--t-ink);line-height:1.3;margin:16px 0 8px;font-weight:700}
-    .diary-editor h3{font-family:var(--t-title);font-size:1.3rem;color:var(--t-ink2);line-height:1.3;margin:12px 0 6px}
-    body[data-t="news"] .diary-editor h2{column-span:all;border-top:1px solid var(--t-ink);padding-top:8px}
-    .diary-editor blockquote{margin:16px 0;padding:10px 20px;border-left:3px solid var(--t-acc);background:rgba(0,0,0,0.03);font-style:italic;color:var(--t-ink2)}
-    body[data-t="tech"] .diary-editor blockquote{background:rgba(255,255,255,0.04);border-radius:0 4px 4px 0}
-    .diary-editor ul,.diary-editor ol{padding-left:24px;margin:8px 0}
-    .diary-editor li{line-height:32px}
-    .diary-editor pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.85);padding:14px 18px;margin:12px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.6;color:#58a6ff;border-radius:6px;display:block}
-    .diary-editor code{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88rem;color:#79c0ff}
+    body[data-t="magazine"] .ql-editor, body[data-t="magazine"] .diary-editor{font-size:1.05rem;line-height:1.8}
+    body[data-t="news"] .ql-editor, body[data-t="news"] .diary-editor{font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
+    body[data-t="tech"] .ql-editor, body[data-t="tech"] .diary-editor{font-family:'DM Sans',sans-serif;font-size:0.95rem;line-height:1.8}
+    body[data-t="college"] .ql-editor, body[data-t="college"] .diary-editor{font-size:1.15rem;line-height:34px}
+    .ql-editor h2, .diary-editor h2{font-family:var(--t-title);font-size:1.8rem;color:var(--t-ink);line-height:1.3;margin:16px 0 8px;font-weight:700}
+    .ql-editor h3, .diary-editor h3{font-family:var(--t-title);font-size:1.3rem;color:var(--t-ink2);line-height:1.3;margin:12px 0 6px}
+    body[data-t="news"] .ql-editor h2, body[data-t="news"] .diary-editor h2{column-span:all;border-top:1px solid var(--t-ink);padding-top:8px}
+    .ql-editor blockquote, .diary-editor blockquote{margin:16px 0;padding:10px 20px;border-left:3px solid var(--t-acc);background:rgba(0,0,0,0.03);font-style:italic;color:var(--t-ink2)}
+    body[data-t="tech"] .ql-editor blockquote, body[data-t="tech"] .diary-editor blockquote{background:rgba(255,255,255,0.04);border-radius:0 4px 4px 0}
+    .ql-editor ul, .ql-editor ol, .diary-editor ul, .diary-editor ol{padding-left:24px;margin:8px 0}
+    .ql-editor li, .diary-editor li{line-height:32px}
+    .ql-editor pre, .diary-editor pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.85);padding:14px 18px;margin:12px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.6;color:#58a6ff;border-radius:6px;display:block}
+    .ql-editor code, .diary-editor code{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88rem;color:#79c0ff}
     
     /* ✅ Custom Content elements */
     .sticky-callout{display:block;background:#fef9c3;padding:12px 16px;margin:14px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.2);max-width:360px;font-family:'Caveat',cursive;font-size:1rem;color:#1a1208;line-height:1.6;position:relative;user-select:text;-webkit-user-select:text}
@@ -286,15 +298,15 @@
     .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
     .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
     .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
-    .diary-editor figure.img-left{float:left;margin:8px 20px 8px 0;max-width:45%}
-    .diary-editor figure.img-right{float:right;margin:8px 0 8px 20px;max-width:45%}
-    .diary-editor figure.img-center{clear:both;margin:12px auto;text-align:center;max-width:80%}
-    .diary-editor figure.img-full{clear:both;margin:12px 0}
-    .diary-editor figure img{width:100%;display:block}
-    .diary-editor figure figcaption{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--t-ink3);text-align:center;padding-top:4px}
-    .diary-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
-    .diary-editor .img-row-block figure{flex:1;margin:0}
-    .diary-editor .img-row-block figure img{width:100%;display:block}
+    .ql-editor figure.img-left, .diary-editor figure.img-left{float:left;margin:8px 20px 8px 0;max-width:45%}
+    .ql-editor figure.img-right, .diary-editor figure.img-right{float:right;margin:8px 0 8px 20px;max-width:45%}
+    .ql-editor figure.img-center, .diary-editor figure.img-center{clear:both;margin:12px auto;text-align:center;max-width:80%}
+    .ql-editor figure.img-full, .diary-editor figure.img-full{clear:both;margin:12px 0}
+    .ql-editor figure img, .diary-editor figure img{width:100%;display:block}
+    .ql-editor figure figcaption, .diary-editor figure figcaption{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--t-ink3);text-align:center;padding-top:4px}
+    .ql-editor .img-row-block, .diary-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
+    .ql-editor .img-row-block figure, .diary-editor .img-row-block figure{flex:1;margin:0}
+    .ql-editor .img-row-block figure img, .diary-editor .img-row-block figure img{width:100%;display:block}
     
     /* ✅ Count strip */
     .count-strip{position:sticky;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(4px);border-top:1px solid rgba(255,255,255,0.06);padding:6px 24px;display:flex;gap:20px;align-items:center;z-index:10}
@@ -879,18 +891,50 @@
     const editor = document.getElementById("editor");
     const canvasWrap = document.getElementById("canvasWrap");
 
+    // ── Safe Quill Initialization with Fallback ──
+    let quill = null;
+    try {
+      if (typeof Quill !== "undefined") {
+        const FontStyle = Quill.import('attributors/style/font');
+        if (FontStyle) {
+          FontStyle.whitelist = ['Crimson Pro', 'Caveat', 'IM Fell English', 'Playfair Display', 'Kalam', 'JetBrains Mono'];
+          Quill.register(FontStyle, true);
+        }
+        const ColorStyle = Quill.import('attributors/style/color');
+        if (ColorStyle) Quill.register(ColorStyle, true);
+        const BackgroundStyle = Quill.import('attributors/style/background');
+        if (BackgroundStyle) Quill.register(BackgroundStyle, true);
+
+        quill = new Quill('#editor', {
+          theme: 'snow',
+          placeholder: TEMPLATES.diary.ph,
+          modules: {
+            toolbar: false,
+            history: { delay: 500, maxStack: 100, userOnly: true }
+          }
+        });
+      }
+    } catch (err) {
+      console.warn("Quill initialization fallback active:", err);
+      quill = null;
+    }
+
     // Click anywhere in writing canvas to focus editor
     if (canvasWrap && editor) {
       canvasWrap.addEventListener("click", e => {
         if (e.target === canvasWrap) {
-          editor.focus();
-          const sel = window.getSelection();
-          if (!sel.rangeCount || !editor.contains(sel.anchorNode)) {
-            const range = document.createRange();
-            range.selectNodeContents(editor);
-            range.collapse(false);
-            sel.removeAllRanges();
-            sel.addRange(range);
+          if (quill) {
+            quill.focus();
+          } else {
+            editor.focus();
+            const sel = window.getSelection();
+            if (!sel.rangeCount || !editor.contains(sel.anchorNode)) {
+              const range = document.createRange();
+              range.selectNodeContents(editor);
+              range.collapse(false);
+              sel.removeAllRanges();
+              sel.addRange(range);
+            }
           }
         }
       });
@@ -911,44 +955,51 @@
 
     // Helper: Insert custom HTML at cursor
     function insertAtCursor(html) {
-      if (!editor) return;
-      editor.focus();
-      const sel = window.getSelection();
-      let range = null;
-      if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
-        range = sel.getRangeAt(0);
-      } else if (savedRange) {
-        range = savedRange;
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-      if (!range) {
-        const newRange = document.createRange();
-        newRange.selectNodeContents(editor);
-        newRange.collapse(false);
-        range = newRange;
-        sel.removeAllRanges();
-        sel.addRange(newRange);
-      }
-
       const safeHTML = sanitizeHTML(html);
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = safeHTML;
-      const frag = document.createDocumentFragment();
-      let node, lastNode;
-      while ((node = tempDiv.firstChild)) {
-        lastNode = frag.appendChild(node);
-      }
-      range.deleteContents();
-      range.insertNode(frag);
+      if (quill) {
+        const range = quill.getSelection(true);
+        const index = range ? range.index : quill.getLength();
+        quill.clipboard.dangerouslyPasteHTML(index, safeHTML);
+        quill.setSelection(index + 1);
+        quill.focus();
+      } else if (editor) {
+        editor.focus();
+        const sel = window.getSelection();
+        let range = null;
+        if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
+          range = sel.getRangeAt(0);
+        } else if (savedRange) {
+          range = savedRange;
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+        if (!range) {
+          const newRange = document.createRange();
+          newRange.selectNodeContents(editor);
+          newRange.collapse(false);
+          range = newRange;
+          sel.removeAllRanges();
+          sel.addRange(newRange);
+        }
 
-      if (lastNode) {
-        const nextRange = document.createRange();
-        nextRange.setStartAfter(lastNode);
-        nextRange.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(nextRange);
-        savedRange = nextRange.cloneRange();
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = safeHTML;
+        const frag = document.createDocumentFragment();
+        let node, lastNode;
+        while ((node = tempDiv.firstChild)) {
+          lastNode = frag.appendChild(node);
+        }
+        range.deleteContents();
+        range.insertNode(frag);
+
+        if (lastNode) {
+          const nextRange = document.createRange();
+          nextRange.setStartAfter(lastNode);
+          nextRange.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(nextRange);
+          savedRange = nextRange.cloneRange();
+        }
       }
       updateCounts();
       updateSaveStatus("unsaved");
@@ -956,61 +1007,72 @@
 
     // Helper: Apply style to selection or create typing span
     function applyInlineStyle(styleObj) {
-      if (!editor) return;
-      editor.focus();
-      const sel = window.getSelection();
-      let range = null;
-      if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
-        range = sel.getRangeAt(0);
-      } else if (savedRange) {
-        range = savedRange;
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-
-      if (!range) {
-        const newRange = document.createRange();
-        newRange.selectNodeContents(editor);
-        newRange.collapse(false);
-        range = newRange;
-        sel.removeAllRanges();
-        sel.addRange(newRange);
-      }
-
-      if (range.collapsed) {
-        // No selection: create span for next typed text
-        const span = document.createElement("span");
-        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
-        if (styleObj.color) span.style.color = styleObj.color;
-        if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
-        const textNode = document.createTextNode("\u200B");
-        span.appendChild(textNode);
-        range.insertNode(span);
-
-        const nextRange = document.createRange();
-        nextRange.setStart(textNode, 1);
-        nextRange.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(nextRange);
-        savedRange = nextRange.cloneRange();
-      } else {
-        // Selected text: wrap in styled span
-        const span = document.createElement("span");
-        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
-        if (styleObj.color) span.style.color = styleObj.color;
-        if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
-        try {
-          range.surroundContents(span);
-        } catch(e) {
-          const frag = range.extractContents();
-          span.appendChild(frag);
-          range.insertNode(span);
+      if (quill) {
+        if (styleObj.fontFamily) {
+          const cleaned = styleObj.fontFamily.replace(/['",]/g, '').trim();
+          quill.format("font", cleaned);
         }
-        const newRange = document.createRange();
-        newRange.selectNodeContents(span);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
-        savedRange = newRange.cloneRange();
+        if (styleObj.color) {
+          quill.format("color", styleObj.color);
+        }
+        if (styleObj.backgroundColor !== undefined) {
+          quill.format("background", styleObj.backgroundColor);
+        }
+        quill.focus();
+      } else if (editor) {
+        editor.focus();
+        const sel = window.getSelection();
+        let range = null;
+        if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
+          range = sel.getRangeAt(0);
+        } else if (savedRange) {
+          range = savedRange;
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+
+        if (!range) {
+          const newRange = document.createRange();
+          newRange.selectNodeContents(editor);
+          newRange.collapse(false);
+          range = newRange;
+          sel.removeAllRanges();
+          sel.addRange(newRange);
+        }
+
+        if (range.collapsed) {
+          const span = document.createElement("span");
+          if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+          if (styleObj.color) span.style.color = styleObj.color;
+          if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
+          const textNode = document.createTextNode("\u200B");
+          span.appendChild(textNode);
+          range.insertNode(span);
+
+          const nextRange = document.createRange();
+          nextRange.setStart(textNode, 1);
+          nextRange.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(nextRange);
+          savedRange = nextRange.cloneRange();
+        } else {
+          const span = document.createElement("span");
+          if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+          if (styleObj.color) span.style.color = styleObj.color;
+          if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
+          try {
+            range.surroundContents(span);
+          } catch(e) {
+            const frag = range.extractContents();
+            span.appendChild(frag);
+            range.insertNode(span);
+          }
+          const newRange = document.createRange();
+          newRange.selectNodeContents(span);
+          sel.removeAllRanges();
+          sel.addRange(newRange);
+          savedRange = newRange.cloneRange();
+        }
       }
       updateCounts();
       updateSaveStatus("unsaved");
@@ -1030,7 +1092,9 @@
         activeTemplate = t; 
         body.setAttribute("data-t", t);
         document.getElementById("navTemplateLabel").textContent = TEMPLATES[t].label;
-        if (editor) {
+        if (quill && quill.root) {
+          quill.root.dataset.placeholder = TEMPLATES[t].ph;
+        } else if (editor) {
           editor.setAttribute("data-placeholder", TEMPLATES[t].ph);
         }
         
@@ -1163,7 +1227,7 @@
 
     // ── Word/char count ──
     function updateCounts() {
-      const text = editor ? editor.innerText.trim() : "";
+      const text = quill ? quill.getText().trim() : (editor ? editor.innerText.trim() : "");
       const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
       const chars = text.replace(/\s/g, "").length;
       document.getElementById("wordCount").textContent = words;
@@ -1171,6 +1235,12 @@
       document.getElementById("readTimeCalc").textContent = "~" + Math.max(1, Math.ceil(words / 200)) + " min read";
     }
 
+    if (quill) {
+      quill.on("text-change", () => {
+        updateCounts();
+        updateSaveStatus("unsaved");
+      });
+    }
     if (editor) {
       editor.addEventListener("input", () => {
         updateCounts();
@@ -1221,17 +1291,38 @@
     document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn => {
       btn.addEventListener("mousedown", e => {
         e.preventDefault();
-        if (!editor) return;
-        editor.focus();
         const cmd = btn.dataset.cmd;
-        try {
-          if (cmd === "h2" || cmd === "h3" || cmd === "blockquote") {
-            document.execCommand("formatBlock", false, `<${cmd}>`);
-          } else {
-            document.execCommand(cmd, false, null);
+        if (quill) {
+          quill.focus();
+          const format = quill.getFormat();
+          if (cmd === "bold") {
+            quill.format("bold", !format.bold);
+          } else if (cmd === "italic") {
+            quill.format("italic", !format.italic);
+          } else if (cmd === "h2") {
+            quill.format("header", format.header === 2 ? false : 2);
+          } else if (cmd === "h3") {
+            quill.format("header", format.header === 3 ? false : 3);
+          } else if (cmd === "blockquote") {
+            quill.format("blockquote", !format.blockquote);
+          } else if (cmd === "insertUnorderedList") {
+            quill.format("list", format.list === "bullet" ? false : "bullet");
+          } else if (cmd === "undo") {
+            quill.history.undo();
+          } else if (cmd === "redo") {
+            quill.history.redo();
           }
-        } catch (err) {
-          console.warn("Formatting failed:", cmd, err);
+        } else if (editor) {
+          editor.focus();
+          try {
+            if (cmd === "h2" || cmd === "h3" || cmd === "blockquote") {
+              document.execCommand("formatBlock", false, `<${cmd}>`);
+            } else {
+              document.execCommand(cmd, false, null);
+            }
+          } catch (err) {
+            console.warn("Formatting failed:", cmd, err);
+          }
         }
         updateCounts();
         updateSaveStatus("unsaved");
@@ -1750,11 +1841,12 @@
 
     // ── Content serialization (safe) ──
     function serializeContent() {
-      if (!editor) return "";
-      const clone = editor.cloneNode(true);
-      clone.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
-      clone.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
-      return sanitizeHTML(clone.innerHTML);
+      const rawHtml = quill ? quill.root.innerHTML : (editor ? editor.innerHTML : "");
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = rawHtml;
+      tempDiv.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
+      tempDiv.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
+      return sanitizeHTML(tempDiv.innerHTML);
     }
 
     // ── Draft auto-save (localStorage + Firestore) ──
@@ -1762,11 +1854,10 @@
     function getDraftKey() { return "hlywor_draft_" + (currentUser?.uid || "anon"); }
     
     function saveDraftLocally() {
-      if (!editor) return;
       const draft = {
         title: document.getElementById("titleInput").value,
         desc: document.getElementById("descInput").value,
-        content: editor.innerHTML,
+        content: quill ? quill.root.innerHTML : (editor ? editor.innerHTML : ""),
         template: activeTemplate,
         category: selectedCat,
         mood: selectedMood,
@@ -1791,12 +1882,18 @@
           const draft = JSON.parse(saved);
           document.getElementById("titleInput").value = draft.title || "";
           document.getElementById("descInput").value = draft.desc || "";
-          if (editor) editor.innerHTML = draft.content || "";
+          if (quill && draft.content) {
+            quill.clipboard.dangerouslyPasteHTML(draft.content);
+          } else if (editor && draft.content) {
+            editor.innerHTML = draft.content;
+          }
           if (draft.template) {
             activeTemplate = draft.template;
             body.setAttribute("data-t", draft.template);
             document.getElementById("navTemplateLabel").textContent = TEMPLATES[draft.template].label;
-            if (editor) {
+            if (quill && quill.root) {
+              quill.root.dataset.placeholder = TEMPLATES[draft.template].ph;
+            } else if (editor) {
               editor.setAttribute("data-placeholder", TEMPLATES[draft.template].ph);
             }
           }
@@ -1920,6 +2017,7 @@
       }, 2000);
     }
     
+    if (quill) quill.on("text-change", triggerAutoSave);
     if (editor) editor.addEventListener("input", triggerAutoSave);
     ["titleInput", "descInput", "authorInput"].forEach(id => {
       const el = document.getElementById(id);
@@ -2018,7 +2116,7 @@
             coverUrl = document.getElementById("coverUrl").value,
             coverAlt = document.getElementById("coverAlt").value.trim(),
             content = serializeContent(),
-            plainText = editor ? editor.innerText.trim() : "",
+            plainText = quill ? quill.getText().trim() : (editor ? editor.innerText.trim() : ""),
             type = document.getElementById("typeSelect").value,
             agree = document.getElementById("agreeCheck").checked,
             agreeImg = document.getElementById("agreeImgCheck").checked,
