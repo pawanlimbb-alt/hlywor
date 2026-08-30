@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HlyWor Debug</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #1a1208; color: #faf6ee; }
+    .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+    .success { background: #2ecc71; color: white; }
+    .error { background: #e74c3c; color: white; }
+    .warning { background: #f39c12; color: white; }
+    pre { background: #2a1f14; padding: 15px; border-radius: 4px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>🔍 HlyWor Firebase Debug</h1>
+  <div id="output"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const output = document.getElementById('output');
+
+    function log(message, type = 'info') {
+      const div = document.createElement('div');
+      div.className = `status ${type}`;
+      div.innerHTML = message;
+      output.appendChild(div);
+    }
+
+    async function runDiagnostics() {
+      try {
+        log('✓ Starting diagnostics...', 'success');
+
+        // Initialize Firebase
+        const app = initializeApp({
+          apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
+          authDomain: "hlywor.firebaseapp.com",
+          projectId: "hlywor",
+          storageBucket: "hlywor.firebasestorage.app",
+          messagingSenderId: "697637160825",
+          appId: "1:697637160825:web:00dae42c1b0242c9f4d1a8",
+          measurementId: "G-MQDXDWHLX8"
+        });
+
+        log('✓ Firebase initialized', 'success');
+
+        const db = getFirestore(app);
+        log('✓ Firestore connected', 'success');
+
+        // Check for posts
+        log('📡 Fetching posts...', 'warning');
+        const postsQuery = query(collection(db, 'posts'), where('status', '==', 'published'), limit(5));
+        const snapshot = await getDocs(postsQuery);
+
+        if (snapshot.empty) {
+          log('⚠️ No published posts found in database', 'error');
+          log('Check: 1) Do posts exist? 2) Are they marked as "published"? 3) Is the collection named "posts"?', 'warning');
+        } else {
+          log(`✓ Found ${snapshot.size} published posts`, 'success');
+
+          const posts = [];
+          snapshot.forEach(doc => {
+            posts.push({ id: doc.id, ...doc.data() });
+          });
+
+          const pre = document.createElement('pre');
+          pre.textContent = JSON.stringify(posts, null, 2);
+          output.appendChild(pre);
+        }
+
+        // Check for prompts
+        log('📡 Checking prompts collection...', 'warning');
+        const promptsSnap = await getDocs(collection(db, 'prompts'));
+        log(`✓ Found ${promptsSnap.size} prompts`, promptsSnap.size > 0 ? 'success' : 'warning');
+
+        // Check for micro notes
+        log('📡 Checking microNotes collection...', 'warning');
+        const notesSnap = await getDocs(query(collection(db, 'microNotes'), limit(5)));
+        log(`✓ Found ${notesSnap.size} micro notes`, notesSnap.size > 0 ? 'success' : 'warning');
+
+        log('✅ Diagnostics complete!', 'success');
+
+      } catch (error) {
+        log(`❌ Error: ${error.message}`, 'error');
+        const pre = document.createElement('pre');
+        pre.textContent = error.stack;
+        output.appendChild(pre);
+      }
+    }
+
+    runDiagnostics();
+  </script>
+</body>
+</html>
