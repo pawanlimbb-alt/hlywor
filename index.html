@@ -1168,53 +1168,10 @@
       </div>
     </div>
 
-    <!-- 3. STORIES FEED & ATTACHED CATEGORY FILTER RIBBON (RIGHT UPFRONT!) -->
-    <section class="pinboard-section" id="posts">
-      <div class="pinboard-header-bar reveal">
-        <div class="pinboard-title-group">
-          <div style="display:flex;align-items:center;gap:10px">
-            <h2 class="pinboard-main-title">// 📌 PINBOARD STORIES</h2>
-            <div id="recentlyPinnedInfo" style="display:flex;align-items:center;gap:6px">
-              <span id="recentlyPinnedDot" style="width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire);display:inline-block;opacity:0;transition:opacity 0.4s" aria-hidden="true"></span>
-              <span id="recentlyPinnedTime" style="font-family:var(--hand);font-size:0.92rem;color:var(--ink3);font-style:italic" aria-live="polite"></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CATEGORY FILTER RIBBON MOUNTED DIRECTLY ON TOP OF STORIES GRID -->
-        <div class="pinboard-filters-row">
-          <div class="tape-filter" id="tagBar" role="tablist" aria-label="Filter stories by category">
-            <button class="tape-tab active" data-tag="all" role="tab" aria-selected="true" aria-controls="postsGrid">ALL</button>
-            <button class="tape-tab" data-tag="3am" role="tab" aria-selected="false" aria-controls="postsGrid">🌙 3 AM</button>
-            <button class="tape-tab" data-tag="unsaid" role="tab" aria-selected="false" aria-controls="postsGrid">💔 UNSAID</button>
-            <button class="tape-tab" data-tag="story" role="tab" aria-selected="false" aria-controls="postsGrid">📖 STORY</button>
-            <button class="tape-tab" data-tag="college" role="tab" aria-selected="false" aria-controls="postsGrid">☕ COLLEGE</button>
-            <button class="tape-tab" data-tag="thoughts" role="tab" aria-selected="false" aria-controls="postsGrid">💭 THOUGHTS</button>
-            <button class="tape-tab" data-tag="healing" role="tab" aria-selected="false" aria-controls="postsGrid">🌿 HEALING</button>
-            <button class="tape-tab" data-tag="movies" role="tab" aria-selected="false" aria-controls="postsGrid">🎬 MOVIES</button>
-            <button class="tape-tab" data-tag="books" role="tab" aria-selected="false" aria-controls="postsGrid">📚 BOOKS</button>
-          </div>
-
-          <div class="sort-bar" id="sortBar" role="group" aria-label="Sort stories">
-            <button class="sort-tab active" data-sort="latest" aria-pressed="true" aria-controls="postsGrid">🕐 Latest</button>
-            <button class="sort-tab" data-sort="random" aria-pressed="false" aria-controls="postsGrid">🎲 Random</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- THE STORIES GRID -->
-      <div class="pinboard" id="postsGrid" role="list" aria-label="Pinned stories">
-        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:60%"></div></div></div>
-        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:75%"></div><div class="skel-line shimmer" style="width:55%"></div></div></div>
-        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:70%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
-        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:50%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:45%"></div></div></div>
-      </div>
-    </section>
-
-    <!-- 4. INTERACTIVE DESK WIDGETS (3 AM Prompt, Editor's Pick & Micro Notes) -->
-    <div class="desk-tray" id="deskTray" style="margin-top:40px;margin-bottom:28px">
-      <!-- Side by Side Prompt & Editor's Pick -->
-      <div class="desk-row desk-row-top">
+    <!-- 2. Desk Tray (Prompt + Editor's Pick + Micro Notes + Category Ribbon) -->
+    <div class="desk-tray" id="deskTray" style="margin-bottom:20px;padding:14px 16px 10px;">
+      <!-- Row 1: Side by Side Prompt & Editor's Pick -->
+      <div class="desk-row desk-row-top" style="margin-bottom:10px;">
         <div class="midnight-prompt-sheet reveal" id="midnightPromptSheet">
           <div class="midnight-pin"></div>
           <div class="prompt-header">
@@ -1243,8 +1200,8 @@
         </div>
       </div>
 
-      <!-- Micro Notes pad (Collapsible) -->
-      <div class="micro-notes-box reveal" id="microNotesBox">
+      <!-- Row 2: Micro Notes pad (Collapsible) -->
+      <div class="micro-notes-box reveal" id="microNotesBox" style="margin-bottom:12px;">
         <div class="micro-head" id="microHead">
           <button class="micro-head-toggle" id="microToggleBtn" aria-expanded="false" aria-controls="microBody">
             <span class="micro-head-title">📌 DROP A QUICK NOTE</span>
@@ -1285,7 +1242,44 @@
           </div>
         </div>
       </div>
+
+      <!-- Row 3: Category Filter Ribbon & Sort Bar (Now at the bottom of desk-tray, directly above stories) -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:6px;border-top:1px dashed rgba(26,18,8,0.12);">
+        <div class="tape-filter reveal" id="tagBar" role="tablist" aria-label="Filter stories by category">
+          <button class="tape-tab active" data-tag="all" role="tab" aria-selected="true" aria-controls="postsGrid">ALL</button>
+          <button class="tape-tab" data-tag="3am" role="tab" aria-selected="false" aria-controls="postsGrid">🌙 3 AM</button>
+          <button class="tape-tab" data-tag="unsaid" role="tab" aria-selected="false" aria-controls="postsGrid">💔 UNSAID</button>
+          <button class="tape-tab" data-tag="story" role="tab" aria-selected="false" aria-controls="postsGrid">📖 STORY</button>
+          <button class="tape-tab" data-tag="college" role="tab" aria-selected="false" aria-controls="postsGrid">☕ COLLEGE</button>
+          <button class="tape-tab" data-tag="thoughts" role="tab" aria-selected="false" aria-controls="postsGrid">💭 THOUGHTS</button>
+          <button class="tape-tab" data-tag="healing" role="tab" aria-selected="false" aria-controls="postsGrid">🌿 HEALING</button>
+          <button class="tape-tab" data-tag="movies" role="tab" aria-selected="false" aria-controls="postsGrid">🎬 MOVIES</button>
+          <button class="tape-tab" data-tag="books" role="tab" aria-selected="false" aria-controls="postsGrid">📚 BOOKS</button>
+        </div>
+
+        <div class="sort-bar reveal" id="sortBar" role="group" aria-label="Sort stories">
+          <button class="sort-tab active" data-sort="latest" aria-pressed="true" aria-controls="postsGrid">🕐 Latest</button>
+          <button class="sort-tab" data-sort="random" aria-pressed="false" aria-controls="postsGrid">🎲 Random</button>
+        </div>
+      </div>
     </div><!-- end deskTray -->
+
+    <!-- 3. POSTS SECTION -->
+    <section id="posts" style="margin-top:20px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-left:4px">
+        <span style="font-family:var(--pixel);font-size:0.62rem;color:var(--fire);letter-spacing:2px">// RECENTLY PINNED</span>
+        <span id="recentlyPinnedDot" style="width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire);display:inline-block;opacity:0;transition:opacity 0.4s" aria-hidden="true"></span>
+        <span id="recentlyPinnedTime" style="font-family:var(--hand);font-size:0.92rem;color:var(--ink3);font-style:italic" aria-live="polite"></span>
+      </div>
+
+      <!-- THE STORIES GRID -->
+      <div class="pinboard" id="postsGrid" role="list" aria-label="Pinned stories">
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:45%"></div><div class="skel-line shimmer" style="width:80%"></div><div class="skel-line shimmer" style="width:60%"></div></div></div>
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:75%"></div><div class="skel-line shimmer" style="width:55%"></div></div></div>
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:35%"></div><div class="skel-line shimmer" style="width:70%"></div><div class="skel-line shimmer" style="width:65%"></div></div></div>
+        <div class="skel-post" aria-hidden="true"><div class="skel-img-box shimmer"></div><div class="skel-body-box"><div class="skel-line shimmer" style="width:50%"></div><div class="skel-line shimmer" style="width:65%"></div><div class="skel-line shimmer" style="width:45%"></div></div></div>
+      </div>
+    </section>
 
     <div class="board-bottom" style="margin-top:56px">
       <div class="about-note reveal">
