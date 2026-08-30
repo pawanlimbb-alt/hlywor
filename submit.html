@@ -18,9 +18,7 @@
   <!-- ✅ Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- ✅ Quill Rich Text Engine (Pure Client-side JS) -->
-  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
-  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -227,15 +225,13 @@
     body[data-t="tech"] .cover-preview img{max-height:240px;border:1px solid rgba(255,255,255,0.08)}
     .cover-clear{position:absolute;top:8px;right:8px;font-family:var(--pixel);font-size:0.55rem;color:#fff;background:rgba(0,0,0,0.55);padding:4px 8px;border:none;cursor:pointer}
     
-    /* ✅ Writing canvas & Quill Theme */
-    .writing-canvas{padding:16px 36px 40px 36px;position:relative;min-height:600px;z-index:2;box-sizing:border-box}
+    /* ✅ Writing canvas & Diary Editor */
+    .writing-canvas{padding:16px 36px 40px 36px;position:relative;min-height:600px;z-index:2;box-sizing:border-box;cursor:text}
     
-    .ql-toolbar.ql-snow { display: none !important; }
-    .ql-container.ql-snow { border: none !important; font-family: inherit !important; font-size: inherit !important; color: inherit !important; height: auto !important; }
-    .ql-editor {
+    .diary-editor {
       min-height: 500px;
-      padding: 0 !important;
-      outline: none !important;
+      padding: 0;
+      outline: none;
       font-family: var(--t-font);
       font-size: 1.06rem;
       color: var(--t-ink);
@@ -244,30 +240,30 @@
       z-index: 2;
       word-break: break-word;
       caret-color: var(--t-acc);
-      overflow-y: visible !important;
       transition: all 0.3s;
       cursor: text;
     }
-    .ql-editor.ql-blank::before {
-      color: var(--t-ink4) !important;
-      font-style: italic !important;
-      left: 0 !important;
-      right: 0 !important;
-      font-family: var(--t-font) !important;
+    .diary-editor:empty::before {
+      content: attr(data-placeholder);
+      color: var(--t-ink4);
+      pointer-events: none;
+      font-style: italic;
+      white-space: pre-line;
+      display: block;
     }
-    body[data-t="magazine"] .ql-editor{font-size:1.05rem;line-height:1.8}
-    body[data-t="news"] .ql-editor{font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
-    body[data-t="tech"] .ql-editor{font-family:'DM Sans',sans-serif;font-size:0.95rem;line-height:1.8}
-    body[data-t="college"] .ql-editor{font-size:1.15rem;line-height:34px}
-    .ql-editor h2{font-family:var(--t-title) !important;font-size:1.8rem;color:var(--t-ink);line-height:1.3;margin:16px 0 8px;font-weight:700}
-    .ql-editor h3{font-family:var(--t-title) !important;font-size:1.3rem;color:var(--t-ink2);line-height:1.3;margin:12px 0 6px}
-    body[data-t="news"] .ql-editor h2{column-span:all;border-top:1px solid var(--t-ink);padding-top:8px}
-    .ql-editor blockquote{margin:16px 0 !important;padding:10px 20px !important;border-left:3px solid var(--t-acc) !important;background:rgba(0,0,0,0.03);font-style:italic;color:var(--t-ink2)}
-    body[data-t="tech"] .ql-editor blockquote{background:rgba(255,255,255,0.04);border-radius:0 4px 4px 0}
-    .ql-editor ul,.ql-editor ol{padding-left:24px;margin:8px 0}
-    .ql-editor li{line-height:32px}
-    .ql-editor pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.85);padding:14px 18px;margin:12px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.6;color:#58a6ff;border-radius:6px;display:block}
-    .ql-editor code{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88rem;color:#79c0ff}
+    body[data-t="magazine"] .diary-editor{font-size:1.05rem;line-height:1.8}
+    body[data-t="news"] .diary-editor{font-size:1rem;line-height:1.75;columns:2;column-gap:28px}
+    body[data-t="tech"] .diary-editor{font-family:'DM Sans',sans-serif;font-size:0.95rem;line-height:1.8}
+    body[data-t="college"] .diary-editor{font-size:1.15rem;line-height:34px}
+    .diary-editor h2{font-family:var(--t-title);font-size:1.8rem;color:var(--t-ink);line-height:1.3;margin:16px 0 8px;font-weight:700}
+    .diary-editor h3{font-family:var(--t-title);font-size:1.3rem;color:var(--t-ink2);line-height:1.3;margin:12px 0 6px}
+    body[data-t="news"] .diary-editor h2{column-span:all;border-top:1px solid var(--t-ink);padding-top:8px}
+    .diary-editor blockquote{margin:16px 0;padding:10px 20px;border-left:3px solid var(--t-acc);background:rgba(0,0,0,0.03);font-style:italic;color:var(--t-ink2)}
+    body[data-t="tech"] .diary-editor blockquote{background:rgba(255,255,255,0.04);border-radius:0 4px 4px 0}
+    .diary-editor ul,.diary-editor ol{padding-left:24px;margin:8px 0}
+    .diary-editor li{line-height:32px}
+    .diary-editor pre{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.85);padding:14px 18px;margin:12px 0;border:1px solid rgba(255,255,255,0.08);overflow-x:auto;line-height:1.6;color:#58a6ff;border-radius:6px;display:block}
+    .diary-editor code{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:0.88rem;color:#79c0ff}
     
     /* ✅ Custom Content elements */
     .sticky-callout{display:block;background:#fef9c3;padding:12px 16px;margin:14px 0;transform:rotate(-1deg);box-shadow:2px 3px 10px rgba(0,0,0,0.2);max-width:360px;font-family:'Caveat',cursive;font-size:1rem;color:#1a1208;line-height:1.6;position:relative;user-select:text;-webkit-user-select:text}
@@ -290,15 +286,15 @@
     .highlight-r{background:rgba(255,100,100,0.3);padding:0 2px}
     .highlight-g{background:rgba(100,220,100,0.3);padding:0 2px}
     .highlight-b{background:rgba(100,150,255,0.3);padding:0 2px}
-    .ql-editor figure.img-left{float:left;margin:8px 20px 8px 0;max-width:45%}
-    .ql-editor figure.img-right{float:right;margin:8px 0 8px 20px;max-width:45%}
-    .ql-editor figure.img-center{clear:both;margin:12px auto;text-align:center;max-width:80%}
-    .ql-editor figure.img-full{clear:both;margin:12px 0}
-    .ql-editor figure img{width:100%;display:block}
-    .ql-editor figure figcaption{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--t-ink3);text-align:center;padding-top:4px}
-    .ql-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
-    .ql-editor .img-row-block figure{flex:1;margin:0}
-    .ql-editor .img-row-block figure img{width:100%;display:block}
+    .diary-editor figure.img-left{float:left;margin:8px 20px 8px 0;max-width:45%}
+    .diary-editor figure.img-right{float:right;margin:8px 0 8px 20px;max-width:45%}
+    .diary-editor figure.img-center{clear:both;margin:12px auto;text-align:center;max-width:80%}
+    .diary-editor figure.img-full{clear:both;margin:12px 0}
+    .diary-editor figure img{width:100%;display:block}
+    .diary-editor figure figcaption{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--t-ink3);text-align:center;padding-top:4px}
+    .diary-editor .img-row-block{display:flex;gap:10px;margin:12px 0;clear:both;align-items:flex-start}
+    .diary-editor .img-row-block figure{flex:1;margin:0}
+    .diary-editor .img-row-block figure img{width:100%;display:block}
     
     /* ✅ Count strip */
     .count-strip{position:sticky;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(4px);border-top:1px solid rgba(255,255,255,0.06);padding:6px 24px;display:flex;gap:20px;align-items:center;z-index:10}
@@ -492,7 +488,7 @@
 <body data-t="diary">
 
   <!-- ✅ Skip Link -->
-  <a href="#quillContainer" class="skip-link">Skip to editor</a>
+  <a href="#editor" class="skip-link">Skip to editor</a>
 
   <nav class="top-nav">
     <div class="nav-left">
@@ -746,8 +742,8 @@
             <input type="hidden" id="coverUrl">
             <input type="text" id="coverAlt" placeholder="Alt text for cover image" style="margin-top:8px;font-family:var(--sans);font-size:0.75rem;padding:4px 8px;border:1px dashed rgba(0,0,0,0.1);border-radius:4px;background:var(--t-paper2)" aria-label="Alt text for cover image">
           </div>
-          <div class="writing-canvas">
-            <div id="quillContainer"></div>
+          <div class="writing-canvas" id="canvasWrap">
+            <div class="diary-editor" id="editor" contenteditable="true" data-placeholder="Start writing..." role="textbox" aria-label="Post content" aria-multiline="true"></div>
           </div>
           <div class="count-strip">
             <div class="count-item">words <span id="wordCount">0</span></div>
@@ -878,37 +874,144 @@
       college: { label:"college life",  ph:"What happened today? What are you thinking about?\n\nAdd stickers, doodles, anything — this is your journal." },
     };
 
-    // ── Register Style Attributors for pure inline CSS styles ──
-    const FontStyle = Quill.import('attributors/style/font');
-    FontStyle.whitelist = ['Crimson Pro', 'Caveat', 'IM Fell English', 'Playfair Display', 'Kalam', 'JetBrains Mono'];
-    Quill.register(FontStyle, true);
-
-    const ColorStyle = Quill.import('attributors/style/color');
-    Quill.register(ColorStyle, true);
-
-    const BackgroundStyle = Quill.import('attributors/style/background');
-    Quill.register(BackgroundStyle, true);
-
-    let activeTemplate = "diary", selectedCat = "story", selectedMood = "", starRating = 0, currentColor = "#1a1208", uploadingCount = 0, isPreviewMode = false, draftId = null;
+    let activeTemplate = "diary", selectedCat = "story", selectedMood = "", starRating = 0, currentColor = "#1a1208", savedRange = null, uploadingCount = 0, isPreviewMode = false, draftId = null;
     const body = document.body;
+    const editor = document.getElementById("editor");
+    const canvasWrap = document.getElementById("canvasWrap");
 
-    // ── Initialize Quill ──
-    const quill = new Quill('#quillContainer', {
-      theme: 'snow',
-      placeholder: TEMPLATES.diary.ph,
-      modules: {
-        toolbar: false,
-        history: { delay: 500, maxStack: 100, userOnly: true }
+    // Click anywhere in writing canvas to focus editor
+    if (canvasWrap && editor) {
+      canvasWrap.addEventListener("click", e => {
+        if (e.target === canvasWrap) {
+          editor.focus();
+          const sel = window.getSelection();
+          if (!sel.rangeCount || !editor.contains(sel.anchorNode)) {
+            const range = document.createRange();
+            range.selectNodeContents(editor);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }
+      });
+    }
+
+    // Continuous selection tracking
+    function saveSelection() {
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount && editor && editor.contains(sel.anchorNode)) {
+        savedRange = sel.getRangeAt(0).cloneRange();
       }
-    });
+    }
+    document.addEventListener("selectionchange", saveSelection);
+    if (editor) {
+      editor.addEventListener("keyup", saveSelection);
+      editor.addEventListener("mouseup", saveSelection);
+    }
 
-    // Helper: Insert custom HTML at current cursor position
+    // Helper: Insert custom HTML at cursor
     function insertAtCursor(html) {
-      const range = quill.getSelection(true);
-      const index = range ? range.index : quill.getLength();
-      quill.clipboard.dangerouslyPasteHTML(index, sanitizeHTML(html));
-      quill.setSelection(index + 1);
-      quill.focus();
+      if (!editor) return;
+      editor.focus();
+      const sel = window.getSelection();
+      let range = null;
+      if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
+        range = sel.getRangeAt(0);
+      } else if (savedRange) {
+        range = savedRange;
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      if (!range) {
+        const newRange = document.createRange();
+        newRange.selectNodeContents(editor);
+        newRange.collapse(false);
+        range = newRange;
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+      }
+
+      const safeHTML = sanitizeHTML(html);
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = safeHTML;
+      const frag = document.createDocumentFragment();
+      let node, lastNode;
+      while ((node = tempDiv.firstChild)) {
+        lastNode = frag.appendChild(node);
+      }
+      range.deleteContents();
+      range.insertNode(frag);
+
+      if (lastNode) {
+        const nextRange = document.createRange();
+        nextRange.setStartAfter(lastNode);
+        nextRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(nextRange);
+        savedRange = nextRange.cloneRange();
+      }
+      updateCounts();
+      updateSaveStatus("unsaved");
+    }
+
+    // Helper: Apply style to selection or create typing span
+    function applyInlineStyle(styleObj) {
+      if (!editor) return;
+      editor.focus();
+      const sel = window.getSelection();
+      let range = null;
+      if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
+        range = sel.getRangeAt(0);
+      } else if (savedRange) {
+        range = savedRange;
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+
+      if (!range) {
+        const newRange = document.createRange();
+        newRange.selectNodeContents(editor);
+        newRange.collapse(false);
+        range = newRange;
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+      }
+
+      if (range.collapsed) {
+        // No selection: create span for next typed text
+        const span = document.createElement("span");
+        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+        if (styleObj.color) span.style.color = styleObj.color;
+        if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
+        const textNode = document.createTextNode("\u200B");
+        span.appendChild(textNode);
+        range.insertNode(span);
+
+        const nextRange = document.createRange();
+        nextRange.setStart(textNode, 1);
+        nextRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(nextRange);
+        savedRange = nextRange.cloneRange();
+      } else {
+        // Selected text: wrap in styled span
+        const span = document.createElement("span");
+        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+        if (styleObj.color) span.style.color = styleObj.color;
+        if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
+        try {
+          range.surroundContents(span);
+        } catch(e) {
+          const frag = range.extractContents();
+          span.appendChild(frag);
+          range.insertNode(span);
+        }
+        const newRange = document.createRange();
+        newRange.selectNodeContents(span);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+        savedRange = newRange.cloneRange();
+      }
       updateCounts();
       updateSaveStatus("unsaved");
     }
@@ -927,8 +1030,8 @@
         activeTemplate = t; 
         body.setAttribute("data-t", t);
         document.getElementById("navTemplateLabel").textContent = TEMPLATES[t].label;
-        if (quill && quill.root) {
-          quill.root.dataset.placeholder = TEMPLATES[t].ph;
+        if (editor) {
+          editor.setAttribute("data-placeholder", TEMPLATES[t].ph);
         }
         
         document.querySelectorAll(".cat-pill").forEach(p => {
@@ -939,7 +1042,6 @@
         selectedCat = cat;
         currentColor = t === "tech" ? "#e6edf3" : "#1a1208";
         
-        // Update preview if open
         if (isPreviewMode) updatePreview();
       });
     });
@@ -1061,7 +1163,7 @@
 
     // ── Word/char count ──
     function updateCounts() {
-      const text = quill ? quill.getText().trim() : "";
+      const text = editor ? editor.innerText.trim() : "";
       const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
       const chars = text.replace(/\s/g, "").length;
       document.getElementById("wordCount").textContent = words;
@@ -1069,10 +1171,12 @@
       document.getElementById("readTimeCalc").textContent = "~" + Math.max(1, Math.ceil(words / 200)) + " min read";
     }
 
-    quill.on("text-change", () => {
-      updateCounts();
-      updateSaveStatus("unsaved");
-    });
+    if (editor) {
+      editor.addEventListener("input", () => {
+        updateCounts();
+        updateSaveStatus("unsaved");
+      });
+    }
 
     function updateSaveStatus(s){
       const el=document.getElementById("saveStatus");
@@ -1115,34 +1219,38 @@
 
     // ── Formatting toolbar binding ──
     document.querySelectorAll(".tool-btn[data-cmd]").forEach(btn => {
-      btn.addEventListener("click", e => {
+      btn.addEventListener("mousedown", e => {
         e.preventDefault();
+        if (!editor) return;
+        editor.focus();
         const cmd = btn.dataset.cmd;
-        const format = quill.getFormat();
-        if (cmd === "bold") {
-          quill.format("bold", !format.bold);
-        } else if (cmd === "italic") {
-          quill.format("italic", !format.italic);
-        } else if (cmd === "h2") {
-          quill.format("header", format.header === 2 ? false : 2);
-        } else if (cmd === "h3") {
-          quill.format("header", format.header === 3 ? false : 3);
-        } else if (cmd === "blockquote") {
-          quill.format("blockquote", !format.blockquote);
-        } else if (cmd === "insertUnorderedList") {
-          quill.format("list", format.list === "bullet" ? false : "bullet");
-        } else if (cmd === "undo") {
-          quill.history.undo();
-        } else if (cmd === "redo") {
-          quill.history.redo();
+        try {
+          if (cmd === "h2" || cmd === "h3" || cmd === "blockquote") {
+            document.execCommand("formatBlock", false, `<${cmd}>`);
+          } else {
+            document.execCommand(cmd, false, null);
+          }
+        } catch (err) {
+          console.warn("Formatting failed:", cmd, err);
         }
+        updateCounts();
         updateSaveStatus("unsaved");
       });
     });
 
+    // ── Tab key support in editor ──
+    if (editor) {
+      editor.addEventListener("keydown", e => {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          insertAtCursor("&emsp;");
+        }
+      });
+    }
+
     // ── Font picker ──
     document.querySelectorAll(".font-btn").forEach(btn => {
-      btn.addEventListener("click", e => {
+      btn.addEventListener("mousedown", e => {
         e.preventDefault();
         document.querySelectorAll(".font-btn").forEach(b => {
           b.classList.remove("active");
@@ -1151,10 +1259,14 @@
         btn.classList.add("active");
         btn.setAttribute("aria-checked", "true");
         
-        const font = btn.dataset.font;
-        const cleanedFont = font ? font.replace(/['",]/g, '').trim() : false;
-        quill.format("font", cleanedFont);
-        updateSaveStatus("unsaved");
+        const font = btn.dataset.font || "";
+        applyInlineStyle({ fontFamily: font });
+      });
+      btn.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          btn.click();
+        }
       });
     });
 
@@ -1169,21 +1281,25 @@
         sw.setAttribute("aria-checked", "true");
         
         currentColor = sw.dataset.color;
-        quill.format("color", currentColor);
-        updateSaveStatus("unsaved");
+        applyInlineStyle({ color: currentColor });
+      });
+      sw.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          sw.click();
+        }
       });
     });
 
     const customColorInput = document.getElementById("customColorInput");
-    document.getElementById("customColorBtn")?.addEventListener("click", () => customColorInput.click());
+    document.getElementById("customColorBtn")?.addEventListener("click", () => customColorInput?.click());
     customColorInput?.addEventListener("input", () => {
       currentColor = customColorInput.value;
       document.querySelectorAll(".text-color-swatch").forEach(s => {
         s.classList.remove("active");
         s.setAttribute("aria-checked", "false");
       });
-      quill.format("color", currentColor);
-      updateSaveStatus("unsaved");
+      applyInlineStyle({ color: currentColor });
     });
 
     // ── Highlights ──
@@ -1194,18 +1310,17 @@
       "highlight-g": "rgba(100,220,100,0.35)"
     };
     document.querySelectorAll(".tool-btn[data-highlight]").forEach(btn => {
-      btn.addEventListener("click", e => {
+      btn.addEventListener("mousedown", e => {
         e.preventDefault();
         const cls = btn.dataset.highlight;
         const color = HL_COLORS[cls] || "rgba(255,220,50,0.4)";
-        const currentBg = quill.getFormat().background;
-        quill.format("background", currentBg === color ? false : color);
-        updateSaveStatus("unsaved");
+        applyInlineStyle({ backgroundColor: color });
       });
     });
 
     // ── Helper: position popups responsively ──
     function positionPopup(popupEl, buttonEl) {
+      if (!popupEl || !buttonEl) return;
       if (window.innerWidth <= 768) {
         popupEl.style.left = "";
         popupEl.style.top = "";
@@ -1220,13 +1335,15 @@
     const sp = document.getElementById("stickerPicker");
     document.getElementById("insertStickerBtn")?.addEventListener("click", e => {
       positionPopup(sp, e.currentTarget);
-      sp.classList.toggle("open");
+      sp?.classList.toggle("open");
+      const sel = window.getSelection();
+      if (sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
     });
     
     document.querySelectorAll(".sticker-option").forEach(opt => {
       opt.addEventListener("click", () => {
         insertAtCursor(`<span class='floating-sticker'>${opt.textContent}</span>`);
-        sp.classList.remove("open");
+        sp?.classList.remove("open");
       });
       opt.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -1269,9 +1386,11 @@
       }, 50);
     });
     
-    quill.root.addEventListener("click", e => {
-      if (e.target.closest("[data-sticky]")) e.stopPropagation();
-    });
+    if (editor) {
+      editor.addEventListener("click", e => {
+        if (e.target.closest("[data-sticky]")) e.stopPropagation();
+      });
+    }
 
     // ── Doodle ──
     const doodleBtn = document.getElementById("insertDoodleBtn");
@@ -1302,7 +1421,7 @@
     document.querySelectorAll(".tape-swatch").forEach(sw => {
       sw.addEventListener("click", () => {
         insertAtCursor(`<div class='washi-tape' style='--tape-color:${sw.dataset.tape}'></div><p><br></p>`);
-        quill.focus();
+        editor?.focus();
       });
       sw.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -1348,11 +1467,13 @@
     const imgPopup = document.getElementById("imgPopup");
     document.getElementById("insertImgBtn")?.addEventListener("click", e => {
       positionPopup(imgPopup, e.currentTarget);
-      imgPopup.classList.toggle("open");
+      imgPopup?.classList.toggle("open");
+      const sel = window.getSelection();
+      if (sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
     });
     
     document.getElementById("inlineImgUploadBtn")?.addEventListener("click", () => {
-      document.getElementById("inlineImgFile").click();
+      document.getElementById("inlineImgFile")?.click();
     });
 
     let selectedImgAlign = "center";
@@ -1396,7 +1517,7 @@
       }
       
       insertAtCursor(html);
-      imgPopup.classList.remove("open");
+      imgPopup?.classList.remove("open");
       document.getElementById("inlineImgCaption").value = "";
       document.getElementById("inlineImgFile").value = "";
       
@@ -1418,7 +1539,9 @@
     const imgRowPopup = document.getElementById("imgRowPopup");
     document.getElementById("insertImgRowBtn")?.addEventListener("click", e => {
       positionPopup(imgRowPopup, e.currentTarget);
-      imgRowPopup.classList.toggle("open");
+      imgRowPopup?.classList.toggle("open");
+      const sel = window.getSelection();
+      if (sel.rangeCount && editor && editor.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange();
     });
 
     const rowUrls = [null, null, null];
@@ -1466,7 +1589,7 @@
         : `<div class="img-row-block">${validUrls.map(u => `<figure><img src="${u}"></figure>`).join("")}</div><p><br></p>`;
       
       insertAtCursor(html);
-      imgRowPopup.classList.remove("open");
+      imgRowPopup?.classList.remove("open");
       rowUrls.fill(null);
       
       document.querySelectorAll(".img-row-slot").forEach((slot, i) => {
@@ -1482,7 +1605,13 @@
     const coverPreview = document.getElementById("coverPreview");
     const coverUrlEl = document.getElementById("coverUrl");
     
-    coverDrop?.addEventListener("click", () => coverFile.click());
+    coverDrop?.addEventListener("click", () => coverFile?.click());
+    coverDrop?.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        coverFile?.click();
+      }
+    });
     coverDrop?.addEventListener("dragover", e => {
       e.preventDefault();
       coverDrop.style.borderColor = "var(--t-acc)";
@@ -1558,11 +1687,11 @@
         showLoginModal({ prompt: "Sign in to publish your post." });
         return;
       }
-      document.getElementById("publishModalBg").classList.add("open");
+      document.getElementById("publishModalBg")?.classList.add("open");
     });
     
     document.getElementById("modalClose")?.addEventListener("click", () => {
-      document.getElementById("publishModalBg").classList.remove("open");
+      document.getElementById("publishModalBg")?.classList.remove("open");
     });
     
     document.getElementById("publishModalBg")?.addEventListener("click", e => {
@@ -1621,12 +1750,11 @@
 
     // ── Content serialization (safe) ──
     function serializeContent() {
-      const rawHtml = quill ? quill.root.innerHTML : "";
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = rawHtml;
-      tempDiv.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
-      tempDiv.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
-      return sanitizeHTML(tempDiv.innerHTML);
+      if (!editor) return "";
+      const clone = editor.cloneNode(true);
+      clone.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
+      clone.querySelectorAll("[data-sticky]").forEach(el => el.removeAttribute("data-sticky"));
+      return sanitizeHTML(clone.innerHTML);
     }
 
     // ── Draft auto-save (localStorage + Firestore) ──
@@ -1634,10 +1762,11 @@
     function getDraftKey() { return "hlywor_draft_" + (currentUser?.uid || "anon"); }
     
     function saveDraftLocally() {
+      if (!editor) return;
       const draft = {
         title: document.getElementById("titleInput").value,
         desc: document.getElementById("descInput").value,
-        content: quill ? quill.root.innerHTML : "",
+        content: editor.innerHTML,
         template: activeTemplate,
         category: selectedCat,
         mood: selectedMood,
@@ -1662,15 +1791,13 @@
           const draft = JSON.parse(saved);
           document.getElementById("titleInput").value = draft.title || "";
           document.getElementById("descInput").value = draft.desc || "";
-          if (quill && draft.content) {
-            quill.clipboard.dangerouslyPasteHTML(draft.content);
-          }
+          if (editor) editor.innerHTML = draft.content || "";
           if (draft.template) {
             activeTemplate = draft.template;
             body.setAttribute("data-t", draft.template);
             document.getElementById("navTemplateLabel").textContent = TEMPLATES[draft.template].label;
-            if (quill && quill.root) {
-              quill.root.dataset.placeholder = TEMPLATES[draft.template].ph;
+            if (editor) {
+              editor.setAttribute("data-placeholder", TEMPLATES[draft.template].ph);
             }
           }
           if (draft.category) {
@@ -1793,7 +1920,7 @@
       }, 2000);
     }
     
-    quill.on("text-change", triggerAutoSave);
+    if (editor) editor.addEventListener("input", triggerAutoSave);
     ["titleInput", "descInput", "authorInput"].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener("input", triggerAutoSave);
@@ -1891,7 +2018,7 @@
             coverUrl = document.getElementById("coverUrl").value,
             coverAlt = document.getElementById("coverAlt").value.trim(),
             content = serializeContent(),
-            plainText = quill ? quill.getText().trim() : "",
+            plainText = editor ? editor.innerText.trim() : "",
             type = document.getElementById("typeSelect").value,
             agree = document.getElementById("agreeCheck").checked,
             agreeImg = document.getElementById("agreeImgCheck").checked,
