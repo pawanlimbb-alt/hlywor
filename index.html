@@ -1735,8 +1735,20 @@
       quoteInterval = setInterval(refreshHeroQuote, 9000);
     }
 
+    // Timeout fallback: if posts don't load in 5 seconds, show empty state
+    let postsLoaded = false;
+    setTimeout(() => {
+      if (!postsLoaded) {
+        console.warn('[Hlywor] Posts took too long to load, showing empty state');
+        renderPosts();
+        renderFeaturedBanner();
+        loadHeroLive();
+      }
+    }, 5000);
+
     if(db){
       onSnapshot(query(collection(db,'posts'),where('status','==','published')),snap=>{
+        postsLoaded = true;
         allPosts=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>{
           const da=a.createdAt?.toDate?a.createdAt.toDate():(a.date?new Date(a.date):new Date(0));
           const db_=b.createdAt?.toDate?b.createdAt.toDate():(b.date?new Date(b.date):new Date(0));
@@ -1747,10 +1759,12 @@
         loadHeroLive();
         startQuoteRotation(); // Restart quote rotation with fresh posts
       },err=>{
+        postsLoaded = true;
         console.error('Error fetching posts:', err);
         document.getElementById('postsGrid').innerHTML=`<div class="no-posts">Couldn't load posts.<br>Try refreshing or check your connection.</div>`;
       });
     } else {
+      postsLoaded = true;
       allPosts=[];renderPosts();renderFeaturedBanner();loadHeroLive();
     }
 
