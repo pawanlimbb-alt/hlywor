@@ -382,7 +382,7 @@
     .night-owls-badge{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:0.76rem;color:var(--gold);background:rgba(212,160,32,0.1);padding:4px 10px;border-radius:12px;border:1px solid rgba(212,160,32,0.25);}
     
     /* 2. Midnight Prompt Sheet */
-    .midnight-prompt-sheet{background:#fff9d2;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 27px,rgba(26,18,8,0.07) 27px,rgba(26,18,8,0.07) 28px);padding:24px 24px 20px;border-radius:2px;box-shadow:0 6px 24px rgba(0,0,0,0.35);position:relative;margin:28px 0;transform:rotate(-0.8deg);transition:transform 0.3s;}
+.midnight-prompt-sheet{background:#fff9d2;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 27px,rgba(26,18,8,0.07) 27px,rgba(26,18,8,0.07) 28px);padding:24px 24px 20px;border-radius:2px;box-shadow:0 6px 24px rgba(0,0,0,0.35);position:relative;margin:0;transform:rotate(-0.8deg);transition:transform 0.3s;}
     .midnight-prompt-sheet:hover{transform:rotate(0deg) translateY(-2px);}
     .midnight-prompt-sheet::before{content:'';position:absolute;top:-10px;left:40px;width:70px;height:20px;background:rgba(232,104,26,0.65);clip-path:polygon(0% 0%,100% 0%,96% 100%,4% 100%);box-shadow:0 1px 4px rgba(0,0,0,0.15);}
     .midnight-pin{position:absolute;top:-10px;right:40px;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9999,#cc2222);box-shadow:0 2px 6px rgba(0,0,0,0.4);z-index:2;}
@@ -411,7 +411,7 @@
     .featured-btn:hover{background:var(--fire);color:#fff;}
 
     /* 4. Quick Micro-Note Drop Pad */
-    .micro-notes-box{background:#181008;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:24px;margin:36px 0;position:relative;}
+.micro-notes-box{background:#181008;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:24px;margin:0;position:relative;}
     .micro-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
     .micro-head-title{font-family:var(--pixel);font-size:0.6rem;color:var(--gold);letter-spacing:2px;}
     .micro-input-wrap{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:12px;margin-bottom:16px;}
@@ -511,6 +511,18 @@
     .mtb-search-btn:active{border-color:var(--gold);color:var(--gold);}
     @media(max-width:640px){.mobile-topbar{display:flex;}#authSlotMobile .auth-nav-btn{font-size:0;padding:3px;border-radius:50%;width:34px;height:34px;justify-content:center;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);}#authSlotMobile .auth-nav-btn svg{margin:0;}#authSlotMobile .auth-user-btn{padding:2px;border-radius:50%;border:1.5px solid rgba(232,104,26,0.5);background:none;}#authSlotMobile .auth-user-btn img{width:28px;height:28px;border-radius:50%;}#authSlotMobile .auth-user-name,#authSlotMobile .auth-chevron{display:none;}#authSlotMobile .auth-dropdown{right:0;left:auto;top:38px;position:fixed;z-index:9999;}.board{padding-top:0;}}
   </style>
+<style>
+  .desk-tray{
+    background:var(--paper);
+    padding:24px;
+    margin-bottom:24px;
+    position:sticky;
+    top:calc(var(--topbar-h) + 28px); /* below topbar */
+    z-index:350;
+    border-radius:4px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  }
+</style>
 </head>
 
 <body>
@@ -677,6 +689,7 @@
     </div>
 
     <!-- 2. Daily 3 AM Midnight Prompt Sheet -->
+<div class="desk-tray">
     <div class="midnight-prompt-sheet reveal" id="midnightPromptSheet">
       <div class="midnight-pin"></div>
       <div class="prompt-header">
@@ -753,6 +766,7 @@
         <!-- Pinned quick notes load here -->
       </div>
     </div>
+    </div><!-- end desk-tray -->
 
     <div id="posts" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-left:4px">
       <span style="font-family:var(--pixel);font-size:0.62rem;color:rgba(245,237,216,0.5);letter-spacing:2px" aria-hidden="true">// RECENTLY PINNED</span>
