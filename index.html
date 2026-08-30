@@ -41,9 +41,13 @@
 
   <!-- ✅ Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVLSVF6T3J"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVLSVF6T3J');</script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQDXDWHLX8"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MQDXDWHLX8');</script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZVLSVF6T3J');
+    gtag('config', 'G-MQDXDWHLX8');
+  </script>
 
   <style>
     :root {
@@ -1367,8 +1371,11 @@
       db = getFirestore(app);
     } catch(e) { console.warn("Firebase init skipped (offline/demo mode)"); }
 
-    // Initialize Firestore-backed micro-notes
-    if (db) { initMicroNotes(db); }
+    // Initialize Firestore-backed micro-notes & dynamic 3 AM prompts
+    if (db) {
+      initMicroNotes(db);
+      loadFirestorePrompts(db);
+    }
 
     injectAuthNav(document.getElementById('authSlot'));
     injectAuthNav(document.getElementById('authSlotMobile'), { compact: true });
@@ -1385,13 +1392,13 @@
         document.body.classList.add('night-mode');
         nightBtn?.classList.add('active');
         if (nightLabel) nightLabel.textContent = '🌙 NIGHT: ON';
-        if (nightBtnMobile) nightBtnMobile.innerHTML = '☀️ Day';
+        if (nightBtnMobile) nightBtnMobile.innerHTML = '☀️ Day Mode';
         localStorage.setItem('hlywor_night_mode', 'on');
       } else {
         document.body.classList.remove('night-mode');
         nightBtn?.classList.remove('active');
         if (nightLabel) nightLabel.textContent = '🌙 NIGHT: OFF';
-        if (nightBtnMobile) nightBtnMobile.innerHTML = '🌙 Theme';
+        if (nightBtnMobile) nightBtnMobile.innerHTML = '🌙 Night Mode';
         localStorage.setItem('hlywor_night_mode', 'off');
       }
     }
@@ -1471,8 +1478,33 @@
     const catMap={story:'cat-story',movies:'cat-movies',books:'cat-books',thoughts:'cat-thoughts',college:'cat-college',news:'cat-news','3am':'cat-story',unsaid:'cat-thoughts',healing:'cat-books'};
     function catClass(c){return catMap[c]||'cat-default';}
 
-    // ── 1. 3 AM SPARK PROMPTS ROTATOR ──
-    const SPARK_PROMPTS = [
+    // ── 1. DYNAMIC & FIRESTORE-BACKED 3 AM PROMPT GENERATOR ──
+    let firestorePrompts = [];
+    async function loadFirestorePrompts(dbInstance) {
+      if (!dbInstance) return;
+      try {
+        const snap = await getDocs(collection(dbInstance, "prompts"));
+        const list = [];
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          if (d.question || d.q) {
+            list.push({
+              q: d.question || d.q,
+              title: d.title || "3 AM Prompt"
+            });
+          }
+        });
+        if (list.length > 0) {
+          firestorePrompts = list;
+          console.log(`[Hlywor] Loaded ${list.length} custom 3 AM prompts from Firestore database!`);
+          setSparkPrompt(); // Immediately update view with real Firestore prompt!
+        }
+      } catch (e) {
+        console.warn("[Hlywor] Firestore prompts fetch fallback to generator", e);
+      }
+    }
+
+    const CURATED_PROMPTS = [
       { q: "What is a conversation you rehearsed 100 times in your head, but never actually had?", title: "The Conversation I Never Had" },
       { q: "What is something you forgave someone for, but will never forget?", title: "Forgiven, But Never Forgotten" },
       { q: "Tell us about a place you can never visit the same way again.", title: "A Place That Changed" },
@@ -1480,34 +1512,122 @@
       { q: "Who was someone that changed your life, but doesn't even know it?", title: "To The Stranger Who Changed Me" },
       { q: "What is a small, quiet memory that still makes your heart ache?", title: "A Quiet Midnight Memory" },
       { q: "What is a secret dream you've never told anyone out loud?", title: "The Dream I Kept Secret" },
-      { q: "If you could tell your 16-year-old self one thing, what would it be?", title: "A Letter To 16-Year-Old Me" }
+      { q: "If you could tell your 16-year-old self one thing, what would it be?", title: "A Letter To 16-Year-Old Me" },
+      { q: "What song instantly brings back a person you haven't spoken to in years?", title: "The Song That Reminds Me" },
+      { q: "What was a goodbye that felt unfinished or unsaid?", title: "An Unfinished Goodbye" },
+      { q: "What is something you realized about your parents only after growing up?", title: "Growing Up & Understanding" },
+      { q: "Tell us about a late-night moment that felt like a movie scene.", title: "A Midnight Movie Moment" },
+      { q: "What promise did you make to yourself that you haven't kept yet?", title: "A Promise To Myself" },
+      { q: "Who do you wish you could say 'I'm sorry' to right now?", title: "An Unsent Apology" },
+      { q: "What is a lesson love taught you when you least expected it?", title: "What Love Taught Me" }
     ];
-    let curPromptIdx = 0;
-    function setSparkPrompt(idx) {
-      const p = SPARK_PROMPTS[idx % SPARK_PROMPTS.length];
+
+    const TEMPLATE_SUBJECTS = ["an old friend", "your childhood self", "someone you loved", "a stranger on a train", "your past self", "a person you miss"];
+    const TEMPLATE_TIMES = ["2:14 AM", "3:30 AM", "a rainy Tuesday", "the last night of summer", "a quiet winter evening", "years ago"];
+    const TEMPLATE_EMOTIONS = ["regret", "longing", "relief", "unspoken gratitude", "quiet sadness", "peace"];
+
+    const GENERATOR_TEMPLATES = [
+      (subj, time, emo) => ({ q: `What is something you wish ${subj} knew about how you felt back during ${time}?`, title: `What I Wish You Knew` }),
+      (subj, time, emo) => ({ q: `If you could re-live one single hour with ${subj} from ${time}, what would happen?`, title: `One Hour With You` }),
+      (subj, time, emo) => ({ q: `What is the text message you drafted at ${time} filled with ${emo}, but never hit send?`, title: `The Draft I Kept Saved` }),
+      (subj, time, emo) => ({ q: `What quiet truth about ${emo} did you learn during ${time}?`, title: `A Quiet Truth` }),
+      (subj, time, emo) => ({ q: `Describe a small detail about ${subj} that nobody else noticed.`, title: `A Detail Only I Noticed` })
+    ];
+
+    let lastPromptText = '';
+    function generateRandom3AMPrompt() {
+      let result;
+      let attempts = 0;
+      const dbPool = firestorePrompts.length > 0 ? firestorePrompts : [];
+      const totalPool = [...dbPool, ...CURATED_PROMPTS];
+
+      do {
+        attempts++;
+        if (totalPool.length > 0 && Math.random() < 0.7) {
+          result = totalPool[Math.floor(Math.random() * totalPool.length)];
+        } else {
+          const t = GENERATOR_TEMPLATES[Math.floor(Math.random() * GENERATOR_TEMPLATES.length)];
+          const subj = TEMPLATE_SUBJECTS[Math.floor(Math.random() * TEMPLATE_SUBJECTS.length)];
+          const time = TEMPLATE_TIMES[Math.floor(Math.random() * TEMPLATE_TIMES.length)];
+          const emo = TEMPLATE_EMOTIONS[Math.floor(Math.random() * TEMPLATE_EMOTIONS.length)];
+          result = t(subj, time, emo);
+        }
+      } while (result.q === lastPromptText && attempts < 10);
+
+      lastPromptText = result.q;
+      return result;
+    }
+
+    function setSparkPrompt(p) {
+      const prompt = p || generateRandom3AMPrompt();
       const qEl = document.getElementById('promptQuestion');
       const ctaEl = document.getElementById('promptWriteCta');
       if (qEl) {
+        qEl.style.transition = 'opacity 0.2s';
         qEl.style.opacity = '0';
         setTimeout(() => {
-          qEl.textContent = `"${p.q}"`;
+          qEl.textContent = `"${prompt.q}"`;
           qEl.style.opacity = '1';
         }, 180);
       }
       if (ctaEl) {
-        ctaEl.href = `submit.html?prompt=${encodeURIComponent(p.q)}&title=${encodeURIComponent(p.title)}`;
+        ctaEl.href = `submit.html?prompt=${encodeURIComponent(prompt.q)}&title=${encodeURIComponent(prompt.title)}`;
       }
     }
-    document.getElementById('promptShuffleBtn')?.addEventListener('click', () => {
-      curPromptIdx = (curPromptIdx + 1 + Math.floor(Math.random() * (SPARK_PROMPTS.length - 1))) % SPARK_PROMPTS.length;
-      setSparkPrompt(curPromptIdx);
+
+    const shuffleBtn = document.getElementById('promptShuffleBtn');
+    let deg = 0;
+    shuffleBtn?.addEventListener('click', () => {
+      deg += 360;
+      // Reset rotation value to prevent performance issues after many clicks
+      if (deg >= 3600) deg = 360;
+      shuffleBtn.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+      shuffleBtn.style.transform = `rotate(${deg}deg)`;
+      setSparkPrompt();
     });
-    setSparkPrompt(0);
+
+    setSparkPrompt(CURATED_PROMPTS[0]);
 
     // ── 2. FEATURED STORY OF THE WEEK (GOLDEN PIN + COVER IMAGE) ──
     function renderFeaturedBanner() {
       const banner = document.getElementById('featuredBanner');
-      if (!banner || !allPosts.length) return;
+      if (!banner) return;
+
+      // Fallback featured story when Firebase is offline or no posts exist
+      const fallbackFeatured = {
+        title: 'Welcome to HlyWor',
+        desc: 'A place to open up. Some things don't fit in a conversation. This is where they go.',
+        category: 'STORY',
+        author: 'The Crew',
+        slug: 'about',
+        thumbnail: 'img/view.webp'
+      };
+
+      if (!allPosts.length) {
+        // Use fallback when no posts are available
+        const feat = fallbackFeatured;
+        const ft = document.getElementById('featuredTitle');
+        const fd = document.getElementById('featuredDesc');
+        const fc = document.getElementById('featuredCat');
+        const fa = document.getElementById('featuredAuthor');
+        const fb = document.getElementById('featuredReadBtn');
+        const fi = document.getElementById('featuredImg');
+        const fw = document.getElementById('featuredImgWrap');
+
+        if (fi) {
+          fi.src = feat.thumbnail;
+          fi.alt = feat.title;
+        }
+        if (fw) fw.style.display = 'block';
+        if (ft) { ft.textContent = feat.title; ft.href = 'about.html'; }
+        if (fd) fd.textContent = feat.desc;
+        if (fc) fc.textContent = feat.category;
+        if (fa) fa.textContent = `by ${feat.author}`;
+        if (fb) fb.href = 'about.html';
+        banner.style.display = 'block';
+        return;
+      }
+
       const feat = allPosts.find(p => p.featured || p.thumbnail || p.image || p.coverImage) || allPosts[0];
       if (!feat) return;
       const ft = document.getElementById('featuredTitle');
@@ -1542,6 +1662,31 @@
         document.querySelectorAll('.micro-emoji-btn').forEach(x => x.classList.remove('selected'));
         b.classList.add('selected');
         window.selectedMicroEmoji = b.dataset.emoji;
+      });
+    });
+
+    // Micro-notes view toggle (Global vs Following)
+    window.microNotesView = 'global'; // Default view
+    document.querySelectorAll('.micro-view-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+        if (view === window.microNotesView) return; // Already on this view
+
+        // Update button states
+        document.querySelectorAll('.micro-view-toggle-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        // Update global view state
+        window.microNotesView = view;
+
+        // Trigger microNotes.js to re-filter the feed
+        if (window.refreshMicroNotesFeed) {
+          window.refreshMicroNotesFeed(view);
+        }
       });
     });
 
@@ -1581,9 +1726,14 @@
       }, 400);
     }
 
-    // Start rotation every 9 seconds
-    if (quoteInterval) clearInterval(quoteInterval);
-    quoteInterval = setInterval(refreshHeroQuote, 9000);
+    function startQuoteRotation() {
+      // Clear any existing interval to prevent multiple timers
+      if (quoteInterval) clearInterval(quoteInterval);
+      // Show first quote immediately
+      refreshHeroQuote();
+      // Then start rotation every 9 seconds
+      quoteInterval = setInterval(refreshHeroQuote, 9000);
+    }
 
     if(db){
       onSnapshot(query(collection(db,'posts'),where('status','==','published')),snap=>{
@@ -1595,7 +1745,7 @@
         renderPosts();
         renderFeaturedBanner();
         loadHeroLive();
-        refreshHeroQuote(); // Show first quote immediately
+        startQuoteRotation(); // Restart quote rotation with fresh posts
       },err=>{
         console.error('Error fetching posts:', err);
         document.getElementById('postsGrid').innerHTML=`<div class="no-posts">Couldn't load posts.<br>Try refreshing or check your connection.</div>`;
@@ -1705,7 +1855,7 @@
         const readTime = post.readtime || (Math.max(2, Math.ceil((post.desc||'').split(/\s+/).length / 25 + 2)) + ' min read');
         const moodBadge = post.mood ? `<span class="post-mood-badge">${post.mood}</span>` : '';
         const savedArr = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
-        const isSaved = savedArr.includes(slug) || (post.id && savedArr.includes(post.id));
+        const isSaved = savedArr.includes(slug);
         const rh=EMOJIS.map(e=>`<button class="sticker-btn" data-slug="${slug}" data-emoji="${e}" aria-label="React with ${e}">${e}<span class="sticker-count" aria-live="polite">…</span></button>`).join('');
         const authorMeta=isAnon
           ? `<span class="post-author-chip" style="cursor:default;"><span class="post-author-chip-dot" aria-hidden="true"></span>${an}${ds?' · '+ds:''}</span>`
@@ -1722,13 +1872,12 @@
           saveBtn.addEventListener('click', e => {
             e.stopPropagation();
             let cur = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
-            const idKey = slug || post.id;
-            if (cur.includes(idKey)) {
-              cur = cur.filter(x => x !== idKey);
+            if (cur.includes(slug)) {
+              cur = cur.filter(x => x !== slug);
               saveBtn.classList.remove('is-saved');
               saveBtn.title = 'Save story';
             } else {
-              cur.push(idKey);
+              cur.push(slug);
               saveBtn.classList.add('is-saved');
               saveBtn.title = 'Saved to your list';
             }
