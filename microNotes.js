@@ -14,6 +14,21 @@ export function initMicroNotes(db) {
   const feed = document.getElementById("microFeed");
   const visibilityInputs = document.getElementsByName("visibility");
   const toggleBtns = document.querySelectorAll(".micro-view-toggle-btn");
+  const charCounter = document.getElementById("microCharCounter");
+
+  if (textarea && charCounter) {
+    textarea.addEventListener("input", () => {
+      const remaining = 180 - textarea.value.length;
+      charCounter.textContent = `${remaining}`;
+      if (remaining < 20) {
+        charCounter.style.color = "var(--fire)";
+        charCounter.style.fontWeight = "700";
+      } else {
+        charCounter.style.color = "rgba(255,255,255,0.4)";
+        charCounter.style.fontWeight = "normal";
+      }
+    });
+  }
 
   // Which feed to view: "global" (everyone) or "following" (people you follow)
   let viewMode = "global";
