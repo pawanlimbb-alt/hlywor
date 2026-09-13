@@ -597,60 +597,101 @@
   .brief .meta{ font-family:'Courier Prime', monospace; font-size: 11px; color: var(--ink-soft); margin-bottom: 6px; }
   .brief p{ margin:0; font-size: 0.95rem; }
 
-  .classifieds{
-    display:grid;
+  /* ---------- Hand-Cut Paper Clipping Skill Cards ---------- */
+  .classifieds {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    gap: 16px;
   }
-  .classifieds .ad{
+  .classifieds .ad {
     position: relative;
-    border: 1px solid var(--ink);
+    border: 1.5px solid var(--ink);
     padding: 14px 16px;
     font-size: 0.88rem;
     background: var(--paper-alt);
     overflow: hidden;
+    box-shadow: 2px 3px 0px var(--ink);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25), box-shadow 0.3s ease, border-color 0.25s ease, background 0.3s ease;
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23f5e4b3' stroke='%238f1f24' stroke-width='2'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='14.5' y1='14.5' x2='20' y2='20' stroke-linecap='round'/%3E%3C/svg%3E") 10 10, zoom-in !important;
   }
 
-  /* Rubber-Stamp Overlay */
+  /* Unique hand-cut paper corner curves & organic angles for every card */
+  .classifieds .ad:nth-child(1) {
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    transform: rotate(-0.6deg);
+  }
+  .classifieds .ad:nth-child(2) {
+    border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+    transform: rotate(0.8deg);
+  }
+  .classifieds .ad:nth-child(3) {
+    border-radius: 225px 18px 245px 12px / 12px 245px 18px 225px;
+    transform: rotate(-0.9deg);
+  }
+  .classifieds .ad:nth-child(4) {
+    border-radius: 18px 245px 12px 225px / 225px 12px 245px 18px;
+    transform: rotate(0.7deg);
+  }
+  .classifieds .ad:nth-child(5) {
+    border-radius: 245px 12px 215px 18px / 18px 215px 12px 245px;
+    transform: rotate(-0.5deg);
+  }
+  .classifieds .ad:nth-child(6) {
+    border-radius: 12px 215px 18px 245px / 245px 18px 215px 12px;
+    transform: rotate(1deg);
+  }
+
+  /* Hand-Torn Paper Stamp Overlay */
   .classifieds .ad::after {
     content: attr(data-stamp);
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     font-family: 'Courier Prime', monospace;
     font-size: 9px;
     font-weight: 700;
-    color: var(--red);
-    border: 1.5px solid var(--red);
-    padding: 2px 6px;
+    color: #fff;
+    background: var(--red);
+    padding: 3px 8px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
+    border-radius: 255px 12px 225px 10px / 10px 225px 12px 255px;
+    box-shadow: 2px 2px 0px var(--ink);
     transform: rotate(15deg) scale(2.2);
     opacity: 0;
     pointer-events: none;
     transition: transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.3), opacity 0.2s ease;
   }
 
-  /* Physical Clipping Tilt Effect (No generic AI scale-up!) */
+  body.dark-theme .classifieds .ad::after {
+    background: var(--red);
+    color: #fff;
+    box-shadow: 2px 2px 0px #000;
+  }
+
+  /* Physical Paper Clipping Lift & Fill Effect on Hover */
   .classifieds .ad:nth-child(odd):hover {
-    transform: rotate(-1.8deg) translateY(-2px);
-    background: var(--paper);
-    box-shadow: 4px 5px 0px var(--ink);
+    transform: rotate(-2.2deg) translateY(-4px) scale(1.02);
+    background: #fffdf7;
+    box-shadow: 5px 7px 0px var(--ink);
     border-color: var(--red);
   }
   .classifieds .ad:nth-child(even):hover {
-    transform: rotate(1.8deg) translateY(-2px);
-    background: var(--paper);
-    box-shadow: -4px 5px 0px var(--ink);
+    transform: rotate(2.2deg) translateY(-4px) scale(1.02);
+    background: #fffdf7;
+    box-shadow: -5px 7px 0px var(--ink);
     border-color: var(--red);
   }
 
-  /* Rubber Stamp Slam on Hover */
+  body.dark-theme .classifieds .ad:nth-child(odd):hover,
+  body.dark-theme .classifieds .ad:nth-child(even):hover {
+    background: #28241e;
+  }
+
+  /* Paper Stamp Slam on Hover */
   .classifieds .ad:hover::after {
-    opacity: 0.85;
-    transform: rotate(-8deg) scale(1);
+    opacity: 0.95;
+    transform: rotate(-6deg) scale(1);
   }
 
   .classifieds .ad strong{
