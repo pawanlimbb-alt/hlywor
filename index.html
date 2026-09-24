@@ -1512,7 +1512,15 @@
 
     onAuthChange(user=>{const icon=document.getElementById('dockMeIcon'),label=document.getElementById('dockMeLabel');if(!icon)return;if(user){if(user.photoURL)icon.innerHTML=`<img class="dock-avatar" src="${user.photoURL}" alt="" referrerpolicy="no-referrer">`;else{const i=(user.displayName||user.email||'U')[0].toUpperCase();icon.innerHTML=`<div class="dock-avatar-placeholder">${i}</div>`;}if(label)label.textContent=(user.displayName||'').split(' ')[0].slice(0,5)||'ME';}else{icon.innerHTML=`<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;if(label)label.textContent='ME';}});
 
-    const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;const siblings=[...e.target.parentElement.querySelectorAll('.reveal')];setTimeout(()=>e.target.classList.add('in'),siblings.indexOf(e.target)*70);ro.unobserve(e.target);});},{threshold:0.06});
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const parent = e.target.parentElement;
+        const idx = parent ? [...parent.querySelectorAll('.reveal')].indexOf(e.target) : 0;
+        setTimeout(() => e.target.classList.add('in'), Math.max(0, idx) * 40);
+        ro.unobserve(e.target);
+      });
+    }, { threshold: 0.01 });
     document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
     let allPosts=[],activeTag='all',sortMode='latest';
@@ -1998,9 +2006,10 @@
         loadReactions(slug).then(data=>{card.querySelectorAll('.sticker-btn').forEach(b=>{const e=b.dataset.emoji;if(data[e]){b.querySelector('.sticker-count').textContent=data[e].count;b.classList.toggle('reacted',data[e].userReacted);b.setAttribute('aria-pressed',data[e].userReacted?'true':'false');}});});
       });
 
-      cardEls.forEach(card=>{
+      cardEls.forEach((card, idx) => {
         grid.appendChild(card);
-        requestAnimationFrame(()=>ro.observe(card));
+        setTimeout(() => card.classList.add('in'), idx * 40 + 20);
+        requestAnimationFrame(() => ro.observe(card));
       });
 
       updateFreshness();
