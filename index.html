@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📌</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HlyWor — A place to open up</title>
   
@@ -2046,7 +2046,32 @@
     setInterval(updateFreshness, 60000);
     setTimeout(()=>{document.querySelectorAll('.skel-post').forEach(el=>el.remove());},1500);
 
-    document.addEventListener('DOMContentLoaded',()=>{const lastVisit=localStorage.getItem('hlywor_last_visit'),now=Date.now(),isNew=!lastVisit||(now-parseInt(lastVisit))>30*24*60*60*1000;if(isNew){localStorage.setItem('hlywor_last_visit',now.toString());const toast=document.createElement('div');toast.innerHTML=`<div class="welcome-toast-inner" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--paper);color:var(--ink);padding:12px 20px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.3);font-family:var(--sans);font-size:0.85rem;z-index:9999;max-width:90%;text-align:center;border:1px solid var(--tape-y);opacity:0;transition:all 0.4s ease;">👋 Welcome. This space is yours too.<span style="display:block;font-size:0.75rem;color:var(--ink3);margin-top:4px">No pressure. Just presence.</span></div>`;document.body.appendChild(toast);requestAnimationFrame(()=>{const inner=toast.firstElementChild;inner.style.opacity='1';inner.style.transform='translateX(-50%) translateY(0)';});setTimeout(()=>{const inner=toast.firstElementChild;inner.style.opacity='0';inner.style.transform='translateX(-50%) translateY(20px)';setTimeout(()=>toast.remove(),400);},6000);}});
+    document.addEventListener('DOMContentLoaded', () => {
+      const lastVisit = localStorage.getItem('hlywor_last_visit');
+      const now = Date.now();
+      const isNew = !lastVisit || (now - parseInt(lastVisit)) > 30 * 24 * 60 * 60 * 1000;
+      if (isNew) {
+        localStorage.setItem('hlywor_last_visit', now.toString());
+        const toast = document.createElement('div');
+        toast.innerHTML = `<div class="welcome-toast-inner" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--paper);color:var(--ink);padding:12px 20px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.3);font-family:var(--sans);font-size:0.85rem;z-index:9999;max-width:90%;text-align:center;border:1px solid var(--tape-y);opacity:0;transition:all 0.4s ease;">👋 Welcome. This space is yours too.<span style="display:block;font-size:0.75rem;color:var(--ink3);margin-top:4px">No pressure. Just presence.</span></div>`;
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => {
+          const inner = toast.firstElementChild;
+          if (inner) {
+            inner.style.opacity = '1';
+            inner.style.transform = 'translateX(-50%) translateY(0)';
+          }
+        });
+        setTimeout(() => {
+          const inner = toast.firstElementChild;
+          if (inner) {
+            inner.style.opacity = '0';
+            inner.style.transform = 'translateX(-50%) translateY(20px)';
+            setTimeout(() => toast.remove(), 400);
+          }
+        }, 6000);
+      }
+    });
   </script>
 </body>
 </html>
