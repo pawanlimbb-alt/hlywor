@@ -1918,8 +1918,24 @@
           localStorage.setItem('hlywor_view_date', today);
           document.getElementById('viewedToday').textContent = '0';
         }
-      }
-
+      // Build all post cards
+      const cardEls=[];
+      filtered.forEach((post,i)=>{
+        const rot=rots[i%rots.length],cat=(post.category||post.type||'post').toLowerCase(),slug=post.slug||post.id;
+        const card=document.createElement('div');card.className='pinned-post reveal';card.style.cssText=`--rot:${rot}deg;`;card.style.transitionDelay=`${i*55}ms`;card.setAttribute('role','listitem');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`${post.title} by ${post.author||'anonymous'}`);
+        const pl=[28,55,42,65,35][i%5];
+        const thumb=post.thumbnail?`<div class="post-photo"><img src="${post.thumbnail}" alt="${post.title}" loading="lazy" decoding="async"><div class="photo-corner tl" aria-hidden="true"></div><div class="photo-corner tr" aria-hidden="true"></div><div class="photo-corner bl" aria-hidden="true"></div><div class="photo-corner br" aria-hidden="true"></div></div>`:`<div class="post-noimg"><div class="post-noimg-num" aria-hidden="true">${String(i+1).padStart(2,'0')}</div><div class="post-noimg-label">no photo</div></div>`;
+        const ds=post.date?new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}):'';
+        const an=post.author||'HlyWor';
+        const isAnon=!!post.isAnonymous;
+        const readTime = post.readtime || (Math.max(2, Math.ceil((post.desc||'').split(/\s+/).length / 25 + 2)) + ' min read');
+        const moodBadge = post.mood ? `<span class="post-mood-badge">${post.mood}</span>` : '';
+        const savedArr = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
+        const isSaved = savedArr.includes(slug);
+        const rh=EMOJIS.map(e=>`<button class="sticker-btn" data-slug="${slug}" data-emoji="${e}" aria-label="React with ${e}">${e}<span class="sticker-count" aria-live="polite">…</span></button>`).join('');
+        const authorMeta=isAnon
+          ? `<span class="post-author-chip" style="cursor:default;"><span class="post-author-chip-dot" aria-hidden="true"></span>${an}${ds?' · '+ds:''}</span>`
+          : `<button class="post-author-chip" data-author="${an}" data-uid="${post.authorUid||''}" aria-label="View ${an}'s profile"><span class="post-author-chip-dot" aria-hidden="true"></span>${an}${ds?' · '+ds:''}</button>`;
         const isAdminUser = currentUser && (currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
         const adminBtn = isAdminUser ? `<button class="admin-feature-btn ${post.featured ? 'is-featured' : ''}" data-id="${post.id}" title="Set as Editor's Pick">${post.featured ? '✦ Featured' : '✦ Feature'}</button>` : '';
 
