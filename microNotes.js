@@ -181,6 +181,21 @@ export function initMicroNotes(db) {
       allNotes = [];
       snap.forEach((docSnap) => allNotes.push({ id: docSnap.id, ...docSnap.data() }));
       render();
+
+      const teaserEl = document.getElementById('microPillTeaser');
+      const badgeEl = document.getElementById('microPillBadge');
+      const emojiEl = document.getElementById('microPillEmoji');
+      const miniEmojiEl = document.getElementById('microMiniEmoji');
+      if (allNotes.length > 0) {
+        if (teaserEl) teaserEl.textContent = `"${allNotes[0].content}"`;
+        if (badgeEl) badgeEl.textContent = `${allNotes.length} ${allNotes.length === 1 ? 'NOTE' : 'NOTES'}`;
+        if (emojiEl && allNotes[0].emoji) emojiEl.textContent = allNotes[0].emoji;
+        if (miniEmojiEl && allNotes[0].emoji) miniEmojiEl.textContent = allNotes[0].emoji;
+      } else {
+        if (teaserEl) teaserEl.textContent = 'Raw · 1-2 lines · 48h expire';
+        if (badgeEl) badgeEl.textContent = 'NOTES';
+        if (miniEmojiEl) miniEmojiEl.textContent = '📌';
+      }
     },
     (err) => {
       console.error("Micro-notes listener error:", err);

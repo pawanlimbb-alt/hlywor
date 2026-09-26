@@ -345,7 +345,7 @@
     #randomQuote.fade { opacity: 0; }
 
     .reader-stat {
-      position: fixed; bottom: 74px; right: 16px;
+      position: fixed; bottom: 24px; left: 88px; right: auto;
       background: var(--paper2); color: var(--ink2);
       padding: 8px 14px; border-radius: 18px;
       font-family: var(--sans); font-size: 0.72rem;
@@ -357,6 +357,13 @@
       backdrop-filter: blur(6px);
     }
     .reader-stat.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    @media (max-width: 640px) {
+      .reader-stat {
+        bottom: 74px;
+        left: 14px;
+        right: auto;
+      }
+    }
 
     #scrollNudge {
       position: fixed; bottom: 130px; left: 50%; transform: translateX(-50%) translateY(12px);
@@ -369,6 +376,159 @@
       z-index: 800; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
     #scrollNudge.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+    /* ── Animated Sun & Moon Toggle Switch with 3D Flipping Knob ── */
+    .toggle-track {
+      width: 58px;
+      height: 28px;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      background: linear-gradient(135deg, #70b5f9 0%, #3a82f6 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+      perspective: 400px;
+    }
+    .toggle-track:hover {
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 12px rgba(212, 160, 32, 0.4);
+    }
+    .toggle-track:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    /* Dark Mode Track Background */
+    .toggle-track.dark,
+    body.night-mode .toggle-track,
+    body.dark-mode .toggle-track {
+      background: linear-gradient(135deg, #0b132b 0%, #1c2541 100%);
+      border-color: rgba(212, 160, 32, 0.55);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Stars (visible in dark mode) */
+    .toggle-track .star {
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.35s ease;
+    }
+    .toggle-track .star.s1 { top: 6px; left: 8px; width: 3px; height: 3px; box-shadow: 0 0 3px #fff; }
+    .toggle-track .star.s2 { top: 16px; left: 16px; width: 2px; height: 2px; }
+    .toggle-track .star.s3 { top: 8px; left: 24px; width: 3px; height: 3px; box-shadow: 0 0 3px #fff; }
+
+    .toggle-track.dark .star,
+    body.night-mode .toggle-track .star,
+    body.dark-mode .toggle-track .star {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+
+    /* Clouds (visible in light mode) */
+    .toggle-track .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 10px;
+      transition: all 0.35s ease;
+    }
+    .toggle-track .cloud-1 {
+      bottom: 4px;
+      right: 6px;
+      width: 18px;
+      height: 7px;
+      box-shadow: -4px -3px 0 2px rgba(255, 255, 255, 0.85);
+    }
+    .toggle-track .cloud-2 {
+      bottom: 3px;
+      right: 18px;
+      width: 11px;
+      height: 5px;
+      opacity: 0.7;
+    }
+
+    .toggle-track.dark .cloud,
+    body.night-mode .toggle-track .cloud,
+    body.dark-mode .toggle-track .cloud {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    /* Outer Knob Container */
+    .toggle-track .knob {
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      top: 1.5px;
+      left: 2px;
+      transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+      perspective: 300px;
+    }
+
+    .toggle-track.dark .knob,
+    body.night-mode .toggle-track .knob,
+    body.dark-mode .toggle-track .knob {
+      transform: translateX(30px);
+    }
+
+    /* 3D Flipping Inner Knob */
+    .knob-flip-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+      border-radius: 50%;
+    }
+
+    .toggle-track.dark .knob-flip-inner,
+    body.night-mode .toggle-track .knob-flip-inner,
+    body.dark-mode .toggle-track .knob-flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* Knob Front (Sun) & Back (Moon) Faces */
+    .knob-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .knob-front {
+      background: #ffcc00;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    .knob-back {
+      background: #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), inset -2px -2px 0 0 rgba(0, 0, 0, 0.15);
+      transform: rotateY(180deg);
+    }
+
+    .toggle-track .icon-sun {
+      width: 14px;
+      height: 14px;
+      stroke: #7a4b00;
+    }
+
+    .toggle-track .icon-moon {
+      width: 13px;
+      height: 13px;
+      fill: #1e293b;
+    }
 
     /* ══════════════════════════════════════════════════════
        ✨ HOMEPAGE ENGAGEMENT & ATMOSPHERE ENHANCEMENTS
@@ -434,20 +594,173 @@
 
     @media(max-width:480px){.featured-layout{flex-direction:column;align-items:flex-start;}.featured-img-wrap{width:100%;height:100px;}}
 
-    /* 4. Quick Micro-Note Drop Pad (Redesigned & User-Friendly) */
-    .micro-notes-box{background:#181008;border:1px solid rgba(212,160,32,0.25);border-radius:6px;padding:14px 16px;margin:0 0 16px;position:relative;box-shadow:0 4px 18px rgba(0,0,0,0.4);}
-    .micro-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);}
-    .micro-head-toggle{background:none;border:none;color:inherit;font:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;text-align:left;padding:0;}
-    .micro-head-title{font-family:var(--pixel);font-size:0.55rem;color:var(--gold);letter-spacing:1.5px;text-shadow:0 0 8px rgba(212,160,32,0.3);}
-    .micro-head-sub{font-family:var(--sans);font-size:0.72rem;color:rgba(255,255,255,0.5);font-style:italic;}
-    .micro-head-chevron{font-size:0.8rem;color:var(--gold);transition:transform 0.2s;}
-    .micro-head-toggle[aria-expanded="true"] .micro-head-chevron{transform:rotate(90deg);}
+    /* 4. Floating Notes Widget (Bottom-Right Corner) */
+    .micro-widget-floating {
+      position: fixed;
+      bottom: 24px;
+      right: 28px;
+      left: auto;
+      z-index: 1200;
+      font-family: var(--sans);
+    }
+    @media (max-width: 640px) {
+      .micro-widget-floating {
+        bottom: 74px;
+        right: 14px;
+        left: auto;
+      }
+    }
+
+    /* Collapsed Floating Square Card */
+    .micro-widget-square {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      background: rgba(20, 14, 8, 0.95);
+      border: 1.5px solid rgba(212, 160, 32, 0.5);
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(232, 104, 26, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1),
+                  border-color 0.2s ease,
+                  box-shadow 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      box-sizing: border-box;
+      padding: 6px;
+    }
+    .micro-widget-square:hover {
+      transform: translateY(-3px) scale(1.05);
+      border-color: var(--fire);
+      box-shadow: 0 12px 28px rgba(232, 104, 26, 0.45);
+    }
+    .micro-widget-square[aria-expanded="true"] {
+      border-color: var(--fire);
+      box-shadow: 0 4px 20px rgba(232, 104, 26, 0.5);
+    }
+
+    /* SVG Pin Icon inside square card */
+    .micro-pin-svg {
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      flex-shrink: 0;
+    }
+    .micro-square-avatar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .micro-square-pulse {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2ecc71;
+      border: 1.5px solid #181008;
+      box-shadow: 0 0 6px #2ecc71;
+      animation: ambientBlink 1.8s infinite;
+    }
+    .micro-square-title {
+      font-family: var(--pixel);
+      font-size: 0.44rem;
+      color: var(--gold);
+      letter-spacing: 0.8px;
+      margin-top: 5px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Popover Expanded Panel */
+    .micro-popover-card {
+      position: absolute;
+      bottom: 78px;
+      right: 0;
+      left: auto;
+      width: 420px;
+      max-width: calc(100vw - 32px);
+      background: #16100a;
+      border: 1.5px solid rgba(212, 160, 32, 0.35);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.75), 0 0 24px rgba(232, 104, 26, 0.25);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transform-origin: bottom right;
+      z-index: 1300;
+    }
+    /* Open animation */
+    .micro-popover-card:not([hidden]) {
+      animation: microPopOpen 0.28s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+    }
+    /* Close animation class */
+    .micro-popover-card.micro-closing {
+      animation: microPopClose 0.2s ease-in forwards;
+    }
+    @keyframes microPopOpen {
+      from { transform: scale(0.8) translateY(16px); opacity: 0; }
+      to   { transform: scale(1) translateY(0);    opacity: 1; }
+    }
+    @keyframes microPopClose {
+      from { transform: scale(1) translateY(0);    opacity: 1; }
+      to   { transform: scale(0.82) translateY(14px); opacity: 0; }
+    }
+    @media (max-width: 640px) {
+      .micro-popover-card {
+        bottom: 74px;
+        right: 0;
+        left: auto;
+        width: calc(100vw - 28px);
+        max-width: 340px;
+        box-sizing: border-box;
+      }
+    }
+
+
+    .micro-popover-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 8px;
+    }
+    .micro-close-btn {
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: rgba(255,255,255,0.6);
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .micro-close-btn:hover {
+      background: var(--fire);
+      color: #fff;
+    }
 
     .micro-view-tabs{display:flex;gap:4px;background:rgba(255,255,255,0.05);padding:3px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);}
-    .micro-view-toggle-btn{background:none;border:none;color:rgba(255,255,255,0.5);font-family:var(--sans);font-size:0.7rem;font-weight:600;padding:3px 10px;border-radius:12px;cursor:pointer;transition:all 0.2s;}
+    .micro-view-toggle-btn{background:none;border:none;color:rgba(255,255,255,0.5);font-family:var(--sans);font-size:0.68rem;font-weight:600;padding:3px 9px;border-radius:12px;cursor:pointer;transition:all 0.2s;}
     .micro-view-toggle-btn.active{background:var(--fire);color:#fff;box-shadow:0 2px 6px rgba(232,104,26,0.4);}
 
-    .micro-body{display:block;}
     .micro-compose{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:12px 14px;margin-bottom:14px;}
     .micro-compose-row{position:relative;}
     .micro-textarea{width:100%;background:rgba(0,0,0,0.25);border:1px solid rgba(212,160,32,0.2);border-radius:4px;outline:none;font-family:'Caveat',cursive;font-size:1.18rem;color:#fdf6e2;line-height:1.35;padding:10px 12px 24px;resize:none;min-height:54px;box-sizing:border-box;}
@@ -468,7 +781,7 @@
     .micro-pin-btn{background:var(--fire);color:#fff;border:none;font-family:var(--sans);font-size:0.78rem;font-weight:700;padding:6px 16px;border-radius:4px;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(232,104,26,0.4);}
     .micro-pin-btn:hover{background:#ff7a2a;transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,104,26,0.5);}
 
-    .micro-feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:14px;max-height:360px;overflow-y:auto;padding-right:4px;}
+    .micro-feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px;max-height:280px;overflow-y:auto;padding-right:4px;}
     .micro-feed::-webkit-scrollbar{width:4px;}
     .micro-feed::-webkit-scrollbar-thumb{background:var(--fire);border-radius:2px;}
 
@@ -504,6 +817,30 @@
       --ink3: #b8a68a;
       --ink4: #8a7860;
       --rule: rgba(255,255,255,0.07);
+    }
+    /* Nav & footer use var(--ink) as bg which flips in night mode — keep them dark */
+    body.night-mode .nav-strip,
+    body.dark-mode .nav-strip {
+      background: #0e0905;
+      border-right-color: rgba(212,160,32,0.12);
+    }
+    body.night-mode .board-footer,
+    body.dark-mode .board-footer {
+      background: #0e0905;
+      border-top-color: rgba(255,255,255,0.05);
+    }
+    body.night-mode .mobile-topbar,
+    body.dark-mode .mobile-topbar {
+      background: linear-gradient(180deg, #0e0905 0%, #120c08 100%);
+      border-bottom-color: rgba(212,160,32,0.12);
+    }
+    /* Sticker tooltip bg also uses --ink, keep it dark */
+    body.night-mode .sticker-btn:hover::after,
+    body.night-mode .sticker-btn:focus::after,
+    body.dark-mode .sticker-btn:hover::after,
+    body.dark-mode .sticker-btn:focus::after {
+      background: #120c08;
+      color: var(--ink);
     }
     body.night-mode .title-sheet {
       background: #140e08;
@@ -1074,7 +1411,23 @@
   <div class="mobile-topbar" role="banner">
     <a href="index.html" class="mtb-logo" aria-label="HlyWor Home">HlYWoR</a>
     <div class="mtb-right">
-      <button type="button" class="mtb-night-btn" id="nightModeWidgetMobile" aria-label="Toggle Night Mode" title="Toggle Night Mode">☽ Theme</button>
+      <div class="toggle-track" id="themeToggleMobile" role="switch" aria-checked="false" aria-label="Toggle theme" tabindex="0" title="Toggle Theme">
+        <div class="star s1"></div>
+        <div class="star s2"></div>
+        <div class="star s3"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="knob">
+          <div class="knob-flip-inner">
+            <div class="knob-face knob-front">
+              <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </div>
+            <div class="knob-face knob-back">
+              <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+            </div>
+          </div>
+        </div>
+      </div>
       <div id="authSlotMobile" aria-label="Account"></div>
       <button class="mtb-search-btn" id="mtbSearchBtn" aria-label="Open search">⌕</button>
     </div>
@@ -1168,10 +1521,23 @@
           <span class="freshness-dot"></span>
           <span><strong id="nightOwlsCount">1</strong> reading now</span>
         </div>
-        <button type="button" class="ambient-widget" id="nightModeWidget" aria-label="Toggle midnight mode" title="Toggle midnight mode">
-          <span class="ambient-dot"></span>
-          <span class="ambient-label" id="nightModeLabel">☽ NIGHT: OFF</span>
-        </button>
+        <div class="toggle-track" id="themeToggle" role="switch" aria-checked="false" aria-label="Toggle theme" tabindex="0" title="Toggle Theme">
+          <div class="star s1"></div>
+          <div class="star s2"></div>
+          <div class="star s3"></div>
+          <div class="cloud cloud-1"></div>
+          <div class="cloud cloud-2"></div>
+          <div class="knob">
+            <div class="knob-flip-inner">
+              <div class="knob-face knob-front">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+              </div>
+              <div class="knob-face knob-back">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1262,51 +1628,7 @@
         </div>
       </div>
 
-      <!-- Row 2: Micro Notes pad (User-Friendly & Open by default) -->
-      <div class="micro-notes-box reveal" id="microNotesBox" style="margin-bottom:12px;">
-        <div class="micro-head" id="microHead">
-          <button class="micro-head-toggle" id="microToggleBtn" aria-expanded="true" aria-controls="microBody">
-            <span class="micro-head-title">📌 DROP A QUICK NOTE</span>
-            <span class="micro-head-sub">Raw · 1-2 lines · 48h expire</span>
-            <span class="micro-head-chevron">▸</span>
-          </button>
-          <div class="micro-view-tabs" role="tablist">
-            <button class="micro-view-toggle-btn active" data-view="global" role="tab">🌍 Global</button>
-            <button class="micro-view-toggle-btn" data-view="following" role="tab">👥 Following</button>
-          </div>
-        </div>
-
-        <div class="micro-body" id="microBody">
-          <div class="micro-compose">
-            <div class="micro-compose-row" style="position:relative;">
-              <textarea class="micro-textarea" id="microTextarea" maxlength="180" placeholder="Type a midnight thought, confession, or feeling…" rows="2"></textarea>
-              <span id="microCharCounter" style="font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.4);position:absolute;right:10px;bottom:6px;pointer-events:none;">180</span>
-            </div>
-            <div class="micro-actions">
-              <div class="micro-emojis" id="microEmojis">
-                <button type="button" class="micro-emoji-btn selected" data-emoji="🌙">🌙</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="❤️">❤️</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="😭">😭</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="🔥">🔥</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="🫂">🫂</button>
-                <button type="button" class="micro-emoji-btn" data-emoji="✨">✨</button>
-              </div>
-              <div class="micro-post-controls">
-                <div class="micro-vis-select">
-                  <label><input type="radio" name="visibility" value="global" checked> 🌍 Global</label>
-                  <label><input type="radio" name="visibility" value="following"> 👥 Followers</label>
-                </div>
-                <button type="button" class="micro-pin-btn" id="microPinBtn">Pin Note 📌</button>
-              </div>
-            </div>
-          </div>
-          <div class="micro-feed" id="microFeed">
-            <p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">Loading notes…</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 3: Category Filter Ribbon & Sort Bar (Now at the bottom of desk-tray, directly above stories) -->
+      <!-- Row 2: Category Filter Ribbon & Sort Bar (Directly above stories) -->
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:6px;border-top:1px dashed rgba(26,18,8,0.12);">
         <div class="tape-filter reveal" id="tagBar" role="tablist" aria-label="Filter stories by category">
           <button class="tape-tab active" data-tag="all" role="tab" aria-selected="true" aria-controls="postsGrid">ALL</button>
@@ -1401,6 +1723,77 @@
     </div>
   </footer>
 
+  <!-- 📌 Floating Notes Card & Drawer -->
+  <div id="microNotesWidget" class="micro-widget-floating">
+
+    <!-- Collapsed Floating Square Card -->
+    <div id="microWidgetTrigger" class="micro-widget-square" role="button" tabindex="0" aria-label="Toggle midnight notes" aria-expanded="false">
+      <div class="micro-square-avatar">
+        <!-- SVG Pin Icon -->
+        <svg class="micro-pin-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2C8.686 2 6 4.686 6 8c0 4.5 6 13 6 13s6-8.5 6-13c0-3.314-2.686-6-6-6z" fill="url(#pinGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+          <circle cx="12" cy="8" r="2.5" fill="rgba(255,255,255,0.92)"/>
+          <defs>
+            <linearGradient id="pinGrad" x1="6" y1="2" x2="18" y2="21" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#e8681a"/>
+              <stop offset="100%" stop-color="#d4a020"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="micro-square-pulse"></span>
+      </div>
+      <span class="micro-square-title">NOTES</span>
+    </div>
+
+    <!-- Expanded Popover Card / Drawer -->
+    <div class="micro-popover-card" id="microPopoverCard" hidden>
+      <div class="micro-popover-header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="display:flex;align-items:center;gap:5px;">
+            <svg width="11" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M12 2C8.686 2 6 4.686 6 8c0 4.5 6 13 6 13s6-8.5 6-13c0-3.314-2.686-6-6-6z" fill="#d4a020"/><circle cx="12" cy="8" r="2.5" fill="rgba(255,255,255,0.9)"/></svg>
+            <span style="font-family:var(--pixel);font-size:0.52rem;color:var(--gold);letter-spacing:1.5px;">MIDNIGHT NOTES</span>
+          </span>
+          <span style="font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.4);font-style:italic;">48h expire</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="micro-view-tabs" role="tablist">
+            <button class="micro-view-toggle-btn active" data-view="global" role="tab">🌍 Global</button>
+            <button class="micro-view-toggle-btn" data-view="following" role="tab">👥 Following</button>
+          </div>
+          <button type="button" class="micro-close-btn" id="microCloseBtn" aria-label="Close notes">✕</button>
+        </div>
+      </div>
+
+      <div class="micro-compose">
+        <div class="micro-compose-row" style="position:relative;">
+          <textarea class="micro-textarea" id="microTextarea" maxlength="180" placeholder="Type a midnight thought, confession, or feeling…" rows="2"></textarea>
+          <span id="microCharCounter" style="font-family:var(--sans);font-size:0.68rem;color:rgba(255,255,255,0.4);position:absolute;right:10px;bottom:6px;pointer-events:none;">180</span>
+        </div>
+        <div class="micro-actions">
+          <div class="micro-emojis" id="microEmojis">
+            <button type="button" class="micro-emoji-btn selected" data-emoji="🌙">🌙</button>
+            <button type="button" class="micro-emoji-btn" data-emoji="❤️">❤️</button>
+            <button type="button" class="micro-emoji-btn" data-emoji="😭">😭</button>
+            <button type="button" class="micro-emoji-btn" data-emoji="🔥">🔥</button>
+            <button type="button" class="micro-emoji-btn" data-emoji="🫂">🫂</button>
+            <button type="button" class="micro-emoji-btn" data-emoji="✨">✨</button>
+          </div>
+          <div class="micro-post-controls">
+            <div class="micro-vis-select">
+              <label><input type="radio" name="visibility" value="global" checked> 🌍 Global</label>
+              <label><input type="radio" name="visibility" value="following"> 👥 Followers</label>
+            </div>
+            <button type="button" class="micro-pin-btn" id="microPinBtn">Pin Note <svg width="10" height="12" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-left:2px"><path d="M12 2C8.686 2 6 4.686 6 8c0 4.5 6 13 6 13s6-8.5 6-13c0-3.314-2.686-6-6-6z" fill="currentColor"/><circle cx="12" cy="8" r="2.5" fill="rgba(255,255,255,0.85)"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="micro-feed" id="microFeed">
+        <p style="opacity:0.4;font-size:0.8rem;text-align:center;padding:12px 0;">Loading notes…</p>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, query, orderBy, onSnapshot, where, getDocs, addDoc, deleteDoc, doc, setDoc, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -1424,39 +1817,51 @@
     document.getElementById('mtbSearchBtn')?.addEventListener('click', () => openSearch());
     document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-    // ── Night Mode (Midnight Theme) Toggle Logic ──
-    const nightBtn = document.getElementById('nightModeWidget');
-    const nightLabel = document.getElementById('nightModeLabel');
-    const nightBtnMobile = document.getElementById('nightModeWidgetMobile');
-
+    // ── 3D Paper Page-Flip Theme Toggle Logic ──
     function applyNightMode(isNight) {
       if (isNight) {
         document.body.classList.add('night-mode');
-        nightBtn?.classList.add('active');
-        if (nightLabel) nightLabel.textContent = '☀️ NIGHT: ON';
-        if (nightBtnMobile) nightBtnMobile.innerHTML = '☀️ Day Mode';
+        document.body.classList.add('dark-mode');
+        document.querySelectorAll('.toggle-track').forEach(t => {
+          t.classList.add('dark');
+          t.setAttribute('aria-checked', 'true');
+        });
         localStorage.setItem('hlywor_night_mode', 'on');
+        localStorage.setItem('theme', 'dark');
       } else {
         document.body.classList.remove('night-mode');
-        nightBtn?.classList.remove('active');
-        if (nightLabel) nightLabel.textContent = '☽ NIGHT: OFF';
-        if (nightBtnMobile) nightBtnMobile.innerHTML = '☽ Night Mode';
+        document.body.classList.remove('dark-mode');
+        document.querySelectorAll('.toggle-track').forEach(t => {
+          t.classList.remove('dark');
+          t.setAttribute('aria-checked', 'false');
+        });
         localStorage.setItem('hlywor_night_mode', 'off');
+        localStorage.setItem('theme', 'light');
       }
     }
 
-    const savedNight = localStorage.getItem('hlywor_night_mode');
-    if (savedNight === 'on') {
+    function toggleTheme() {
+      const isNight = document.body.classList.contains('night-mode') || document.body.classList.contains('dark-mode');
+      applyNightMode(!isNight);
+    }
+    window.toggleTheme = toggleTheme;
+
+    // Restore saved theme on page load
+    const savedTheme = localStorage.getItem('theme') || (localStorage.getItem('hlywor_night_mode') === 'on' ? 'dark' : 'light');
+    if (savedTheme === 'dark') {
       applyNightMode(true);
     }
 
-    const toggleNightMode = () => {
-      const isNight = document.body.classList.contains('night-mode');
-      applyNightMode(!isNight);
-    };
-
-    nightBtn?.addEventListener('click', toggleNightMode);
-    nightBtnMobile?.addEventListener('click', toggleNightMode);
+    // Wire listeners for all theme flip toggles
+    document.querySelectorAll('.toggle-track').forEach(track => {
+      track.addEventListener('click', toggleTheme);
+      track.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleTheme();
+        }
+      });
+    });
 
     // ── Real Live "Reading Now" Presence Tracking ──
     const PRESENCE_TIMEOUT_MS = 2.5 * 60 * 1000; // 2.5 minutes
@@ -1758,22 +2163,55 @@
       });
     });
 
-    // Collapse / expand toggle for micro-notes compose area
-    const microToggleBtn = document.getElementById('microToggleBtn');
-    const microBody = document.getElementById('microBody');
-    if (microToggleBtn && microBody) {
-      microToggleBtn.addEventListener('click', () => {
-        const expanded = microToggleBtn.getAttribute('aria-expanded') === 'true';
-        microToggleBtn.setAttribute('aria-expanded', String(!expanded));
-        if (expanded) {
-          microBody.hidden = true;
-        } else {
-          microBody.hidden = false;
-          document.getElementById('microTextarea')?.focus();
-        }
-      });
+    // ── Floating Notes Widget — Click to Expand / Collapse ──
+    const microWidgetTrigger = document.getElementById('microWidgetTrigger');
+    const microPopoverCard   = document.getElementById('microPopoverCard');
+    const microCloseBtn      = document.getElementById('microCloseBtn');
+
+    function closeMicroWidget() {
+      if (!microPopoverCard || microPopoverCard.hidden) return;
+      microPopoverCard.classList.add('micro-closing');
+      microWidgetTrigger?.setAttribute('aria-expanded', 'false');
+      microPopoverCard.addEventListener('animationend', () => {
+        microPopoverCard.classList.remove('micro-closing');
+        microPopoverCard.hidden = true;
+      }, { once: true });
     }
-    // Micro-notes Firestore rendering handled by microNotes.js module (initMicroNotes called above).
+
+    function openMicroWidget() {
+      if (!microPopoverCard) return;
+      microPopoverCard.hidden = false;
+      microWidgetTrigger?.setAttribute('aria-expanded', 'true');
+      setTimeout(() => document.getElementById('microTextarea')?.focus(), 100);
+    }
+
+    function toggleMicroWidget(open) {
+      if (!microPopoverCard) return;
+      const shouldOpen = open !== undefined ? open : microPopoverCard.hidden;
+      shouldOpen ? openMicroWidget() : closeMicroWidget();
+    }
+
+    microWidgetTrigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMicroWidget();
+    });
+    microWidgetTrigger?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMicroWidget();
+      }
+    });
+    microCloseBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeMicroWidget();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (microPopoverCard && !microPopoverCard.hidden && !e.target.closest('#microNotesWidget')) {
+        closeMicroWidget();
+      }
+    });
+
 
     // ✅ DYNAMIC QUOTE ROTATOR (pulls from live posts)
     const qEl = document.getElementById('randomQuote');
