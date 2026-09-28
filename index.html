@@ -617,69 +617,135 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       width: 68px;
       height: 68px;
-      background: rgba(20, 14, 8, 0.95);
-      border: 1.5px solid rgba(212, 160, 32, 0.5);
+      background: rgba(18, 12, 8, 0.94);
+      border: 1.5px solid rgba(212, 160, 32, 0.45);
       border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(232, 104, 26, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(232, 104, 26, 0.2);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       cursor: pointer;
       color: #fff;
-      transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1),
-                  border-color 0.2s ease,
-                  box-shadow 0.25s ease;
+      transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1),
+                  border-color 0.25s ease,
+                  box-shadow 0.3s ease;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
       box-sizing: border-box;
       padding: 6px;
+      overflow: hidden;
+      animation: mcCardFloat 5s ease-in-out infinite alternate;
+    }
+    @keyframes mcCardFloat {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-4px) rotate(1deg); }
     }
     .micro-widget-square:hover {
-      transform: translateY(-3px) scale(1.05);
+      transform: translateY(-6px) scale(1.08) rotate(-1deg);
       border-color: var(--fire);
-      box-shadow: 0 12px 28px rgba(232, 104, 26, 0.45);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7), 0 0 24px rgba(232, 104, 26, 0.5);
     }
     .micro-widget-square[aria-expanded="true"] {
       border-color: var(--fire);
       box-shadow: 0 4px 20px rgba(232, 104, 26, 0.5);
+      animation: none;
     }
 
-    /* SVG Pin Icon inside square card */
-    .micro-pin-svg {
-      width: 26px;
-      height: 26px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-      flex-shrink: 0;
-    }
-    .micro-square-avatar {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .micro-square-pulse {
+    /* Embedded SVG Card Canvas */
+    .micro-card-svg {
       position: absolute;
-      top: -1px;
-      right: -1px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #2ecc71;
-      border: 1.5px solid #181008;
-      box-shadow: 0 0 6px #2ecc71;
-      animation: ambientBlink 1.8s infinite;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
     }
+
+    /* Quill floating/writing animation */
+    .mc-quill {
+      transform-origin: 2px 28px;
+      transition: transform 0.3s ease;
+      animation: mcQuillIdle 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes mcQuillIdle {
+      0% { transform: translate(22px, 10px) rotate(0deg); }
+      50% { transform: translate(24px, 8px) rotate(3deg); }
+      100% { transform: translate(21px, 11px) rotate(-2deg); }
+    }
+    .micro-widget-square:hover .mc-quill {
+      animation: mcQuillWrite 0.9s ease-in-out infinite;
+    }
+    @keyframes mcQuillWrite {
+      0% { transform: translate(22px, 10px) rotate(0deg); }
+      25% { transform: translate(26px, 12px) rotate(4deg); }
+      50% { transform: translate(19px, 9px) rotate(-4deg); }
+      75% { transform: translate(24px, 11px) rotate(2deg); }
+      100% { transform: translate(22px, 10px) rotate(0deg); }
+    }
+
+    /* Handwriting lines animation */
+    .mc-writing line {
+      stroke-dasharray: 26;
+      animation: mcLineDraw 2.4s ease-in-out infinite;
+    }
+    .mc-line-1 { animation-delay: 0s !important; }
+    .mc-line-2 { animation-delay: 0.8s !important; }
+    .mc-line-3 { animation-delay: 1.6s !important; }
+    @keyframes mcLineDraw {
+      0% { stroke-dashoffset: 26; opacity: 0.2; }
+      50% { stroke-dashoffset: 0; opacity: 0.8; }
+      100% { stroke-dashoffset: 0; opacity: 0.35; }
+    }
+
+    /* Ink drop glow */
+    .mc-ink-drop {
+      animation: mcInkPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes mcInkPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; filter: drop-shadow(0 0 3px #e8681a); }
+    }
+
+    /* Live activity ring pulse */
+    .mc-live-ring {
+      animation: mcLivePulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+      transform-origin: 10px 10px;
+    }
+    @keyframes mcLivePulse {
+      0% { transform: scale(0.8); opacity: 0.8; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+    .mc-live-dot {
+      filter: drop-shadow(0 0 3px #2ecc71);
+    }
+
+    /* Fire bar animation */
+    .mc-fire-bar {
+      animation: mcFireGlow 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes mcFireGlow {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; filter: drop-shadow(0 0 4px #e8681a); }
+    }
+
     .micro-square-title {
       font-family: var(--pixel);
-      font-size: 0.44rem;
+      font-size: 0.42rem;
       color: var(--gold);
-      letter-spacing: 0.8px;
-      margin-top: 5px;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
       text-align: center;
       white-space: nowrap;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+    .micro-widget-square:hover .micro-square-title {
+      color: #fff;
+      text-shadow: 0 0 8px rgba(212, 160, 32, 0.8);
     }
 
     /* Popover Expanded Panel */
@@ -1728,20 +1794,82 @@
 
     <!-- Collapsed Floating Square Card -->
     <div id="microWidgetTrigger" class="micro-widget-square" role="button" tabindex="0" aria-label="Toggle midnight notes" aria-expanded="false">
-      <div class="micro-square-avatar">
-        <!-- SVG Pin Icon -->
-        <svg class="micro-pin-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2C8.686 2 6 4.686 6 8c0 4.5 6 13 6 13s6-8.5 6-13c0-3.314-2.686-6-6-6z" fill="url(#pinGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
-          <circle cx="12" cy="8" r="2.5" fill="rgba(255,255,255,0.92)"/>
-          <defs>
-            <linearGradient id="pinGrad" x1="6" y1="2" x2="18" y2="21" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#e8681a"/>
-              <stop offset="100%" stop-color="#d4a020"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <span class="micro-square-pulse"></span>
-      </div>
+
+      <!-- SVG canvas fills the whole card -->
+      <svg class="micro-card-svg" viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <!-- Paper texture gradient -->
+          <linearGradient id="mcPaper" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fdf6e2" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#e8681a" stop-opacity="0.04"/>
+          </linearGradient>
+          <!-- Orange glow gradient for accent line -->
+          <linearGradient id="mcFire" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#e8681a" stop-opacity="0"/>
+            <stop offset="40%" stop-color="#e8681a" stop-opacity="0.9"/>
+            <stop offset="70%" stop-color="#d4a020" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#d4a020" stop-opacity="0"/>
+          </linearGradient>
+          <!-- Gold shimmer on border -->
+          <linearGradient id="mcBorder" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#d4a020" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#e8681a" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#d4a020" stop-opacity="0.3"/>
+          </linearGradient>
+          <!-- Ink drop filter -->
+          <filter id="mcGlow">
+            <feGaussianBlur stdDeviation="1.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background fill -->
+        <rect x="0" y="0" width="68" height="68" rx="13" fill="url(#mcPaper)"/>
+
+        <!-- Ruled paper lines -->
+        <line x1="10" y1="22" x2="58" y2="22" stroke="rgba(212,160,32,0.18)" stroke-width="0.7"/>
+        <line x1="10" y1="30" x2="58" y2="30" stroke="rgba(212,160,32,0.12)" stroke-width="0.7"/>
+        <line x1="10" y1="38" x2="58" y2="38" stroke="rgba(212,160,32,0.12)" stroke-width="0.7"/>
+        <line x1="10" y1="46" x2="50" y2="46" stroke="rgba(212,160,32,0.08)" stroke-width="0.7"/>
+
+        <!-- Red margin line (notebook style) -->
+        <line x1="16" y1="14" x2="16" y2="54" stroke="rgba(220,80,80,0.22)" stroke-width="1"/>
+
+        <!-- Corner fold (top-right) -->
+        <polygon points="56,6 62,6 62,12 56,12 56,6" fill="rgba(232,104,26,0.0)"/>
+        <polyline points="56,6 62,12" stroke="rgba(212,160,32,0.5)" stroke-width="1" fill="none"/>
+        <polygon points="56,6 62,6 62,12" fill="rgba(212,160,32,0.08)"/>
+
+        <!-- Quill / pen SVG — centered, animated -->
+        <g class="mc-quill" transform="translate(22, 10)">
+          <!-- Quill body -->
+          <path d="M18 2 C14 8, 4 14, 2 28" stroke="#d4a020" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <!-- Quill barbs left -->
+          <path d="M16 5 C12 7, 8 9, 6 14" stroke="rgba(212,160,32,0.5)" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+          <path d="M13 9 C9 11, 6 13, 4 18" stroke="rgba(212,160,32,0.35)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+          <path d="M10 14 C7 16, 5 18, 3 22" stroke="rgba(212,160,32,0.25)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+          <!-- Quill tip (nib) -->
+          <path d="M2 28 L0 34 L3 31 Z" fill="#e8681a" filter="url(#mcGlow)"/>
+          <!-- Ink drop at nib -->
+          <circle cx="1" cy="35" r="1.2" fill="#e8681a" opacity="0.7" class="mc-ink-drop"/>
+        </g>
+
+        <!-- Handwriting lines (short animated strokes) -->
+        <g class="mc-writing">
+          <line x1="20" y1="30" x2="44" y2="30" stroke="rgba(253,246,226,0.55)" stroke-width="1.1" stroke-linecap="round" class="mc-line-1"/>
+          <line x1="20" y1="38" x2="38" y2="38" stroke="rgba(253,246,226,0.35)" stroke-width="1" stroke-linecap="round" class="mc-line-2"/>
+          <line x1="20" y1="46" x2="32" y2="46" stroke="rgba(253,246,226,0.2)" stroke-width="0.9" stroke-linecap="round" class="mc-line-3"/>
+        </g>
+
+        <!-- Live notes count badge (top-left corner dot glow) -->
+        <circle cx="10" cy="10" r="4.5" fill="#2ecc71" opacity="0.9" class="mc-live-dot"/>
+        <circle cx="10" cy="10" r="4.5" fill="#2ecc71" opacity="0.3" class="mc-live-ring"/>
+
+        <!-- Fire accent line at bottom -->
+        <rect x="12" y="60" width="44" height="2" rx="1" fill="url(#mcFire)" class="mc-fire-bar"/>
+      </svg>
+
+      <!-- NOTES label -->
       <span class="micro-square-title">NOTES</span>
     </div>
 
