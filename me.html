@@ -521,59 +521,212 @@
     object-fit: contain;
   }
 
-  /* ---------- Photography Section ---------- */
-  .photo-gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+  /* ---------- Pinterest Masonry Gallery ---------- */
+  .photo-section {
+    position: relative;
   }
-  .photo-exhibit {
-    border: 1px solid var(--ink);
-    background: var(--paper-alt);
-    padding: 12px;
-    box-shadow: 3px 4px 0px var(--ink);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .photo-exhibit:hover {
-    transform: translateY(-2px);
-    box-shadow: 4px 6px 0px var(--red);
-  }
-  .photo-placeholder {
+  .photo-masonry {
+    column-count: 3;
+    column-gap: 20px;
     width: 100%;
-    height: 180px;
+  }
+  @media (max-width: 820px) {
+    .photo-masonry { column-count: 2; column-gap: 16px; }
+  }
+  @media (max-width: 500px) {
+    .photo-masonry { column-count: 1; }
+  }
+
+  .photo-card {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 20px;
+    display: inline-block;
+    width: 100%;
+    background: var(--paper-alt);
+    border: 1.5px solid var(--ink);
+    padding: 10px;
+    box-shadow: 3px 4px 0px var(--ink);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25), box-shadow 0.3s ease, border-color 0.2s ease;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%238f1f24' stroke='%23f4efe4' stroke-width='1.5'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='16' y1='16' x2='22' y2='22' stroke-width='2'/%3E%3C/svg%3E") 11 11, zoom-in !important;
+  }
+
+  /* Unique hand-cut paper corner radii & subtle tilt for gallery items */
+  .photo-card:nth-child(odd) {
+    border-radius: 255px 12px 225px 15px / 15px 225px 12px 255px;
+    transform: rotate(-0.5deg);
+  }
+  .photo-card:nth-child(even) {
+    border-radius: 12px 225px 15px 255px / 255px 15px 225px 12px;
+    transform: rotate(0.6deg);
+  }
+
+  .photo-card:hover {
+    transform: translateY(-5px) rotate(0deg) scale(1.02);
+    box-shadow: 5px 7px 0px var(--red);
+    border-color: var(--red);
     background: var(--paper);
-    border: 1px dashed var(--rule);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink-soft);
-    font-family: 'Courier Prime', monospace;
-    font-size: 12px;
+  }
+
+  .photo-card-frame {
     position: relative;
     overflow: hidden;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .photo-placeholder img {
+  .photo-card-frame img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    display: block;
     object-fit: cover;
-    filter: grayscale(80%) contrast(1.1);
+    transition: transform 0.4s ease, filter 0.3s ease;
   }
-  .photo-exhibit-caption {
+  .photo-card:hover .photo-card-frame img {
+    transform: scale(1.04);
+  }
+
+  .photo-zoom-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  .photo-card:hover .photo-zoom-badge {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+
+  .photo-card-info {
     margin-top: 10px;
+    padding: 2px 4px 4px;
   }
-  .photo-exhibit-caption h4 {
+  .photo-card-info h4 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    margin: 0 0 4px 0;
+    font-size: 1.02rem;
     font-weight: 700;
+    margin: 0 0 4px;
   }
-  .photo-exhibit-caption p {
+  .photo-card-meta {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- Exhibition Lightbox Modal ---------- */
+  .photo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(18, 16, 14, 0.88);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .photo-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .photo-modal-content {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 6px 10px 0px var(--red);
+    max-width: 860px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.94);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+  }
+  .photo-modal.active .photo-modal-content {
+    transform: scale(1);
+  }
+  .photo-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    font-size: 22px;
+    width: 34px;
+    height: 34px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 2px;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .photo-modal-close:hover {
+    background: var(--red);
+    transform: scale(1.1);
+  }
+  .photo-modal-image-wrap {
+    background: #0d0c0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 60vh;
+    overflow: hidden;
+    padding: 12px;
+  }
+  .photo-modal-image-wrap img {
+    max-width: 100%;
+    max-height: 56vh;
+    object-fit: contain;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .photo-modal-plaque {
+    padding: 14px 20px;
+    border-top: 1px solid var(--rule);
+    background: var(--paper-alt);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .plaque-stamp {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    border: 1px solid var(--red);
+    padding: 2px 6px;
+    display: inline-block;
+  }
+  .plaque-meta {
     font-family: 'Courier Prime', monospace;
     font-size: 11px;
-    color: var(--ink-soft);
-    margin: 0;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    font-weight: 700;
   }
 
   /* ---------- Education & Skills Two-Col ---------- */
@@ -1284,41 +1437,78 @@
 
     <hr class="hr">
 
-    <!-- Photography Section -->
-    <section id="photography">
+    <!-- Photography Section (Pinterest Masonry Gallery + Mobile Shots) -->
+    <section id="photography" class="photo-section">
       <h2 class="section-title">📷 Photography &amp; Visual Framing</h2>
-      <p>I carry a camera around Guwahati to document candid street scenes, Brahmaputra riverbank light, and natural Assam landscapes. Photography sharpens my eye for <mark>framing, contrast, and layout balance</mark>: principles that directly inform my web user interface design.</p>
+      <p style="margin-bottom: 24px;">I capture photos on my phone around Guwahati to document street scenes, riverbank light, and natural Assam landscapes. Photography sharpens my eye for <mark>framing, contrast, and layout balance</mark>: principles that directly inform my web user interface design. Click any photograph to step into gallery view.</p>
 
-      <div class="photo-gallery-grid">
-        <div class="photo-exhibit">
-          <div class="photo-placeholder">
-            <span>📷 [ADD PHOTO: ASSAM LANDSCAPE]</span>
+      <!-- Pinterest-Style Masonry Container -->
+      <div class="photo-masonry">
+        <!-- Photo 01 -->
+        <article class="photo-card" onclick="openPhotoModal('img/photo1.png', 'LANDSCAPE')">
+          <div class="photo-card-frame">
+            <img src="img/photo1.png" alt="Shot on Mobile" loading="lazy">
+            <span class="photo-zoom-badge">🔍 Gallery View</span>
           </div>
-          <div class="photo-exhibit-caption">
-            <h4>Brahmaputra Riverbank &amp; Hills</h4>
-            <p>GUWAHATI · 50mm · f/1.8 · NATURAL LIGHT</p>
+          <div class="photo-card-info">
+            <div class="photo-card-meta">FOCUS: LANDSCAPE · SHOT ON MOBILE</div>
           </div>
-        </div>
+        </article>
 
-        <div class="photo-exhibit">
-          <div class="photo-placeholder">
-            <span>📷 [ADD PHOTO: STREET SHADOWS]</span>
+        <!-- Photo 02 -->
+        <article class="photo-card" onclick="openPhotoModal('img/photo2.jpeg', 'STREET SCENE')">
+          <div class="photo-card-frame">
+            <img src="img/photo2.jpeg" alt="Shot on Mobile" loading="lazy">
+            <span class="photo-zoom-badge">🔍 Gallery View</span>
           </div>
-          <div class="photo-exhibit-caption">
-            <h4>City Street &amp; Daily Life</h4>
-            <p>ASSAM · 35mm · MONOCHROMATIC CONTRAST</p>
+          <div class="photo-card-info">
+            <div class="photo-card-meta">FOCUS: STREET SCENE · SHOT ON MOBILE</div>
           </div>
-        </div>
+        </article>
 
-        <div class="photo-exhibit">
-          <div class="photo-placeholder">
-            <span>📷 [ADD PHOTO: CANDID PORTRAIT]</span>
+        <!-- Photo 03 -->
+        <article class="photo-card" onclick="openPhotoModal('img/photo3.jpeg', 'CANDID')">
+          <div class="photo-card-frame">
+            <img src="img/photo3.jpeg" alt="Shot on Mobile" loading="lazy">
+            <span class="photo-zoom-badge">🔍 Gallery View</span>
           </div>
-          <div class="photo-exhibit-caption">
-            <h4>Candid Moments &amp; Framing</h4>
-            <p>GUWAHATI · 85mm · AMBIENT SHADOWS</p>
+          <div class="photo-card-info">
+            <div class="photo-card-meta">FOCUS: CANDID · SHOT ON MOBILE</div>
           </div>
-        </div>
+        </article>
+
+        <!-- Photo 04 -->
+        <article class="photo-card" onclick="openPhotoModal('img/photo4.jpeg', 'SHADOWS')">
+          <div class="photo-card-frame">
+            <img src="img/photo4.jpeg" alt="Shot on Mobile" loading="lazy">
+            <span class="photo-zoom-badge">🔍 Gallery View</span>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-meta">FOCUS: SHADOWS · SHOT ON MOBILE</div>
+          </div>
+        </article>
+
+        <!-- Photo 05 -->
+        <article class="photo-card" onclick="openPhotoModal('img/photo5.jpeg', 'NATURAL LIGHT')">
+          <div class="photo-card-frame">
+            <img src="img/photo5.jpeg" alt="Shot on Mobile" loading="lazy">
+            <span class="photo-zoom-badge">🔍 Gallery View</span>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-meta">FOCUS: NATURAL LIGHT · SHOT ON MOBILE</div>
+          </div>
+        </article>
+
+        <!-- Photo 06 -->
+        <article class="photo-card" onclick="openPhotoModal('img/photo6.jpeg', 'TEXTURE')">
+          <div class="photo-card-frame">
+            <img src="img/photo6.jpeg" alt="Shot on Mobile" loading="lazy">
+            <span class="photo-zoom-badge">🔍 Gallery View</span>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-meta">FOCUS: TEXTURE · SHOT ON MOBILE</div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1411,7 +1601,52 @@
   <!-- Toast Banner -->
   <div id="toast" class="toast-banner">🗞️ MESSAGE COPIED</div>
 
+  <!-- Exhibition Lightbox Modal Overlay -->
+  <div id="photoModal" class="photo-modal" onclick="closePhotoModal(event)">
+    <div class="photo-modal-content" onclick="event.stopPropagation()">
+      <button class="photo-modal-close" onclick="closePhotoModal(event)" aria-label="Close Gallery View">&times;</button>
+      <div class="photo-modal-image-wrap">
+        <img id="modalImg" src="" alt="Mobile Photography Detail">
+      </div>
+      <div class="photo-modal-plaque">
+        <span class="plaque-stamp">MOBILE PHOTOGRAPHY</span>
+        <div id="modalMeta" class="plaque-meta">FOCUS: LANDSCAPE · SHOT ON MOBILE</div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Gallery Exhibition Lightbox Functions
+    function openPhotoModal(imgSrc, focusText) {
+      playTypewriterClick();
+      const modal = document.getElementById('photoModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalMeta = document.getElementById('modalMeta');
+
+      if (!modal || !modalImg) return;
+
+      modalImg.src = imgSrc;
+      if (modalMeta) modalMeta.textContent = `FOCUS: ${focusText} · SHOT ON MOBILE`;
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePhotoModal(event) {
+      if (event) playTypewriterClick();
+      const modal = document.getElementById('photoModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePhotoModal();
+      }
+    });
+
     // Dynamic Real-Time Date
     const dateEl = document.getElementById('today-date');
     if (dateEl) {
