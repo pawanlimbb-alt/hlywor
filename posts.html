@@ -472,8 +472,12 @@ function render() {
     const dateStr = post.date
       ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
       : '';
-    const slug = post.slug || post.url || '#';
-    const href = slug.startsWith('post') ? slug : 'post.html?slug=' + slug;
+    let targetSlug = (post.slug || post.id || post.url || '').replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').replace(/^post\.html\?p=/i, '').trim();
+    if (!targetSlug && post.title) {
+      targetSlug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+    const slug = targetSlug || post.id || '';
+    const href = 'post.html?slug=' + encodeURIComponent(slug);
 
     let thumbHtml = '';
     if (post.thumbnail && (tc === 't-magazine' || tc === 't-college')) {
@@ -528,8 +532,15 @@ function render() {
             (post.authorUid ? '<button class="card-stick-btn" data-touid="' + post.authorUid + '" data-toname="' + (post.author||'') + '">📌</button>' : '') +
           '</div>' +
         '</div>' +
-      '</div>';
     cols.appendChild(a);
+
+    a.addEventListener('click', e => {
+      if (e.target.closest('.card-save-btn') || e.target.closest('.card-stick-btn') || e.target.closest('.card-author')) return;
+      try {
+        sessionStorage.setItem('hlywor_current_slug', slug);
+        sessionStorage.setItem('hlywor_current_post', JSON.stringify(post));
+      } catch(err) {}
+    });
 
     // Wire save button
     const saveBtn = a.querySelector('.card-save-btn');

@@ -568,30 +568,47 @@
     /* ✅ Publish modal */
     .publish-modal-bg{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center}
     .publish-modal-bg.open{display:flex}
-    .publish-modal{background:var(--t-paper);width:100%;max-width:500px;margin:20px;box-shadow:var(--shadow);position:relative;transition:background 0.4s}
+    .publish-modal{background:var(--t-paper);width:100%;max-width:480px;margin:20px;box-shadow:var(--shadow);position:relative;transition:background 0.4s;border-radius:4px}
     .publish-modal::before{content:'';position:absolute;top:-10px;left:0;right:0;height:14px;background:var(--t-paper);clip-path:polygon(0% 100%,2% 0%,5% 100%,8% 0%,11% 100%,14% 0%,17% 100%,20% 0%,23% 100%,26% 0%,29% 100%,32% 0%,35% 100%,38% 0%,41% 100%,44% 0%,47% 100%,50% 0%,53% 100%,56% 0%,59% 100%,62% 0%,65% 100%,68% 0%,71% 100%,74% 0%,77% 100%,80% 0%,83% 100%,86% 0%,89% 100%,92% 0%,95% 100%,98% 0%,100% 100%,100% 100%,0% 100%)}
     .modal-pin{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,#cc2222);box-shadow:0 2px 4px rgba(0,0,0,0.5);z-index:2}
     .modal-pin::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:10px;background:linear-gradient(to bottom,#888,#444)}
-    .modal-body{padding:28px}
-    .modal-title{font-family:'Caveat',cursive;font-size:1.6rem;color:var(--t-ink);margin-bottom:20px;font-weight:600}
-    .modal-field{margin-bottom:16px}
-    .modal-field label{font-family:var(--pixel);font-size:0.55rem;color:var(--t-ink3);letter-spacing:1.5px;display:block;margin-bottom:6px}
-    .modal-field input,.modal-field select{width:100%;background:var(--t-paper2);border:1px solid rgba(0,0,0,0.12);color:var(--t-ink);font-family:var(--t-font);font-size:0.9rem;padding:8px 12px;outline:none;transition:border-color 0.2s}
+    .modal-body{padding:26px 28px 24px}
+    .modal-head-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+    .modal-title{font-family:'Caveat',cursive;font-size:1.6rem;color:var(--t-ink);font-weight:700;margin:0}
+    .modal-draft-btn-compact{font-family:var(--sans);font-size:0.75rem;font-weight:600;padding:5px 12px;background:var(--t-paper2);border:1px dashed rgba(0,0,0,0.2);color:var(--t-ink3);border-radius:3px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:4px}
+    .modal-draft-btn-compact:hover{background:var(--t-paper3);color:var(--t-ink);border-color:var(--t-ink)}
+    .modal-grid-row{display:flex;gap:12px;margin-bottom:12px}
+    @media(max-width:480px){.modal-grid-row{flex-direction:column;gap:8px}}
+    .modal-field{margin-bottom:12px}
+    .modal-field label{font-family:var(--pixel);font-size:0.52rem;color:var(--t-ink3);letter-spacing:1.5px;display:block;margin-bottom:5px}
+    .modal-field input,.modal-field select{width:100%;background:var(--t-paper2);border:1px solid rgba(0,0,0,0.12);color:var(--t-ink);font-family:var(--t-font);font-size:0.88rem;padding:7px 10px;outline:none;transition:border-color 0.2s}
     .modal-field input:focus,.modal-field select:focus{border-color:var(--t-acc)}
     .modal-field select option{background:var(--t-paper)}
-    .modal-check{display:flex;align-items:flex-start;gap:10px;font-family:var(--sans);font-size:0.75rem;color:var(--t-ink3);line-height:1.6;margin-bottom:10px}
-    .modal-check input[type="checkbox"]{margin-top:2px;accent-color:var(--t-acc);flex-shrink:0}
-    .tags-wrap{border:1px solid rgba(0,0,0,0.12);background:var(--t-paper2);min-height:38px;padding:4px 6px;display:flex;flex-wrap:wrap;gap:4px;cursor:text}
+    .tags-wrap{border:1px solid rgba(0,0,0,0.12);background:var(--t-paper2);min-height:34px;padding:3px 6px;display:flex;flex-wrap:wrap;gap:4px;cursor:text}
     .tags-wrap:focus-within{border-color:var(--t-acc)}
-    .tag-chip{background:var(--t-acc);color:#fff;font-family:var(--sans);font-size:0.75rem;padding:2px 10px;display:flex;align-items:center;gap:5px;border-radius:2px}
+    .tag-chip{background:var(--t-acc);color:#fff;font-family:var(--sans);font-size:0.72rem;padding:2px 8px;display:flex;align-items:center;gap:5px;border-radius:2px}
     .tag-chip .rm{cursor:pointer;opacity:.7}.tag-chip .rm:hover{opacity:1}
-    .tags-wrap input{border:none;outline:none;background:transparent;font-family:var(--sans);font-size:0.85rem;color:var(--t-ink);flex:1;min-width:80px}
-    .modal-submit{width:100%;font-family:'Caveat',cursive;font-size:1.2rem;padding:12px;background:var(--t-acc);color:#fff;border:none;cursor:pointer;transition:all 0.2s;font-weight:600;margin-top:6px}
-    .modal-submit:hover{filter:brightness(1.1)}
-    .modal-submit:disabled{opacity:.5;cursor:not-allowed}
-    .modal-status{font-family:var(--sans);font-size:0.78rem;margin-top:8px;text-align:center;font-style:italic;min-height:18px}
-    .modal-status.ok{color:#2a8a2a}.modal-status.err{color:#c0392b}
-    .modal-close{position:absolute;top:12px;right:12px;font-family:var(--pixel);font-size:0.65rem;color:var(--t-ink3);cursor:pointer;background:none;border:none}
+    .tags-wrap input{border:none;outline:none;background:transparent;font-family:var(--sans);font-size:0.82rem;color:var(--t-ink);flex:1;min-width:70px}
+    .modal-checks-wrap{margin:12px 0 16px;background:rgba(0,0,0,0.025);padding:10px 12px;border-radius:3px;border-left:2px solid var(--t-acc)}
+    .modal-check{display:flex;align-items:flex-start;gap:8px;font-family:var(--sans);font-size:0.75rem;color:var(--t-ink3);line-height:1.5;margin-bottom:6px}
+    .modal-check:last-child{margin-bottom:0}
+    .modal-check input[type="checkbox"]{margin-top:2px;accent-color:var(--t-acc);flex-shrink:0;cursor:pointer}
+    .modal-check label{cursor:pointer}
+    
+    /* Action buttons: Orange Share vs Black/White Anonymous */
+    .modal-publish-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+    @media(max-width:400px){.modal-publish-actions{grid-template-columns:1fr}}
+    .modal-btn-share{font-family:'Caveat',cursive;font-size:1.25rem;font-weight:700;padding:11px 16px;background:var(--fire,#e8681a);color:#fff;border:none;border-radius:3px;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 10px rgba(232,104,26,0.3)}
+    .modal-btn-share:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 5px 14px rgba(232,104,26,0.4)}
+    .modal-btn-share:disabled{opacity:.55;cursor:wait;transform:none}
+    .modal-btn-anon{font-family:'Caveat',cursive;font-size:1.25rem;font-weight:700;padding:11px 16px;background:#1a1208;color:#ffffff;border:1px solid #1a1208;border-radius:3px;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 10px rgba(0,0,0,0.25)}
+    .modal-btn-anon:hover{background:#000000;border-color:#000000;color:#ffffff;transform:translateY(-1px);box-shadow:0 5px 14px rgba(0,0,0,0.35)}
+    .modal-btn-anon:disabled{opacity:.55;cursor:wait;transform:none}
+
+    .modal-status{font-family:var(--sans);font-size:0.8rem;margin-top:10px;text-align:center;font-style:italic;min-height:18px}
+    .modal-status.ok{color:#2a8a2a;font-weight:600}.modal-status.err{color:#c0392b;font-weight:600}
+    .modal-close{position:absolute;top:10px;right:12px;font-family:var(--pixel);font-size:0.6rem;color:var(--t-ink3);cursor:pointer;background:none;border:none;padding:4px}
+    .modal-close:hover{color:var(--fire)}
     
     /* ✅ Preview mode */
     .preview-overlay{
@@ -993,41 +1010,52 @@
       <div class="modal-pin" aria-hidden="true"></div>
       <button class="modal-close" id="modalClose" aria-label="Close publish dialog">[ close ]</button>
       <div class="modal-body">
-        <div class="modal-title" id="publishModalTitle">Ready to go live?</div>
-        <div class="modal-field">
-          <label for="tagInput">TAGS (enter to add)</label>
-          <div class="tags-wrap" id="tagsWrap" role="listbox" aria-label="Post tags">
-            <input type="text" id="tagInput" placeholder="add a tag..." aria-label="Add tag">
+        <div class="modal-head-row">
+          <div class="modal-title" id="publishModalTitle">Ready to share?</div>
+          <button type="button" class="modal-draft-btn-compact" id="draftBtn" title="Save as draft">💾 Save Draft</button>
+        </div>
+        
+        <div class="modal-grid-row">
+          <div class="modal-field" style="flex:1">
+            <label for="typeSelect">TYPE</label>
+            <select id="typeSelect" aria-label="Post type">
+              <option value="story" selected>Story</option>
+              <option value="blog">Blog</option>
+              <option value="poem">Poem</option>
+              <option value="review">Review</option>
+              <option value="news">News</option>
+              <option value="tech">Tech</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="modal-field" style="flex:2">
+            <label for="tagInput">TAGS (press enter)</label>
+            <div class="tags-wrap" id="tagsWrap" role="listbox" aria-label="Post tags">
+              <input type="text" id="tagInput" placeholder="add a tag..." aria-label="Add tag">
+            </div>
           </div>
         </div>
-        <div class="modal-field">
-          <label for="typeSelect">TYPE</label>
-          <select id="typeSelect" aria-label="Post type">
-            <option value="blog">Blog</option>
-            <option value="story">Story</option>
-            <option value="poem">Poem</option>
-            <option value="review">Review</option>
-            <option value="news">News</option>
-            <option value="tech">Tech</option>
-            <option value="other">Other</option>
-          </select>
+
+        <div class="modal-checks-wrap">
+          <div class="modal-check">
+            <input type="checkbox" id="agreeCheck" checked aria-label="Confirm original content">
+            <label for="agreeCheck">This is my original content and I'm ready to share it.</label>
+          </div>
+          <div class="modal-check">
+            <input type="checkbox" id="agreeImgCheck" checked aria-label="Confirm image rights">
+            <label for="agreeImgCheck">I have rights to all images included.</label>
+          </div>
         </div>
-        <div class="modal-check">
-          <input type="checkbox" id="anonCheck" aria-label="Post anonymously">
-          <label for="anonCheck">Post this anonymously — hide my name, no follow button, keeps my account private.</label>
+
+        <div class="modal-publish-actions">
+          <button type="button" class="modal-btn-share" id="shareBtn" title="Share with your name and profile">
+            <span>✨ Share Story</span>
+          </button>
+          <button type="button" class="modal-btn-anon" id="anonBtn" title="Share anonymously — no name or profile attached">
+            <span>🎭 Go Anonymous</span>
+          </button>
         </div>
-        <div class="modal-check">
-          <input type="checkbox" id="agreeCheck" aria-label="Confirm original content">
-          <label for="agreeCheck">This is my original content and I'm okay with it going live on HlyWor right now.</label>
-        </div>
-        <div class="modal-check">
-          <input type="checkbox" id="agreeImgCheck" aria-label="Confirm image rights">
-          <label for="agreeImgCheck">I have rights to all images included.</label>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="modal-submit" id="draftBtn" style="background:var(--t-paper3);color:var(--t-ink);border:1px solid rgba(0,0,0,0.1)">💾 Save as draft</button>
-          <button class="modal-submit" id="submitBtn" style="flex:1">✨ Go live now</button>
-        </div>
+
         <div class="modal-status" id="modalStatus" role="status" aria-live="polite"></div>
       </div>
     </div>
@@ -2149,9 +2177,11 @@
 
     // ── Draft auto-save (localStorage + Firestore) ──
     let autoSaveTimer = null;
+    let isPostSubmitted = false;
     function getDraftKey() { return "hlywor_draft_" + (currentUser?.uid || "anon"); }
     
     function saveDraftLocally() {
+      if (isPostSubmitted) return;
       const draft = {
         title: document.getElementById("titleInput").value,
         desc: document.getElementById("descInput").value,
@@ -2171,6 +2201,93 @@
       };
       localStorage.setItem(getDraftKey(), JSON.stringify(draft));
       updateSaveStatus("draft");
+    }
+
+    function clearDraftData() {
+      isPostSubmitted = true;
+      if (autoSaveTimer) {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = null;
+      }
+
+      // Remove from localStorage
+      try {
+        localStorage.removeItem(getDraftKey());
+        localStorage.removeItem("hlywor_draft_anon");
+        if (currentUser?.uid) {
+          localStorage.removeItem("hlywor_draft_" + currentUser.uid);
+        }
+      } catch (e) {
+        console.warn("Failed to remove draft from localStorage:", e);
+      }
+      
+      draftId = null;
+
+      // Clear form inputs
+      const titleInput = document.getElementById("titleInput");
+      if (titleInput) titleInput.value = "";
+      const descInput = document.getElementById("descInput");
+      if (descInput) descInput.value = "";
+      const readtimeInput = document.getElementById("readtimeInput");
+      if (readtimeInput) readtimeInput.value = "";
+      const techTagInput = document.getElementById("techTagInput");
+      if (techTagInput) techTagInput.value = "";
+      
+      // Clear editor
+      if (quill) {
+        quill.setText("");
+        if (quill.root) quill.root.innerHTML = "";
+      } else if (editor) {
+        editor.innerHTML = "";
+      }
+
+      // Clear cover image
+      const coverUrl = document.getElementById("coverUrl");
+      if (coverUrl) coverUrl.value = "";
+      const coverAlt = document.getElementById("coverAlt");
+      if (coverAlt) coverAlt.value = "";
+      const coverPreviewImg = document.getElementById("coverPreviewImg");
+      if (coverPreviewImg) coverPreviewImg.src = "";
+      const coverPreview = document.getElementById("coverPreview");
+      if (coverPreview) coverPreview.style.display = "none";
+      const coverDrop = document.getElementById("coverDrop");
+      if (coverDrop) coverDrop.style.display = "";
+      const coverFileInput = document.getElementById("coverFileInput");
+      if (coverFileInput) coverFileInput.value = "";
+
+      // Clear tags
+      tags.length = 0;
+      document.querySelectorAll("#tagsWrap .tag-chip").forEach(el => el.remove());
+      const tagInput = document.getElementById("tagInput");
+      if (tagInput) tagInput.value = "";
+
+      // Reset rating
+      starRating = 0;
+      document.querySelectorAll(".star").forEach(st => {
+        st.classList.remove("lit");
+        st.setAttribute("aria-checked", "false");
+      });
+      const ratingText = document.getElementById("ratingText");
+      if (ratingText) ratingText.textContent = "0/5";
+
+      // Reset mood
+      selectedMood = "";
+      document.querySelectorAll(".mood-opt").forEach(m => {
+        m.classList.remove("selected");
+        m.setAttribute("aria-checked", "false");
+      });
+
+      // Reset checkboxes
+      const anonCheck = document.getElementById("anonCheck");
+      if (anonCheck) anonCheck.checked = false;
+      const agreeCheck = document.getElementById("agreeCheck");
+      if (agreeCheck) agreeCheck.checked = false;
+      const agreeImgCheck = document.getElementById("agreeImgCheck");
+      if (agreeImgCheck) agreeImgCheck.checked = false;
+
+      // Update counters & status
+      if (typeof updateCounts === "function") updateCounts();
+      updateSaveStatus("saved");
     }
     
     function loadDraftLocally() {
@@ -2262,7 +2379,7 @@
     }
     
     async function saveDraftToFirestore() {
-      if (!currentUser) return null;
+      if (!currentUser || isPostSubmitted) return null;
       
       try {
         const draftData = {
@@ -2307,8 +2424,10 @@
     
     // Auto-save on input (debounced)
     function triggerAutoSave() {
+      if (isPostSubmitted) return;
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
       autoSaveTimer = setTimeout(() => {
+        if (isPostSubmitted) return;
         saveDraftLocally();
         if (navigator.onLine && currentUser) {
           saveDraftToFirestore();
@@ -2333,6 +2452,7 @@
     
     // Warn before leaving with unsaved changes
     window.addEventListener("beforeunload", (e) => {
+      if (isPostSubmitted) return;
       const status = document.getElementById("saveStatus")?.textContent;
       if (status === "unsaved") {
         e.preventDefault();
@@ -2391,23 +2511,26 @@
       previewContent.innerHTML = previewHTML;
     }
 
-    // ── Submit / publish ──
-    document.getElementById("submitBtn")?.addEventListener("click", async () => {
-      await publishPost("published");
+    // ── Submit / publish buttons ──
+    document.getElementById("shareBtn")?.addEventListener("click", async () => {
+      await publishPost("published", false);
+    });
+
+    document.getElementById("anonBtn")?.addEventListener("click", async () => {
+      await publishPost("published", true);
     });
     
     document.getElementById("draftBtn")?.addEventListener("click", async () => {
-      await publishPost("draft");
+      await publishPost("draft", false);
     });
 
-    async function publishPost(status) {
+    async function publishPost(status, isAnonymous = false) {
       if (!currentUser) {
         showLoginModal({ prompt: "Sign in to publish your post." });
         return;
       }
 
-      const isAnonymous = document.getElementById("anonCheck").checked,
-            name = isAnonymous ? "Anonymous" : (document.getElementById("authorInput").value.trim() || getDisplayName(currentUser)),
+      const name = isAnonymous ? "Anonymous" : (document.getElementById("authorInput").value.trim() || getDisplayName(currentUser)),
             email = isAnonymous ? "" : (document.getElementById("emailInput").value.trim() || currentUser.email || ""),
             title = document.getElementById("titleInput").value.trim(),
             desc = document.getElementById("descInput").value.trim(),
@@ -2417,8 +2540,8 @@
             content = serializeContent(),
             plainText = quill ? quill.getText().trim() : (editor ? editor.innerText.trim() : ""),
             type = document.getElementById("typeSelect").value,
-            agree = document.getElementById("agreeCheck").checked,
-            agreeImg = document.getElementById("agreeImgCheck").checked,
+            agree = document.getElementById("agreeCheck")?.checked ?? true,
+            agreeImg = document.getElementById("agreeImgCheck")?.checked ?? true,
             techTag = (document.getElementById("techTagInput") || {}).value?.trim() || "",
             statusEl = document.getElementById("modalStatus");
 
@@ -2441,33 +2564,42 @@
       }
       
       if (plainText.length < 30) {
-        statusEl.textContent = "⚠ Write a little more first";
+        statusEl.textContent = "⚠ Write a little more first (at least 30 characters)";
         statusEl.className = "modal-status err";
         return;
       }
       
-      if (!agree) {
-        statusEl.textContent = "⚠ Confirm your content";
+      if (status === "published" && !agree) {
+        statusEl.textContent = "⚠ Please confirm original content";
         statusEl.className = "modal-status err";
         return;
       }
       
-      if (!agreeImg) {
-        statusEl.textContent = "⚠ Confirm image rights";
+      if (status === "published" && !agreeImg) {
+        statusEl.textContent = "⚠ Please confirm image rights";
         statusEl.className = "modal-status err";
         return;
       }
 
-      const btn = document.getElementById("submitBtn");
+      const shareBtn = document.getElementById("shareBtn");
+      const anonBtn = document.getElementById("anonBtn");
       const draftBtn = document.getElementById("draftBtn");
-      btn.disabled = true;
-      draftBtn.disabled = true;
-      btn.textContent = status === "published" ? "Sending..." : "Saving...";
+
+      if (shareBtn) shareBtn.disabled = true;
+      if (anonBtn) anonBtn.disabled = true;
+      if (draftBtn) draftBtn.disabled = true;
+
+      if (status === "published") {
+        if (isAnonymous && anonBtn) anonBtn.textContent = "Publishing...";
+        else if (shareBtn) shareBtn.textContent = "Sharing...";
+      } else {
+        if (draftBtn) draftBtn.textContent = "Saving...";
+      }
       statusEl.textContent = "";
 
       try {
-        const baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-        const slug = baseSlug + "-" + Date.now().toString(36).slice(-4);
+        const cleanBase = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "story";
+        const slug = cleanBase + "-" + Date.now().toString(36).slice(-4);
         
         const postData = {
           name, email, type, readtime, title, desc,
@@ -2484,7 +2616,7 @@
           slug,
           status: status,
           author: name,
-          isAnonymous: isAnonymous,
+          isAnonymous: !!isAnonymous,
           date: new Date().toISOString(),
           authorUid: currentUser.uid,
           authorEmail: isAnonymous ? "" : (currentUser.email || ""),
@@ -2505,14 +2637,28 @@
           }
         }
         
+        const docId = draftId || (docRef ? docRef.id : "");
+        const fullPostObj = {
+          id: docId,
+          ...postData
+        };
+
         if (status === "published") {
-          localStorage.removeItem(getDraftKey());
-          draftId = null;
+          try {
+            sessionStorage.setItem('hlywor_current_slug', slug);
+            sessionStorage.setItem('hlywor_current_post', JSON.stringify(fullPostObj));
+          } catch(e) {
+            console.warn("Session cache error:", e);
+          }
+          clearDraftData();
         }
         
-        btn.textContent = status === "published" ? "Live ✦" : "Saved ✦";
+        if (shareBtn) shareBtn.textContent = "Live ✦";
+        if (anonBtn) anonBtn.textContent = "Anonymous Live ✦";
+        if (draftBtn) draftBtn.textContent = "Saved ✦";
+
         statusEl.textContent = status === "published" 
-          ? "✓ Your post is live on the homepage! 🎉" 
+          ? (isAnonymous ? "✓ Shared anonymously to the board! 🎭" : "✓ Your story is live on the board! 🎉")
           : "✓ Draft saved. You can publish anytime.";
         statusEl.className = "modal-status ok";
         updateSaveStatus(status === "published" ? "saved" : "draft");
@@ -2520,14 +2666,20 @@
         if (status === "published") {
           setTimeout(() => {
             window.location.href = "post.html?slug=" + slug;
-          }, 1500);
+          }, 1400);
+        } else {
+          setTimeout(() => {
+            if (shareBtn) { shareBtn.disabled = false; shareBtn.innerHTML = "<span>✨ Share Story</span>"; }
+            if (anonBtn) { anonBtn.disabled = false; anonBtn.innerHTML = "<span>🎭 Go Anonymous</span>"; }
+            if (draftBtn) { draftBtn.disabled = false; draftBtn.innerHTML = "💾 Save Draft"; }
+          }, 2000);
         }
         
       } catch (err) {
         console.error("Publish error:", err);
-        btn.disabled = false;
-        draftBtn.disabled = false;
-        btn.textContent = status === "published" ? "✨ Go live now" : "💾 Save as draft";
+        if (shareBtn) { shareBtn.disabled = false; shareBtn.innerHTML = "<span>✨ Share Story</span>"; }
+        if (anonBtn) { anonBtn.disabled = false; anonBtn.innerHTML = "<span>🎭 Go Anonymous</span>"; }
+        if (draftBtn) { draftBtn.disabled = false; draftBtn.innerHTML = "💾 Save Draft"; }
         statusEl.textContent = "✕ Failed — " + err.message;
         statusEl.className = "modal-status err";
       }

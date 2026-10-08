@@ -836,10 +836,18 @@ function renderCommunity() {
 
     const card = document.createElement('a');
     card.className = 'char-card';
-    const slug = person.slug
-  || person.name?.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-card.href = slug ? `profile.html?slug=${slug}` : (person.profileUrl || '#');
+    // Always prefer profile.html?slug= over raw profileUrl
+    const cardSlug = (person.slug || '')
+      || (person.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+      || person.id;
+    card.href = `profile.html?slug=${encodeURIComponent(cardSlug)}`;
     card.style.cssText = `--acc:${accent}`;
+    card.addEventListener('click', () => {
+      try {
+        sessionStorage.setItem('hlywor_current_person_slug', cardSlug);
+        sessionStorage.setItem('hlywor_current_person', JSON.stringify(person));
+      } catch(e) {}
+    });
     card.innerHTML = `
       <div class="card-pin" style="left:${pinLeft}%;background:${PIN_COLORS[i%PIN_COLORS.length]}"></div>
       ${photosHtml}

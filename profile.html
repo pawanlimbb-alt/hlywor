@@ -780,7 +780,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, doc, limit, orderBy, getCountFromServer }
+import { getFirestore, collection, query, where, getDocs, getDoc, addDoc, deleteDoc, doc, limit, orderBy, getCountFromServer }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { injectAuthNav, currentUser, onAuthChange, showLoginModal, getDisplayName } from "./auth.js";
 
@@ -826,53 +826,191 @@ for (let i = 0; i < 14; i++) {
   ec.appendChild(e);
 }
 
-/* Get identifier — supports ?slug=pawan or ?name=Pawan */
-const params = new URLSearchParams(window.location.search);
-const slug   = (params.get('slug') || params.get('name') || '').trim();
+/* Get identifier — supports ?slug=..., ?name=..., ?id=..., ?uid=..., hash #slug, and sessionStorage */
+function resolveProfileSlug() {
+  const urlParams = new URLSearchParams(window.location.search);
+  let raw = urlParams.get('slug') || urlParams.get('name') || urlParams.get('id') || urlParams.get('p') || urlParams.get('user') || urlParams.get('uid') || urlParams.get('person') || urlParams.get('author') || '';
+
+  if (!raw && window.location.hash) {
+    const hash = window.location.hash.replace(/^#\/?/, '').trim();
+    const hashParams = new URLSearchParams(hash);
+    raw = hashParams.get('slug') || hashParams.get('name') || hashParams.get('id') || hash;
+  }
+
+  if (!raw && window.location.search) {
+    const cleanSearch = window.location.search.replace(/^\?/, '').trim();
+    if (cleanSearch && !cleanSearch.includes('=')) {
+      raw = cleanSearch;
+    }
+  }
+
+  if (raw) {
+    try {
+      raw = decodeURIComponent(raw).replace(/^profile\.html\?slug=/i, '').replace(/^profile\.html\?name=/i, '').replace(/^profile\.html\?id=/i, '').trim();
+    } catch(e) {
+      raw = raw.replace(/^profile\.html\?slug=/i, '').replace(/^profile\.html\?name=/i, '').replace(/^profile\.html\?id=/i, '').trim();
+    }
+  }
+
+  if (raw === 'undefined' || raw === 'null') raw = '';
+
+  if (!raw) {
+    try {
+      const cached = sessionStorage.getItem('hlywor_current_person_slug');
+      if (cached && cached !== 'undefined' && cached !== 'null') {
+        raw = cached;
+      }
+    } catch(e) {}
+  }
+
+  return (raw || '').trim();
+}
+
+const slug = resolveProfileSlug();
 
 let currentPersonData = null;
 
 // Founders check - redirect to their dedicated hardcoded pages
+// Use exact or well-scoped checks to avoid catching community members accidentally
 const sl = slug.toLowerCase();
-if (sl.includes('pawan')) {
-  window.location.replace('pawan.html');
-} else if (sl.includes('charu') || sl === 'cml' || sl === 'cml.exe') {
-  window.location.replace('charu.html');
-} else if (sl.includes('suvam') || sl.includes('suv')) {
-  window.location.replace('suv.html');
-} else if (sl.includes('morak') || sl.includes('koushik') || sl === 'ezaf' || sl === 'ezaf.exe') {
-  window.location.replace('koushik.html');
-} else if (!slug) {
-  showNotFound();
+const FOUNDER_MAP = [
+  { html: 'pawan.html',   slugs: ['pawan', 'pawan-limbu', 'pawan-exe', 'pawan.exe'] },
+  { html: 'charu.html',   slugs: ['charu', 'charu-maya-limbu', 'charu-limbu', 'cml', 'cml-exe', 'cml.exe'] },
+  { html: 'suv.html',     slugs: ['suvam', 'suvam-limbu', 'suv', 'suvam-exe', 'suv.exe'] },
+  { html: 'koushik.html', slugs: ['morak', 'koushik', 'koushik-moran', 'ezaf', 'ezaf-exe', 'ezaf.exe'] },
+];
+const founderMatch = FOUNDER_MAP.find(f => f.slugs.includes(sl));
+if (founderMatch) {
+  window.location.replace(founderMatch.html);
 } else {
-  loadProfile(slug);
+  // Check if session has this person preloaded from a previous click
+  try {
+    const cachedPersonStr = sessionStorage.getItem('hlywor_current_person');
+    if (cachedPersonStr && slug) {
+      const cachedObj = JSON.parse(cachedPersonStr);
+      const cachedSlug = (cachedObj.slug || cachedObj.nameLower || cachedObj.id || '').toLowerCase();
+      const normSlug = slug.toLowerCase();
+      if (cachedSlug === normSlug || (cachedObj.id || '').toLowerCase() === normSlug) {
+        currentPersonData = cachedObj;
+        renderProfile(currentPersonData);
+        loadPosts(currentPersonData);
+      }
+    }
+  } catch(e) {}
+
+  if (!slug) {
+    onAuthChange(async (user) => {
+      if (user && !currentPersonData) {
+        try {
+          const snap = await getDocs(query(collection(db, 'people'), where('authorUid', '==', user.uid), limit(1)));
+          if (!snap.empty) {
+            currentPersonData = { id: snap.docs[0].id, ...snap.docs[0].data() };
+            renderProfile(currentPersonData);
+            loadPosts(currentPersonData);
+            return;
+          }
+        } catch(e) {}
+      }
+      if (!currentPersonData) {
+        showNotFound('(no slug provided)');
+      }
+    });
+  } else {
+    loadProfile(slug);
+  }
 }
+
+
 
 /* ── Load person ── */
 async function loadProfile(slug) {
   try {
-    /* Try by slug field first, then by name (for legacy links) */
-    let snap = await getDocs(query(
-      collection(db,'people'),
-      where('slug','==',slug.toLowerCase()),
-      limit(1)
-    ));
-    if (snap.empty) {
-      snap = await getDocs(query(
-        collection(db,'people'),
-        where('nameLower','==',slug.toLowerCase()),
-        limit(1)
-      ));
+    const lowerSlug = slug.toLowerCase().trim();
+    let person = null;
+
+    // 1. Exact slug field match
+    if (!person) {
+      try {
+        const s = await getDocs(query(
+          collection(db, 'people'),
+          where('slug', '==', lowerSlug),
+          limit(1)
+        ));
+        if (!s.empty) person = { id: s.docs[0].id, ...s.docs[0].data() };
+      } catch(e) {}
     }
-    if (snap.empty) { showNotFound(); return; }
-    const person = { id: snap.docs[0].id, ...snap.docs[0].data() };
+
+    // 2. nameLower field match (for links built from name)
+    if (!person) {
+      try {
+        const s = await getDocs(query(
+          collection(db, 'people'),
+          where('nameLower', '==', lowerSlug),
+          limit(1)
+        ));
+        if (!s.empty) person = { id: s.docs[0].id, ...s.docs[0].data() };
+      } catch(e) {}
+    }
+
+    // 3. Firestore document ID match
+    if (!person) {
+      try {
+        const docSnap = await getDoc(doc(db, 'people', slug));
+        if (docSnap.exists()) person = { id: docSnap.id, ...docSnap.data() };
+      } catch(e) {}
+    }
+
+    // 4. authorUid match (when link passes uid as slug)
+    if (!person) {
+      try {
+        const s = await getDocs(query(
+          collection(db, 'people'),
+          where('authorUid', '==', slug),
+          limit(1)
+        ));
+        if (!s.empty) person = { id: s.docs[0].id, ...s.docs[0].data() };
+      } catch(e) {}
+    }
+
+    // 5. Broad scan — first-name, slug contains, or name contains
+    if (!person) {
+      try {
+        const all = await getDocs(query(collection(db, 'people'), where('status', '==', 'published')));
+        const firstName = lowerSlug.replace(/-/g, ' ').split(/[\s.]/)[0];
+        for (const d of all.docs) {
+          const data = d.data();
+          const dSlug     = (data.slug || '').toLowerCase();
+          const dName     = (data.nameLower || data.name || '').toLowerCase();
+          const dFirstName = dName.split(/[\s.]/)[0];
+          const generatedSlug = dName.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          if (
+            d.id === slug ||
+            dSlug === lowerSlug ||
+            dName === lowerSlug ||
+            generatedSlug === lowerSlug ||
+            (firstName.length >= 3 && dFirstName === firstName)
+          ) {
+            person = { id: d.id, ...data };
+            break;
+          }
+        }
+      } catch(e) {}
+    }
+
+    if (!person) {
+      showNotFound();
+      return;
+    }
+
     currentPersonData = person;
     renderProfile(person);
     loadPosts(person);
   } catch(err) {
-    console.error(err); showNotFound();
+    console.error('Profile loading error:', err);
+    showNotFound();
   }
 }
+
 
 /* ── Render profile ── */
 function renderProfile(p) {
@@ -1074,7 +1212,14 @@ async function loadPosts(personOrName) {
       posts.forEach((post, i) => {
         const card = document.createElement('a');
         card.className = 'post-card';
-        card.href = `post.html?slug=${post.slug}`;
+        const postSlug = post.slug || post.id || '';
+        card.href = `post.html?slug=${encodeURIComponent(postSlug)}`;
+        card.addEventListener('click', () => {
+          try {
+            sessionStorage.setItem('hlywor_current_slug', postSlug);
+            sessionStorage.setItem('hlywor_current_post', JSON.stringify(post));
+          } catch(err) {}
+        });
         card.style.animationDelay = `${i*55}ms`;
 
         const thumb = post.thumbnail
@@ -1122,7 +1267,7 @@ async function setupStickButton(person, user) {
   if (!wrap || !btn) return;
 
   // Don't show on own profile
-  if (!user || !person.authorUid || user.uid === person.authorUid) {
+  if (!user || !person || !person.authorUid || user.uid === person.authorUid) {
     hideStickButton(); return;
   }
 
@@ -1138,17 +1283,22 @@ async function setupStickButton(person, user) {
       where('toUid','==',person.authorUid),
       limit(1)
     ));
+    const liveBtn = document.getElementById('stickBtn') || btn;
     if (!existing.empty) {
       stickDocId = existing.docs[0].id;
-      setStuckState(btn, true);
+      setStuckState(liveBtn, true);
     } else {
-      setStuckState(btn, false);
+      setStuckState(liveBtn, false);
     }
   } catch(e) { console.error(e); }
 
+  // Fresh reference to ensure parentNode exists
+  const currentBtn = document.getElementById('stickBtn');
+  if (!currentBtn || !currentBtn.parentNode) return;
+
   // Remove old listener by cloning
-  const newBtn = btn.cloneNode(true);
-  btn.parentNode.replaceChild(newBtn, btn);
+  const newBtn = currentBtn.cloneNode(true);
+  currentBtn.parentNode.replaceChild(newBtn, currentBtn);
 
   newBtn.addEventListener('click', async () => {
     if (!currentUser) {
@@ -1211,7 +1361,8 @@ function hideStickButton() {
 
 function showNotFound() {
   document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('notFound').style.display = 'block';
+  const nf = document.getElementById('notFound');
+  if (nf) nf.style.display = 'block';
 }
 
 function lighten(hex) {

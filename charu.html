@@ -699,7 +699,14 @@ async function loadCharuPosts() {
     posts.forEach((post, i) => {
       const card = document.createElement('a');
       card.className = 'post-card';
-      card.href = `post.html?slug=${post.slug}`;
+      const postSlug = post.slug || post.id || '';
+      card.href = `post.html?slug=${encodeURIComponent(postSlug)}`;
+      card.addEventListener('click', () => {
+        try {
+          sessionStorage.setItem('hlywor_current_slug', postSlug);
+          sessionStorage.setItem('hlywor_current_post', JSON.stringify(post));
+        } catch(err) {}
+      });
       const thumb = post.thumbnail
         ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
         : `<div class="post-noimg"><span class="post-noimg-n">${String(i + 1).padStart(2, '0')}</span></div>`;

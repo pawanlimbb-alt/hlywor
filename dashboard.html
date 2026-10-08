@@ -684,6 +684,7 @@ async function loadPosts(user) {
       const dateStr = post.date
         ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '';
 
+      const postSlug = post.slug || post.id || '';
       card.innerHTML = `
         ${thumb}
         <div class="post-card-body">
@@ -692,14 +693,18 @@ async function loadPosts(user) {
           <p class="post-card-desc">${post.desc||''}</p>
           <div class="post-card-meta">
             <span class="post-card-date">${dateStr}</span>
-            <a class="post-card-edit" href="post.html?slug=${post.slug}">READ →</a>
+            <a class="post-card-edit" href="post.html?slug=${encodeURIComponent(postSlug)}">READ →</a>
           </div>
         </div>`;
 
       // Click opens post
       card.addEventListener('click', e => {
         if (e.target.closest('.post-card-edit')) return;
-        window.location.href = `post.html?slug=${post.slug}`;
+        try {
+          sessionStorage.setItem('hlywor_current_slug', postSlug);
+          sessionStorage.setItem('hlywor_current_post', JSON.stringify(post));
+        } catch(err) {}
+        window.location.href = `post.html?slug=${encodeURIComponent(postSlug)}`;
       });
       card.style.cursor = 'pointer';
       grid.appendChild(card);
@@ -758,6 +763,7 @@ async function loadFeed(user) {
         ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
         : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
       const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) : '';
+      const postSlug = post.slug || post.id || '';
       card.innerHTML = `
         ${thumb}
         <div class="post-card-body">
@@ -766,12 +772,16 @@ async function loadFeed(user) {
           <p class="post-card-desc">${post.desc||''}</p>
           <div class="post-card-meta">
             <span class="post-card-date">${dateStr}</span>
-            <a class="post-card-edit" href="post.html?slug=${post.slug}">READ →</a>
+            <a class="post-card-edit" href="post.html?slug=${encodeURIComponent(postSlug)}">READ →</a>
           </div>
         </div>`;
       card.addEventListener('click', e => {
         if (e.target.closest('.post-card-edit')) return;
-        window.location.href = `post.html?slug=${post.slug}`;
+        try {
+          sessionStorage.setItem('hlywor_current_slug', postSlug);
+          sessionStorage.setItem('hlywor_current_post', JSON.stringify(post));
+        } catch(err) {}
+        window.location.href = `post.html?slug=${encodeURIComponent(postSlug)}`;
       });
       card.style.cursor = 'pointer';
       grid.appendChild(card);
@@ -817,6 +827,7 @@ async function loadSaved(user) {
         ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title}" loading="lazy">`
         : `<div class="post-noimg"><span class="post-noimg-n">${String(i+1).padStart(2,'0')}</span></div>`;
       const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) : '';
+      const postSlug = post.slug || post.id || '';
       card.innerHTML = `
         ${thumb}
         <div class="post-card-body">
@@ -825,12 +836,16 @@ async function loadSaved(user) {
           <p class="post-card-desc">${post.desc||''}</p>
           <div class="post-card-meta">
             <span class="post-card-date">${dateStr}</span>
-            <a class="post-card-edit" href="post.html?slug=${post.slug}">READ →</a>
+            <a class="post-card-edit" href="post.html?slug=${encodeURIComponent(postSlug)}">READ →</a>
           </div>
         </div>`;
       card.addEventListener('click', e => {
         if (e.target.closest('.post-card-edit')) return;
-        window.location.href = `post.html?slug=${post.slug}`;
+        try {
+          sessionStorage.setItem('hlywor_current_slug', postSlug);
+          sessionStorage.setItem('hlywor_current_post', JSON.stringify(post));
+        } catch(err) {}
+        window.location.href = `post.html?slug=${encodeURIComponent(postSlug)}`;
       });
       card.style.cursor = 'pointer';
       grid.appendChild(card);
@@ -931,7 +946,7 @@ async function loadCard(user) {
           <div class="ppc-role" style="color:${acc}">${(p.role||'').toUpperCase()}</div>
           <p class="ppc-bio">${p.bio||''}</p>
           <div class="ppc-chips">${chips}</div>
-          <a class="ppc-edit-link" href="profile.html?slug=${p.slug}">View full profile →</a>
+          <a class="ppc-edit-link" href="profile.html?slug=${encodeURIComponent(p.slug || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || p.id)}">View full profile →</a>
         </div>
       </div>
       <p style="font-family:var(--serif);font-size:0.8rem;font-style:italic;color:var(--ink4);margin-top:12px">

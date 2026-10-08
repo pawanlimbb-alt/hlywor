@@ -1173,6 +1173,19 @@
       outline-offset: 1px
     }
 
+    .share-btn.share-btn-ig {
+      background: linear-gradient(135deg, rgba(225, 48, 108, 0.1), rgba(247, 119, 55, 0.1));
+      border-color: rgba(225, 48, 108, 0.4);
+      position: relative;
+    }
+
+    .share-btn.share-btn-ig:hover {
+      background: linear-gradient(135deg, #e1306c, #f77737);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(225, 48, 108, 0.45);
+    }
+
     .card-stick-btn {
       font-family: var(--sans);
       font-size: 0.78rem;
@@ -1570,23 +1583,26 @@
     .comment-author.is-op::after {
       content: 'OP';
       font-family: var(--pixel);
-      font-size: 0.2rem;
+      font-size: 0.52rem;
       color: #fff;
       background: var(--fire);
-      padding: 1px 5px;
-      margin-left: 5px;
-      vertical-align: middle
+      padding: 2px 6px;
+      margin-left: 6px;
+      border-radius: 2px;
+      vertical-align: middle;
+      display: inline-block;
+      letter-spacing: 0.5px;
     }
 
     .comment-date {
       font-family: var(--sans);
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       color: var(--ink4)
     }
 
     .comment-text {
       font-family: var(--hand);
-      font-size: 1rem;
+      font-size: 1.08rem;
       color: var(--ink2);
       line-height: 1.65
     }
@@ -1595,53 +1611,66 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-top: 6px
+      margin-top: 8px;
+      flex-wrap: wrap;
     }
 
     .comment-reply-btn {
-      font-family: var(--pixel);
-      font-size: 0.2rem;
-      color: var(--ink4);
-      background: none;
-      border: none;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink3);
+      background: rgba(26, 18, 8, 0.04);
+      border: 1px solid rgba(26, 18, 8, 0.14);
+      border-radius: 4px;
       cursor: pointer;
-      letter-spacing: 1px;
-      padding: 2px 0;
-      transition: color .15s
+      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all .18s;
     }
 
     .comment-reply-btn:hover,
     .comment-reply-btn:focus {
       color: var(--fire);
-      outline: none
+      background: rgba(232, 104, 26, 0.08);
+      border-color: var(--fire);
+      outline: none;
     }
 
     .comment-reply-btn:focus-visible {
       outline: 2px solid var(--focus-ring);
-      outline-offset: 1px
+      outline-offset: 1px;
     }
 
     .comment-delete-btn {
-      font-family: var(--pixel);
-      font-size: 0.2rem;
-      color: rgba(192, 57, 43, 0.5);
-      background: none;
-      border: none;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #c0392b;
+      background: rgba(192, 57, 43, 0.04);
+      border: 1px solid rgba(192, 57, 43, 0.22);
+      border-radius: 4px;
       cursor: pointer;
-      letter-spacing: 1px;
-      padding: 2px 0;
-      transition: color .15s
+      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all .18s;
     }
 
     .comment-delete-btn:hover,
     .comment-delete-btn:focus {
-      color: #c0392b;
-      outline: none
+      color: #fff;
+      background: #c0392b;
+      border-color: #c0392b;
+      outline: none;
     }
 
     .comment-delete-btn:focus-visible {
       outline: 2px solid var(--focus-ring);
-      outline-offset: 1px
+      outline-offset: 1px;
     }
 
     .comment-vote {
@@ -1651,13 +1680,13 @@
     }
 
     .vote-btn {
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       background: none;
       border: none;
       cursor: pointer;
       color: var(--ink4);
       transition: all .15s;
-      padding: 1px 3px;
+      padding: 2px 4px;
       border-radius: 2px
     }
 
@@ -1679,7 +1708,7 @@
 
     .vote-count {
       font-family: var(--pixel);
-      font-size: 0.24rem;
+      font-size: 0.52rem;
       color: var(--ink4);
       min-width: 16px;
       text-align: center
@@ -1702,7 +1731,7 @@
     }
 
     .replies-wrap .comment-text {
-      font-size: 0.92rem
+      font-size: 0.96rem
     }
 
     /* Inline reply form */
@@ -1724,7 +1753,7 @@
       border: none;
       border-bottom: 1px solid rgba(26, 18, 8, 0.2);
       font-family: var(--hand);
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--ink);
       padding: 4px 0;
       outline: none;
@@ -1751,12 +1780,13 @@
     }
 
     .reply-submit-btn {
-      font-family: var(--hand);
-      font-size: 0.9rem;
-      padding: 5px 16px;
+      font-family: var(--sans);
+      font-size: 0.84rem;
+      padding: 6px 16px;
       background: var(--fire);
       color: #fff;
       border: none;
+      border-radius: 4px;
       cursor: pointer;
       transition: all .2s;
       font-weight: 600
@@ -1779,11 +1809,12 @@
     }
 
     .reply-cancel-btn {
-      font-family: var(--hand);
-      font-size: 0.9rem;
-      padding: 5px 12px;
+      font-family: var(--sans);
+      font-size: 0.84rem;
+      padding: 6px 14px;
       background: transparent;
       border: 1px solid rgba(26, 18, 8, 0.15);
+      border-radius: 4px;
       color: var(--ink3);
       cursor: pointer;
       transition: all .2s
@@ -1802,21 +1833,21 @@
 
     .reply-status {
       font-family: var(--hand);
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       color: var(--fire);
       font-style: italic
     }
 
     /* Toggle replies */
     .toggle-replies-btn {
-      font-family: var(--pixel);
-      font-size: 0.2rem;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 600;
       color: var(--fire);
       background: none;
       border: none;
       cursor: pointer;
-      letter-spacing: 1px;
-      padding: 4px 0;
+      padding: 6px 0;
       display: flex;
       align-items: center;
       gap: 5px;
@@ -2345,12 +2376,12 @@
             <!-- ✅ Share Buttons -->
             <div class="post-share" aria-label="Share this post">
               <span style="font-family:var(--pixel);font-size:0.55rem;color:var(--ink4);letter-spacing:1.5px">SHARE</span>
-              <button class="share-btn" id="shareTwitter" aria-label="Share on Twitter">🐦</button>
-              <button class="share-btn" id="shareWhatsApp" aria-label="Share on WhatsApp">💬</button>
-              <button class="share-btn" id="shareInstagramStory" aria-label="Share to Instagram Story">📸</button>
-              <button class="share-btn" id="shareInstagramChat" aria-label="Share via Instagram Chat">💌</button>
-              <button class="share-btn" id="copyLinkBtn" aria-label="Copy link to clipboard">🔗</button>
-              <button class="share-btn" id="savePostBtn" aria-label="Save for later" aria-pressed="false">🔖</button>
+              <button class="share-btn" id="shareTwitter" aria-label="Share on Twitter" title="Share on Twitter">🐦</button>
+              <button class="share-btn" id="shareWhatsApp" aria-label="Share on WhatsApp" title="Share on WhatsApp">💬</button>
+              <button class="share-btn share-btn-ig" id="shareInstagramStory" aria-label="Share to Instagram Story" title="Create Instagram Story Card">📸</button>
+              <button class="share-btn" id="shareInstagramChat" aria-label="Share via Instagram Chat" title="Share link to Instagram Chat">💌</button>
+              <button class="share-btn" id="copyLinkBtn" aria-label="Copy link to clipboard" title="Copy link">🔗</button>
+              <button class="share-btn" id="savePostBtn" aria-label="Save for later" aria-pressed="false" title="Save post">🔖</button>
             </div>
 
             <!-- ✅ Read Next Recommendations -->
@@ -2426,11 +2457,12 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import {
-      getFirestore, collection, query, where, getDocs,
+      getFirestore, collection, query, where, getDocs, getDoc,
       addDoc, updateDoc, deleteDoc, doc,
       orderBy, limit, serverTimestamp, onSnapshot
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     import { injectAuthNav, currentUser, onAuthChange, showConfirmDelete, getDisplayName, showLoginModal } from "./auth.js";
+    import { openIgStoryModal } from "./igStoryCard.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAg7yTP5YEDsTUpmNYhCi5iroqNQ_67o58",
@@ -2442,8 +2474,13 @@
       measurementId: "G-MQDXDWHLX8"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    let app, db;
+    try {
+      app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+    } catch(e) {
+      console.warn("Firebase initialization skipped/failed", e);
+    }
 
     // ── Auth nav ──
     injectAuthNav(document.getElementById('authSlot'), {
@@ -2473,52 +2510,228 @@
       }
     }, { passive: true });
 
-    // ── Slug from URL (normalized) ──
-    const rawSlug = new URLSearchParams(window.location.search).get('slug');
-    const slug = rawSlug?.toLowerCase().trim();
+    // ── Slug from URL (supports ?slug=..., ?id=..., ?p=..., ?post=..., and hash #slug) ──
+    function resolvePostSlug() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let raw = urlParams.get('slug') || urlParams.get('id') || urlParams.get('p') || urlParams.get('post') || urlParams.get('story') || urlParams.get('s') || '';
 
-    console.log("🔍 Loading post for slug:", slug); // Debug log
+      if (!raw && window.location.hash) {
+        const hash = window.location.hash.replace(/^#\/?/, '').trim();
+        const hashParams = new URLSearchParams(hash);
+        raw = hashParams.get('slug') || hashParams.get('id') || hashParams.get('p') || hash;
+      }
 
-    if (!slug) {
-      showNotFound("No post specified.");
-    } else {
-      loadPost(slug);
+      if (!raw && window.location.search) {
+        const cleanSearch = window.location.search.replace(/^\?/, '').trim();
+        if (cleanSearch && !cleanSearch.includes('=')) {
+          raw = cleanSearch;
+        }
+      }
+
+      if (raw) {
+        try {
+          raw = decodeURIComponent(raw).replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').replace(/^post\.html\?p=/i, '').trim();
+        } catch(e) {
+          raw = raw.replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').replace(/^post\.html\?p=/i, '').trim();
+        }
+      }
+
+      // ONLY use sessionStorage if URL has NO slug at all!
+      if (!raw) {
+        try {
+          const cached = sessionStorage.getItem('hlywor_current_slug');
+          if (cached && cached !== 'undefined' && cached !== 'null') {
+            raw = cached;
+          }
+        } catch(e) {}
+      }
+
+      return (raw && raw !== 'undefined' && raw !== 'null') ? raw.trim() : '';
     }
+
+    const slug = resolvePostSlug();
 
     let currentPostData = null;
     let isEditMode = false;
-    let commentsUnsub = null; // For memory leak fix
+    let commentsUnsub = null;
 
-    // ── Load post ──
-    async function loadPost(slug) {
+    // Check if session has this post preloaded from a previous click
+    try {
+      const cachedPostStr = sessionStorage.getItem('hlywor_current_post');
+      if (cachedPostStr && slug) {
+        const cachedObj = JSON.parse(cachedPostStr);
+        const cachedSlug = (cachedObj.slug || cachedObj.id || '').replace(/^post\.html\?slug=/i, '').trim().toLowerCase();
+        const normSlug = slug.toLowerCase();
+        // ONLY pre-render if the cached post actually matches the target slug!
+        if (cachedSlug === normSlug || (cachedObj.id || '').toLowerCase() === normSlug) {
+          currentPostData = cachedObj;
+          renderPost(currentPostData);
+        }
+      }
+    } catch(e) {}
+
+    if (!slug && !currentPostData) {
+      showNotFound("No story specified. Click back to return to the board.");
+    } else {
+      loadPost(slug || currentPostData?.slug || currentPostData?.id);
+    }
+
+    // ── Robust Multi-Strategy Load Post ──
+    async function loadPost(targetSlug) {
+      if (!targetSlug && !currentPostData) {
+        showNotFound("No story specified. Click back to return to the board.");
+        return;
+      }
+
+      // 8-second safety timeout so it never hangs in loading state on localhost
+      const loadTimeout = setTimeout(() => {
+        if (!currentPostData) {
+          console.warn("⚠️ Post loading timed out");
+          showNotFound("Loading took too long. Check your internet connection or try refreshing.");
+        }
+      }, 8000);
+
       try {
-        const q = query(
-          collection(db, 'posts'),
-          where('slug', '==', slug),
-          where('status', '==', 'published'),
-          limit(1)
-        );
-        const snap = await getDocs(q);
-
-        console.log("✅ Found docs:", snap.size); // Debug log
-
-        if (snap.empty) {
-          showNotFound(`No post found with slug "${slug}". It may have been removed.`);
+        if (!db) {
+          clearTimeout(loadTimeout);
+          if (!currentPostData) showNotFound("Database connection unavailable.");
           return;
         }
 
-        currentPostData = { id: snap.docs[0].id, ...snap.docs[0].data() };
+        const cleanSlug = (targetSlug || '').replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();
+        const normalizedSlug = cleanSlug.toLowerCase();
+        let docData = null;
+
+        // 1. Try querying by exact slug
+        if (cleanSlug) {
+          try {
+            const q1 = query(
+              collection(db, 'posts'),
+              where('slug', '==', cleanSlug),
+              limit(1)
+            );
+            const snap1 = await getDocs(q1);
+            if (!snap1.empty) {
+              docData = { id: snap1.docs[0].id, ...snap1.docs[0].data() };
+            }
+          } catch(e) {
+            console.warn("Slug query attempt 1 failed:", e);
+          }
+        }
+
+        // 2. Try querying by lowercase slug if different
+        if (!docData && cleanSlug && normalizedSlug !== cleanSlug) {
+          try {
+            const q2 = query(
+              collection(db, 'posts'),
+              where('slug', '==', normalizedSlug),
+              limit(1)
+            );
+            const snap2 = await getDocs(q2);
+            if (!snap2.empty) {
+              docData = { id: snap2.docs[0].id, ...snap2.docs[0].data() };
+            }
+          } catch(e) {
+            console.warn("Slug query attempt 2 failed:", e);
+          }
+        }
+
+        // 3. Try direct Firestore document lookup by ID
+        if (!docData && cleanSlug) {
+          try {
+            const docRef = doc(db, 'posts', cleanSlug);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+              docData = { id: docSnap.id, ...docSnap.data() };
+            }
+          } catch(e) {
+            console.warn("Direct doc lookup failed:", e);
+          }
+        }
+
+        // 4. Try querying by url field
+        if (!docData && cleanSlug) {
+          try {
+            const q4 = query(
+              collection(db, 'posts'),
+              where('url', '==', 'post.html?slug=' + cleanSlug),
+              limit(1)
+            );
+            const snap4 = await getDocs(q4);
+            if (!snap4.empty) {
+              docData = { id: snap4.docs[0].id, ...snap4.docs[0].data() };
+            }
+          } catch(e) {
+            console.warn("Url field query failed:", e);
+          }
+        }
+
+        // 5. Fallback: Search across collection for exact slug or doc ID
+        if (!docData && cleanSlug && cleanSlug.length > 1) {
+          try {
+            const allSnap = await getDocs(query(collection(db, 'posts'), where('status', '==', 'published')));
+            for (const d of allSnap.docs) {
+              const data = d.data();
+              const pSlug = (data.slug || '').toLowerCase().replace(/^post\.html\?slug=/i, '').trim();
+              const pUrl = (data.url || '').toLowerCase().trim();
+              const pUrlSlug = pUrl.replace(/^.*[?&]slug=/i, '').replace(/&.*$/, '').trim();
+              const pTitleSlug = (data.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+              const pTitle = (data.title || '').toLowerCase().trim();
+              
+              if (
+                d.id === cleanSlug ||
+                (pSlug && pSlug === normalizedSlug) ||
+                (pUrlSlug && pUrlSlug === normalizedSlug) ||
+                (pTitleSlug && pTitleSlug === normalizedSlug) ||
+                (pTitle && pTitle === cleanSlug.toLowerCase())
+              ) {
+                docData = { id: d.id, ...data };
+                break;
+              }
+            }
+          } catch(e) {
+            console.warn("Fallback collection scan failed:", e);
+          }
+        }
+
+        clearTimeout(loadTimeout);
+
+        if (!docData) {
+          if (currentPostData) {
+            console.warn(`[Hlywor] Firestore lookup failed for "${cleanSlug}", continuing with cached version.`);
+            return;
+          }
+          showNotFound(`No story found for "${targetSlug}". It may have been removed.`);
+          return;
+        }
+
+        currentPostData = docData;
+        try {
+          sessionStorage.setItem('hlywor_current_slug', currentPostData.slug || currentPostData.id);
+          sessionStorage.setItem('hlywor_current_post', JSON.stringify(currentPostData));
+        } catch(e) {}
+
         renderPost(currentPostData);
-        loadComments(currentPostData.id, currentPostData.slug, currentPostData.title, currentPostData.authorUid);
-        // Skip "more by this author" for anonymous posts — grouping by the
-        // literal string "Anonymous" would incorrectly cluster unrelated
-        // writers together under one identity.
+
+        try {
+          loadComments(currentPostData.id, currentPostData.slug || currentPostData.id, currentPostData.title, currentPostData.authorUid);
+        } catch(e) {
+          console.warn("Comments load error:", e);
+        }
+
         if (!currentPostData.isAnonymous) {
-          loadMoreByAuthor(currentPostData.author, currentPostData.slug);
+          try {
+            loadMoreByAuthor(currentPostData.author, currentPostData.slug, currentPostData.id, currentPostData.title);
+          } catch(e) {
+            console.warn("More by author error:", e);
+          }
         }
       } catch (err) {
+        clearTimeout(loadTimeout);
         console.error("❌ Load post error:", err);
-        showNotFound("An error occurred while loading this post.");
+        if (!currentPostData) {
+          showNotFound("An error occurred while loading this post. Click back to return to the board.");
+        }
       }
     }
 
@@ -2738,71 +2951,9 @@
       document.getElementById('shareWhatsApp')?.addEventListener('click', () => {
         window.open(`https://wa.me/?text=${postTitle}%20${postUrl}`, '_blank');
       });
-      // Instagram Story Share
-      document.getElementById('shareInstagramStory')?.addEventListener('click', async () => {
-        const postUrl = window.location.href;
-        const postTitle = post.title;
-
-        // Try to open Instagram story creation
-        const instagramUrl = `https://www.instagram.com/stories/create/`;
-
-        // For mobile, try to open Instagram app
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-        if (isMobile) {
-          // On mobile, copy link first then open Instagram
-          try {
-            await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
-
-            const btn = document.getElementById('shareInstagramStory');
-            const original = btn.innerHTML;
-            btn.innerHTML = '✓';
-            btn.setAttribute('aria-label', 'Link copied! Open Instagram');
-
-            // Try to open Instagram app
-            window.location.href = 'instagram://story';
-
-            // Fallback to web after 2 seconds
-            setTimeout(() => {
-              window.open(instagramUrl, '_blank');
-            }, 2000);
-
-            setTimeout(() => {
-              btn.innerHTML = original;
-              btn.setAttribute('aria-label', 'Share to Instagram Story');
-            }, 2000);
-          } catch (e) {
-            // Fallback: just open Instagram
-            window.open(instagramUrl, '_blank');
-          }
-        } else {
-          // On desktop, open Instagram web and show instructions
-          const confirmed = confirm(
-            'To share to Instagram Story:\n\n' +
-            '1. We\'ll copy the link to your clipboard\n' +
-            '2. Instagram will open in a new tab\n' +
-            '3. Create a story and paste the link\n\n' +
-            'Continue?'
-          );
-
-          if (confirmed) {
-            try {
-              await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
-
-              const btn = document.getElementById('shareInstagramStory');
-              const original = btn.innerHTML;
-              btn.innerHTML = '✓';
-
-              window.open(instagramUrl, '_blank');
-
-              setTimeout(() => {
-                btn.innerHTML = original;
-              }, 2000);
-            } catch (e) {
-              window.open(instagramUrl, '_blank');
-            }
-          }
-        }
+      // ✅ Instagram Story Share (Open Interactive 9:16 Story Card Generator)
+      document.getElementById('shareInstagramStory')?.addEventListener('click', () => {
+        openIgStoryModal(post);
       });
 
       // Instagram Chat/Direct Share
@@ -2907,7 +3058,10 @@
       setupCommentForm(post.id, post.slug, post.title, post.authorUid);
       maybeShowToolbar(post);
       wirePostStickBtn(post);
-      loadReadNext(post.slug || post.id);
+      loadReadNext(post.slug, post.id, post.title);
+      if (!post.isAnonymous && post.author) {
+        loadMoreByAuthor(post.author, post.slug, post.id, post.title);
+      }
 
       // Reading Theme Controller
       const savedTheme = localStorage.getItem('hlywor_reader_theme') || 'parchment';
@@ -2936,7 +3090,7 @@
       });
     }
 
-    async function loadReadNext(currentSlug) {
+    async function loadReadNext(currentSlug, currentId, currentTitle) {
       const container = document.getElementById('readNextGrid');
       if (!container) return;
       try {
@@ -2945,27 +3099,60 @@
         if (res.ok) posts = await res.json();
         if (db) {
           try {
-            const snap = await getDocs(query(collection(db, 'posts'), where('status', '==', 'published'), limit(6)));
+            const snap = await getDocs(query(collection(db, 'posts'), where('status', '==', 'published'), limit(10)));
             if (!snap.empty) {
               const fbPosts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
               if (fbPosts.length) posts = fbPosts;
             }
           } catch (e) {}
         }
-        const filtered = posts.filter(p => (p.slug || p.id) !== currentSlug).slice(0, 3);
+        const cleanCurrentSlug = (currentSlug || '').toLowerCase().replace(/^post\.html\?slug=/i, '').trim();
+        const cleanCurrentId = (currentId || '').toLowerCase().trim();
+        const cleanCurrentTitle = (currentTitle || '').toLowerCase().trim();
+
+        const filtered = posts.filter(p => {
+          const pSlug = (p.slug || '').toLowerCase().replace(/^post\.html\?slug=/i, '').trim();
+          const pId = (p.id || '').toLowerCase().trim();
+          const pTitle = (p.title || '').toLowerCase().trim();
+          if (cleanCurrentSlug && pSlug === cleanCurrentSlug) return false;
+          if (cleanCurrentId && pId === cleanCurrentId) return false;
+          if (cleanCurrentSlug && pId === cleanCurrentSlug) return false;
+          if (cleanCurrentTitle && pTitle === cleanCurrentTitle) return false;
+          return true;
+        }).slice(0, 3);
+
         if (!filtered.length) {
-          document.getElementById('readNextSection')?.remove();
+          const sec = document.getElementById('readNextSection');
+          if (sec) sec.style.display = 'none';
           return;
         }
-        container.innerHTML = filtered.map(p => `
-          <a href="post.html?slug=${p.slug || p.id}" class="read-next-card">
-            <span class="read-next-tag">${(p.category || p.type || 'STORY').toUpperCase()}</span>
-            <div class="read-next-title">${p.title}</div>
-            <div class="read-next-author">by ${p.author || 'HlyWor'}</div>
-          </a>
-        `).join('');
+
+        container.innerHTML = filtered.map(p => {
+          const targetSlug = (p.slug || p.id || '').replace(/^post\.html\?slug=/i, '').trim();
+          return `
+            <a href="post.html?slug=${encodeURIComponent(targetSlug)}" class="read-next-card" data-slug="${targetSlug}">
+              <span class="read-next-tag">${(p.category || p.type || 'STORY').toUpperCase()}</span>
+              <div class="read-next-title">${escHtml(p.title)}</div>
+              <div class="read-next-author">by ${escHtml(p.author || 'HlyWor')}</div>
+            </a>
+          `;
+        }).join('');
+
+        container.querySelectorAll('.read-next-card').forEach((card, idx) => {
+          card.addEventListener('click', () => {
+            const p = filtered[idx];
+            const targetSlug = card.dataset.slug;
+            try {
+              sessionStorage.setItem('hlywor_current_slug', targetSlug);
+              if (p) sessionStorage.setItem('hlywor_current_post', JSON.stringify(p));
+            } catch(err) {}
+          });
+        });
+        const sec = document.getElementById('readNextSection');
+        if (sec) sec.style.display = 'block';
       } catch (e) {
-        document.getElementById('readNextSection')?.remove();
+        const sec = document.getElementById('readNextSection');
+        if (sec) sec.style.display = 'none';
       }
     }
 
@@ -3094,9 +3281,14 @@
         if (an.includes('charu') || as.includes('charu') || as === 'cml') return 'charu.html';
         if (an.includes('suvam') || an.includes('suv') || as.includes('suvam') || as === 'suv') return 'suv.html';
         if (an.includes('morak') || an.includes('koushik') || as.includes('koushik') || as === 'ezaf') return 'koushik.html';
-        if (p?.slug) return `profile.html?slug=${encodeURIComponent(p.slug)}`;
+        // Only show a profile link if the person was actually found in Firestore people collection
+        if (!p) return '';
+        const profileSlug = p.slug
+          || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        if (profileSlug) return `profile.html?slug=${encodeURIComponent(profileSlug)}`;
         return '';
       }
+
 
       const targetUrl = getAuthorProfileLink(person, authorName);
       const profileLink = targetUrl
@@ -3583,7 +3775,7 @@
       } catch (e) { console.error('Notification write:', e); }
     }
 
-    async function loadMoreByAuthor(author, currentSlug) {
+    async function loadMoreByAuthor(author, currentSlug, currentId, currentTitle) {
       if (!author) return;
       try {
         const snap = await getDocs(query(
@@ -3591,15 +3783,34 @@
           where('author', '==', author),
           where('status', '==', 'published')
         ));
+        const cleanCurrentSlug = (currentSlug || '').toLowerCase().replace(/^post\.html\?slug=/i, '').trim();
+        const cleanCurrentId = (currentId || '').toLowerCase().trim();
+        const cleanCurrentTitle = (currentTitle || '').toLowerCase().trim();
+
         const others = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-          .filter(p => p.slug !== currentSlug)
+          .filter(p => {
+            const pSlug = (p.slug || '').toLowerCase().replace(/^post\.html\?slug=/i, '').trim();
+            const pId = (p.id || '').toLowerCase().trim();
+            const pTitle = (p.title || '').toLowerCase().trim();
+            if (cleanCurrentSlug && pSlug === cleanCurrentSlug) return false;
+            if (cleanCurrentId && pId === cleanCurrentId) return false;
+            if (cleanCurrentSlug && pId === cleanCurrentSlug) return false;
+            if (cleanCurrentTitle && pTitle === cleanCurrentTitle) return false;
+            return true;
+          })
           .sort((a,b) => {
             const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.date||0);
             const db_ = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.date||0);
             return db_ - da;
           })
           .slice(0, 3);
-        if (!others.length) return;
+
+        if (!others.length) {
+          const section = document.getElementById('moreByAuthor');
+          if (section) section.style.display = 'none';
+          return;
+        }
+
         document.getElementById('moreSubheading').textContent = `More by ${escHtml(author)}`;
         const grid = document.getElementById('moreGrid');
         grid.innerHTML = others.map((p, i) => {
@@ -3608,7 +3819,8 @@
           const thumb = p.thumbnail
             ? `<img class="more-card-img" src="${p.thumbnail}" alt="${escHtml(p.title)}" loading="lazy" decoding="async">`
             : `<div class="more-card-noimg"><span class="more-card-noimg-num">${String(i + 1).padStart(2, '0')}</span></div>`;
-          return `<a href="post.html?slug=${p.slug}" class="more-card" role="listitem">
+          const targetSlug = (p.slug || p.id || '').replace(/^post\.html\?slug=/i, '').trim();
+          return `<a href="post.html?slug=${encodeURIComponent(targetSlug)}" class="more-card" role="listitem" data-slug="${targetSlug}">
             <div class="more-card-pin" aria-hidden="true"></div>${thumb}
             <div class="more-card-body">
               <div class="more-card-cat" aria-label="Category: ${cat}">${cat}</div>
@@ -3616,6 +3828,18 @@
               ${ds ? `<div class="more-card-date">${ds}</div>` : ''}
             </div></a>`;
         }).join('');
+
+        grid.querySelectorAll('.more-card').forEach((card, idx) => {
+          card.addEventListener('click', () => {
+            const p = others[idx];
+            const targetSlug = card.dataset.slug;
+            try {
+              sessionStorage.setItem('hlywor_current_slug', targetSlug);
+              if (p) sessionStorage.setItem('hlywor_current_post', JSON.stringify(p));
+            } catch(err) {}
+          });
+        });
+
         document.getElementById('moreByAuthor').style.display = 'block';
       } catch (err) { console.error('More by author:', err); }
     }

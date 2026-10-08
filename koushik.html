@@ -318,7 +318,14 @@
       grid.innerHTML = '';
       posts.forEach(post => {
         const card = document.createElement('a');
-        card.href = `post.html?slug=${post.slug}`;
+        const postSlug = post.slug || post.id || '';
+        card.href = `post.html?slug=${encodeURIComponent(postSlug)}`;
+        card.addEventListener('click', () => {
+          try {
+            sessionStorage.setItem('hlywor_current_slug', postSlug);
+            sessionStorage.setItem('hlywor_current_post', JSON.stringify(post));
+          } catch(err) {}
+        });
         card.style.cssText = 'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;text-decoration:none;color:#fff;display:flex;flex-direction:column;transition:all .2s';
         card.onmouseover = () => { card.style.borderColor = '#ff3b3b'; card.style.transform = 'translateY(-3px)'; };
         card.onmouseout = () => { card.style.borderColor = 'rgba(255,255,255,0.1)'; card.style.transform = 'none'; };

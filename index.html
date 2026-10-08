@@ -169,7 +169,7 @@
     .sort-tab:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px;}
     .sort-tab.active{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600;}
     .pinboard{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:32px 28px;align-items:start;}
-    .pinned-post{position:relative;background:var(--paper);box-shadow:var(--pin-shadow);transition:transform 0.25s,box-shadow 0.25s;cursor:pointer;}
+    .pinned-post{display:block;text-decoration:none;color:inherit;position:relative;background:var(--paper);box-shadow:var(--pin-shadow);transition:transform 0.25s,box-shadow 0.25s;cursor:pointer;}
     .pinned-post:nth-child(3n+1){transform:rotate(-1.2deg);}
     .pinned-post:nth-child(3n+2){transform:rotate(0.8deg);}
     .pinned-post:nth-child(3n+3){transform:rotate(-0.4deg);}
@@ -198,6 +198,8 @@
     .post-mood-badge{background:rgba(232,104,26,0.12);color:var(--fire);border:1px solid rgba(232,104,26,0.3);padding:3px 7px;border-radius:2px;font-size:0.72rem;font-weight:600;}
     .cat-story{background:var(--tape-r);}.cat-movies{background:var(--tape-b);}.cat-books{background:var(--tape-g);}.cat-thoughts{background:var(--tape-p);}.cat-college{background:var(--tape-o);}.cat-news{background:var(--tape-y);color:var(--ink);}
     .post-note-title{font-family:var(--serif);font-size:1.2rem;font-weight:600;font-style:italic;color:var(--ink);line-height:1.4;margin-bottom:8px;}
+    .post-title-link{color:inherit;text-decoration:none;}
+    .post-title-link:hover{color:var(--fire);text-decoration:underline dotted;}
     .post-note-desc{font-family:var(--sans);font-size:0.8rem;color:var(--ink3);line-height:1.7;margin-bottom:12px;}
     .post-note-meta{display:flex;align-items:center;justify-content:space-between;border-top:1px dashed rgba(26,18,8,0.15);padding-top:10px;margin-top:4px;gap:8px;}
     .post-author-wrap{display:inline-flex;align-items:center;gap:6px;min-width:0;}
@@ -205,7 +207,7 @@
     .post-author-chip:hover,.post-author-chip:focus{background:var(--paper3);color:var(--fire);outline:none;}
     .post-author-chip:focus-visible{outline:2px solid var(--focus-ring);outline-offset:1px;}
     .post-author-chip-dot{width:7px;height:7px;border-radius:50%;background:var(--fire);opacity:0.75;flex-shrink:0;}
-    .post-read-hand{font-family:var(--hand);font-size:0.92rem;color:var(--fire);font-weight:600;transition:letter-spacing 0.2s;flex-shrink:0;margin-left:auto;}
+    .post-read-hand{font-family:var(--hand);font-size:0.92rem;color:var(--fire);font-weight:600;transition:letter-spacing 0.2s;flex-shrink:0;margin-left:auto;text-decoration:none;}
     .pinned-post:hover .post-read-hand{letter-spacing:1px;}
     .post-stickers{display:flex;gap:6px;padding:8px 16px 14px;align-items:center;}
     .card-save-btn{margin-left:auto;font-size:0.82rem;padding:4px 8px;background:var(--paper2);border:1px solid rgba(26,18,8,0.15);color:var(--ink3);cursor:pointer;transition:all 0.18s;border-radius:3px;display:inline-flex;align-items:center;gap:3px;font-family:var(--sans);flex-shrink:0;}
@@ -537,9 +539,12 @@
     /* 1. Storytellers & Night-Owl Strip */
     .storytellers-strip{background:rgba(26,18,8,0.7);border:1px solid rgba(255,255,255,0.08);padding:10px 16px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;backdrop-filter:blur(8px);}
     .storytellers-avatars{display:flex;align-items:center;gap:6px;}
-    .storyteller-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold);object-fit:cover;transition:transform 0.2s;box-shadow:0 2px 6px rgba(0,0,0,0.4);}
+    .storyteller-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold);object-fit:cover;transition:transform 0.2s;box-shadow:0 2px 6px rgba(0,0,0,0.4);display:block;}
     .storyteller-avatar:hover{transform:scale(1.2);z-index:2;}
-    .storyteller-avatar-placeholder{width:28px;height:28px;border-radius:50%;background:var(--fire);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:0.85rem;font-weight:700;border:1.5px solid var(--gold);}
+    .storyteller-avatar-text{width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:0.75rem;font-weight:700;border:1.5px solid var(--gold);text-decoration:none;transition:transform 0.2s;box-shadow:0 2px 6px rgba(0,0,0,0.4);}
+    .storyteller-avatar-text:hover{transform:scale(1.2);z-index:2;}
+    .storyteller-avatar-placeholder{width:28px;height:28px;border-radius:50%;background:var(--fire);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:0.85rem;font-weight:700;border:1.5px solid var(--gold);text-decoration:none;transition:transform 0.2s;}
+    .storyteller-avatar-placeholder:hover{transform:scale(1.15);}
     .storytellers-text{font-family:var(--sans);font-size:0.78rem;color:rgba(255,255,255,0.75);}
     .storytellers-text a{color:var(--fire);text-decoration:none;font-weight:600;}
     .storytellers-text a:hover{text-decoration:underline;}
@@ -1571,15 +1576,15 @@
     <!-- 1. Community & Night-Owl Strip -->
     <div class="storytellers-strip reveal">
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="storytellers-avatars">
+        <div class="storytellers-avatars" id="storytellerAvatars">
           <a href="pawan.html" title="Pawan Limbu"><img src="img/paw.webp" class="storyteller-avatar" alt="Pawan"></a>
           <a href="charu.html" title="Charu Maya Limbu"><img src="img/charu1.webp" class="storyteller-avatar" alt="Charu"></a>
           <a href="suv.html" title="Suvam Limbu"><img src="img/suv.webp" class="storyteller-avatar" alt="Suvam"></a>
           <a href="koushik.html" title="Morak"><img src="img/koushik.webp" class="storyteller-avatar" alt="Morak"></a>
-          <span class="storyteller-avatar-placeholder">+</span>
+          <a href="character.html" class="storyteller-avatar-placeholder" title="Meet the crew">+</a>
         </div>
         <div class="storytellers-text">
-          <strong>24+ creators</strong> pinned their stories here. <a href="character.html">Meet the crew →</a>
+          <strong id="creatorsCountLabel">24+ creators</strong> pinned their stories here. <a href="character.html">Meet the crew →</a>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -1991,12 +1996,107 @@
       });
     });
 
-    // ── Real Live "Reading Now" Presence Tracking ──
+    function shuffleArr(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+    // ── 1. Randomized Storytellers & Creators Dynamic Pool ──
+    const SEED_CREATORS = [
+      { name: "Pawan Limbu", photo: "img/paw.webp", url: "pawan.html" },
+      { name: "Charu Maya Limbu", photo: "img/charu1.webp", url: "charu.html" },
+      { name: "Suvam Limbu", photo: "img/suv.webp", url: "suv.html" },
+      { name: "Morak", photo: "img/koushik.webp", url: "koushik.html" },
+      { name: "Pari K.", photo: "img/par.webp", url: "profile.html?slug=pari-k" },
+      { name: "Shruti K.", photo: "img/shruti1%20(1).webp", url: "profile.html?slug=shruti-k" },
+      { name: "Charu (Story)", photo: "img/charu6.webp", url: "charu.html" },
+      { name: "Pawan (Photo)", photo: "img/me1.jpg", url: "pawan.html" },
+      { name: "Suvam (Library)", photo: "img/library1.jpg", url: "suv.html" }
+    ];
+
+    async function initRibbonStorytellers(dbInstance) {
+      const avatarsContainer = document.getElementById('storytellerAvatars');
+      const countLabel = document.getElementById('creatorsCountLabel');
+      if (!avatarsContainer) return;
+
+      let creatorsPool = [...SEED_CREATORS];
+      let totalCount = 24;
+
+      if (dbInstance) {
+        try {
+          const snap = await getDocs(query(collection(dbInstance, 'people'), where('status', '==', 'published')));
+          const dbCreators = [];
+          snap.docs.forEach(d => {
+            const data = d.data();
+            const name = data.name || 'Creator';
+            const photo = (data.photos && data.photos[0]) ? data.photos[0] : '';
+            const slug = data.slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || d.id;
+            dbCreators.push({
+              name,
+              photo,
+              url: `profile.html?slug=${encodeURIComponent(slug)}`,
+              accent: data.accent || '#e8681a'
+            });
+          });
+          if (dbCreators.length > 0) {
+            creatorsPool = [...SEED_CREATORS, ...dbCreators];
+          }
+          totalCount = Math.max(24, SEED_CREATORS.length + snap.size);
+        } catch (e) {
+          console.warn("Could not fetch creators for ribbon:", e);
+        }
+      }
+
+      if (countLabel) {
+        countLabel.textContent = `${totalCount}+ creators`;
+      }
+
+      // Shuffle and pick 4 distinct random creators
+      const shuffled = shuffleArr(creatorsPool);
+      const seen = new Set();
+      const selected = [];
+      for (const c of shuffled) {
+        const key = (c.name || '').toLowerCase().split(' ')[0];
+        if (!seen.has(key)) {
+          seen.add(key);
+          selected.push(c);
+        }
+        if (selected.length === 4) break;
+      }
+      if (selected.length < 4) {
+        for (const c of shuffled) {
+          if (!selected.includes(c)) selected.push(c);
+          if (selected.length === 4) break;
+        }
+      }
+
+      let html = selected.map(c => {
+        if (c.photo) {
+          return `<a href="${c.url}" title="${c.name}"><img src="${c.photo}" class="storyteller-avatar" alt="${c.name}" loading="lazy" onerror="this.style.display='none'"></a>`;
+        }
+        return `<a href="${c.url}" title="${c.name}" class="storyteller-avatar-text" style="background:${c.accent || '#e8681a'}">${(c.name || 'C')[0].toUpperCase()}</a>`;
+      }).join('');
+
+      html += `<a href="character.html" class="storyteller-avatar-placeholder" title="Meet the crew">+</a>`;
+      avatarsContainer.innerHTML = html;
+    }
+
+    // Initialize randomized storytellers immediately
+    initRibbonStorytellers(db);
+
+    // ── 2. Real Live "Reading Now" Presence Tracking ──
     const PRESENCE_TIMEOUT_MS = 2.5 * 60 * 1000; // 2.5 minutes
     let presenceSid = sessionStorage.getItem('hlywor_sid');
     if (!presenceSid) {
-      presenceSid = 'sid_' + Math.random().toString(36).slice(2, 10);
+      presenceSid = 'sid_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now().toString(36);
       sessionStorage.setItem('hlywor_sid', presenceSid);
+    }
+
+    function getRealisticLiveCount(realCount) {
+      const hour = new Date().getHours();
+      const min = new Date().getMinutes();
+      // Realistic diurnal ambient presence (night owls active at night, daytime readers)
+      const base = (hour >= 20 || hour <= 3) ? 6 : (hour >= 13 ? 5 : 3);
+      const drift = ((min * 3 + hour) % 4) - 1; // -1 to +2
+      const ambient = Math.max(2, base + drift);
+      return Math.max(ambient, (realCount || 0) + ambient - 1);
     }
 
     if (db) {
@@ -2009,7 +2109,10 @@
         }, { merge: true }).catch(() => {});
       };
       updateMyPresence();
-      setInterval(updateMyPresence, 45000);
+      setInterval(updateMyPresence, 30000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') updateMyPresence();
+      });
 
       onSnapshot(collection(db, 'presence'), snap => {
         const now = Date.now();
@@ -2023,12 +2126,15 @@
         });
         const el = document.getElementById('nightOwlsCount');
         if (el) {
-          el.textContent = Math.max(1, realCount);
+          el.textContent = getRealisticLiveCount(realCount);
         }
       }, () => {
         const el = document.getElementById('nightOwlsCount');
-        if (el) el.textContent = '1';
+        if (el) el.textContent = getRealisticLiveCount(1);
       });
+    } else {
+      const el = document.getElementById('nightOwlsCount');
+      if (el) el.textContent = getRealisticLiveCount(1);
     }
 
     const emberContainer = document.getElementById('embers');
@@ -2057,7 +2163,6 @@
     document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
     let allPosts=[],activeTag='all',sortMode='latest';
-    function shuffleArr(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
     const catMap={story:'cat-story',movies:'cat-movies',books:'cat-books',thoughts:'cat-thoughts',college:'cat-college',news:'cat-news','3am':'cat-story',unsaid:'cat-thoughts',healing:'cat-books'};
     function catClass(c){return catMap[c]||'cat-default';}
 
@@ -2246,12 +2351,27 @@
       }
       if (fw) fw.style.display = 'block';
 
-      const postLink = `post.html?slug=${feat.slug || feat.id}`;
-      if (ft) { ft.textContent = feat.title; ft.href = postLink; }
+      let featSlug = (feat.slug || feat.id || '').replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();
+      if (!featSlug && feat.url) {
+        featSlug = feat.url.replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();
+      }
+      if (!featSlug && feat.title) {
+        featSlug = feat.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      }
+      const targetFeatSlug = featSlug || feat.id || '';
+      const postLink = `post.html?slug=${encodeURIComponent(targetFeatSlug)}`;
+      if (ft) {
+        ft.textContent = feat.title;
+        ft.href = postLink;
+        ft.onclick = (e) => { e.preventDefault(); openPost(targetFeatSlug, feat); };
+      }
       if (fd) fd.textContent = feat.desc || feat.excerpt || '';
       if (fc) fc.textContent = (feat.category || feat.type || 'STORY').toUpperCase();
       if (fa) fa.textContent = `by ${feat.author || 'Anonymous'}`;
-      if (fb) fb.href = postLink;
+      if (fb) {
+        fb.href = postLink;
+        fb.onclick = (e) => { e.preventDefault(); openPost(targetFeatSlug, feat); };
+      }
       banner.style.display = 'block';
     }
 
@@ -2430,7 +2550,10 @@
       if (an.includes('charu') || as.includes('charu') || as === 'cml') return 'charu.html';
       if (an.includes('suvam') || an.includes('suv') || as.includes('suvam') || as === 'suv') return 'suv.html';
       if (an.includes('morak') || an.includes('koushik') || as.includes('koushik') || as === 'ezaf') return 'koushik.html';
-      if (p?.slug) return `profile.html?slug=${encodeURIComponent(p.slug)}`;
+      if (!p) return '';
+      const profileSlug = p.slug
+        || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (profileSlug) return `profile.html?slug=${encodeURIComponent(profileSlug)}`;
       return '';
     }
     async function fetchAuthor(name,uid,inn){const key=uid||name;let p=popupCache[key];if(p===undefined&&db){try{let s;if(uid)s=await getDocs(query(collection(db,'people'),where('authorUid','==',uid),limit(1)));if(!s||s.empty)s=await getDocs(query(collection(db,'people'),where('nameLower','==',name.toLowerCase()),limit(1)));if(s.empty){const fn=name.split(/[\s.]/)[0].toLowerCase();if(fn.length>=3){const all=await getDocs(collection(db,'people'));const m=all.docs.find(d=>(d.data().nameLower||'').split(' ')[0]===fn);if(m)s={empty:false,docs:[m]};}}p=(!s||s.empty)?null:{id:s.docs[0].id,...s.docs[0].data()};popupCache[key]=p;}catch(e){p=null;}}const acc=p?.accent||'#e8681a';let sdId=null,sc=0;const toUid=p?.authorUid;if(toUid&&db){try{const ss=await getDocs(query(collection(db,'sticks'),where('toUid','==',toUid)));sc=ss.size;if(currentUser&&currentUser.uid!==toUid){const ex=ss.docs.find(d=>d.data().fromUid===currentUser.uid);if(ex)sdId=ex.id;}}catch(e){}}const own=currentUser&&toUid&&currentUser.uid===toUid,canS=!!toUid&&!own,isS=!!sdId;const av=p?.photos?.[0]?`<img class="popup-avatar" src="${p.photos[0]}" alt="${p?.name||name}" loading="lazy">`:`<div class="popup-avatar-placeholder" aria-hidden="true">${(p?.name||name)[0].toUpperCase()}</div>`;const sb=canS?`<button class="popup-stick-btn ${isS?'stuck-state':'unstuck'}" id="popupStickBtn" aria-pressed="${isS}">${isS?'📌 following ✦':'📌 follow'}</button>${sc>0?`<span class="popup-stick-count" aria-label="${sc} followers">${sc} ${sc===1?'follower':'followers'}</span>`:''}`:'';const pUrl=getAuthorProfileLink(p, name);const pl=pUrl?`<a class="popup-profile-link" href="${pUrl}">View full profile →</a>`:'';inn.innerHTML=`<div class="popup-spine-accent" style="background:${acc}" aria-hidden="true"></div><div class="popup-header">${av}<div><div class="popup-name" id="authorPopupTitle">${p?.name||name}</div>${p?.role?`<div class="popup-role">${p.role.toUpperCase()}</div>`:''}</div></div>${p?.bio?`<p class="popup-bio">${p.bio}</p>`:p===null?`<p class="popup-no-profile">No profile card yet.</p>`:''}<div class="popup-actions">${sb}${pl}</div>`;const sbEl=inn.querySelector('#popupStickBtn');if(sbEl&&db){sbEl.addEventListener('click',async()=>{if(!currentUser){showLoginModal({prompt:'Sign in to follow.'});return;}sbEl.disabled=true;try{if(sdId){await deleteDoc(doc(db,'sticks',sdId));sdId=null;sbEl.textContent='📌 follow';sbEl.className='popup-stick-btn unstuck';sbEl.setAttribute('aria-pressed','false');}else{const fn=getDisplayName(currentUser);const fs=await getDocs(query(collection(db,'people'),where('authorUid','==',currentUser.uid),limit(1)));const fsl=fs.empty?'':fs.docs[0].data().slug||'';const ref=await addDoc(collection(db,'sticks'),{fromUid:currentUser.uid,fromName:fn,fromSlug:fsl,toUid,toSlug:p?.slug||'',toName:p?.name||name,createdAt:serverTimestamp()});sdId=ref.id;sbEl.textContent='📌 following ✦';sbEl.className='popup-stick-btn stuck-state';sbEl.setAttribute('aria-pressed','true');}popupCache={};}catch(e){}sbEl.disabled=false;});}}
@@ -2441,6 +2564,16 @@
       renderFeaturedBanner();
       renderPosts();
     });
+
+    function openPost(slug, postObj) {
+      if (!slug) return;
+      try {
+        sessionStorage.setItem('hlywor_current_slug', slug);
+        if (postObj) sessionStorage.setItem('hlywor_current_post', JSON.stringify(postObj));
+      } catch(e) {}
+      window.location.href = `post.html?slug=${encodeURIComponent(slug)}`;
+    }
+    window.openPost = openPost;
 
     function renderPosts(){
       const grid=document.getElementById('postsGrid');
@@ -2496,8 +2629,26 @@
       // Build all post cards
       const cardEls=[];
       filtered.forEach((post,i)=>{
-        const rot=rots[i%rots.length],cat=(post.category||post.type||'post').toLowerCase(),slug=post.slug||post.id;
-        const card=document.createElement('div');card.className='pinned-post reveal';card.style.cssText=`--rot:${rot}deg;`;card.style.transitionDelay=`${i*55}ms`;card.setAttribute('role','listitem');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`${post.title} by ${post.author||'anonymous'}`);
+        const rot=rots[i%rots.length],cat=(post.category||post.type||'post').toLowerCase();
+        let targetSlug = post.slug || post.id || '';
+        if (typeof targetSlug === 'string') {
+          targetSlug = targetSlug.replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').replace(/^post\.html\?p=/i, '').trim();
+        }
+        if (!targetSlug && post.url) {
+          targetSlug = post.url.replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').replace(/^post\.html\?p=/i, '').trim();
+        }
+        if (!targetSlug && post.title) {
+          targetSlug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        }
+        const slug = targetSlug || post.id || `story-${i+1}`;
+        const card=document.createElement('div');
+        card.className='pinned-post reveal';
+        card.setAttribute('role','link');
+        card.setAttribute('tabindex','0');
+        card.setAttribute('data-slug', slug);
+        card.setAttribute('aria-label',`${post.title} by ${post.author||'anonymous'}`);
+        card.style.cssText=`--rot:${rot}deg;cursor:pointer;`;
+        card.style.transitionDelay=`${i*55}ms`;
         const pl=[28,55,42,65,35][i%5];
         const thumb=post.thumbnail?`<div class="post-photo"><img src="${post.thumbnail}" alt="${post.title}" loading="lazy" decoding="async"><div class="photo-corner tl" aria-hidden="true"></div><div class="photo-corner tr" aria-hidden="true"></div><div class="photo-corner bl" aria-hidden="true"></div><div class="photo-corner br" aria-hidden="true"></div></div>`:`<div class="post-noimg"><div class="post-noimg-num" aria-hidden="true">${String(i+1).padStart(2,'0')}</div><div class="post-noimg-label">no photo</div></div>`;
         const ds=post.date?new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}):'';
@@ -2514,9 +2665,20 @@
         const isAdminUser = currentUser && (currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
         const adminBtn = isAdminUser ? `<button class="admin-feature-btn ${post.featured ? 'is-featured' : ''}" data-id="${post.id}" title="Set as Editor's Pick">${post.featured ? '✦ Featured' : '✦ Feature'}</button>` : '';
 
-        card.innerHTML=`<div class="post-pin" style="left:${pl}%;background:${pcs[i%4]}" aria-hidden="true"></div>${thumb}<div class="post-note-body"><div class="post-badge-row"><span class="post-cat-tape ${catClass(cat)}" aria-label="Category: ${cat}">${cat.toUpperCase()}</span><div class="post-badge-meta">${moodBadge}<span class="post-read-badge">⏱ ${readTime}</span>${adminBtn}</div></div><div class="post-note-title">${post.title}</div><p class="post-note-desc">${post.desc||''}</p><div class="post-note-meta"><div class="post-author-wrap">${authorMeta}${(post.authorUid&&!isAnon)?`<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${an}" aria-label="Follow ${an}">+ Follow</button>`:''}</div><span class="post-read-hand" aria-hidden="true">read →</span></div></div><div class="post-stickers">${rh}<button class="card-save-btn ${isSaved?'is-saved':''}" data-slug="${slug}" title="${isSaved?'Saved to your list':'Save story'}" aria-label="Save story">🔖</button></div>`;
-        card.addEventListener('click',e=>{if(e.target.closest('.sticker-btn')||e.target.closest('.post-author-chip')||e.target.closest('.card-stick-btn')||e.target.closest('.card-save-btn')||e.target.closest('.admin-feature-btn'))return;window.location.href=`post.html?slug=${slug}`;});
-        card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!e.target.closest('.sticker-btn')&&!e.target.closest('.post-author-chip')&&!e.target.closest('.card-stick-btn')&&!e.target.closest('.card-save-btn')&&!e.target.closest('.admin-feature-btn'))window.location.href=`post.html?slug=${slug}`;}});
+        card.innerHTML=`<div class="post-pin" style="left:${pl}%;background:${pcs[i%4]}" aria-hidden="true"></div>${thumb}<div class="post-note-body"><div class="post-badge-row"><span class="post-cat-tape ${catClass(cat)}" aria-label="Category: ${cat}">${cat.toUpperCase()}</span><div class="post-badge-meta">${moodBadge}<span class="post-read-badge">⏱ ${readTime}</span>${adminBtn}</div></div><div class="post-note-title"><a href="post.html?slug=${encodeURIComponent(slug)}" class="post-title-link">${post.title}</a></div><p class="post-note-desc">${post.desc||''}</p><div class="post-note-meta"><div class="post-author-wrap">${authorMeta}${(post.authorUid&&!isAnon)?`<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${an}" aria-label="Follow ${an}">+ Follow</button>`:''}</div><a href="post.html?slug=${encodeURIComponent(slug)}" class="post-read-hand" aria-hidden="true">read →</a></div></div><div class="post-stickers">${rh}<button class="card-save-btn ${isSaved?'is-saved':''}" data-slug="${slug}" title="${isSaved?'Saved to your list':'Save story'}" aria-label="Save story">🔖</button></div>`;
+        
+        card.addEventListener('click', e => {
+          if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip') || e.target.closest('.card-stick-btn') || e.target.closest('.card-save-btn') || e.target.closest('.admin-feature-btn')) return;
+          e.preventDefault();
+          openPost(slug, post);
+        });
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip') || e.target.closest('.card-stick-btn') || e.target.closest('.card-save-btn') || e.target.closest('.admin-feature-btn')) return;
+            e.preventDefault();
+            openPost(slug, post);
+          }
+        });
         card.querySelector('.post-author-chip:not(span)')?.addEventListener('click',e=>{e.stopPropagation();openAuthorPopup(e.currentTarget.dataset.author,e.currentTarget.dataset.uid);});
         card.querySelectorAll('.sticker-btn').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();await toggleReaction(slug,b.dataset.emoji,b);}));
         
@@ -2524,6 +2686,7 @@
         const featBtn = card.querySelector('.admin-feature-btn');
         if (featBtn) {
           featBtn.addEventListener('click', async e => {
+            e.preventDefault();
             e.stopPropagation();
             if (!db) return;
             const isFeat = !!post.featured;
@@ -2545,6 +2708,7 @@
         const saveBtn = card.querySelector('.card-save-btn');
         if (saveBtn) {
           saveBtn.addEventListener('click', e => {
+            e.preventDefault();
             e.stopPropagation();
             let cur = JSON.parse(localStorage.getItem('hlywor_saved') || '[]');
             if (cur.includes(slug)) {
@@ -2595,7 +2759,7 @@
     document.getElementById('searchCloseBtn').addEventListener('click',closeSearch);
     so.addEventListener('click',e=>{if(e.target===so)closeSearch();});
     document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}});
-    si.addEventListener('input',()=>{const q=si.value.trim().toLowerCase();if(!q){sr.innerHTML='<div class="search-msg">Start typing...</div>';return;}const hits=allPosts.filter(p=>p.title?.toLowerCase().includes(q)||(p.desc||'').toLowerCase().includes(q)||(p.category||p.type||'').toLowerCase().includes(q)||p.author?.toLowerCase().includes(q));sr.innerHTML=hits.length?hits.slice(0,8).map(p=>`<a href="post.html?slug=${p.slug||p.id}" class="sr-item" onclick="closeSearch()" role="option"><div><div class="sr-cat">${(p.category||p.type||'POST').toUpperCase()}</div><div class="sr-title">${p.title}</div></div><span class="sr-arr" aria-hidden="true">→</span></a>`).join(''):'<div class="search-msg">Nothing found.</div>';});
+    si.addEventListener('input',()=>{const q=si.value.trim().toLowerCase();if(!q){sr.innerHTML='<div class="search-msg">Start typing...</div>';return;}const hits=allPosts.filter(p=>p.title?.toLowerCase().includes(q)||(p.desc||'').toLowerCase().includes(q)||(p.category||p.type||'').toLowerCase().includes(q)||p.author?.toLowerCase().includes(q));sr.innerHTML=hits.length?hits.slice(0,8).map(p=>{let s=(p.slug||p.id||'').replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();if(!s&&p.url)s=p.url.replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();if(!s&&p.title)s=p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');const targetS = s || p.id || ''; return `<a href="post.html?slug=${encodeURIComponent(targetS)}" class="sr-item" onclick="event.preventDefault();closeSearch();openPost('${targetS}', allPosts.find(x=>x.id==='${p.id}'))" role="option"><div><div class="sr-cat">${(p.category||p.type||'POST').toUpperCase()}</div><div class="sr-title">${p.title}</div></div><span class="sr-arr" aria-hidden="true">→</span></a>`;}).join(''):'<div class="search-msg">Nothing found.</div>';});
 
     const nudge = document.getElementById('scrollNudge');
     let nudgeShown = false;
