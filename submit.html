@@ -17,11 +17,7 @@
   
   <!-- ✅ Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-  <!-- ✅ Quill Rich Text Engine CDN -->
-  <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.7/quill.snow.css">
-  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Special+Elite&family=Lora:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;700&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -142,20 +138,40 @@
       position: sticky;
       top: 48px;
       z-index: 80;
-      background: rgba(20, 14, 8, 0.95);
+      background: rgba(20, 14, 8, 0.97);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 6px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
       width: 100%;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+    /* Row 1 — Star Creative Tools */
+    .desk-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 14px;
+      flex-wrap: wrap;
+    }
+    .desk-row-label {
+      font-family: var(--pixel);
+      font-size: 0.52rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-right: 2px;
+      flex-shrink: 0;
+    }
+    .desk-row.creative-row {
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(0,0,0,0.15);
+    }
+    .desk-row.format-row {
+      gap: 4px;
     }
     .desk-toolbar::-webkit-scrollbar { display: none; }
     .desk-grp {
@@ -199,6 +215,11 @@
       border-color: var(--t-acc);
       color: var(--t-acc);
     }
+    .desk-btn-clear:hover {
+      background: rgba(220, 50, 50, 0.2) !important;
+      border-color: rgba(220, 50, 50, 0.45) !important;
+      color: #ff6b6b !important;
+    }
     .font-select-wrap {
       position: relative;
       flex-shrink: 0;
@@ -206,63 +227,308 @@
     .font-select-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      gap: 7px;
+      padding: 5px 12px;
+      background: rgba(212,160,32,0.1);
+      border: 1px solid rgba(212,160,32,0.45);
       border-radius: 6px;
-      color: rgba(255, 255, 255, 0.85);
+      color: #fff;
       font-family: var(--sans);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.15s;
-      height: 32px;
+      transition: all 0.2s;
+      height: 34px;
       box-sizing: border-box;
+      box-shadow: 0 0 8px rgba(212,160,32,0.15), 0 2px 6px rgba(0,0,0,0.3);
     }
     .font-select-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.25);
-      color: #fff;
+      background: rgba(212,160,32,0.2);
+      border-color: var(--gold);
+      box-shadow: 0 0 14px rgba(212,160,32,0.3);
+      transform: translateY(-1px);
     }
-    .font-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      margin-top: 4px;
-      background: #140e08;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 6px;
+    .font-select-btn[aria-expanded="true"] {
+      background: rgba(212,160,32,0.18);
+      border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(212,160,32,0.35);
+    }
+    .font-select-btn .font-badge {
+      font-size: 0.62rem;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: rgba(232,104,26,0.3);
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-family: var(--sans);
+    }
+    
+
+    /* ════ Font Picker Dropdown — body-level, always on top ════ */
+    #fontDropdown {
+      position: fixed;
+      z-index: 99999;
+      width: 270px;
+      background: #120d06;
+      border: 1px solid rgba(212,160,32,0.4);
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.95), 0 0 0 1px rgba(212,160,32,0.1);
       display: none;
       flex-direction: column;
-      gap: 2px;
-      width: 175px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
-      z-index: 120;
+      overflow: hidden;
+      animation: fontDropIn 0.18s cubic-bezier(0.16,1,0.3,1);
     }
-    .font-menu.open { display: flex; }
-    .font-option {
-      padding: 6px 10px;
-      border-radius: 4px;
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.75);
-      text-align: left;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.15s;
-      width: 100%;
+    #fontDropdown.open { display: flex; }
+    @keyframes fontDropIn {
+      from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .font-drop-head {
+      padding: 9px 14px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .font-option:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .font-drop-title {
+      font-family: var(--pixel);
+      font-size: 0.58rem;
+      color: var(--gold);
+      letter-spacing: 1.2px;
+    }
+    .font-drop-close {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.9rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: all 0.12s;
+    }
+    .font-drop-close:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    /* The scrollable list */
+    .font-drop-list {
+      overflow-y: auto;
+      max-height: 340px;
+      padding: 5px 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212,160,32,0.25) transparent;
+    }
+    .font-opt {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.1s;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .font-opt:last-child { border-bottom: none; }
+    .font-opt:hover { background: rgba(255,255,255,0.05); }
+    .font-opt.active { background: rgba(212,160,32,0.09); }
+    /* Main clickable area — sets page font */
+    .font-opt-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      min-width: 0;
+    }
+    .font-opt-name {
+      font-size: 1.05rem;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+    .font-opt-badge {
+      font-family: var(--sans);
+      font-size: 0.56rem;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .font-opt.active .font-opt-badge {
+      background: rgba(212,160,32,0.2);
+      color: var(--gold);
+    }
+    .font-opt-check {
+      font-size: 0.7rem;
+      color: var(--gold);
+      width: 16px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    /* Right "T↗" button — apply to selection only */
+    .font-opt-sel {
+      padding: 10px 11px;
+      border-left: 1px solid rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.3);
+      font-size: 0.68rem;
+      font-family: var(--sans);
+      cursor: pointer;
+      transition: all 0.12s;
+      flex-shrink: 0;
+      user-select: none;
+      title-attr: "Apply to selected text only";
+    }
+    .font-opt-sel:hover { color: var(--gold); background: rgba(212,160,32,0.1); }
+    /* Footer hint */
+    .font-drop-footer {
+      padding: 6px 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ════ Desk Guide Modal ════ */
+    .guide-modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 6, 2, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 210;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .guide-modal-bg.open { display: flex; }
+    .guide-modal {
+      background: #171109;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 720px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.85);
+      overflow: hidden;
+      animation: guideModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes guideModalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .guide-modal-head {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0,0,0,0.25);
+    }
+    .guide-grid {
+      padding: 20px 24px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .guide-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .guide-icon {
+      font-size: 1.4rem;
+      background: rgba(232,104,26,0.15);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .guide-title {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .guide-desc {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.4;
+    }
+
+    /* ════ Labeled Creative Elements Buttons ════ */
+    .desk-labeled-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.8);
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      height: 32px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .desk-labeled-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .desk-labeled-btn.highlight-feature {
+      background: rgba(212,160,32,0.12);
+      border-color: rgba(212,160,32,0.3);
+      color: var(--gold);
+    }
+    .desk-labeled-btn.highlight-feature:hover {
+      background: rgba(212,160,32,0.22);
+      border-color: var(--gold);
       color: #fff;
     }
-    .font-option.active {
-      background: rgba(232, 104, 26, 0.2);
-      color: var(--t-acc);
+    .desk-highlighter-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.15s;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #1a1208;
+    }
+    .desk-highlighter-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
     }
     .desk-color-swatch {
       width: 18px;
@@ -296,24 +562,38 @@
     .mag-tools{display:none}
     body[data-t="magazine"] .mag-tools{display:flex}
 
-    /* ✅ Embed Interactive Controls Bar */
-    .polaroid, .sticky-callout, .img-row-block, .washi-tape, .doodle-divider, .pull-quote, pre, figure {
+    /* ✅ Embed Interactive Controls & Free Dragging System */
+    .polaroid, .sticky-callout, .img-row-block, .washi-tape, .doodle-divider-wrap, .pull-quote, pre, figure {
       position: relative !important;
+      touch-action: none;
+      transition: box-shadow 0.15s, outline 0.15s;
+    }
+    .draggable-embed {
+      cursor: grab;
+      user-select: none;
+    }
+    .draggable-embed.is-dragging {
+      cursor: grabbing !important;
+      z-index: 200 !important;
+      opacity: 0.95;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45) !important;
+      outline: 2px dashed var(--gold) !important;
+      outline-offset: 4px;
     }
     .embed-ctrls {
       position: absolute;
-      top: -12px;
+      top: -14px;
       right: 4px;
       display: none;
       align-items: center;
-      gap: 4px;
-      background: rgba(14, 10, 6, 0.95);
+      gap: 3px;
+      background: rgba(14, 10, 6, 0.96);
       backdrop-filter: blur(8px);
-      padding: 3px 8px;
+      padding: 3px 6px;
       border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.18);
-      z-index: 30;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.22);
+      z-index: 50;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.65);
       user-select: none;
     }
     .polaroid:hover > .embed-ctrls,
@@ -332,26 +612,53 @@
       border: none;
       color: rgba(255,255,255,0.75);
       font-family: var(--sans);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       cursor: pointer;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border-radius: 4px;
       transition: all 0.15s;
       line-height: 1;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
     }
     .ctrl-btn:hover {
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.18);
       color: #fff;
+    }
+    .ctrl-btn.drag-handle {
+      cursor: grab !important;
+      background: rgba(212,160,32,0.25) !important;
+      color: var(--gold) !important;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .ctrl-btn.drag-handle:active {
+      cursor: grabbing !important;
+    }
+    .nudge-grp {
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 1px 2px;
+    }
+    .nudge-btn {
+      padding: 2px 4px !important;
+      font-size: 0.65rem !important;
+      color: rgba(255,255,255,0.75) !important;
+    }
+    .nudge-btn:hover {
+      background: rgba(255,255,255,0.25) !important;
+      color: #fff !important;
     }
     .ctrl-btn.del-btn {
       color: #ff6b6b;
       font-weight: bold;
     }
     .ctrl-btn.del-btn:hover {
-      background: rgba(232,92,92,0.25);
+      background: rgba(232,92,92,0.3);
       color: #ff9999;
     }
     .ctrl-dot {
@@ -361,6 +668,21 @@
       display: inline-block;
       cursor: pointer;
       border: 1px solid rgba(0,0,0,0.2);
+    }
+    .floating-sticker {
+      display: inline-block;
+      font-size: 1.8rem;
+      margin: 0 4px;
+      vertical-align: middle;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.05s ease-out;
+      touch-action: none;
+    }
+    .floating-sticker.is-dragging {
+      cursor: grabbing !important;
+      z-index: 200 !important;
+      transform: scale(1.3);
     }
     
     /* ✅ Diary area */
@@ -646,28 +968,58 @@
     
     /* ✅ Responsive */
     @media(max-width:768px){
-      .desk-toolbar{
-        top:48px;
-        padding:5px 8px;
-        gap:5px;
+      .desk-toolbar {
+        top: 48px;
       }
-      .desk-btn{
-        width:28px;
-        height:28px;
-        font-size:0.82rem;
+      .desk-row {
+        padding: 4px 8px;
+        gap: 4px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        scrollbar-width: none;
       }
-      .font-select-btn{
-        font-size:0.7rem;
-        padding:2px 6px;
-        height:28px;
+      .desk-row::-webkit-scrollbar { display: none; }
+      .desk-row.creative-row {
+        /* on mobile allow horizontal scroll for the tools row */
+        flex-wrap: nowrap;
       }
-      .desk-color-swatch{
-        width:16px;
-        height:16px;
+      .desk-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.82rem;
       }
-      .tape-swatch{
-        width:20px;
-        height:12px;
+      .font-select-btn {
+        font-size: 0.72rem;
+        padding: 3px 8px;
+        height: 28px;
+      }
+      .desk-labeled-btn {
+        padding: 3px 7px;
+        font-size: 0.68rem;
+        height: 28px;
+        gap: 3px;
+        flex-shrink: 0;
+      }
+      .desk-color-swatch { width:16px; height:16px; }
+      #fontDropdown, .font-dropdown {
+        width: calc(100vw - 16px);
+        max-width: 300px;
+      }
+      .font-drop-list {
+        max-height: 260px;
+      }
+      .guide-modal {
+        max-width: 95vw;
+        max-height: 90vh;
+      }
+      .guide-modal-head {
+        padding: 14px 16px;
+      }
+      .guide-grid {
+        padding: 12px 14px;
+      }
+      .guide-grid {
+        grid-template-columns: 1fr;
       }
       
       /* Mobile top nav: ensure Publish button is always 100% visible */
@@ -772,6 +1124,105 @@
     <span class="sticker-option" role="button" tabindex="0" aria-label="Dog">🐕</span>
     <span class="sticker-option" role="button" tabindex="0" aria-label="Ghost">👻</span>
     <span class="sticker-option" role="button" tabindex="0" aria-label="Controller">🎮</span>
+  </div>
+
+  <!-- ════ Desk Creative Guide Modal ════ -->
+  <div class="guide-modal-bg" id="deskGuideModal" role="dialog" aria-modal="true" aria-labelledby="deskGuideTitle">
+    <div class="guide-modal">
+      <div class="guide-modal-head">
+        <div>
+          <div class="font-studio-title" id="deskGuideTitle">DESK CREATIVE TOOLS GUIDE</div>
+          <div class="font-studio-sub">All creative elements &amp; formatting features you can use</div>
+        </div>
+        <button type="button" class="font-studio-close" id="deskGuideClose" aria-label="Close desk guide">[ Close ✕ ]</button>
+      </div>
+      <div class="guide-grid">
+        <div class="guide-item">
+          <div class="guide-icon">📸</div>
+          <div>
+            <div class="guide-title">Polaroids &amp; Photos</div>
+            <div class="guide-desc">Upload photos with left/right polaroid tilts, custom captions, and center or float alignment.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">🖼️</div>
+          <div>
+            <div class="guide-title">Photo Grid Rows</div>
+            <div class="guide-desc">Place 2 or 3 photos side-by-side in polaroid style or seamless collage format.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">📝</div>
+          <div>
+            <div class="guide-title">Pinned Sticky Notes</div>
+            <div class="guide-desc">Add editable yellow, pink, or blue post-it notes anywhere inside your text.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">✨</div>
+          <div>
+            <div class="guide-title">Floating Stickers</div>
+            <div class="guide-desc">Drop sparkles, coffee cups, stars, badges, and emotion stickers directly onto lines.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">〰️</div>
+          <div>
+            <div class="guide-title">Doodle Divider Lines</div>
+            <div class="guide-desc">Insert organic, hand-drawn sketch dividers between your story sections.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">🏷️</div>
+          <div>
+            <div class="guide-title">Washi Tape Strips</div>
+            <div class="guide-desc">Add decorative yellow, red, green, or blue washi tape strips across the parchment.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">💬</div>
+          <div>
+            <div class="guide-title">Pull Quotes</div>
+            <div class="guide-desc">Highlight deep thoughts and standout phrases with large magazine-style callouts.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">🔤</div>
+          <div>
+            <div class="guide-title">Typography Studio</div>
+            <div class="guide-desc">Switch between vintage typewriters, literary novels, handwriting, or apply fonts to specific phrases.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">💡</div>
+          <div>
+            <div class="guide-title">3 AM Spark Prompts</div>
+            <div class="guide-desc">Stuck on what to write? Click Spark Prompt for writing prompts, midnight themes, and titles.</div>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">⌨️</div>
+          <div>
+            <div class="guide-title">Keyboard Shortcuts</div>
+            <div class="guide-desc"><b>Ctrl+B</b> Bold, <b>Ctrl+I</b> Italic, <b>Ctrl+U</b> Underline, <b>Ctrl+Z</b> Undo, <b>Tab</b> Indent paragraph.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Font Dropdown Menu (Body Level - Always on Top) ════ -->
+  <div class="font-dropdown" id="fontDropdown" role="listbox" aria-label="Choose story font">
+    <div class="font-drop-head">
+      <span class="font-drop-title">🔤 STORY FONT</span>
+      <button type="button" class="font-drop-close" id="fontDropClose" aria-label="Close font picker">✕</button>
+    </div>
+    <div class="font-drop-list" id="fontCardsList">
+      <!-- Rendered dynamically -->
+    </div>
+    <div class="font-drop-footer">
+      <span>💡 Click row to change page font • <b>T↗</b> for selected text</span>
+    </div>
   </div>
 
   <!-- ✅ Image popup -->
@@ -903,85 +1354,117 @@
             <input type="text" id="coverAlt" placeholder="Alt text for cover image" style="margin-top:8px;font-family:var(--sans);font-size:0.75rem;padding:4px 8px;border:1px dashed rgba(0,0,0,0.1);border-radius:4px;background:var(--t-paper2)" aria-label="Alt text for cover image">
           </div>
 
-          <!-- ✅ Sticky Desk Ribbon Toolbar -->
+          <!-- ✅ Sticky Desk Ribbon Toolbar — 2 rows -->
           <div class="desk-toolbar" id="deskToolbar" role="toolbar" aria-label="Editor formatting tools">
-            <!-- Typography Group -->
-            <div class="desk-grp">
-              <div class="font-select-wrap">
-                <button type="button" class="font-select-btn" id="fontSelectBtn" title="Choose font" aria-haspopup="true" aria-expanded="false">
-                  <span id="fontCurrentLabel">Crimson Pro</span> <span style="font-size:0.6rem;opacity:0.6">▼</span>
+
+            <!-- ── ROW 1: Star Creative Tools (always visible) ── -->
+            <div class="desk-row creative-row">
+              <span class="desk-row-label">✦ insert</span>
+
+              <button type="button" class="desk-labeled-btn highlight-feature" id="insertImgBtn" title="Insert photo or polaroid with frame & caption">
+                📸 Polaroid
+              </button>
+              <button type="button" class="desk-labeled-btn highlight-feature" id="insertImgRowBtn" title="Insert multi-photo side-by-side gallery">
+                🖼️ Photo Grid
+              </button>
+              <button type="button" class="desk-labeled-btn" id="insertStickyBtn" title="Insert pinned sticky note">
+                📝 Sticky Note
+              </button>
+              <button type="button" class="desk-labeled-btn" id="insertStickerBtn" title="Open floating stickers tray">
+                ✨ Stickers
+              </button>
+              <button type="button" class="desk-labeled-btn" id="insertDoodleBtn" title="Insert hand-drawn doodle divider">
+                〰️ Doodle
+              </button>
+              <button type="button" class="desk-labeled-btn" id="insertPullBtn" title="Insert magazine pull-quote">
+                💬 Pull Quote
+              </button>
+              <button type="button" class="desk-labeled-btn" id="insertCodeBtn" title="Insert formatted code block">
+                💻 Code
+              </button>
+
+              <!-- Washi Tapes inline -->
+              <div class="desk-sep" style="height:22px"></div>
+              <span style="font-family:var(--pixel);font-size:0.52rem;color:rgba(255,255,255,0.3);letter-spacing:1px">TAPE</span>
+              <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)" title="Yellow Washi Tape" role="radio" aria-checked="true" tabindex="0"></div>
+              <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)"  style="background:rgba(220,80,80,.55)"  title="Red Washi Tape"    role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)" title="Blue Washi Tape"   role="radio" aria-checked="false" tabindex="0"></div>
+              <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)" title="Green Washi Tape"  role="radio" aria-checked="false" tabindex="0"></div>
+
+              <div class="desk-sep" style="height:22px"></div>
+              <button type="button" class="desk-labeled-btn" id="openSparkDrawerBtn" title="Get writing ideas & 3 AM prompts">
+                💡 Spark Prompt
+              </button>
+              <button type="button" class="desk-labeled-btn" id="openDeskGuideBtn" title="See all features guide">
+                📖 Desk Guide
+              </button>
+            </div>
+
+            <!-- ── ROW 2: Text Formatting ── -->
+            <div class="desk-row format-row">
+              <!-- Font picker -->
+              <div class="desk-grp">
+                <button type="button" class="font-select-btn" id="fontSelectBtn" title="Choose story font" aria-haspopup="listbox" aria-expanded="false">
+                  <span>🔤</span> <span id="fontCurrentLabel">Crimson Pro</span> <span class="font-badge" id="fontCategoryBadge">Classic</span> <span style="font-size:0.55rem;opacity:0.6">▼</span>
                 </button>
-                <div class="font-menu" id="fontMenu" role="menu">
-                  <button type="button" class="font-option active" data-font="" style="font-family:'Crimson Pro',serif" role="menuitem">Crimson Pro <span>Default</span></button>
-                  <button type="button" class="font-option" data-font="'Caveat',cursive" style="font-family:'Caveat',cursive" role="menuitem">Caveat <span>Hand</span></button>
-                  <button type="button" class="font-option" data-font="'IM Fell English',serif" style="font-family:'IM Fell English',serif" role="menuitem">IM Fell <span>Literary</span></button>
-                  <button type="button" class="font-option" data-font="'Playfair Display',serif" style="font-family:'Playfair Display',serif" role="menuitem">Playfair <span>Editorial</span></button>
-                  <button type="button" class="font-option" data-font="'Kalam',cursive" style="font-family:'Kalam',cursive" role="menuitem">Kalam <span>Casual</span></button>
-                  <button type="button" class="font-option" data-font="'JetBrains Mono',monospace" style="font-family:'JetBrains Mono',monospace;font-size:0.75rem" role="menuitem">JetBrains <span>Code</span></button>
-                </div>
+              </div>
+
+              <div class="desk-sep"></div>
+
+              <!-- Basic formatting -->
+              <div class="desk-grp">
+                <button type="button" class="desk-btn" data-cmd="bold"      title="Bold (Ctrl+B)"      aria-label="Bold"><strong>B</strong></button>
+                <button type="button" class="desk-btn" data-cmd="italic"    title="Italic (Ctrl+I)"    aria-label="Italic"><em style="font-family:Georgia">I</em></button>
+                <button type="button" class="desk-btn" data-cmd="underline" title="Underline (Ctrl+U)" aria-label="Underline"><span style="text-decoration:underline">U</span></button>
+                <button type="button" class="desk-btn" data-cmd="strike"    title="Strikethrough"      aria-label="Strikethrough"><span style="text-decoration:line-through">S</span></button>
+              </div>
+
+              <div class="desk-sep"></div>
+
+              <!-- Headings & structure -->
+              <div class="desk-grp">
+                <button type="button" class="desk-btn" data-cmd="h2"               title="Section Heading" aria-label="H1"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
+                <button type="button" class="desk-btn" data-cmd="h3"               title="Subheading"      aria-label="H2"><span style="font-family:'Caveat',cursive;font-size:0.85rem">H2</span></button>
+                <button type="button" class="desk-btn" data-cmd="blockquote"       title="Quote Block"     aria-label="Quote">&#10077;</button>
+                <button type="button" class="desk-btn" data-cmd="insertUnorderedList" title="Bullet List"  aria-label="Bullets">&bull;&#8801;</button>
+                <button type="button" class="desk-btn" data-cmd="insertOrderedList"   title="Numbered List" aria-label="Numbers">1.&equiv;</button>
+                <button type="button" class="desk-btn" data-cmd="indent"           title="Indent (Tab)"    aria-label="Indent">&rarr;&#124;</button>
+              </div>
+
+              <div class="desk-sep"></div>
+
+              <!-- Ink colors -->
+              <div class="desk-grp" role="radiogroup" aria-label="Ink colors">
+                <div class="desk-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink: Black"  role="radio" aria-checked="true"  tabindex="0"></div>
+                <div class="desk-color-swatch" data-color="#b82020" style="background:#b82020" title="Ink: Crimson"       role="radio" aria-checked="false" tabindex="0"></div>
+                <div class="desk-color-swatch" data-color="#d4a020" style="background:#d4a020" title="Ink: Gold"          role="radio" aria-checked="false" tabindex="0"></div>
+                <div class="desk-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Ink: Forest"        role="radio" aria-checked="false" tabindex="0"></div>
+                <div class="desk-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Ink: Ocean"         role="radio" aria-checked="false" tabindex="0"></div>
+                <div class="desk-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Ink: Violet"        role="radio" aria-checked="false" tabindex="0"></div>
+                <button type="button" class="desk-btn" id="customColorBtn" title="Custom ink color" aria-label="Custom color" style="font-size:0.85rem">+</button>
+                <input type="color" id="customColorInput" value="#1a1208" style="position:absolute;opacity:0;width:0;height:0" aria-label="Custom color picker">
+              </div>
+
+              <div class="desk-sep"></div>
+
+              <!-- Highlighters -->
+              <div class="desk-grp" aria-label="Highlighters">
+                <button type="button" class="desk-highlighter-btn" data-highlight="highlight-y" title="Yellow highlight" aria-label="Yellow HL" style="background:#ffdc32">HL</button>
+                <button type="button" class="desk-highlighter-btn" data-highlight="highlight-r" title="Pink highlight"   aria-label="Pink HL"   style="background:#ff8080">HL</button>
+                <button type="button" class="desk-highlighter-btn" data-highlight="highlight-g" title="Green highlight"  aria-label="Green HL"  style="background:#82e0aa">HL</button>
+                <button type="button" class="desk-highlighter-btn" data-highlight="highlight-b" title="Blue highlight"   aria-label="Blue HL"   style="background:#85c1e9">HL</button>
+              </div>
+
+              <div class="desk-sep"></div>
+
+              <!-- Undo / Redo / Clear -->
+              <div class="desk-grp">
+                <button type="button" class="desk-btn" data-cmd="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8617;</button>
+                <button type="button" class="desk-btn" data-cmd="redo" title="Redo (Ctrl+Y)" aria-label="Redo">&#8618;</button>
+                <button type="button" class="desk-btn desk-btn-clear" id="clearCanvasBtn" title="Clear all text, images & embeds" aria-label="Clear All">🗑️</button>
               </div>
             </div>
-            <div class="desk-sep"></div>
 
-            <!-- Formatting Group -->
-            <div class="desk-grp">
-              <button type="button" class="desk-btn" data-cmd="bold" title="Bold (Ctrl+B)" aria-label="Bold"><strong>B</strong></button>
-              <button type="button" class="desk-btn" data-cmd="italic" title="Italic (Ctrl+I)" aria-label="Italic"><em style="font-family:Georgia">I</em></button>
-              <button type="button" class="desk-btn" data-cmd="h2" title="Heading 1" aria-label="Heading 1"><span style="font-family:'Caveat',cursive;font-weight:700">H1</span></button>
-              <button type="button" class="desk-btn" data-cmd="h3" title="Heading 2" aria-label="Heading 2"><span style="font-family:'Caveat',cursive;font-size:0.85rem">H2</span></button>
-              <button type="button" class="desk-btn" data-cmd="blockquote" title="Quote" aria-label="Quote">&#10077;</button>
-              <button type="button" class="desk-btn" data-cmd="insertUnorderedList" title="Bullet list" aria-label="Bullet list">&bull;&#8801;</button>
-            </div>
-            <div class="desk-sep"></div>
-
-            <!-- Inks & Color Swatches -->
-            <div class="desk-grp" role="radiogroup" aria-label="Ink color">
-              <div class="desk-color-swatch active" data-color="#1a1208" style="background:#1a1208" title="Ink black" role="radio" aria-checked="true" tabindex="0"></div>
-              <div class="desk-color-swatch" data-color="#b82020" style="background:#b82020" title="Crimson" role="radio" aria-checked="false" tabindex="0"></div>
-              <div class="desk-color-swatch" data-color="#d4a020" style="background:#d4a020" title="Quill gold" role="radio" aria-checked="false" tabindex="0"></div>
-              <div class="desk-color-swatch" data-color="#1a6a2a" style="background:#1a6a2a" title="Forest green" role="radio" aria-checked="false" tabindex="0"></div>
-              <div class="desk-color-swatch" data-color="#1a3a8a" style="background:#1a3a8a" title="Deep blue" role="radio" aria-checked="false" tabindex="0"></div>
-              <div class="desk-color-swatch" data-color="#5a1a8a" style="background:#5a1a8a" title="Violet" role="radio" aria-checked="false" tabindex="0"></div>
-              <button type="button" class="desk-btn" id="customColorBtn" title="Custom color" aria-label="Custom color" style="font-size:0.85rem">+</button>
-              <input type="color" id="customColorInput" value="#1a1208" style="position:absolute;opacity:0;width:0;height:0" aria-label="Custom color picker">
-            </div>
-            <div class="desk-sep"></div>
-
-            <!-- Highlighters -->
-            <div class="desk-grp">
-              <button type="button" class="desk-btn" data-highlight="highlight-y" title="Yellow highlight" aria-label="Yellow highlight"><span style="background:rgba(255,220,50,.5);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
-              <button type="button" class="desk-btn" data-highlight="highlight-r" title="Pink highlight" aria-label="Pink highlight"><span style="background:rgba(255,100,100,.4);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
-              <button type="button" class="desk-btn" data-highlight="highlight-g" title="Green highlight" aria-label="Green highlight"><span style="background:rgba(100,220,100,.35);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
-              <button type="button" class="desk-btn" data-highlight="highlight-b" title="Blue highlight" aria-label="Blue highlight"><span style="background:rgba(100,150,255,.4);padding:1px 4px;font-size:0.75rem;border-radius:2px;color:#1a1208">HL</span></button>
-            </div>
-            <div class="desk-sep"></div>
-
-            <!-- Embeds & Elements -->
-            <div class="desk-grp">
-              <button type="button" class="desk-btn" id="insertImgBtn" title="Insert Polaroid / Photo" aria-label="Insert photo">&#128247;</button>
-              <button type="button" class="desk-btn" id="insertImgRowBtn" title="Insert Photo Row" aria-label="Insert photo row">&#128248;</button>
-              <button type="button" class="desk-btn" id="insertStickyBtn" title="Insert Sticky Note" aria-label="Insert sticky note">&#128221;</button>
-              <button type="button" class="desk-btn" id="insertStickerBtn" title="Insert Sticker" aria-label="Insert sticker">&#10024;</button>
-              <button type="button" class="desk-btn" id="insertDoodleBtn" title="Insert Doodle Divider" aria-label="Insert doodle divider"><span style="font-size:0.8rem">&#12316;</span></button>
-              <button type="button" class="desk-btn" id="insertPullBtn" title="Insert Pull Quote" aria-label="Insert pull quote">&#10078;</button>
-              <button type="button" class="desk-btn" id="insertCodeBtn" title="Insert Code Block" aria-label="Insert code block"><span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem">&lt;/&gt;</span></button>
-            </div>
-            <div class="desk-sep"></div>
-
-            <!-- Tape Swatches -->
-            <div class="desk-grp diary-tools" role="radiogroup" aria-label="Washi tape color">
-              <div class="tape-swatch" data-tape="rgba(240,190,40,0.65)" style="background:rgba(240,190,40,.65)" title="Yellow tape" role="radio" aria-checked="true" tabindex="0"></div>
-              <div class="tape-swatch" data-tape="rgba(220,80,80,0.55)" style="background:rgba(220,80,80,.55)" title="Red tape" role="radio" aria-checked="false" tabindex="0"></div>
-              <div class="tape-swatch" data-tape="rgba(80,130,220,0.55)" style="background:rgba(80,130,220,.55)" title="Blue tape" role="radio" aria-checked="false" tabindex="0"></div>
-              <div class="tape-swatch" data-tape="rgba(80,180,100,0.55)" style="background:rgba(80,180,100,.55)" title="Green tape" role="radio" aria-checked="false" tabindex="0"></div>
-            </div>
-            <div class="desk-sep"></div>
-
-            <!-- History -->
-            <div class="desk-grp">
-              <button type="button" class="desk-btn" data-cmd="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8617;</button>
-              <button type="button" class="desk-btn" data-cmd="redo" title="Redo (Ctrl+Y)" aria-label="Redo">&#8618;</button>
-            </div>
           </div>
 
           <div class="writing-canvas" id="canvasWrap">
@@ -1132,50 +1615,18 @@
     const editor = document.getElementById("editor");
     const canvasWrap = document.getElementById("canvasWrap");
 
-    // ── Safe Quill Initialization with Fallback ──
-    let quill = null;
-    try {
-      if (typeof Quill !== "undefined") {
-        const FontStyle = Quill.import('attributors/style/font');
-        if (FontStyle) {
-          FontStyle.whitelist = ['Crimson Pro', 'Caveat', 'IM Fell English', 'Playfair Display', 'Kalam', 'JetBrains Mono'];
-          Quill.register(FontStyle, true);
-        }
-        const ColorStyle = Quill.import('attributors/style/color');
-        if (ColorStyle) Quill.register(ColorStyle, true);
-        const BackgroundStyle = Quill.import('attributors/style/background');
-        if (BackgroundStyle) Quill.register(BackgroundStyle, true);
-
-        quill = new Quill('#editor', {
-          theme: 'snow',
-          placeholder: TEMPLATES.diary.ph,
-          modules: {
-            toolbar: false,
-            history: { delay: 500, maxStack: 100, userOnly: true }
-          }
-        });
-      }
-    } catch (err) {
-      console.warn("Quill initialization fallback active:", err);
-      quill = null;
-    }
-
     // Click anywhere in writing canvas to focus editor
     if (canvasWrap && editor) {
       canvasWrap.addEventListener("click", e => {
         if (e.target === canvasWrap) {
-          if (quill) {
-            quill.focus();
-          } else {
-            editor.focus();
-            const sel = window.getSelection();
-            if (!sel.rangeCount || !editor.contains(sel.anchorNode)) {
-              const range = document.createRange();
-              range.selectNodeContents(editor);
-              range.collapse(false);
-              sel.removeAllRanges();
-              sel.addRange(range);
-            }
+          editor.focus();
+          const sel = window.getSelection();
+          if (!sel.rangeCount || !editor.contains(sel.anchorNode)) {
+            const range = document.createRange();
+            range.selectNodeContents(editor);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
           }
         }
       });
@@ -1196,127 +1647,172 @@
 
     // Helper: Insert custom HTML at cursor
     function insertAtCursor(html) {
+      if (!editor) return;
+      editor.focus();
+      const sel = window.getSelection();
+      let range = null;
+      if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
+        range = sel.getRangeAt(0);
+      } else if (savedRange) {
+        range = savedRange;
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      if (!range) {
+        const newRange = document.createRange();
+        newRange.selectNodeContents(editor);
+        newRange.collapse(false);
+        range = newRange;
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+      }
+
       const safeHTML = sanitizeHTML(html);
-      if (quill) {
-        const range = quill.getSelection(true);
-        const index = range ? range.index : quill.getLength();
-        quill.clipboard.dangerouslyPasteHTML(index, safeHTML);
-        quill.setSelection(index + 1);
-        quill.focus();
-      } else if (editor) {
-        editor.focus();
-        const sel = window.getSelection();
-        let range = null;
-        if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
-          range = sel.getRangeAt(0);
-        } else if (savedRange) {
-          range = savedRange;
-          sel.removeAllRanges();
-          sel.addRange(range);
-        }
-        if (!range) {
-          const newRange = document.createRange();
-          newRange.selectNodeContents(editor);
-          newRange.collapse(false);
-          range = newRange;
-          sel.removeAllRanges();
-          sel.addRange(newRange);
-        }
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = safeHTML;
+      const frag = document.createDocumentFragment();
+      let node, lastNode;
+      while ((node = tempDiv.firstChild)) {
+        lastNode = frag.appendChild(node);
+      }
+      range.deleteContents();
+      range.insertNode(frag);
 
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = safeHTML;
-        const frag = document.createDocumentFragment();
-        let node, lastNode;
-        while ((node = tempDiv.firstChild)) {
-          lastNode = frag.appendChild(node);
-        }
-        range.deleteContents();
-        range.insertNode(frag);
+      if (lastNode) {
+        const nextRange = document.createRange();
+        nextRange.setStartAfter(lastNode);
+        nextRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(nextRange);
+        savedRange = nextRange.cloneRange();
+      }
+      restoreEmbedControls();
+      updateCounts();
+      updateSaveStatus("unsaved");
+    }
 
-        if (lastNode) {
-          const nextRange = document.createRange();
-          nextRange.setStartAfter(lastNode);
-          nextRange.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(nextRange);
-          savedRange = nextRange.cloneRange();
+    // ── Font & Style Continuity Engine ──
+    let activeTypingFontFamily = null;
+    let activeTypingColor = null;
+
+    // Helper: Apply style to selection or create typing span (font / color continuity)
+    function applyInlineStyle(styleObj) {
+      if (!editor) return;
+      editor.focus();
+      try { document.execCommand('styleWithCSS', false, true); } catch(e){}
+
+      const sel = window.getSelection();
+      let range = null;
+      if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
+        range = sel.getRangeAt(0);
+      } else if (savedRange) {
+        range = savedRange;
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+
+      if (!range) {
+        const newRange = document.createRange();
+        newRange.selectNodeContents(editor);
+        newRange.collapse(false);
+        range = newRange;
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+      }
+
+      if (styleObj.fontFamily) {
+        activeTypingFontFamily = styleObj.fontFamily;
+        const fontName = styleObj.fontName || styleObj.fontFamily.split(',')[0].replace(/['"]/g, '').trim();
+        try { document.execCommand("fontName", false, fontName); } catch(e){}
+      }
+
+      if (styleObj.color) {
+        activeTypingColor = styleObj.color;
+        try { document.execCommand("foreColor", false, styleObj.color); } catch(e){}
+      }
+
+      if (range.collapsed) {
+        // Continuous typing span for newly selected font or color
+        const span = document.createElement("span");
+        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+        if (styleObj.color) span.style.color = styleObj.color;
+        if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
+        
+        // Zero-width space so the cursor sits firmly inside the styled span
+        const textNode = document.createTextNode("\u200B");
+        span.appendChild(textNode);
+        range.insertNode(span);
+
+        const nextRange = document.createRange();
+        nextRange.setStart(textNode, 1);
+        nextRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(nextRange);
+        savedRange = nextRange.cloneRange();
+      } else {
+        const span = document.createElement("span");
+        if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
+        if (styleObj.color) span.style.color = styleObj.color;
+        if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
+        try {
+          range.surroundContents(span);
+        } catch(e) {
+          const frag = range.extractContents();
+          span.appendChild(frag);
+          range.insertNode(span);
         }
+        const newRange = document.createRange();
+        newRange.selectNodeContents(span);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+        savedRange = newRange.cloneRange();
       }
       updateCounts();
       updateSaveStatus("unsaved");
     }
 
-    // Helper: Apply style to selection or create typing span
-    function applyInlineStyle(styleObj) {
-      if (quill) {
-        if (styleObj.fontFamily) {
-          const cleaned = styleObj.fontFamily.replace(/['",]/g, '').trim();
-          quill.format("font", cleaned);
-        }
-        if (styleObj.color) {
-          quill.format("color", styleObj.color);
-        }
-        if (styleObj.backgroundColor !== undefined) {
-          quill.format("background", styleObj.backgroundColor);
-        }
-        quill.focus();
-      } else if (editor) {
-        editor.focus();
-        const sel = window.getSelection();
-        let range = null;
-        if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
-          range = sel.getRangeAt(0);
-        } else if (savedRange) {
-          range = savedRange;
-          sel.removeAllRanges();
-          sel.addRange(range);
-        }
+    // Intercept typing to guarantee continuous font family adherence
+    if (editor) {
+      editor.addEventListener("beforeinput", e => {
+        if (!activeTypingFontFamily && !activeTypingColor) return;
+        if (e.inputType === "insertText" && e.data) {
+          const sel = window.getSelection();
+          if (!sel.rangeCount || !editor.contains(sel.anchorNode)) return;
+          const range = sel.getRangeAt(0);
+          
+          if (range.collapsed) {
+            let node = range.startContainer;
+            let currentFont = null;
+            while (node && node !== editor) {
+              if (node.nodeType === Node.ELEMENT_NODE && node.style && node.style.fontFamily) {
+                currentFont = node.style.fontFamily;
+                break;
+              }
+              node = node.parentNode;
+            }
 
-        if (!range) {
-          const newRange = document.createRange();
-          newRange.selectNodeContents(editor);
-          newRange.collapse(false);
-          range = newRange;
-          sel.removeAllRanges();
-          sel.addRange(newRange);
-        }
+            if (activeTypingFontFamily && currentFont !== activeTypingFontFamily) {
+              e.preventDefault();
+              const span = document.createElement("span");
+              span.style.fontFamily = activeTypingFontFamily;
+              if (activeTypingColor) span.style.color = activeTypingColor;
+              const textNode = document.createTextNode(e.data);
+              span.appendChild(textNode);
+              range.deleteContents();
+              range.insertNode(span);
 
-        if (range.collapsed) {
-          const span = document.createElement("span");
-          if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
-          if (styleObj.color) span.style.color = styleObj.color;
-          if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
-          const textNode = document.createTextNode("\u200B");
-          span.appendChild(textNode);
-          range.insertNode(span);
-
-          const nextRange = document.createRange();
-          nextRange.setStart(textNode, 1);
-          nextRange.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(nextRange);
-          savedRange = nextRange.cloneRange();
-        } else {
-          const span = document.createElement("span");
-          if (styleObj.fontFamily) span.style.fontFamily = styleObj.fontFamily;
-          if (styleObj.color) span.style.color = styleObj.color;
-          if (styleObj.backgroundColor) span.style.backgroundColor = styleObj.backgroundColor;
-          try {
-            range.surroundContents(span);
-          } catch(e) {
-            const frag = range.extractContents();
-            span.appendChild(frag);
-            range.insertNode(span);
+              const newRange = document.createRange();
+              newRange.setStart(textNode, textNode.length);
+              newRange.collapse(true);
+              sel.removeAllRanges();
+              sel.addRange(newRange);
+              savedRange = newRange.cloneRange();
+              updateCounts();
+              updateSaveStatus("unsaved");
+            }
           }
-          const newRange = document.createRange();
-          newRange.selectNodeContents(span);
-          sel.removeAllRanges();
-          sel.addRange(newRange);
-          savedRange = newRange.cloneRange();
         }
-      }
-      updateCounts();
-      updateSaveStatus("unsaved");
+      });
     }
 
     // ── Template picker ──
@@ -1333,9 +1829,7 @@
         activeTemplate = t; 
         body.setAttribute("data-t", t);
         document.getElementById("navTemplateLabel").textContent = TEMPLATES[t].label;
-        if (quill && quill.root) {
-          quill.root.dataset.placeholder = TEMPLATES[t].ph;
-        } else if (editor) {
+        if (editor) {
           editor.setAttribute("data-placeholder", TEMPLATES[t].ph);
         }
         
@@ -1468,7 +1962,7 @@
 
     // ── Word/char count ──
     function updateCounts() {
-      const text = quill ? quill.getText().trim() : (editor ? editor.innerText.trim() : "");
+      const text = editor ? editor.innerText.trim() : "";
       const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
       const chars = text.replace(/\s/g, "").length;
       document.getElementById("wordCount").textContent = words;
@@ -1476,12 +1970,6 @@
       document.getElementById("readTimeCalc").textContent = "~" + Math.max(1, Math.ceil(words / 200)) + " min read";
     }
 
-    if (quill) {
-      quill.on("text-change", () => {
-        updateCounts();
-        updateSaveStatus("unsaved");
-      });
-    }
     if (editor) {
       editor.addEventListener("input", () => {
         updateCounts();
@@ -1502,7 +1990,8 @@
       const temp = document.createElement('div');
       temp.innerHTML = html;
       
-      const dangerousTags = ['script', 'iframe', 'object', 'embed', 'form', 'input', 'textarea', 'select', 'button', 'link', 'meta', 'base'];
+      // Remove only malicious execution tags, preserve visual embed tags
+      const dangerousTags = ['script', 'iframe', 'object', 'embed', 'form', 'link', 'meta', 'base'];
       dangerousTags.forEach(tag => {
         temp.querySelectorAll(tag).forEach(el => el.remove());
       });
@@ -1545,27 +2034,167 @@
           <button type="button" class="ctrl-btn" data-tilt="tilt-r" title="Tilt right">⤸</button>
         `;
       }
-      return `<div class="embed-ctrls" contenteditable="false">${extra}<button type="button" class="ctrl-btn del-btn" title="Delete block">✕</button></div>`;
+      return `
+        <div class="embed-ctrls" contenteditable="false">
+          <button type="button" class="ctrl-btn drag-handle" title="Drag to freely reposition on page">✥ Move</button>
+          <div class="nudge-grp">
+            <button type="button" class="ctrl-btn nudge-btn" data-nudge="left" title="Nudge Left (◀)">◀</button>
+            <button type="button" class="ctrl-btn nudge-btn" data-nudge="right" title="Nudge Right (▶)">▶</button>
+            <button type="button" class="ctrl-btn nudge-btn" data-nudge="up" title="Nudge Up (▲)">▲</button>
+            <button type="button" class="ctrl-btn nudge-btn" data-nudge="down" title="Nudge Down (▼)">▼</button>
+            <button type="button" class="ctrl-btn nudge-btn" data-nudge="reset" title="Reset Position (↺)">↺</button>
+          </div>
+          ${extra}
+          <button type="button" class="ctrl-btn del-btn" title="Delete block">✕</button>
+        </div>
+      `;
     }
 
+    // ── Global Drag & Nudge Engine for Embeds and Images ──
+    let activeDragEl = null;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let elemStartX = 0;
+    let elemStartY = 0;
+
+    function applyEmbedTransform(el, x, y) {
+      if (!el) return;
+      let tiltRot = "";
+      if (el.classList.contains("tilt-l") || el.querySelector(".tilt-l")) tiltRot = " rotate(-3deg)";
+      else if (el.classList.contains("tilt-r") || el.querySelector(".tilt-r")) tiltRot = " rotate(3deg)";
+      else if (el.classList.contains("sticky-callout")) tiltRot = " rotate(-1deg)";
+      
+      el.style.transform = `translate3d(${x}px, ${y}px, 0)${tiltRot}`;
+    }
+
+    function nudgeElement(el, dir, step = 15) {
+      if (!el) return;
+      let curX = parseFloat(el.dataset.x || 0);
+      let curY = parseFloat(el.dataset.y || 0);
+      
+      if (dir === "left") curX -= step;
+      else if (dir === "right") curX += step;
+      else if (dir === "up") curY -= step;
+      else if (dir === "down") curY += step;
+      else if (dir === "reset") { curX = 0; curY = 0; }
+      
+      el.dataset.x = curX;
+      el.dataset.y = curY;
+      applyEmbedTransform(el, curX, curY);
+      updateCounts();
+      updateSaveStatus("unsaved");
+    }
+
+    function initDraggableEmbed(el) {
+      if (!el || el.dataset.dragInit) return;
+      el.dataset.dragInit = "1";
+      el.classList.add("draggable-embed");
+
+      // Restore saved position if present
+      if (el.dataset.x || el.dataset.y) {
+        applyEmbedTransform(el, parseFloat(el.dataset.x || 0), parseFloat(el.dataset.y || 0));
+      }
+
+      const startDrag = (clientX, clientY, target) => {
+        const isHandle = target.closest(".drag-handle");
+        const isSticker = el.classList.contains("floating-sticker");
+        const isPolaroidImg = target.closest(".polaroid img") || target.closest(".polaroid") && !target.closest("figcaption, .polaroid-caption");
+        const isTape = target.closest(".washi-tape");
+        const isDoodle = target.closest(".doodle-divider-wrap");
+        const isImgRow = target.closest(".img-row-block") && !target.closest("input");
+        
+        // Let user edit text inside sticky notes and code blocks unless dragging the handle
+        if (!isHandle && !isSticker && !isPolaroidImg && !isTape && !isDoodle && !isImgRow && (target.isContentEditable || target.closest("[contenteditable='true']"))) {
+          return false;
+        }
+        if (target.closest(".ctrl-btn, .ctrl-dot, input, button") && !isHandle) {
+          return false;
+        }
+
+        activeDragEl = el;
+        dragStartX = clientX;
+        dragStartY = clientY;
+        elemStartX = parseFloat(el.dataset.x || 0);
+        elemStartY = parseFloat(el.dataset.y || 0);
+        el.classList.add("is-dragging");
+        return true;
+      };
+
+      el.addEventListener("mousedown", e => {
+        if (e.button !== 0) return;
+        if (startDrag(e.clientX, e.clientY, e.target)) {
+          e.preventDefault();
+        }
+      });
+
+      el.addEventListener("touchstart", e => {
+        if (e.touches.length === 1) {
+          if (startDrag(e.touches[0].clientX, e.touches[0].clientY, e.target)) {
+            // Touch dragging initiated
+          }
+        }
+      }, { passive: true });
+    }
+
+    window.addEventListener("mousemove", e => {
+      if (!activeDragEl) return;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      const newX = Math.round(elemStartX + dx);
+      const newY = Math.round(elemStartY + dy);
+      
+      activeDragEl.dataset.x = newX;
+      activeDragEl.dataset.y = newY;
+      applyEmbedTransform(activeDragEl, newX, newY);
+    });
+
+    window.addEventListener("touchmove", e => {
+      if (!activeDragEl || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - dragStartX;
+      const dy = e.touches[0].clientY - dragStartY;
+      const newX = Math.round(elemStartX + dx);
+      const newY = Math.round(elemStartY + dy);
+      
+      activeDragEl.dataset.x = newX;
+      activeDragEl.dataset.y = newY;
+      applyEmbedTransform(activeDragEl, newX, newY);
+    }, { passive: true });
+
+    function endDrag() {
+      if (activeDragEl) {
+        activeDragEl.classList.remove("is-dragging");
+        activeDragEl = null;
+        updateCounts();
+        updateSaveStatus("unsaved");
+      }
+    }
+
+    window.addEventListener("mouseup", endDrag);
+    window.addEventListener("touchend", endDrag);
+
     function restoreEmbedControls() {
-      const root = quill ? quill.root : editor;
-      if (!root) return;
-      root.querySelectorAll(".sticky-callout").forEach(el => {
+      if (!editor) return;
+      editor.querySelectorAll(".sticky-callout").forEach(el => {
         if (!el.querySelector(".embed-ctrls")) {
           el.insertAdjacentHTML("afterbegin", createEmbedControlsHTML("sticky"));
         }
+        initDraggableEmbed(el);
       });
-      root.querySelectorAll(".polaroid").forEach(el => {
+      editor.querySelectorAll(".polaroid").forEach(el => {
         const fig = el.closest("figure") || el;
         if (!fig.querySelector(".embed-ctrls")) {
           fig.insertAdjacentHTML("afterbegin", createEmbedControlsHTML("polaroid"));
         }
+        initDraggableEmbed(fig);
       });
-      root.querySelectorAll(".img-row-block, .washi-tape, .doodle-divider-wrap, .pull-quote, pre").forEach(el => {
+      editor.querySelectorAll(".img-row-block, .washi-tape, .doodle-divider-wrap, .pull-quote, pre").forEach(el => {
         if (!el.querySelector(".embed-ctrls")) {
           el.insertAdjacentHTML("afterbegin", createEmbedControlsHTML("generic"));
         }
+        initDraggableEmbed(el);
+      });
+      editor.querySelectorAll(".floating-sticker").forEach(el => {
+        initDraggableEmbed(el);
       });
     }
 
@@ -1575,11 +2204,24 @@
       if (delBtn) {
         e.preventDefault();
         e.stopPropagation();
-        const block = delBtn.closest("figure") || delBtn.closest(".sticky-callout") || delBtn.closest(".img-row-block") || delBtn.closest(".washi-tape") || delBtn.closest(".doodle-divider-wrap") || delBtn.closest(".pull-quote") || delBtn.closest("pre");
+        const block = delBtn.closest("figure, .polaroid, .sticky-callout, .img-row-block, .washi-tape, .doodle-divider-wrap, .pull-quote, pre, .floating-sticker");
         if (block) {
           block.remove();
           updateCounts();
           updateSaveStatus("unsaved");
+        }
+        return;
+      }
+
+      const nudgeBtn = e.target.closest(".nudge-btn");
+      if (nudgeBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const block = nudgeBtn.closest("figure, .polaroid, .sticky-callout, .img-row-block, .washi-tape, .doodle-divider-wrap, .pull-quote, pre, .floating-sticker");
+        if (block) {
+          const dir = nudgeBtn.dataset.nudge;
+          const step = e.shiftKey ? 45 : 15;
+          nudgeElement(block, dir, step);
         }
         return;
       }
@@ -1602,11 +2244,12 @@
       if (tiltBtn) {
         e.preventDefault();
         e.stopPropagation();
-        const pol = tiltBtn.closest(".polaroid");
+        const pol = tiltBtn.closest(".polaroid") || tiltBtn.closest("figure");
         if (pol) {
           const tilt = tiltBtn.dataset.tilt;
           pol.classList.remove("tilt-l", "tilt-r");
           if (tilt) pol.classList.add(tilt);
+          applyEmbedTransform(pol, parseFloat(pol.dataset.x || 0), parseFloat(pol.dataset.y || 0));
           updateSaveStatus("unsaved");
         }
         return;
@@ -1620,31 +2263,15 @@
       btn.addEventListener("mousedown", e => {
         e.preventDefault();
         const cmd = btn.dataset.cmd;
-        if (quill) {
-          quill.focus();
-          const format = quill.getFormat();
-          if (cmd === "bold") {
-            quill.format("bold", !format.bold);
-          } else if (cmd === "italic") {
-            quill.format("italic", !format.italic);
-          } else if (cmd === "h2") {
-            quill.format("header", format.header === 2 ? false : 2);
-          } else if (cmd === "h3") {
-            quill.format("header", format.header === 3 ? false : 3);
-          } else if (cmd === "blockquote") {
-            quill.format("blockquote", !format.blockquote);
-          } else if (cmd === "insertUnorderedList") {
-            quill.format("list", format.list === "bullet" ? false : "bullet");
-          } else if (cmd === "undo") {
-            quill.history.undo();
-          } else if (cmd === "redo") {
-            quill.history.redo();
-          }
-        } else if (editor) {
+        if (editor) {
           editor.focus();
           try {
             if (cmd === "h2" || cmd === "h3" || cmd === "blockquote") {
               document.execCommand("formatBlock", false, `<${cmd}>`);
+            } else if (cmd === "strike") {
+              document.execCommand("strikeThrough", false, null);
+            } else if (cmd === "indent") {
+              insertAtCursor("&emsp;");
             } else {
               document.execCommand(cmd, false, null);
             }
@@ -1657,6 +2284,23 @@
       });
     });
 
+    // ── Clear All canvas button ──
+    document.getElementById("clearCanvasBtn")?.addEventListener("click", e => {
+      e.preventDefault();
+      if (!editor) return;
+      const hasContent = editor.innerText.trim().length > 0 || editor.querySelector("img, figure, svg, .sticky-callout, .washi-tape, .pull-quote, pre");
+      if (hasContent) {
+        const ok = confirm("Clear all content from the editor? (This removes all text, images, sticky notes, and embeds)");
+        if (!ok) return;
+      }
+      editor.innerHTML = "";
+      savedRange = null;
+      updateCounts();
+      updateSaveStatus("unsaved");
+      saveDraftLocally();
+      editor.focus();
+    });
+
     // ── Tab key support in editor ──
     if (editor) {
       editor.addEventListener("keydown", e => {
@@ -1667,38 +2311,228 @@
       });
     }
 
-    // ── Font selector dropdown ──
+    // ════ 🔤 TYPOGRAPHY STUDIO LOGIC ════
+    const CURATED_FONTS = [
+      {
+        id: "crimson-pro",
+        name: "Crimson Pro",
+        family: "'Crimson Pro', Georgia, serif",
+        category: "serif",
+        badge: "Classic Novel",
+        desc: "Timeless literary serif crafted for emotional stories, memoirs, and essays.",
+        specimen: "Some memories are etched like dark ink into parchment that refuses to fade with time."
+      },
+      {
+        id: "caveat",
+        name: "Caveat",
+        family: "'Caveat', cursive",
+        category: "hand",
+        badge: "Messy Diary",
+        desc: "Natural, organic handwriting — feels like a real handwritten journal page.",
+        specimen: "It was 2:40 AM when I finally realized that everything had quietly changed."
+      },
+      {
+        id: "kalam",
+        name: "Kalam",
+        family: "'Kalam', cursive",
+        category: "hand",
+        badge: "Casual Notes",
+        desc: "Warm and friendly handwriting with clean, effortless readability.",
+        specimen: "A warm cup of coffee, a rainy window, and thoughts that don't need explaining."
+      },
+      {
+        id: "playfair",
+        name: "Playfair Display",
+        family: "'Playfair Display', Georgia, serif",
+        category: "editorial",
+        badge: "Modern Editorial",
+        desc: "High-contrast elegance suited for thoughtful reviews, critiques, and modern articles.",
+        specimen: "The cinema screen flickered in the dark, casting long shadows of forgotten dreams."
+      },
+      {
+        id: "im-fell",
+        name: "IM Fell English",
+        family: "'IM Fell English', Georgia, serif",
+        category: "serif",
+        badge: "Vintage Antique",
+        desc: "17th-century antique print with authentic rough-ink texture.",
+        specimen: "An ancient chronicle preserved beneath the dusty floorboards of memory."
+      },
+      {
+        id: "special-elite",
+        name: "Special Elite",
+        family: "'Special Elite', Courier, monospace",
+        category: "typewriter",
+        badge: "1950s Typewriter",
+        desc: "Authentic mechanical typewriter feel for raw, unfiltered personal writing.",
+        specimen: "REPORT NO. 402: THE RAIN NEVER STOPPED FALLING OVER THE EMPTY HARBOR."
+      },
+      {
+        id: "lora",
+        name: "Lora",
+        family: "'Lora', serif",
+        category: "serif",
+        badge: "Contemporary Essay",
+        desc: "Crisp, contemporary literary serif with balanced cadence and rhythm.",
+        specimen: "Writing is the quietest way of speaking without ever being interrupted."
+      },
+      {
+        id: "jetbrains",
+        name: "JetBrains Mono",
+        family: "'JetBrains Mono', monospace",
+        category: "mono",
+        badge: "Code & Tech",
+        desc: "Clean developer monospace for code snippets and technical thoughts.",
+        specimen: "const rawEmotion = await listenClosely(); // compiled successfully"
+      },
+      {
+        id: "dm-sans",
+        name: "DM Sans",
+        family: "'DM Sans', system-ui, sans-serif",
+        category: "mono",
+        badge: "Clean Minimal",
+        desc: "Modern, ultra-clean neutral sans for concise, punchy writing.",
+        specimen: "Simple. Direct. No unnecessary noise, just what actually matters."
+      }
+    ];
+
+    let currentDocFontObj = CURATED_FONTS[0];
+    const fontDropdown = document.getElementById("fontDropdown");
+    const fontCardsList = document.getElementById("fontCardsList");
     const fontSelectBtn = document.getElementById("fontSelectBtn");
-    const fontMenu = document.getElementById("fontMenu");
     const fontCurrentLabel = document.getElementById("fontCurrentLabel");
+    const fontCategoryBadge = document.getElementById("fontCategoryBadge");
+
+    function closeFontDropdown() {
+      fontDropdown?.classList.remove("open");
+      fontSelectBtn?.setAttribute("aria-expanded", "false");
+    }
+
+    function renderFontList() {
+      if (!fontCardsList) return;
+
+      fontCardsList.innerHTML = CURATED_FONTS.map(f => {
+        const isSelected = f.id === currentDocFontObj.id;
+        return `
+          <div class="font-opt ${isSelected ? 'active' : ''}" data-id="${f.id}">
+            <div class="font-opt-main" data-id="${f.id}" title="Select font '${f.name}'">
+              <span class="font-opt-check">${isSelected ? '✓' : ''}</span>
+              <span class="font-opt-name" style="font-family:${f.family}">${f.name}</span>
+              <span class="font-opt-badge">${f.badge}</span>
+            </div>
+            <div class="font-opt-sel" data-id="${f.id}" title="Apply '${f.name}' to selected text only">T↗</div>
+          </div>
+        `;
+      }).join("");
+
+      // Bind row clicks: applies font to current text selection or sets typing font at caret
+      fontCardsList.querySelectorAll(".font-opt-main, .font-opt-sel, .font-opt").forEach(el => {
+        el.addEventListener("mousedown", e => {
+          e.preventDefault(); // Retain focus & selection in the editor
+        });
+        el.addEventListener("click", e => {
+          e.preventDefault();
+          e.stopPropagation();
+          const fid = el.dataset.id || el.closest(".font-opt")?.dataset.id;
+          const fontObj = CURATED_FONTS.find(f => f.id === fid);
+          if (!fontObj) return;
+          
+          currentDocFontObj = fontObj;
+          applyInlineStyle({ fontFamily: fontObj.family, fontName: fontObj.name });
+          if (fontCurrentLabel) fontCurrentLabel.textContent = fontObj.name;
+          if (fontCategoryBadge) fontCategoryBadge.textContent = fontObj.badge.split(' ')[0];
+          closeFontDropdown();
+        });
+      });
+    }
 
     fontSelectBtn?.addEventListener("mousedown", e => {
       e.preventDefault();
-      fontMenu?.classList.toggle("open");
     });
 
-    document.querySelectorAll(".font-option").forEach(btn => {
-      btn.addEventListener("mousedown", e => {
-        e.preventDefault();
-        document.querySelectorAll(".font-option").forEach(b => {
-          b.classList.remove("active");
-          b.setAttribute("aria-checked", "false");
-        });
-        btn.classList.add("active");
-        btn.setAttribute("aria-checked", "true");
-        if (fontCurrentLabel) {
-          fontCurrentLabel.textContent = btn.textContent.split(" ")[0];
+    // Toggle font dropdown
+    fontSelectBtn?.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = fontDropdown?.classList.contains("open");
+      if (isOpen) {
+        closeFontDropdown();
+      } else {
+        renderFontList();
+        // Position fixed dropdown below the button
+        const rect = fontSelectBtn.getBoundingClientRect();
+        const dropW = 270;
+        let left = rect.left;
+        if (left + dropW > window.innerWidth - 12) left = window.innerWidth - dropW - 12;
+        if (left < 8) left = 8;
+
+        let top = rect.bottom + 6;
+        if (top + 360 > window.innerHeight && rect.top > 360) {
+          top = rect.top - 360 - 6;
         }
-        fontMenu?.classList.remove("open");
-        
-        const font = btn.dataset.font || "";
-        applyInlineStyle({ fontFamily: font });
-      });
+
+        if (fontDropdown) {
+          fontDropdown.style.top  = top + "px";
+          fontDropdown.style.left = left + "px";
+        }
+        fontDropdown?.classList.add("open");
+        fontSelectBtn.setAttribute("aria-expanded", "true");
+      }
     });
 
+    // Close button inside dropdown
+    document.getElementById("fontDropClose")?.addEventListener("click", e => {
+      e.stopPropagation();
+      closeFontDropdown();
+    });
+
+    // Click outside closes dropdown
     document.addEventListener("click", e => {
-      if (!e.target.closest(".font-select-wrap")) {
-        fontMenu?.classList.remove("open");
+      if (fontDropdown?.classList.contains("open")) {
+        const insideBtn  = fontSelectBtn?.contains(e.target);
+        const insideDrop = fontDropdown?.contains(e.target);
+        if (!insideBtn && !insideDrop) closeFontDropdown();
+      }
+    });
+
+    // Close dropdown on window scroll
+    window.addEventListener("scroll", () => {
+      if (fontDropdown?.classList.contains("open")) {
+        closeFontDropdown();
+      }
+    }, { passive: true });
+
+    // ════ 📖 DESK CREATIVE GUIDE MODAL ════
+    const deskGuideModal = document.getElementById("deskGuideModal");
+    document.getElementById("openDeskGuideBtn")?.addEventListener("click", () => {
+      deskGuideModal?.classList.add("open");
+    });
+    document.getElementById("deskGuideClose")?.addEventListener("click", () => {
+      deskGuideModal?.classList.remove("open");
+    });
+    deskGuideModal?.addEventListener("click", e => {
+      if (e.target === deskGuideModal) deskGuideModal.classList.remove("open");
+    });
+
+    // ════ 💡 3 AM SPARK PROMPT DRAWER TRIGGER ════
+    document.getElementById("openSparkDrawerBtn")?.addEventListener("click", () => {
+      const card = document.getElementById("promptSparkCard");
+      if (card) {
+        card.style.display = (card.style.display === "none" || !card.style.display) ? "block" : "none";
+        if (card.style.display === "block") {
+          showSpark(sparkIdx);
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+    });
+
+    // Keyboard ESC listener for all modals
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        closeFontDropdown();
+        deskGuideModal?.classList.remove("open");
+        document.getElementById("publishModalBg")?.classList.remove("open");
+        document.getElementById("previewOverlay")?.classList.remove("open");
       }
     });
 
@@ -2166,7 +3000,7 @@
 
     // ── Content serialization (safe) ──
     function serializeContent() {
-      const rawHtml = quill ? quill.root.innerHTML : (editor ? editor.innerHTML : "");
+      const rawHtml = editor ? editor.innerHTML : "";
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = rawHtml;
       tempDiv.querySelectorAll(".embed-ctrls").forEach(el => el.remove());
@@ -2185,7 +3019,7 @@
       const draft = {
         title: document.getElementById("titleInput").value,
         desc: document.getElementById("descInput").value,
-        content: quill ? quill.root.innerHTML : (editor ? editor.innerHTML : ""),
+        content: editor ? editor.innerHTML : "",
         template: activeTemplate,
         category: selectedCat,
         mood: selectedMood,
@@ -2234,10 +3068,7 @@
       if (techTagInput) techTagInput.value = "";
       
       // Clear editor
-      if (quill) {
-        quill.setText("");
-        if (quill.root) quill.root.innerHTML = "";
-      } else if (editor) {
+      if (editor) {
         editor.innerHTML = "";
       }
 
@@ -2297,9 +3128,7 @@
           const draft = JSON.parse(saved);
           document.getElementById("titleInput").value = draft.title || "";
           document.getElementById("descInput").value = draft.desc || "";
-          if (quill && draft.content) {
-            quill.clipboard.dangerouslyPasteHTML(draft.content);
-          } else if (editor && draft.content) {
+          if (editor && draft.content) {
             editor.innerHTML = draft.content;
           }
           restoreEmbedControls();
@@ -2307,9 +3136,7 @@
             activeTemplate = draft.template;
             body.setAttribute("data-t", draft.template);
             document.getElementById("navTemplateLabel").textContent = TEMPLATES[draft.template].label;
-            if (quill && quill.root) {
-              quill.root.dataset.placeholder = TEMPLATES[draft.template].ph;
-            } else if (editor) {
+            if (editor) {
               editor.setAttribute("data-placeholder", TEMPLATES[draft.template].ph);
             }
           }
@@ -2435,7 +3262,6 @@
       }, 2000);
     }
     
-    if (quill) quill.on("text-change", triggerAutoSave);
     if (editor) editor.addEventListener("input", triggerAutoSave);
     ["titleInput", "descInput", "authorInput"].forEach(id => {
       const el = document.getElementById(id);
@@ -2538,7 +3364,7 @@
             coverUrl = document.getElementById("coverUrl").value,
             coverAlt = document.getElementById("coverAlt").value.trim(),
             content = serializeContent(),
-            plainText = quill ? quill.getText().trim() : (editor ? editor.innerText.trim() : ""),
+            plainText = editor ? editor.innerText.trim() : "",
             type = document.getElementById("typeSelect").value,
             agree = document.getElementById("agreeCheck")?.checked ?? true,
             agreeImg = document.getElementById("agreeImgCheck")?.checked ?? true,
