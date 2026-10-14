@@ -1,26 +1,5 @@
 {
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.hlywor.fun"
-        }
-      ],
-      "destination": "https://hlywor.fun/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/api/home"
-    },
-    {
-      "source": "/index.html",
-      "destination": "/api/home"
-    },
     {
       "source": "/story/:id",
       "destination": "/api/story?id=:id"
