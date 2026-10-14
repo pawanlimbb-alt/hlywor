@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "jsdom": "^27.0.1"
   }

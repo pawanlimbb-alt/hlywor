@@ -2359,7 +2359,7 @@
         featSlug = feat.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       }
       const targetFeatSlug = featSlug || feat.id || '';
-      const postLink = `post.html?slug=${encodeURIComponent(targetFeatSlug)}`;
+      const postLink = `/story/${encodeURIComponent(targetFeatSlug)}`;
       if (ft) {
         ft.textContent = feat.title;
         ft.href = postLink;
@@ -2500,6 +2500,16 @@
       }
     }, 5000);
 
+    // Fast-path: Check if preloaded feed is available from SSR
+    if (window.__PRELOADED_FEED__ && Array.isArray(window.__PRELOADED_FEED__)) {
+      allPosts = window.__PRELOADED_FEED__;
+      postsLoaded = true;
+      renderPosts();
+      renderFeaturedBanner();
+      loadHeroLive();
+      startQuoteRotation();
+    }
+
     if(db){
       onSnapshot(query(collection(db,'posts'),where('status','==','published')),snap=>{
         postsLoaded = true;
@@ -2571,7 +2581,7 @@
         sessionStorage.setItem('hlywor_current_slug', slug);
         if (postObj) sessionStorage.setItem('hlywor_current_post', JSON.stringify(postObj));
       } catch(e) {}
-      window.location.href = `post.html?slug=${encodeURIComponent(slug)}`;
+      window.location.href = `/story/${encodeURIComponent(slug)}`;
     }
     window.openPost = openPost;
 
@@ -2665,7 +2675,7 @@
         const isAdminUser = currentUser && (currentUser.uid === '2aTrlq56lZd3UScCfk7g8g3lBP73');
         const adminBtn = isAdminUser ? `<button class="admin-feature-btn ${post.featured ? 'is-featured' : ''}" data-id="${post.id}" title="Set as Editor's Pick">${post.featured ? '✦ Featured' : '✦ Feature'}</button>` : '';
 
-        card.innerHTML=`<div class="post-pin" style="left:${pl}%;background:${pcs[i%4]}" aria-hidden="true"></div>${thumb}<div class="post-note-body"><div class="post-badge-row"><span class="post-cat-tape ${catClass(cat)}" aria-label="Category: ${cat}">${cat.toUpperCase()}</span><div class="post-badge-meta">${moodBadge}<span class="post-read-badge">⏱ ${readTime}</span>${adminBtn}</div></div><div class="post-note-title"><a href="post.html?slug=${encodeURIComponent(slug)}" class="post-title-link">${post.title}</a></div><p class="post-note-desc">${post.desc||''}</p><div class="post-note-meta"><div class="post-author-wrap">${authorMeta}${(post.authorUid&&!isAnon)?`<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${an}" aria-label="Follow ${an}">+ Follow</button>`:''}</div><a href="post.html?slug=${encodeURIComponent(slug)}" class="post-read-hand" aria-hidden="true">read →</a></div></div><div class="post-stickers">${rh}<button class="card-save-btn ${isSaved?'is-saved':''}" data-slug="${slug}" title="${isSaved?'Saved to your list':'Save story'}" aria-label="Save story">🔖</button></div>`;
+        card.innerHTML=`<div class="post-pin" style="left:${pl}%;background:${pcs[i%4]}" aria-hidden="true"></div>${thumb}<div class="post-note-body"><div class="post-badge-row"><span class="post-cat-tape ${catClass(cat)}" aria-label="Category: ${cat}">${cat.toUpperCase()}</span><div class="post-badge-meta">${moodBadge}<span class="post-read-badge">⏱ ${readTime}</span>${adminBtn}</div></div><div class="post-note-title"><a href="/story/${encodeURIComponent(slug)}" class="post-title-link">${post.title}</a></div><p class="post-note-desc">${post.desc||''}</p><div class="post-note-meta"><div class="post-author-wrap">${authorMeta}${(post.authorUid&&!isAnon)?`<button class="card-stick-btn" data-touid="${post.authorUid}" data-toname="${an}" aria-label="Follow ${an}">+ Follow</button>`:''}</div><a href="/story/${encodeURIComponent(slug)}" class="post-read-hand" aria-hidden="true">read →</a></div></div><div class="post-stickers">${rh}<button class="card-save-btn ${isSaved?'is-saved':''}" data-slug="${slug}" title="${isSaved?'Saved to your list':'Save story'}" aria-label="Save story">🔖</button></div>`;
         
         card.addEventListener('click', e => {
           if (e.target.closest('.sticker-btn') || e.target.closest('.post-author-chip') || e.target.closest('.card-stick-btn') || e.target.closest('.card-save-btn') || e.target.closest('.admin-feature-btn')) return;
@@ -2759,7 +2769,7 @@
     document.getElementById('searchCloseBtn').addEventListener('click',closeSearch);
     so.addEventListener('click',e=>{if(e.target===so)closeSearch();});
     document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}});
-    si.addEventListener('input',()=>{const q=si.value.trim().toLowerCase();if(!q){sr.innerHTML='<div class="search-msg">Start typing...</div>';return;}const hits=allPosts.filter(p=>p.title?.toLowerCase().includes(q)||(p.desc||'').toLowerCase().includes(q)||(p.category||p.type||'').toLowerCase().includes(q)||p.author?.toLowerCase().includes(q));sr.innerHTML=hits.length?hits.slice(0,8).map(p=>{let s=(p.slug||p.id||'').replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();if(!s&&p.url)s=p.url.replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();if(!s&&p.title)s=p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');const targetS = s || p.id || ''; return `<a href="post.html?slug=${encodeURIComponent(targetS)}" class="sr-item" onclick="event.preventDefault();closeSearch();openPost('${targetS}', allPosts.find(x=>x.id==='${p.id}'))" role="option"><div><div class="sr-cat">${(p.category||p.type||'POST').toUpperCase()}</div><div class="sr-title">${p.title}</div></div><span class="sr-arr" aria-hidden="true">→</span></a>`;}).join(''):'<div class="search-msg">Nothing found.</div>';});
+    si.addEventListener('input',()=>{const q=si.value.trim().toLowerCase();if(!q){sr.innerHTML='<div class="search-msg">Start typing...</div>';return;}const hits=allPosts.filter(p=>p.title?.toLowerCase().includes(q)||(p.desc||'').toLowerCase().includes(q)||(p.category||p.type||'').toLowerCase().includes(q)||p.author?.toLowerCase().includes(q));sr.innerHTML=hits.length?hits.slice(0,8).map(p=>{let s=(p.slug||p.id||'').replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();if(!s&&p.url)s=p.url.replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();if(!s&&p.title)s=p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');const targetS = s || p.id || ''; return `<a href="/story/${encodeURIComponent(targetS)}" class="sr-item" onclick="event.preventDefault();closeSearch();openPost('${targetS}', allPosts.find(x=>x.id==='${p.id}'))" role="option"><div><div class="sr-cat">${(p.category||p.type||'POST').toUpperCase()}</div><div class="sr-title">${p.title}</div></div><span class="sr-arr" aria-hidden="true">→</span></a>`;}).join(''):'<div class="search-msg">Nothing found.</div>';});
 
     const nudge = document.getElementById('scrollNudge');
     let nudgeShown = false;

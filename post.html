@@ -2510,10 +2510,16 @@
       }
     }, { passive: true });
 
-    // ── Slug from URL (supports ?slug=..., ?id=..., ?p=..., ?post=..., and hash #slug) ──
+    // ── Slug from URL (supports /story/:id, ?slug=..., ?id=..., ?p=..., ?post=..., and hash #slug) ──
     function resolvePostSlug() {
-      const urlParams = new URLSearchParams(window.location.search);
-      let raw = urlParams.get('slug') || urlParams.get('id') || urlParams.get('p') || urlParams.get('post') || urlParams.get('story') || urlParams.get('s') || '';
+      // 1. Check path for clean rewrite /story/:id
+      const pathMatch = window.location.pathname.match(/\/story\/([^/?#]+)/i);
+      let raw = pathMatch ? pathMatch[1] : '';
+
+      if (!raw) {
+        const urlParams = new URLSearchParams(window.location.search);
+        raw = urlParams.get('slug') || urlParams.get('id') || urlParams.get('p') || urlParams.get('post') || urlParams.get('story') || urlParams.get('s') || '';
+      }
 
       if (!raw && window.location.hash) {
         const hash = window.location.hash.replace(/^#\/?/, '').trim();
@@ -2555,20 +2561,27 @@
     let isEditMode = false;
     let commentsUnsub = null;
 
+    // Check if preloaded from server-side rendering (SSR)
+    if (window.__PRELOADED_POST__) {
+      currentPostData = window.__PRELOADED_POST__;
+    }
+
     // Check if session has this post preloaded from a previous click
-    try {
-      const cachedPostStr = sessionStorage.getItem('hlywor_current_post');
-      if (cachedPostStr && slug) {
-        const cachedObj = JSON.parse(cachedPostStr);
-        const cachedSlug = (cachedObj.slug || cachedObj.id || '').replace(/^post\.html\?slug=/i, '').trim().toLowerCase();
-        const normSlug = slug.toLowerCase();
-        // ONLY pre-render if the cached post actually matches the target slug!
-        if (cachedSlug === normSlug || (cachedObj.id || '').toLowerCase() === normSlug) {
-          currentPostData = cachedObj;
-          renderPost(currentPostData);
+    if (!currentPostData) {
+      try {
+        const cachedPostStr = sessionStorage.getItem('hlywor_current_post');
+        if (cachedPostStr && slug) {
+          const cachedObj = JSON.parse(cachedPostStr);
+          const cachedSlug = (cachedObj.slug || cachedObj.id || '').replace(/^post\.html\?slug=/i, '').trim().toLowerCase();
+          const normSlug = slug.toLowerCase();
+          // ONLY pre-render if the cached post actually matches the target slug!
+          if (cachedSlug === normSlug || (cachedObj.id || '').toLowerCase() === normSlug) {
+            currentPostData = cachedObj;
+            renderPost(currentPostData);
+          }
         }
-      }
-    } catch(e) {}
+      } catch(e) {}
+    }
 
     if (!slug && !currentPostData) {
       showNotFound("No story specified. Click back to return to the board.");
@@ -2601,6 +2614,28 @@
         const cleanSlug = (targetSlug || '').replace(/^post\.html\?slug=/i, '').replace(/^post\.html\?id=/i, '').trim();
         const normalizedSlug = cleanSlug.toLowerCase();
         let docData = null;
+
+        // Fast-path: if currentPostData was already loaded via server-side rendering or cache, hydrate immediately
+        if (currentPostData) {
+          const cSlug = (currentPostData.slug || currentPostData.id || '').replace(/^post\.html\?slug=/i, '').trim().toLowerCase();
+          if (cSlug === normalizedSlug || (currentPostData.id || '').toLowerCase() === normalizedSlug) {
+            clearTimeout(loadTimeout);
+            renderPost(currentPostData);
+            try {
+              loadComments(currentPostData.id, currentPostData.slug || currentPostData.id, currentPostData.title, currentPostData.authorUid);
+            } catch(e) {
+              console.warn("Comments load error:", e);
+            }
+            if (!currentPostData.isAnonymous) {
+              try {
+                loadMoreByAuthor(currentPostData.author, currentPostData.slug, currentPostData.id, currentPostData.title);
+              } catch(e) {
+                console.warn("More by author error:", e);
+              }
+            }
+            return;
+          }
+        }
 
         // 1. Try querying by exact slug
         if (cleanSlug) {
@@ -2757,7 +2792,8 @@
       updateMeta('og:title', `${post.title} — HlyWor`, true);
       updateMeta('og:description', excerpt, true);
       updateMeta('og:type', 'article', true);
-      updateMeta('og:url', `https://hlywor.fun/post.html?slug=${post.slug}`, true);
+      const storyCanonicalUrl = `https://hlywor.fun/story/${encodeURIComponent(post.slug || post.id)}`;
+      updateMeta('og:url', storyCanonicalUrl, true);
       if (post.thumbnail) updateMeta('og:image', post.thumbnail, true);
       updateMeta('twitter:card', 'summary_large_image');
       updateMeta('twitter:title', post.title);
@@ -2770,7 +2806,7 @@
         canonical.setAttribute('rel', 'canonical');
         document.head.appendChild(canonical);
       }
-      canonical.setAttribute('href', `https://hlywor.fun/post.html?slug=${post.slug}`);
+      canonical.setAttribute('href', storyCanonicalUrl);
 
       // ✅ Breadcrumb title
       const breadcrumbTitle = document.getElementById('breadcrumbTitle');
@@ -2941,7 +2977,8 @@
       }
 
       // ✅ Share buttons
-      const postUrl = encodeURIComponent(window.location.href);
+      const shareTargetUrl = window.location.pathname.startsWith('/story/') ? window.location.href : (storyCanonicalUrl || window.location.href);
+      const postUrl = encodeURIComponent(shareTargetUrl);
       const postTitle = encodeURIComponent(post.title);
 
       document.getElementById('shareTwitter')?.addEventListener('click', () => {
@@ -2958,14 +2995,14 @@
 
       // Instagram Chat/Direct Share
       document.getElementById('shareInstagramChat')?.addEventListener('click', async () => {
-        const postUrl = window.location.href;
+        const chatUrl = shareTargetUrl;
         const postTitle = post.title;
 
         // Instagram doesn't have a direct share URL, so we copy the link
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
         try {
-          await navigator.clipboard.writeText(`${postTitle}\n\n${postUrl}`);
+          await navigator.clipboard.writeText(`${postTitle}\n\n${chatUrl}`);
 
           const btn = document.getElementById('shareInstagramChat');
           const original = btn.innerHTML;
@@ -3008,7 +3045,7 @@
       });
       document.getElementById('copyLinkBtn')?.addEventListener('click', async () => {
         try {
-          await navigator.clipboard.writeText(window.location.href);
+          await navigator.clipboard.writeText(shareTargetUrl);
           const btn = document.getElementById('copyLinkBtn');
           const original = btn.innerHTML;
           btn.innerHTML = '✓';
@@ -3018,7 +3055,7 @@
             btn.setAttribute('aria-label', 'Copy link to clipboard');
           }, 1500);
         } catch (e) {
-          prompt('Copy this link:', window.location.href);
+          prompt('Copy this link:', shareTargetUrl);
         }
       });
 
@@ -3130,7 +3167,7 @@
         container.innerHTML = filtered.map(p => {
           const targetSlug = (p.slug || p.id || '').replace(/^post\.html\?slug=/i, '').trim();
           return `
-            <a href="post.html?slug=${encodeURIComponent(targetSlug)}" class="read-next-card" data-slug="${targetSlug}">
+            <a href="/story/${encodeURIComponent(targetSlug)}" class="read-next-card" data-slug="${targetSlug}">
               <span class="read-next-tag">${(p.category || p.type || 'STORY').toUpperCase()}</span>
               <div class="read-next-title">${escHtml(p.title)}</div>
               <div class="read-next-author">by ${escHtml(p.author || 'HlyWor')}</div>
@@ -3820,7 +3857,7 @@
             ? `<img class="more-card-img" src="${p.thumbnail}" alt="${escHtml(p.title)}" loading="lazy" decoding="async">`
             : `<div class="more-card-noimg"><span class="more-card-noimg-num">${String(i + 1).padStart(2, '0')}</span></div>`;
           const targetSlug = (p.slug || p.id || '').replace(/^post\.html\?slug=/i, '').trim();
-          return `<a href="post.html?slug=${encodeURIComponent(targetSlug)}" class="more-card" role="listitem" data-slug="${targetSlug}">
+          return `<a href="/story/${encodeURIComponent(targetSlug)}" class="more-card" role="listitem" data-slug="${targetSlug}">
             <div class="more-card-pin" aria-hidden="true"></div>${thumb}
             <div class="more-card-body">
               <div class="more-card-cat" aria-label="Category: ${cat}">${cat}</div>
